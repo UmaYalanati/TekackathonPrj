@@ -6,12 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.csn.ems.R;
 
@@ -27,16 +24,40 @@ public class EmployeeDetailsFragment extends Fragment {
         return view;
     }
 
-   /* @Override
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // toggle nav drawer on selecting action bar app icon/title
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                try {
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+
+                    Fragment fragOne = new DisplayEmployeeDetailsFragment();
+                    Bundle arguments = new Bundle();
+                    arguments.putBoolean("shouldYouCreateAChildFragment", true);
+                    fragOne.setArguments(arguments);
+                    ft.add(R.id.fragment, fragOne);
+                    ft.commit();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+              //  Toast.makeText(getActivity(), "Refreshing data...", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-    *//*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater ) {
-        super.onCreateOptionsMenu( menu, inflater );
-        inflater.inflate( R.menu.main, menu );
-    }*//*
+
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -94,18 +115,14 @@ public class EmployeeDetailsFragment extends Fragment {
     }*/
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+
 
    /* @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
     }*/
-   @Override
+   /*@Override
    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
        inflater.inflate(R.menu.main, menu);
        MenuItem item = menu.findItem(R.id.action_some);
@@ -119,7 +136,7 @@ public class EmployeeDetailsFragment extends Fragment {
         {
             case R.id.action_settings:
 
-                Toast.makeText(getActivity(),"uma",1000).show();
+                Toast.makeText(getActivity(),"uma",Toast.LENGTH_SHORT).show();
                 break;
 
 
@@ -128,5 +145,5 @@ public class EmployeeDetailsFragment extends Fragment {
         }
 
         return true;
-    }
+    }*/
 }

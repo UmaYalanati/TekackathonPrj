@@ -37,11 +37,6 @@ public class OrgCalendarFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    /*@Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item=menu.findItem(R.id.action_settings);
-        item.setVisible(false);
-    }*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
