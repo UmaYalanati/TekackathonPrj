@@ -1,9 +1,7 @@
 package com.csn.ems;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -13,14 +11,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
+import com.csn.ems.com.csn.ems.fragment.DashBoardFragment;
 import com.csn.ems.com.csn.ems.fragment.EmployeeDetailsFragment;
+import com.csn.ems.com.csn.ems.fragment.LeavesFragment;
 import com.csn.ems.com.csn.ems.fragment.OrgCalendarFragment;
+import com.csn.ems.com.csn.ems.fragment.ReportsFragment;
+import com.csn.ems.com.csn.ems.fragment.TimeClockFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private int currentSelectedItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +44,20 @@ public class MainActivity extends AppCompatActivity
             }
         });*/
 
-         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
     public void onBackPressed() {
+        //Back stack u r not handling,
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -60,21 +68,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main, menu);
+        //based on fragment, update menu here. Got it? Shall i show ? t
+        //There must be a easy way to do this. but this will work 100% u r doing hide i am asking item click
+        if (currentSelectedItem == R.id.nav_orgcalendar) {
+            getMenuInflater().inflate(R.menu.main, menu);
+            MenuItem item = menu.findItem(R.id.action_some);
+            item.setVisible(false);
+        } else {
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_some) {
+
             return true;
+        } else if (id == R.id.action) {
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -89,25 +105,29 @@ public class MainActivity extends AppCompatActivity
         String tag = null;
 
         int id = item.getItemId();
+        currentSelectedItem = id;
 
         if (id == R.id.nav_dashboard) {
 
-
-
+            fragmentClass = DashBoardFragment.class;
+            tag = "Dashboard";
         } else if (id == R.id.nav_employee) {
 
             fragmentClass = EmployeeDetailsFragment.class;
             tag = "Employee";
 
         } else if (id == R.id.nav_timeclock) {
-
+            fragmentClass = TimeClockFragment.class;
+            tag = "Time Lock";
         } else if (id == R.id.nav_orgcalendar) {
             fragmentClass = OrgCalendarFragment.class;
             tag = "Employee";
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_leave) {
+            fragmentClass = LeavesFragment.class;
+            tag = "Leave";
+        } else if (id == R.id.nav_reports) {
+            fragmentClass = ReportsFragment.class;
+            tag = "Report";
         }
 
         if (fragmentClass != null) {
@@ -124,6 +144,8 @@ public class MainActivity extends AppCompatActivity
                 item.setChecked(true);
                 // Set action bar title
                 setTitle(item.getTitle());
+
+                invalidateOptionsMenu();
             } catch (Exception e) {
                 e.printStackTrace();
             }
