@@ -27,8 +27,7 @@ public class OrgCalendarFragment extends Fragment {
     private CaldroidFragment dialogCaldroidFragment;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecti
-        // ng action bar app icon/title
+        // toggle nav drawer on selecting action bar app icon/title
 
         switch (item.getItemId()) {
             case R.id.action_settings:
@@ -38,11 +37,11 @@ public class OrgCalendarFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item=menu.findItem(R.id.action_some);
+        MenuItem item=menu.findItem(R.id.action_settings);
         item.setVisible(false);
-    }
+    }*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
