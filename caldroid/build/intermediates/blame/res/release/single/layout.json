@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\Uma\\New folder (2)\\ems\\caldroid\\build\\intermediates\\res\\merged\\release\\layout\\normal_date_cell.xml",
+        "source": "D:\\Uma\\New folder (2)\\ems\\caldroid\\src\\main\\res\\layout\\normal_date_cell.xml"
+    },
+    {
         "merged": "C:\\Users\\uyalanat\\Downloads\\New folder\\New folder\\ems3\\caldroid\\build\\intermediates\\res\\merged\\release\\layout\\weekday_textview.xml",
         "source": "C:\\Users\\uyalanat\\Downloads\\New folder\\New folder\\ems3\\caldroid\\src\\main\\res\\layout\\weekday_textview.xml"
     },
@@ -16,7 +20,23 @@
         "source": "C:\\Users\\uyalanat\\Downloads\\New folder\\New folder\\ems3\\caldroid\\src\\main\\res\\layout\\date_grid_fragment.xml"
     },
     {
+        "merged": "D:\\Uma\\New folder (2)\\ems\\caldroid\\build\\intermediates\\res\\merged\\release\\layout\\calendar_view.xml",
+        "source": "D:\\Uma\\New folder (2)\\ems\\caldroid\\src\\main\\res\\layout\\calendar_view.xml"
+    },
+    {
+        "merged": "D:\\Uma\\New folder (2)\\ems\\caldroid\\build\\intermediates\\res\\merged\\release\\layout\\square_date_cell.xml",
+        "source": "D:\\Uma\\New folder (2)\\ems\\caldroid\\src\\main\\res\\layout\\square_date_cell.xml"
+    },
+    {
+        "merged": "D:\\Uma\\New folder (2)\\ems\\caldroid\\build\\intermediates\\res\\merged\\release\\layout\\date_grid_fragment.xml",
+        "source": "D:\\Uma\\New folder (2)\\ems\\caldroid\\src\\main\\res\\layout\\date_grid_fragment.xml"
+    },
+    {
         "merged": "C:\\Users\\uyalanat\\Downloads\\New folder\\New folder\\ems3\\caldroid\\build\\intermediates\\res\\merged\\release\\layout\\square_date_cell.xml",
         "source": "C:\\Users\\uyalanat\\Downloads\\New folder\\New folder\\ems3\\caldroid\\src\\main\\res\\layout\\square_date_cell.xml"
+    },
+    {
+        "merged": "D:\\Uma\\New folder (2)\\ems\\caldroid\\build\\intermediates\\res\\merged\\release\\layout\\weekday_textview.xml",
+        "source": "D:\\Uma\\New folder (2)\\ems\\caldroid\\src\\main\\res\\layout\\weekday_textview.xml"
     }
 ]
