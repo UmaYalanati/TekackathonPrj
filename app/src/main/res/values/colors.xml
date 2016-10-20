@@ -3,4 +3,100 @@
     <color name="colorPrimary">#1E90FF</color>
     <color name="colorPrimaryDark">#1E90FF</color>
     <color name="colorAccent">#4682B4</color>
+
+
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#303030</color>
+    <color name="list_background_pressed">#992416</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+    <color name="white">#FFFFFF</color>
+    <!-- FF2026-->
+    <color name="yellow">#FFFF00</color>
+    <color name="black">#000000</color>
+    <color name="newListDivider">#0008E1</color>
+    <color name="newCellBackground">#A000E0</color>
+    <color name="clearRecentSearches"> #888888</color>
+    <color name="gray">#BCBCB9</color>
+    <color name="gray_light">#CBCBCB</color>
+    <color name="hint_text_color">#717171</color>
+    <color name="settingsEditTextBorder">#F0EFE0</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="transparent">#00000000</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="result_image_border">#ffffffff</color>
+    <color name="result_points">#c000ff00</color>
+
+    <!-- HomeScreen -->
+
+    <color name="backGround">#EEEEEE</color>
+    <!--  <color name="gray_light">#999999</color> -->
+    <!-- FeedBack -->
+
+    <color name="FeedbackGround">#FCFCFC</color>
+
+    <!-- Branch Locator Map List Clicked Text Color -->
+
+    <color name="MapListClickedTextColor">#1069af</color>
+    <color name="AboutMeBackground">#D9EAF8</color>
+
+    <!-- Product Screen 3 -->
+
+    <color name="callInBranchLight">#F6FFF6</color>
+    <color name="callInBranchDark">#F0EFEF</color>
+    <color name="callInBranchBorder">#DDDDDD</color>
+    <color name="callInBranchTextColor"> #888888</color>
+
+    <!-- PDF -->
+    <color name="canvas">#FF404040</color>
+    <color name="bar">#C0202020</color>
+
+    <!-- Warranty Success -->
+    <color name="green">#0A8C28</color>
+    <color name="gray_dark">#646464</color>
+    <color name="warrantyView">#555555</color>
+
+    <!--  -->
+    <color name="search_hint_textcolor">#A5A5AB</color>
+    <color name="mainButton_textcolor">#ffffff</color>
+    <color name="blakkish_textcolor">#191919</color>
+    <color name="recentSearch_textcolor">#999999</color>
+    <color name="cellsDark">#F0EFEF</color>
+    <color name="cellsLight">#FFFFFF</color>
+    <color name="directionsDoc"> #C7C6CD</color>
+    <color name="bomLargeInstruction">#333333</color>
+    <color name="docHeaderPartsBack">#3B3B3D</color>
+    <color name="borderEditText">#C7C6CD</color>
+    <color name="blue">#1068AE</color>
+
+    <!-- Xref -->
+
+    <color name="formBgcolor">#B9B9B9</color>
+    <color name="greyxref">#999999</color>
+
+    <!-- lOGUIN -->
+    <color name="highlightTextColor">#1F2124</color>
+
+    <!-- Settings -->
+    <color name="settingsViewColor">#AAAAAA</color>
+
+    <!-- Service History -->
+    <color name="servhist_child">#C9E0C8</color>
+    <color name="greenQuantity">#007f00</color>
+    <color name="regPopupButtonColor">#E5E5E5</color>
+    <color name="ecm_cell_gap">#777777</color>
+    <color name="orange">#C8780A</color>
+    <color name="redOutOfStock">#CD3017</color>
+    <color name="greenInStock">#228B4C</color>
+    <color name="gray_dark_xref">#393939</color>
+    <color name="red">#FF0000</color>
+    <color name="greenHighlight">#CCFFCC</color>
+    <color name="greyRegister">#CCCCCC</color>
 </resources>

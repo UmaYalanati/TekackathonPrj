@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import com.csn.ems.R;
 
 /**
- * Created by uyalanat on 20-10-2016.
+ * Created by uyalanat on 21-10-2016.
  */
 
-public class EditEmployeeDetailsFragment extends Fragment {
+public class ChangePasswordFragment  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.edit_profile, container, false);
+        final View view = inflater.inflate(R.layout.password_change, container, false);
 
         return view;
     }
