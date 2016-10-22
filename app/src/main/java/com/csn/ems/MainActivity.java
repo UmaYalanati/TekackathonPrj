@@ -20,6 +20,8 @@ import com.csn.ems.com.csn.ems.fragment.OrgCalendarFragment;
 import com.csn.ems.com.csn.ems.fragment.ReportsFragment;
 import com.csn.ems.com.csn.ems.fragment.TimeClockFragment;
 
+import static android.R.attr.tag;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +29,9 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
     private int currentSelectedItem;
 
+    Fragment fragment;
+    Class fragmentClass = null;
+    String tag = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +40,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,6 +50,31 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        fragmentClass = DashBoardFragment.class;
+        tag = "Dashboard";
+        if (fragmentClass != null) {
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment, fragment, tag)
+                        .addToBackStack(tag)
+//                        .addToBackStack(String.valueOf(previousItemChecked))
+                        .commit();
+
+                // Set action bar title
+                setTitle(tag);
+
+                invalidateOptionsMenu();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
 
@@ -70,12 +93,28 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         //based on fragment, update menu here. Got it? Shall i show ? t
         //There must be a easy way to do this. but this will work 100% u r doing hide i am asking item click
-        if (currentSelectedItem == R.id.nav_orgcalendar) {
-            getMenuInflater().inflate(R.menu.main, menu);
-            MenuItem item = menu.findItem(R.id.action_some);
-            item.setVisible(false);
-        } else {
-            getMenuInflater().inflate(R.menu.main, menu);
+         if (currentSelectedItem == R.id.nav_dashboard) {
+            getMenuInflater().inflate(R.menu.dashboardmenu, menu);
+            /*MenuItem item = menu.findItem(R.id.action_some);
+            item.setVisible(false);*/
+        }else  if (currentSelectedItem == R.id.nav_employee) {
+             getMenuInflater().inflate(R.menu.main, menu);
+             MenuItem item = menu.findItem(R.id.action_some);
+             item.setVisible(false);
+         } else if (currentSelectedItem == R.id.nav_timeclock) {
+            getMenuInflater().inflate(R.menu.timeclock, menu);
+            /*MenuItem item = menu.findItem(R.id.action_some);
+            item.setVisible(false);*/
+        }else if (currentSelectedItem == R.id.nav_leave) {
+            getMenuInflater().inflate(R.menu.leaves, menu);
+            /*MenuItem item = menu.findItem(R.id.action_some);
+            item.setVisible(false);*/
+        }else if (currentSelectedItem == R.id.nav_reports) {
+            getMenuInflater().inflate(R.menu.report, menu);
+            /*MenuItem item = menu.findItem(R.id.action_some);
+            item.setVisible(false);*/
+        }else {
+            getMenuInflater().inflate(R.menu.dashboardmenu, menu);
         }
         return true;
     }
@@ -100,9 +139,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        Fragment fragment;
-        Class fragmentClass = null;
-        String tag = null;
+
 
         int id = item.getItemId();
         currentSelectedItem = id;

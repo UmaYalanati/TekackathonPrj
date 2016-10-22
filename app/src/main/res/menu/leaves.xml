@@ -4,20 +4,14 @@
     tools:context="com.example.toolbar.MainActivity" >
 
     <item
-        android:icon="@drawable/employeedetails"
+        android:icon="@drawable/leaveinformation"
         android:id="@+id/action_settings"
         android:orderInCategory="1"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom"/>
-    <item android:id="@+id/action"
-        android:icon="@drawable/editdetails"
-        android:title="action_search"
 
-        app:showAsAction="ifRoom"
-        android:orderInCategory="1"
-        android:menuCategory="secondary"/>
     <item android:id="@+id/action_some"
-        android:icon="@drawable/empdetails"
+        android:icon="@drawable/leave"
         android:title="action_search"
 
         app:showAsAction="ifRoom"

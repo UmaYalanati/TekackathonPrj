@@ -3,10 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.toolbar.MainActivity" >
 
-
+    <item
+        android:icon="@drawable/reportsheet"
+        android:id="@+id/action_settings"
+        android:orderInCategory="1"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_some"
-        android:icon="@drawable/search"
+        android:icon="@drawable/paysheet"
         android:title="action_search"
 
         app:showAsAction="ifRoom"
