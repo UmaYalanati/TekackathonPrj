@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:background="#C5CAE9"
+    android:foreground="?attr/selectableItemBackground"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_marginLeft="15dp"
+        android:textSize="12sp"
+        android:text="Oct 17,2016"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="18dp"
+        android:id="@+id/tvdate" />
+
+    <TextView
+        android:background="@drawable/roundedge_green"
+        android:textSize="10sp"
+        android:text="9:15Am"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvdate"
+        android:layout_toRightOf="@+id/tvdate"
+        android:layout_toEndOf="@+id/tvdate"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="14dp"
+        android:id="@+id/tvcheckintime" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:background="@drawable/roundedge_orange"
+        android:textSize="10sp"
+        android:text="10:14 AM"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvcheckintime"
+        android:layout_toRightOf="@+id/imageButton"
+        android:layout_toEndOf="@+id/imageButton"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:id="@+id/tvcheckouttime" />
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_marginLeft="15dp"
+        android:textSize="12sp"
+        android:text="8hrs90min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvcheckouttime"
+        android:layout_toRightOf="@+id/imageButton2"
+        android:layout_toEndOf="@+id/imageButton2"
+        android:id="@+id/tvtotalhrs" />
+
+    <ImageView
+        android:layout_marginLeft="12dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:srcCompat="@drawable/location"
+        android:id="@+id/imageButton"
+        android:layout_alignBottom="@+id/tvcheckintime"
+        android:layout_toRightOf="@+id/tvcheckintime"
+        android:layout_toEndOf="@+id/tvcheckintime" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:srcCompat="@drawable/location"
+        android:id="@+id/imageButton2"
+android:layout_marginLeft="12dp"
+        android:layout_alignTop="@+id/imageButton"
+        android:layout_toRightOf="@+id/tvcheckouttime"
+        android:layout_toEndOf="@+id/tvcheckouttime" />
+
+    <TextView
+        android:textSize="12sp"
+        android:text="*"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:layout_marginLeft="5dp"
+        android:id="@+id/tvapprovalstatus"
+        android:layout_alignTop="@+id/imageButton2"
+        android:layout_toRightOf="@+id/tvtotalhrs"
+        android:layout_toEndOf="@+id/tvtotalhrs" />
+</RelativeLayout>
+</android.support.v7.widget.CardView>

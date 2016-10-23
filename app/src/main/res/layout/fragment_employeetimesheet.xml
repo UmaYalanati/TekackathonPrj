@@ -8,10 +8,11 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinner_birthday"
+        android:id="@+id/spinner_listofsheet"
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+
         android:layout_weight="1"
         android:layout_gravity="center"
         android:textSize="13sp" />
@@ -19,23 +20,43 @@
         android:padding="10dp"
        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_weight="1"
+
+        android:background="@drawable/rectangularbox_warranty"
         android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:text="10-10-2017"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"/>
     <Button
         android:layout_marginRight="5dp"
         android:padding="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
-
+        android:background="@drawable/rectangularbox_warranty"
         android:gravity="center"
-        android:layout_weight="1"
+
         android:text="10-10-2017"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="45dp" />
 </LinearLayout>
+    <RelativeLayout
+
+        android:id="@+id/relativelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:scrollbars="vertical"
+            />
+
+    </RelativeLayout>
 </LinearLayout>

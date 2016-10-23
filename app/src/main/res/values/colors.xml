@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1E90FF</color>
-    <color name="colorPrimaryDark">#1E90FF</color>
+
+  <!--  <color name="colorPrimary">#1E90FF</color>-->
+    <color name="colorPrimary">#C0C0C0</color>
+    <color name="colorPrimaryDark">#C0C0C0</color>
     <color name="colorAccent">#4682B4</color>
 
 
@@ -13,13 +15,14 @@
     <color name="counter_text_color">#c5c4c4</color>
     <color name="white">#FFFFFF</color>
     <!-- FF2026-->
+
     <color name="yellow">#FFFF00</color>
     <color name="black">#000000</color>
     <color name="newListDivider">#0008E1</color>
     <color name="newCellBackground">#A000E0</color>
     <color name="clearRecentSearches"> #888888</color>
     <color name="gray">#BCBCB9</color>
-    <color name="gray_light">#CBCBCB</color>
+    <color name="gray_light">#EFEEEC</color>
     <color name="hint_text_color">#717171</color>
     <color name="settingsEditTextBorder">#F0EFE0</color>
     <color name="result_view">#b0000000</color>

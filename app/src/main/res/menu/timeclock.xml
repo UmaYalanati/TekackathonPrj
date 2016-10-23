@@ -5,7 +5,7 @@
 
 
 
-    <item android:id="@+id/action_some"
+    <item android:id="@+id/action_checkin"
         android:icon="@drawable/timeicon"
         android:title="action_search"
 
@@ -21,7 +21,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:icon="@drawable/timecardapproval"
-        android:id="@+id/action_settings"
+        android:id="@+id/action_approvedtimesheet"
         android:orderInCategory="1"
         android:title="Logout"
         app:showAsAction="ifRoom"/>

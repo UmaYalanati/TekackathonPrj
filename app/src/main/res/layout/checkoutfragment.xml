@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tvcurrentdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+
+        android:text="Oct 17,2016"
+        android:textColor="@android:color/black"
+        android:textSize="15sp" />
+    <TextView
+
+        android:layout_marginLeft="15dp"
+        android:text="Total Hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvtotalahrs"
+        android:layout_below="@+id/tvcurrentdate"
+        android:layout_alignLeft="@+id/tvcurrentdate"
+        android:layout_alignStart="@+id/tvcurrentdate" />
+
+    <LinearLayout
+        android:background="@drawable/rectangularbox_gray"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvCodeNameDetail12"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Checked In"
+            android:textSize="16sp"
+            />
+            <TextView
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="10:30 PM"
+
+                />
+
+
+    </LinearLayout>
+<LinearLayout
+    android:visibility="gone"
+    android:id="@+id/ll_breaktime"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:background="@drawable/rectangularbox_gray"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+
+            android:gravity="left"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Break Started"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/tvbreaktime"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="10:30 PM"
+
+            />
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btncontinueshift"
+        android:textSize="14sp"
+android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@color/green"
+        android:text="Continue Shift"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp" />
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_startbreak"
+        android:background="@drawable/rectangularbox_theme_color"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <EditText
+
+android:layout_marginTop="5dp"
+android:background="@null"
+android:padding="10dp"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+android:hint="Click to add note"
+            android:textSize="16sp"
+            />
+
+        <View
+            android:layout_marginRight="3dp"
+            android:background="@color/gray_light"
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"/>
+        <ImageButton
+            android:id="@+id/imgbtnbreak"
+            android:layout_marginTop="3dp"
+            android:layout_gravity="center"
+android:background="@drawable/coffee_cup"
+            android:gravity="right"
+android:layout_marginRight="4dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+
+
+            />
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btncheckout"
+        android:textSize="14sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        android:text="Check Out"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp" />
+</LinearLayout>

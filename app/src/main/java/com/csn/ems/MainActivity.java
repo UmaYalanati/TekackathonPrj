@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity
             item.setVisible(false);*/
         }else  if (currentSelectedItem == R.id.nav_employee) {
              getMenuInflater().inflate(R.menu.main, menu);
-             MenuItem item = menu.findItem(R.id.action_some);
-             item.setVisible(false);
+            /* MenuItem item = menu.findItem(R.id.action_some);
+             item.setVisible(false);*/
          } else if (currentSelectedItem == R.id.nav_timeclock) {
             getMenuInflater().inflate(R.menu.timeclock, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
@@ -128,9 +128,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_some) {
 
             return true;
-        } else if (id == R.id.action) {
+        } /*else if (id == R.id.action) {
             Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -194,4 +194,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

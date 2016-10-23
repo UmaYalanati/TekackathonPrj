@@ -3,6 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/layout_checkin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="wrap_content"
@@ -12,22 +17,24 @@
         android:orientation="vertical" >
 
         <ImageView
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/timeicon"
             android:id="@+id/img"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="7dp" />
+            android:layout_marginTop="4dp" />
 
         <TextView
-            android:id="@+id/tvHome"
+            android:id="@+id/tvcurrentdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/img"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@+id/btnHomeScreenBuyArrow"
+            android:layout_toLeftOf="@+id/btncheckin"
             android:layout_toRightOf="@+id/img"
             android:text="Oct 17,2016"
             android:textColor="@android:color/black"
@@ -41,22 +48,22 @@
             android:textColor="@color/white"
             android:background="@color/green"
             android:layout_marginRight="5dp"
-            android:id="@+id/btnHomeScreenBuyArrow"
+            android:id="@+id/btncheckin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="Check In"
             android:visibility="visible" />
 
         <TextView
-            android:text="8:10 PM"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:layout_below="@+id/tvHome"
-            android:layout_alignLeft="@+id/tvHome"
-            android:layout_alignStart="@+id/tvHome" />
+            android:id="@+id/tvcurrenttime"
+            android:layout_below="@+id/tvcurrentdate"
+            android:layout_alignLeft="@+id/tvcurrentdate"
+            android:layout_alignStart="@+id/tvcurrentdate" />
 
     </RelativeLayout>
 
@@ -66,4 +73,12 @@
         android:layout_height="1dp"
 
         android:background="@color/gray" />
+    </LinearLayout>
+    <include
+android:visibility="gone"
+        android:id="@+id/layout_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/checkoutfragment"
+        />
 </LinearLayout>
