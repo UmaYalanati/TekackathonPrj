@@ -10,19 +10,17 @@ import android.view.ViewGroup;
 import com.csn.ems.R;
 
 /**
- * Created by uyalanat on 20-10-2016.
+ * Created by uyalanat on 23-10-2016.
  */
 
-public class DisplayEmployeeDetailsFragment extends Fragment {
-
-    public static DisplayEmployeeDetailsFragment newInstance() {
-        return new DisplayEmployeeDetailsFragment();
+public class UpcomingTimeOffFragment extends Fragment {
+    public static UpcomingTimeOffFragment newInstance() {
+        return new UpcomingTimeOffFragment();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_employeedetails, container, false);
+        final View view = inflater.inflate(R.layout.upcomingtimeoff, container, false);
 
         return view;
     }
-
 }

@@ -16,36 +16,38 @@ import android.widget.RelativeLayout;
 import com.csn.ems.R;
 import com.csn.ems.RecyclerViewAdapter.TimesheetRecyclerViewAdapter;
 
+import static com.csn.ems.R.id.spinner_listofsheet;
 
 /**
- * Created by uyalanat on 22-10-2016.
+ * Created by uyalanat on 23-10-2016.
  */
 
-public class TimeSheetFragment extends Fragment {
-    public static TimeSheetFragment newInstance() {
-        return new TimeSheetFragment();
-    }
-    String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
+public class LeavesStatusFragment extends Fragment {
+
+
     Context context;
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-    AppCompatSpinner spinner_listofsheet;
+
     String[] subjects =
             {
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016"};
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016",
+                    "Oct 10,2016-Oct 10,2016"};
 
+    public static LeavesStatusFragment newInstance() {
+        return new LeavesStatusFragment();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_employeetimesheet, container, false);
@@ -62,12 +64,7 @@ public class TimeSheetFragment extends Fragment {
         recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
-        spinner_listofsheet=(AppCompatSpinner)view.findViewById(R.id.spinner_listofsheet);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
-
-        spinner_listofsheet.setAdapter(arrayAdapter);
 
 
         return view;

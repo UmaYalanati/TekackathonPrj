@@ -21,9 +21,23 @@ public class TimeClockFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
 
-       /* newFragment= new TimeClockFragment();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, newFragment).commit();*/
+        if (savedInstanceState == null) {
+            try {
+                // FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack if needed
+                transaction.replace(R.id.fragment_container, new CheckinCheckoutFragment());
+                transaction.addToBackStack(null);
+
+// Commit the transaction
+                transaction.commit();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         return view;
     }
@@ -56,7 +70,7 @@ public class TimeClockFragment extends Fragment {
             case R.id.action_approvedtimesheet:
                 changeIcon(item,R.drawable.empdetails);
 
-                newFragment = new TimeSheetFragment();
+                newFragment = new ApprovedTimesheet();
 
                 break;
 

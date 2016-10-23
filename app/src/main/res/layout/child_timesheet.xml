@@ -16,7 +16,7 @@
 
     <TextView
         android:textColor="@color/black"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:textSize="12sp"
         android:text="Oct 17,2016"
         android:layout_width="wrap_content"
@@ -92,12 +92,13 @@ android:layout_marginLeft="12dp"
         android:layout_toEndOf="@+id/tvcheckouttime" />
 
     <TextView
+        android:layout_marginTop="4dp"
         android:textSize="12sp"
-        android:text="*"
+        android:background="@drawable/bluedot"
         android:textColor="@color/black"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
 android:layout_marginLeft="5dp"
         android:id="@+id/tvapprovalstatus"
         android:layout_alignTop="@+id/imageButton2"

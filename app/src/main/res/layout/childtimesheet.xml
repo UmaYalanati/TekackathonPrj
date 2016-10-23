@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:id="@+id/tvdelete"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+android:background="@drawable/rectangularbox_warranty"
+
+        />
+    <TextView
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="5dp"
+android:layout_weight="1"
+        android:id="@+id/tvmonth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="October"
+
+        />
+
+    <TextView
+        android:layout_marginTop="4dp"
+        android:id="@+id/tvpwd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="22"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:id="@+id/tvawd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="26"
+
+        />
+    <TextView
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:id="@+id/tvlop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="3"
+
+        />
+    <TextView
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:id="@+id/tvleaves"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="2"
+
+        />
+</LinearLayout>
+</LinearLayout>

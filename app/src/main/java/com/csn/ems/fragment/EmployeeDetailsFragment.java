@@ -24,7 +24,23 @@ public class EmployeeDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
+        if (savedInstanceState == null) {
+            try {
+                // FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack if needed
+                transaction.replace(R.id.fragment_container, new DisplayEmployeeDetailsFragment());
+                transaction.addToBackStack(null);
+
+// Commit the transaction
+                transaction.commit();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return view;
     }
 

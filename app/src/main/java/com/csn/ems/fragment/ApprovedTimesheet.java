@@ -12,19 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.csn.ems.R;
 import com.csn.ems.RecyclerViewAdapter.TimesheetRecyclerViewAdapter;
 
-
 /**
- * Created by uyalanat on 22-10-2016.
+ * Created by uyalanat on 23-10-2016.
  */
 
-public class TimeSheetFragment extends Fragment {
-    public static TimeSheetFragment newInstance() {
-        return new TimeSheetFragment();
-    }
+public class ApprovedTimesheet extends Fragment {
+
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;
     RecyclerView recyclerView;
@@ -32,6 +30,7 @@ public class TimeSheetFragment extends Fragment {
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
     AppCompatSpinner spinner_listofsheet;
+    TextView tvtittle;
     String[] subjects =
             {
                     "Oct 10,2016",
@@ -55,6 +54,9 @@ public class TimeSheetFragment extends Fragment {
 
         recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
 
+        tvtittle=(TextView)view.findViewById(R.id.tvtittle);
+
+        tvtittle.setText("Time Card Approval");
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
@@ -64,13 +66,11 @@ public class TimeSheetFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet=(AppCompatSpinner)view.findViewById(R.id.spinner_listofsheet);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
-
-        spinner_listofsheet.setAdapter(arrayAdapter);
+        spinner_listofsheet.setVisibility(View.GONE);
 
 
         return view;
     }
 
 }
+
