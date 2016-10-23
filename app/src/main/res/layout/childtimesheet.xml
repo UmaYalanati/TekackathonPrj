@@ -7,10 +7,13 @@
     android:layout_marginBottom="8dp"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
+
     android:background="#C5CAE9"
     android:foreground="?attr/selectableItemBackground"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 <LinearLayout
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -20,7 +23,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:background="@drawable/rectangularbox_warranty"
-
+        android:textColor="@color/blakkish_textcolor"
         />
     <TextView
         android:layout_marginTop="4dp"
@@ -30,11 +33,11 @@ android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="October"
-android:textColor="@color/black"
+        android:textColor="@color/blakkish_textcolor"
         />
 
     <TextView
-        android:textColor="@color/black"
+        android:textColor="@color/blakkish_textcolor"
         android:layout_marginTop="4dp"
         android:id="@+id/tvpwd"
         android:layout_width="0dp"
@@ -43,7 +46,7 @@ android:textColor="@color/black"
         android:layout_weight="1"
         />
     <TextView
-        android:textColor="@color/black"
+        android:textColor="@color/blakkish_textcolor"
         android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:id="@+id/tvawd"
@@ -53,7 +56,7 @@ android:textColor="@color/black"
 
         />
     <TextView
-        android:textColor="@color/black"
+        android:textColor="@color/blakkish_textcolor"
         android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:id="@+id/tvlop"
@@ -63,7 +66,7 @@ android:textColor="@color/black"
 
         />
     <TextView
-        android:textColor="@color/black"
+        android:textColor="@color/blakkish_textcolor"
         android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:id="@+id/tvleaves"

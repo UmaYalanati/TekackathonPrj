@@ -51,7 +51,7 @@ public class LeavesFragment extends Fragment {
             //    action_editdetails
             case R.id.action_leaaveinformation:
 
-                changeIcon(item,R.drawable.employeedetails);
+                changeIcon(item,R.drawable.leaveinformation);
 
                 newFragment =  LeavesStatusFragment.newInstance();
 
@@ -59,7 +59,7 @@ public class LeavesFragment extends Fragment {
 
                 break;
             case R.id.action_upcomingtimeoff:
-                changeIcon(item,R.drawable.editdetails);
+                changeIcon(item,R.drawable.leave);
 
                 newFragment =  UpcomingTimeOffFragment.newInstance();
 

@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.csn.ems.R;
-import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
+import com.csn.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -60,7 +60,7 @@ public class ApprovedTimesheet extends Fragment {
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-        recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
+        recyclerViewAdapter = new ApprovedTimesheetRecyclerViewAdapter(context, subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet=(AppCompatSpinner)view.findViewById(R.id.spinner_listofsheet);

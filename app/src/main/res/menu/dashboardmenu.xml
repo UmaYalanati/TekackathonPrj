@@ -4,7 +4,7 @@
     tools:context="com.example.toolbar.MainActivity" >
 
     <item
-        android:icon="@drawable/signout"
+        android:icon="@drawable/ic_sign_out"
         android:id="@+id/action_signout"
         android:orderInCategory="1"
         android:title="Logout"

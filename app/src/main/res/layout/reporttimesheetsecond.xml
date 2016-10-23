@@ -9,7 +9,7 @@
 
         <TextView
             android:textSize="16sp"
-            android:textStyle="bold"
+
             android:textColor="@color/black"
             android:text="Time Sheet"
             android:layout_width="wrap_content"
@@ -23,6 +23,7 @@
             android:id="@+id/textView3" />
 
         <TextView
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:text="October"
             android:layout_width="wrap_content"
@@ -32,11 +33,11 @@
             android:layout_toEndOf="@+id/textView3"
             android:layout_marginLeft="19dp"
             android:layout_marginStart="19dp"
-            android:textSize="15sp"
+
             android:id="@+id/textView4" />
 
         <LinearLayout
-            android:background="@drawable/rectangularbox_warranty"
+            android:background="@drawable/rectangularbox"
             android:gravity="center"
             android:layout_width="30dp"
             android:layout_height="25dp"
@@ -48,8 +49,8 @@
             <ImageView
                 android:background="@drawable/next"
                 android:text="Button"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:layout_height="15dp"
                 />
         </LinearLayout>
 
@@ -68,7 +69,8 @@
 
 
         <LinearLayout
-            android:background="@drawable/rectangularbox_warranty"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/rectangularbox"
             android:id="@+id/button"
             android:layout_width="30dp"
             android:gravity="center"
@@ -81,8 +83,8 @@
                 android:layout_gravity="center"
                 android:background="@drawable/back"
                 android:text="Button"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:layout_height="15dp"
                 />
         </LinearLayout>
     </RelativeLayout>
@@ -105,6 +107,7 @@
 
             />
         <TextView
+            android:textColor="@color/blakkish_textcolor"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:id="@+id/tvmonth"
@@ -115,6 +118,7 @@
             />
 
         <TextView
+            android:textColor="@color/blakkish_textcolor"
             android:id="@+id/tvpwd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -122,6 +126,7 @@
             android:layout_weight="1"
             />
         <TextView
+            android:textColor="@color/blakkish_textcolor"
             android:layout_weight="1"
             android:id="@+id/tvawd"
             android:layout_width="0dp"
@@ -130,6 +135,7 @@
 
             />
         <TextView
+            android:textColor="@color/blakkish_textcolor"
             android:layout_weight="1"
             android:id="@+id/tvlop"
             android:layout_width="0dp"
@@ -138,6 +144,7 @@
 
             />
         <TextView
+            android:textColor="@color/blakkish_textcolor"
             android:layout_weight="1"
             android:id="@+id/tvleaves"
             android:layout_width="0dp"

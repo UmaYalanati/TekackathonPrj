@@ -17,7 +17,6 @@
         android:id="@+id/viewHome"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-
         android:background="@color/gray" />
     <android.support.v7.widget.RecyclerView
 

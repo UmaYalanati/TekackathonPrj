@@ -51,7 +51,7 @@ public class ReportsFragment  extends Fragment {
             //    action_editdetails
             case R.id.action_reportsheeet:
 
-                changeIcon(item,R.drawable.employeedetails);
+                changeIcon(item,R.drawable.reportsheet);
 
                 newFragment =  ReportsTimesheet.newInstance();
 
@@ -59,7 +59,7 @@ public class ReportsFragment  extends Fragment {
 
                 break;
             case R.id.action_reportsheeetsecond:
-                changeIcon(item,R.drawable.editdetails);
+                changeIcon(item,R.drawable.paysheet);
 
                 newFragment =  ReportsTimesheetSecond.newInstance();
 

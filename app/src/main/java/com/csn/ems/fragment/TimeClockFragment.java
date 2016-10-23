@@ -17,6 +17,7 @@ import com.csn.ems.R;
 
 public class TimeClockFragment extends Fragment {
     Fragment newFragment=null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -53,7 +54,7 @@ public class TimeClockFragment extends Fragment {
             //    action_editdetails
             case R.id.action_checkin:
 
-                changeIcon(item,R.drawable.employeedetails);
+                changeIcon(item,R.drawable.timeicon);
 
                 newFragment = new CheckinCheckoutFragment();
 
@@ -61,14 +62,14 @@ public class TimeClockFragment extends Fragment {
 
                 break;
             case R.id.action_timesheet:
-                changeIcon(item,R.drawable.editdetails);
+                changeIcon(item,R.drawable.timesheet);
 
                 newFragment = new TimeSheetFragment();
 
 
                 break;
             case R.id.action_approvedtimesheet:
-                changeIcon(item,R.drawable.empdetails);
+                changeIcon(item,R.drawable.timecardapproval);
 
                 newFragment = new ApprovedTimesheet();
 
@@ -107,6 +108,7 @@ public class TimeClockFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     public void changeIcon(final MenuItem item,final int drawableResourceId){

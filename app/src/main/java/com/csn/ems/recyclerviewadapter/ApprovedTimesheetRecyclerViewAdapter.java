@@ -10,18 +10,18 @@ import android.widget.TextView;
 import com.csn.ems.R;
 
 /**
- * Created by uyalanat on 22-10-2016.
+ * Created by uyalanat on 24-10-2016.
  */
 
-public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<TimesheetRecyclerViewAdapter.ViewHolder>{
+public class ApprovedTimesheetRecyclerViewAdapter  extends RecyclerView.Adapter<ApprovedTimesheetRecyclerViewAdapter.ViewHolder>{
 
     String[] SubjectValues;
     Context context;
     View view1;
-    ViewHolder viewHolder1;
+    ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
     TextView textView,tvapprovalstatus;
 
-    public TimesheetRecyclerViewAdapter(Context context1, String[] SubjectValues1){
+    public ApprovedTimesheetRecyclerViewAdapter(Context context1, String[] SubjectValues1){
 
         SubjectValues = SubjectValues1;
         context = context1;
@@ -30,28 +30,28 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView textView;
-public TextView tvapprovalstatus;
+        public TextView tvapprovalstatus;
         public ViewHolder(View v){
 
             super(v);
             tvapprovalstatus= (TextView)v.findViewById(R.id.tvapprovalstatus);
             textView = (TextView)v.findViewById(R.id.tvdate);
-            tvapprovalstatus.setVisibility(View.GONE);
+            //tvapprovalstatus.setVisibility(View.GONE);
         }
     }
 
     @Override
-    public TimesheetRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ApprovedTimesheetRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
 
         view1 = LayoutInflater.from(context).inflate(R.layout.child_timesheet,parent,false);
 
-        viewHolder1 = new ViewHolder(view1);
+        viewHolder1 = new ApprovedTimesheetRecyclerViewAdapter.ViewHolder(view1);
 
         return viewHolder1;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(ApprovedTimesheetRecyclerViewAdapter.ViewHolder holder, int position){
 
         holder.textView.setText(SubjectValues[position]);
 
@@ -63,3 +63,4 @@ public TextView tvapprovalstatus;
         return SubjectValues.length;
     }
 }
+

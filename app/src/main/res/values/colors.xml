@@ -2,8 +2,9 @@
 <resources>
 
   <!--  <color name="colorPrimary">#1E90FF</color>-->
-    <color name="colorPrimary">#9E9E9E</color>
-    <color name="colorPrimaryDark">#616161</color>
+   <!-- <color name="colorPrimary">#9E9E9E</color>-->
+  <color name="colorPrimary">#3399FF</color>
+  <color name="colorPrimaryDark">#616161</color>
     <color name="colorAccent">#1976D2</color>
 
 
@@ -62,7 +63,7 @@
     <color name="bar">#C0202020</color>
 
     <!-- Warranty Success -->
-    <color name="green">#0A8C28</color>
+    <color name="green">#528413</color>
     <color name="gray_dark">#646464</color>
     <color name="warrantyView">#555555</color>
 

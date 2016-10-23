@@ -112,7 +112,11 @@ public class MainActivity extends AppCompatActivity
             getMenuInflater().inflate(R.menu.report, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
-        }else {
+        }else if (currentSelectedItem == R.id.nav_settings) {
+             getMenuInflater().inflate(R.menu.main, menu);
+            /*MenuItem item = menu.findItem(R.id.action_some);
+            item.setVisible(false);*/
+         }else {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
         }
         return true;
@@ -167,6 +171,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_reports) {
             fragmentClass = ReportsFragment.class;
             tag = "Report";
+        } else if (id == R.id.nav_settings) {
+            fragmentClass = EmployeeDetailsFragment.class;
+            tag = "Settings";
         }
 
         if (fragmentClass != null) {
