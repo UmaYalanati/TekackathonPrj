@@ -10,12 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.csn.ems.R;
-import com.csn.ems.RecyclerViewAdapter.TimesheetRecyclerViewAdapter;
+import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
 
 /**
  * Created by uyalanat on 23-10-2016.

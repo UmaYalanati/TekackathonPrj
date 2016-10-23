@@ -1,4 +1,4 @@
-package com.csn.ems.RecyclerViewAdapter;
+package com.csn.ems.recyclerviewadapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
