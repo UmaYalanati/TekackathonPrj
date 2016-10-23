@@ -1,4 +1,4 @@
-package com.csn.ems.com.csn.ems.activity;
+package com.csn.ems.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.csn.ems.MainActivity;
 import com.csn.ems.R;
-
 
 
 /**
@@ -63,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     passwordEditText.requestFocus();
                 }else{
-                    Intent intent_homescreen=new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent_homescreen=new Intent(com.csn.ems.com.csn.ems.activity.LoginActivity.this, MainActivity.class);
                     startActivity(intent_homescreen);
                 }
 

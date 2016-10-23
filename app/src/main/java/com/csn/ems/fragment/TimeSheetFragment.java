@@ -1,4 +1,4 @@
-package com.csn.ems.com.csn.ems.fragment;
+package com.csn.ems.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

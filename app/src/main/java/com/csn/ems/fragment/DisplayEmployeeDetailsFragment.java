@@ -1,4 +1,4 @@
-package com.csn.ems.com.csn.ems.fragment;
+package com.csn.ems.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +13,10 @@ import com.csn.ems.R;
  * Created by uyalanat on 20-10-2016.
  */
 
-public class EditEmployeeDetailsFragment extends Fragment {
+public class DisplayEmployeeDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.edit_profile, container, false);
+        final View view = inflater.inflate(R.layout.fragment_employeedetails, container, false);
 
         return view;
     }

@@ -1,4 +1,4 @@
-package com.csn.ems.com.csn.ems.RecyclerViewAdapter;
+package com.csn.ems.RecyclerViewAdapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ import com.csn.ems.R;
  * Created by uyalanat on 22-10-2016.
  */
 
-public class TimesheetRecyclerViewAdapter  extends RecyclerView.Adapter<TimesheetRecyclerViewAdapter.ViewHolder>{
+public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<TimesheetRecyclerViewAdapter.ViewHolder>{
 
     String[] SubjectValues;
     Context context;
@@ -21,7 +21,7 @@ public class TimesheetRecyclerViewAdapter  extends RecyclerView.Adapter<Timeshee
     ViewHolder viewHolder1;
     TextView textView;
 
-    public TimesheetRecyclerViewAdapter(Context context1,String[] SubjectValues1){
+    public TimesheetRecyclerViewAdapter(Context context1, String[] SubjectValues1){
 
         SubjectValues = SubjectValues1;
         context = context1;
