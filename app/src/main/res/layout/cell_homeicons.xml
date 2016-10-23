@@ -9,18 +9,19 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
 
         android:orientation="vertical" >
 
         <ImageView
+            android:background="@drawable/dashboardprofileicon"
             android:id="@+id/img"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="7dp" />
 
         <TextView
@@ -67,5 +68,6 @@
         android:layout_height="1dp"
 
         android:background="@color/gray" />
+
 
 </LinearLayout>

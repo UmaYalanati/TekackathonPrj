@@ -4,14 +4,14 @@
     tools:context="com.example.toolbar.MainActivity" >
 
     <item
-        android:icon="@drawable/leaveinformation"
+        android:icon="@drawable/leaveinformation_black"
         android:id="@+id/action_leaaveinformation"
         android:orderInCategory="1"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_upcomingtimeoff"
-        android:icon="@drawable/leave"
+        android:icon="@drawable/leave_black"
         android:title="action_search"
 
         app:showAsAction="ifRoom"

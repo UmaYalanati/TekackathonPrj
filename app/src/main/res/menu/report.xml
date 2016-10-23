@@ -4,14 +4,14 @@
     tools:context="com.example.toolbar.MainActivity" >
 
     <item
-        android:icon="@drawable/reportsheet"
+        android:icon="@drawable/reportsheet_black"
         android:id="@+id/action_reportsheeet"
         android:orderInCategory="1"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_reportsheeetsecond"
-        android:icon="@drawable/paysheet"
+        android:icon="@drawable/paysheet_black"
         android:title="action_search"
 
         app:showAsAction="ifRoom"

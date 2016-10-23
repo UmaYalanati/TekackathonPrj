@@ -98,7 +98,8 @@ public class TimeClockFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+       // return super.onOptionsItemSelected(item);
     }
 
 

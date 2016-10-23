@@ -1,5 +1,6 @@
 package com.csn.ems;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.fragment.DashBoardFragment;
 import com.csn.ems.fragment.EmployeeDetailsFragment;
 import com.csn.ems.fragment.LeavesFragment;
@@ -121,13 +123,16 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_some) {
+        switch (item.getItemId()) {
+            //    action_editdetails
+            case R.id.action_signout:
 
-            return true;
-        } /*else if (id == R.id.action) {
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-        }*/
+                Intent intent_homescreen=new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent_homescreen);
+                finish();
+                break;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

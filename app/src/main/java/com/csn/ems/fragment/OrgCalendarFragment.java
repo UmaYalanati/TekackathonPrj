@@ -28,11 +28,11 @@ public class OrgCalendarFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
 
-        switch (item.getItemId()) {
+       /* switch (item.getItemId()) {
             case R.id.action_settings:
                 Toast.makeText(getActivity(), "Refreshing data...", Toast.LENGTH_SHORT).show();
                 return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 

@@ -23,7 +23,7 @@ public class ReportsTimesheet extends Fragment {
     public static ReportsTimesheet newInstance() {
         return new ReportsTimesheet();
     }
-    Context context;
+
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
     RecyclerView.Adapter recyclerViewAdapter;
@@ -47,16 +47,16 @@ public class ReportsTimesheet extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.reporttimesheet, container, false);
 
-        context = getActivity();
+
         relativeLayout = (RelativeLayout)view. findViewById(R.id.relativelayout1);
 
         recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
 
-        recylerViewLayoutManager = new LinearLayoutManager(context);
+        recylerViewLayoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-        recyclerViewAdapter = new ReportTimesheetRecyclerViewAdapter(context, subjects);
+        recyclerViewAdapter = new ReportTimesheetRecyclerViewAdapter(getActivity(), subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
 
