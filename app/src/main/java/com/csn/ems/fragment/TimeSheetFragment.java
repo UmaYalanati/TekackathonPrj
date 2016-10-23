@@ -14,7 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 
 import com.csn.ems.R;
-import com.csn.ems.com.csn.ems.RecyclerViewAdapter.TimesheetRecyclerViewAdapter;
+import com.csn.ems.RecyclerViewAdapter.TimesheetRecyclerViewAdapter;
+
 
 /**
  * Created by uyalanat on 22-10-2016.

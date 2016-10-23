@@ -11,16 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.csn.ems.com.csn.ems.fragment.DashBoardFragment;
-import com.csn.ems.com.csn.ems.fragment.EmployeeDetailsFragment;
-import com.csn.ems.com.csn.ems.fragment.LeavesFragment;
-import com.csn.ems.com.csn.ems.fragment.OrgCalendarFragment;
-import com.csn.ems.com.csn.ems.fragment.ReportsFragment;
-import com.csn.ems.com.csn.ems.fragment.TimeClockFragment;
-
-import static android.R.attr.tag;
+import com.csn.ems.fragment.DashBoardFragment;
+import com.csn.ems.fragment.EmployeeDetailsFragment;
+import com.csn.ems.fragment.LeavesFragment;
+import com.csn.ems.fragment.OrgCalendarFragment;
+import com.csn.ems.fragment.ReportsFragment;
+import com.csn.ems.fragment.TimeClockFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
