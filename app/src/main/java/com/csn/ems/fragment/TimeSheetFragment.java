@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.csn.ems.R;
@@ -21,10 +22,11 @@ import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
  * Created by uyalanat on 22-10-2016.
  */
 
-public class TimeSheetFragment extends Fragment {
+public class TimeSheetFragment extends Fragment implements View.OnClickListener{
     public static TimeSheetFragment newInstance() {
         return new TimeSheetFragment();
     }
+    Button btnstarttime,btnendtime;
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;
     RecyclerView recyclerView;
@@ -54,7 +56,8 @@ public class TimeSheetFragment extends Fragment {
         relativeLayout = (RelativeLayout)view. findViewById(R.id.relativelayout1);
 
         recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
-
+        btnstarttime= (Button) view. findViewById(R.id.btnstarttime);
+                btnendtime= (Button)view. findViewById(R.id.btnendtime);
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
@@ -68,9 +71,36 @@ public class TimeSheetFragment extends Fragment {
                 android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
 
         spinner_listofsheet.setAdapter(arrayAdapter);
-
-
+        btnstarttime.setOnClickListener(this);
+        btnendtime.setOnClickListener(this);
         return view;
     }
+/*    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(year, monthOfYear, dayOfMonth);
+        setDate(c.getTime().getTime());
+    }
+    int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+            | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH
+            | DateUtils.FORMAT_ABBREV_WEEKDAY;
+    String dateString = DateUtils.formatDateTime(getActivity(),millisecond, flags);
+    textDate.setText(dateString);
+}*/
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnstarttime:
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime);
+
+                starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+                break;
+            case R.id.btnendtime:
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
+
+                endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+                break;
+
+        }
+    }
 }
