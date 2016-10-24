@@ -59,7 +59,7 @@ public class LeavesFragment extends Fragment {
 
                 changeIcon(item, R.drawable.ic_leave_information_h);
                 if (pinMenuItem != null)
-                    pinMenuItem.setIcon(R.drawable.leave_black);
+                    pinMenuItem.setIcon(R.drawable.ic_leave);
 
 
                 pinMenuItem = item;
@@ -69,9 +69,9 @@ public class LeavesFragment extends Fragment {
 
                 break;
             case R.id.action_upcomingtimeoff:
-                changeIcon(item, R.drawable.leave);
+                changeIcon(item, R.drawable.ic_leave_h);
                 if (pinMenuItem != null)
-                    pinMenuItem.setIcon(R.drawable.leaveinformation_black);
+                    pinMenuItem.setIcon(R.drawable.ic_leave_information);
 
 
                 pinMenuItem = item;

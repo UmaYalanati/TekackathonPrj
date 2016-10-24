@@ -95,8 +95,8 @@ public class EmployeeDetails {
     @JsonProperty("Photo")
     private String photo;
 
-    @JsonProperty("ByteArrayPhoto")
-    private byte[] byteArrayPhoto;
+    @JsonProperty("PhotoPath")
+    private String photoPath;
 
     @JsonProperty("EmployeeLocation")
     private JSONArray employeeLocation;
@@ -317,12 +317,12 @@ public class EmployeeDetails {
         this.photo = photo;
     }
 
-    public byte[] getByteArrayPhoto() {
-        return byteArrayPhoto;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
-    public void setByteArrayPhoto(byte[] byteArrayPhoto) {
-        this.byteArrayPhoto = byteArrayPhoto;
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public JSONArray getEmployeeLocation() {
@@ -363,7 +363,7 @@ public class EmployeeDetails {
                 ", SubBusinessAreaName='" + SubBusinessAreaName + '\'' +
                 ", scheduleName='" + scheduleName + '\'' +
                 ", photo='" + photo + '\'' +
-                ", byteArrayPhoto=" + Arrays.toString(byteArrayPhoto) +
+                ", PhotoPath=" + photoPath +
                 ", employeeLocation=" + employeeLocation +
                 '}';
     }

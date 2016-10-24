@@ -1,15 +1,12 @@
 package com.csn.ems.services;
 
+import android.util.Property;
+
 import com.csn.ems.model.EmployeeDetails;
-
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
@@ -18,8 +15,9 @@ import retrofit2.http.Query;
  */
 public interface EMSService {
 
-    @GET("user")
-    Call<List<EmployeeDetails>> listUsers();
+    @PUT("Employee/UpdateEmployee")
+    Call<EmployeeDetails> updateEmployee(@Body EmployeeDetails employeeDetails);
+
     @GET("Employee/GetEmployeeById")
     Call<EmployeeDetails> getEmployeeById(@Query("employeeId") int employeeId);
   /*  @GET("client")

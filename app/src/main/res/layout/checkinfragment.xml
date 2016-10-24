@@ -27,7 +27,7 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/timer" />
+                android:background="@drawable/ic_time_clock_h" />
 
             <TextView
                 android:id="@+id/tvcurrentdate"

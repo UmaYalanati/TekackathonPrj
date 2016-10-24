@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.fragment.DashBoardFragment;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity
     Fragment fragment;
     Class fragmentClass = null;
     String tag = null;
+    TextView tvemployeename, tvemployeeemail;
+    ImageView imageView_employee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        imageView_employee = (ImageView) findViewById(R.id.imageView_employee);
 
+        tvemployeename = (TextView) findViewById(R.id.tvemployeename);
+        tvemployeeemail = (TextView) findViewById(R.id.tvemployeeemail);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

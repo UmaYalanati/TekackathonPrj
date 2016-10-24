@@ -53,7 +53,7 @@ public class TimeClockFragment extends Fragment {
             //    action_editdetails
             case R.id.action_checkin:
                 // item.getTitle().equals()
-                changeIcon(item, R.drawable.timeicon);
+                changeIcon(item, R.drawable.ic_time_clock_h);
                 pinneditem = item;
                 newFragment = new CheckinCheckoutFragment();
 
@@ -61,36 +61,36 @@ public class TimeClockFragment extends Fragment {
                     pinneditem2.setIcon(R.drawable.timecardapproval_black);
 
                 if (pinneditem1 != null)
-                    pinneditem1.setIcon(R.drawable.timesheet_black);
+                    pinneditem1.setIcon(R.drawable.ic_timesheetapproval);
 
 
                 break;
             case R.id.action_timesheet:
-                changeIcon(item, R.drawable.timesheet);
+                changeIcon(item, R.drawable.ic_time_sheet_h);
 
                 newFragment = new TimeSheetFragment();
                 //   getActivity().invalidateOptionsMenu();
                 pinneditem1 = item;
 
                 if (pinneditem != null)
-                    pinneditem.setIcon(R.drawable.timeicon_black);
+                    pinneditem.setIcon(R.drawable.ic_time_clock);
 
                 if (pinneditem2 != null)
-                    pinneditem2.setIcon(R.drawable.timecardapproval_black);
+                    pinneditem2.setIcon(R.drawable.ic_timesheetapproval);
 
                 break;
             case R.id.action_approvedtimesheet:
-                changeIcon(item, R.drawable.timecardapproval);
+                changeIcon(item, R.drawable.ic_timesheetapproval_h);
 
                 newFragment = new ApprovedTimesheet();
                 pinneditem2 = item;
 
 
                 if (pinneditem != null)
-                    pinneditem.setIcon(R.drawable.timeicon_black);
+                    pinneditem.setIcon(R.drawable.ic_time_clock);
 
                 if (pinneditem1 != null)
-                    pinneditem1.setIcon(R.drawable.timesheet_black);
+                    pinneditem1.setIcon(R.drawable.ic_time_sheet);
 
 
                 break;

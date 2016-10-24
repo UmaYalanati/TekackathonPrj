@@ -52,24 +52,24 @@ public class ReportsFragment extends Fragment {
             //    action_editdetails
             case R.id.action_reportsheeet:
 
-                changeIcon(item, R.drawable.reportsheet);
+                changeIcon(item, R.drawable.ic_time_sheet_h);
 
                 newFragment = ReportsTimesheetFragment.newInstance();
 
                 if (pinMenuItem != null)
-                    pinMenuItem.setIcon(R.drawable.paysheet_black);
+                    pinMenuItem.setIcon(R.drawable.ic_pay_sheet);
 
 
                 pinMenuItem = item;
 
                 break;
             case R.id.action_reportsheeetsecond:
-                changeIcon(item, R.drawable.paysheet);
+                changeIcon(item, R.drawable.ic_pay_sheet_h);
 
                 newFragment = ReportsTimesheetSecond.newInstance();
 
                 if (pinMenuItem != null)
-                    pinMenuItem.setIcon(R.drawable.reportsheet_black);
+                    pinMenuItem.setIcon(R.drawable.ic_time_sheet);
 
 
                 pinMenuItem = item;
