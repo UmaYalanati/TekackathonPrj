@@ -20,7 +20,7 @@ public class EmployeeDetailsFragment extends Fragment {
     Class fragmentClass = null;
     String tag = null;
 
-
+    MenuItem pinneditem, pinneditem1,pinneditem2;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -55,7 +55,12 @@ public class EmployeeDetailsFragment extends Fragment {
                 changeIcon(item,R.drawable.employeedetails);
 
                      newFragment = new DisplayEmployeeDetailsFragment();
+                pinneditem=item;
+                if (pinneditem2!=null)
+                    pinneditem2.setIcon(R.drawable.empdetails_black);
 
+                if (pinneditem1!=null)
+                    pinneditem1.setIcon(R.drawable.editdetails_black);
 
 
                 break;
@@ -63,13 +68,25 @@ public class EmployeeDetailsFragment extends Fragment {
                 changeIcon(item,R.drawable.editdetails);
 
                      newFragment = new EditEmployeeDetailsFragment();
+                pinneditem1=item;
+                if (pinneditem2!=null)
+                    pinneditem2.setIcon(R.drawable.empdetails_black);
 
+                if (pinneditem!=null)
+                    pinneditem.setIcon(R.drawable.employeedetails_black);
 
                 break;
             case R.id.action_changepassword:
                 changeIcon(item,R.drawable.empdetails);
 
                      newFragment = new ChangePasswordFragment();
+                pinneditem2=item;
+                if (pinneditem1!=null)
+                    pinneditem1.setIcon(R.drawable.editdetails_black);
+
+                if (pinneditem!=null)
+                    pinneditem.setIcon(R.drawable.employeedetails_black);
+
 
                 break;
 

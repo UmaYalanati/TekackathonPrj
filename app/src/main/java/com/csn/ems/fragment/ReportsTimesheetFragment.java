@@ -17,10 +17,10 @@ import com.csn.ems.recyclerviewadapter.ReportTimesheetRecyclerViewAdapter;
  * Created by uyalanat on 23-10-2016.
  */
 
-public class ReportsTimesheet extends Fragment {
+public class ReportsTimesheetFragment extends Fragment {
 
-    public static ReportsTimesheet newInstance() {
-        return new ReportsTimesheet();
+    public static ReportsTimesheetFragment newInstance() {
+        return new ReportsTimesheetFragment();
     }
 
     RecyclerView recyclerView;

@@ -17,7 +17,7 @@ import com.csn.ems.R;
 
 public class ReportsFragment  extends Fragment {
     Fragment newFragment=null;
-
+    MenuItem pinMenuItem;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -28,7 +28,7 @@ public class ReportsFragment  extends Fragment {
 
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
-                transaction.replace(R.id.fragment_container, new ReportsTimesheet());
+                transaction.replace(R.id.fragment_container, new ReportsTimesheetFragment());
                 transaction.addToBackStack(null);
 
 // Commit the transaction
@@ -53,15 +53,25 @@ public class ReportsFragment  extends Fragment {
 
                 changeIcon(item,R.drawable.reportsheet);
 
-                newFragment =  ReportsTimesheet.newInstance();
+                newFragment =  ReportsTimesheetFragment.newInstance();
+
+                if (pinMenuItem!=null)
+                    pinMenuItem.setIcon(R.drawable.paysheet_black);
 
 
+                pinMenuItem=item;
 
                 break;
             case R.id.action_reportsheeetsecond:
                 changeIcon(item,R.drawable.paysheet);
 
                 newFragment =  ReportsTimesheetSecond.newInstance();
+
+                if (pinMenuItem!=null)
+                    pinMenuItem.setIcon(R.drawable.reportsheet_black);
+
+
+                pinMenuItem=item;
 
 
                 break;

@@ -17,7 +17,7 @@ import com.csn.ems.R;
 
 public class TimeClockFragment extends Fragment {
     Fragment newFragment=null;
-
+    MenuItem pinneditem, pinneditem1,pinneditem2;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -55,9 +55,14 @@ public class TimeClockFragment extends Fragment {
             case R.id.action_checkin:
                // item.getTitle().equals()
                 changeIcon(item,R.drawable.timeicon);
-
+                pinneditem=item;
                 newFragment = new CheckinCheckoutFragment();
-               // getActivity().invalidateOptionsMenu();
+
+                if (pinneditem2!=null)
+                    pinneditem2.setIcon(R.drawable.timecardapproval_black);
+
+                if (pinneditem1!=null)
+                    pinneditem1.setIcon(R.drawable.timesheet_black);
 
 
                 break;
@@ -65,13 +70,30 @@ public class TimeClockFragment extends Fragment {
                 changeIcon(item,R.drawable.timesheet);
 
                 newFragment = new TimeSheetFragment();
-                getActivity().invalidateOptionsMenu();
+             //   getActivity().invalidateOptionsMenu();
+                pinneditem1=item;
+
+                if (pinneditem!=null)
+                    pinneditem.setIcon(R.drawable.timeicon_black);
+
+                if (pinneditem2!=null)
+                    pinneditem2.setIcon(R.drawable.timecardapproval_black);
 
                 break;
             case R.id.action_approvedtimesheet:
                 changeIcon(item,R.drawable.timecardapproval);
 
                 newFragment = new ApprovedTimesheet();
+                pinneditem2=item;
+
+
+
+                if (pinneditem!=null)
+                    pinneditem.setIcon(R.drawable.timeicon_black);
+
+                if (pinneditem1!=null)
+                    pinneditem1.setIcon(R.drawable.timesheet_black);
+
 
                 break;
 

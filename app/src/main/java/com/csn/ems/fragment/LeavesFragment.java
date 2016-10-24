@@ -77,7 +77,7 @@ public class LeavesFragment extends Fragment {
 
 
                 pinMenuItem=item;
-              
+
                 newFragment =  UpcomingTimeOffFragment.newInstance();
 
 
