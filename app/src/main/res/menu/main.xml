@@ -5,13 +5,13 @@
 
     <item
         android:id="@+id/action_employeedetails"
-        android:icon="@drawable/employeedetails"
+        android:icon="@drawable/ic_employee_h"
         android:orderInCategory="1"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_editdetails"
-        android:icon="@drawable/editdetails_black"
+        android:icon="@drawable/ic_employee_edit"
         android:menuCategory="secondary"
 
         android:orderInCategory="1"
@@ -19,7 +19,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_changepassword"
-        android:icon="@drawable/empdetails_black"
+        android:icon="@drawable/ic_password"
         android:menuCategory="secondary"
 
         android:orderInCategory="1"

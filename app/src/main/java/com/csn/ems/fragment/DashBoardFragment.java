@@ -29,7 +29,7 @@ public class DashBoardFragment extends Fragment {
 
     String[] subjects =
             {
-                    "Hi Satish",
+                    "Hi Uma",
                     "Time Clock",
                     "Schedule"
             };

@@ -57,7 +57,7 @@ public class LeavesFragment extends Fragment {
             //    action_editdetails
             case R.id.action_leaaveinformation:
 
-                changeIcon(item, R.drawable.leaveinformation);
+                changeIcon(item, R.drawable.ic_leave_information_h);
                 if (pinMenuItem != null)
                     pinMenuItem.setIcon(R.drawable.leave_black);
 

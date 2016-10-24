@@ -5,14 +5,14 @@
 
     <item
         android:id="@+id/action_reportsheeet"
-        android:icon="@drawable/reportsheet"
+        android:icon="@drawable/ic_time_sheet_h"
         android:orderInCategory="1"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_reportsheeetsecond"
-        android:icon="@drawable/paysheet_black"
+        android:icon="@drawable/ic_pay_sheet"
         android:menuCategory="secondary"
 
         android:orderInCategory="1"

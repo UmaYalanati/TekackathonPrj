@@ -53,40 +53,40 @@ public class EmployeeDetailsFragment extends Fragment {
             //    action_editdetails
             case R.id.action_employeedetails:
 
-                changeIcon(item, R.drawable.employeedetails);
+                changeIcon(item, R.drawable.ic_employee_h);
 
                 newFragment = new DisplayEmployeeDetailsFragment();
                 pinneditem = item;
                 if (pinneditem2 != null)
-                    pinneditem2.setIcon(R.drawable.empdetails_black);
+                    pinneditem2.setIcon(R.drawable.ic_password);
 
                 if (pinneditem1 != null)
-                    pinneditem1.setIcon(R.drawable.editdetails_black);
+                    pinneditem1.setIcon(R.drawable.ic_employee_edit);
 
 
                 break;
             case R.id.action_editdetails:
-                changeIcon(item, R.drawable.editdetails);
+                changeIcon(item, R.drawable.ic_employee_edit_h);
 
                 newFragment = new EditEmployeeDetailsFragment();
                 pinneditem1 = item;
                 if (pinneditem2 != null)
-                    pinneditem2.setIcon(R.drawable.empdetails_black);
+                    pinneditem2.setIcon(R.drawable.ic_password);
 
                 if (pinneditem != null)
-                    pinneditem.setIcon(R.drawable.employeedetails_black);
+                    pinneditem.setIcon(R.drawable.ic_employee);
 
                 break;
             case R.id.action_changepassword:
-                changeIcon(item, R.drawable.empdetails);
+                changeIcon(item, R.drawable.ic_password_h);
 
                 newFragment = new ChangePasswordFragment();
                 pinneditem2 = item;
                 if (pinneditem1 != null)
-                    pinneditem1.setIcon(R.drawable.editdetails_black);
+                    pinneditem1.setIcon(R.drawable.ic_employee_edit);
 
                 if (pinneditem != null)
-                    pinneditem.setIcon(R.drawable.employeedetails_black);
+                    pinneditem.setIcon(R.drawable.ic_employee);
 
 
                 break;

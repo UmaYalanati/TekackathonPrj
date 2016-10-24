@@ -4,22 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvtittle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="6dp"
-        android:text="Dashboard"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <View
-        android:id="@+id/viewHome"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray" />
 
     <android.support.v7.widget.RecyclerView
 
