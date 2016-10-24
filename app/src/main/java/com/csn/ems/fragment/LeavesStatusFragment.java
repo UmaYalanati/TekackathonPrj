@@ -44,14 +44,15 @@ public class LeavesStatusFragment extends Fragment {
     public static LeavesStatusFragment newInstance() {
         return new LeavesStatusFragment();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_employeetimesheet, container, false);
 
         context = getActivity();
-        relativeLayout = (RelativeLayout)view. findViewById(R.id.relativelayout1);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
 
-        recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
@@ -60,7 +61,6 @@ public class LeavesStatusFragment extends Fragment {
         recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
-
 
 
         return view;

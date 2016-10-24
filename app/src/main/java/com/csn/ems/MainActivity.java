@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,14 +32,13 @@ public class MainActivity extends AppCompatActivity
     Fragment fragment;
     Class fragmentClass = null;
     String tag = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
 
         fragmentClass = DashBoardFragment.class;
@@ -94,31 +91,31 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         //based on fragment, update menu here. Got it? Shall i show ? t
         //There must be a easy way to do this. but this will work 100% u r doing hide i am asking item click
-         if (currentSelectedItem == R.id.nav_dashboard) {
+        if (currentSelectedItem == R.id.nav_dashboard) {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
-        }else  if (currentSelectedItem == R.id.nav_employee) {
-             getMenuInflater().inflate(R.menu.main, menu);
+        } else if (currentSelectedItem == R.id.nav_employee) {
+            getMenuInflater().inflate(R.menu.main, menu);
             /* MenuItem item = menu.findItem(R.id.action_some);
              item.setVisible(false);*/
-         } else if (currentSelectedItem == R.id.nav_timeclock) {
+        } else if (currentSelectedItem == R.id.nav_timeclock) {
             getMenuInflater().inflate(R.menu.timeclock, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
-        }else if (currentSelectedItem == R.id.nav_leave) {
+        } else if (currentSelectedItem == R.id.nav_leave) {
             getMenuInflater().inflate(R.menu.leaves, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
-        }else if (currentSelectedItem == R.id.nav_reports) {
+        } else if (currentSelectedItem == R.id.nav_reports) {
             getMenuInflater().inflate(R.menu.report, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
-        }else if (currentSelectedItem == R.id.nav_settings) {
-             getMenuInflater().inflate(R.menu.main, menu);
+        } else if (currentSelectedItem == R.id.nav_settings) {
+            getMenuInflater().inflate(R.menu.main, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
-         }else {
+        } else {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
         }
         return true;
@@ -133,7 +130,7 @@ public class MainActivity extends AppCompatActivity
             //    action_editdetails
             case R.id.action_signout:
 
-                Intent intent_homescreen=new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent_homescreen = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent_homescreen);
                 finish();
                 break;
@@ -146,7 +143,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
 
 
         int id = item.getItemId();
@@ -193,13 +189,13 @@ public class MainActivity extends AppCompatActivity
                 // Set action bar title
                 setTitle(item.getTitle());
 
-              //  SpannableString s = new SpannableString(item.getTitle());
-               // s.setSpan(new ForegroundColorSpan(Color.GREEN), 0, item.getTitle().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-              //  getSupportActionBar().setTitle(s);
+                //  SpannableString s = new SpannableString(item.getTitle());
+                // s.setSpan(new ForegroundColorSpan(Color.GREEN), 0, item.getTitle().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                //  getSupportActionBar().setTitle(s);
 
-              //  setTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
+                //  setTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
                 getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
-               // invalidateOptionsMenu();
+                // invalidateOptionsMenu();
             } catch (Exception e) {
                 e.printStackTrace();
             }

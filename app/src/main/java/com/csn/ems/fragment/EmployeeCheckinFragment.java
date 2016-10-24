@@ -32,7 +32,7 @@ public class EmployeeCheckinFragment extends Fragment {
         try {
             String str_MyDate;
             Calendar c = Calendar.getInstance();
-            System.out.println("Current time => "+c.getTime());
+            System.out.println("Current time => " + c.getTime());
 
             SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
             String formattedDate = newDateFormat.format(c.getTime());
@@ -42,7 +42,7 @@ public class EmployeeCheckinFragment extends Fragment {
             newDateFormat.applyPattern("MMM d, yyyy");
             str_MyDate = newDateFormat.format(MyDate);
             tvcurrentdate.setText(str_MyDate);
-        }catch (ParseException e){
+        } catch (ParseException e) {
 
         }
 
@@ -71,16 +71,16 @@ public class EmployeeCheckinFragment extends Fragment {
         });
     }
 
-    class CountDownRunner implements Runnable{
+    class CountDownRunner implements Runnable {
         // @Override
         public void run() {
-            while(!Thread.currentThread().isInterrupted()){
+            while (!Thread.currentThread().isInterrupted()) {
                 try {
                     doWork();
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                }catch(Exception e){
+                } catch (Exception e) {
                 }
             }
         }

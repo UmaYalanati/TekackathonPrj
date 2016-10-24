@@ -13,7 +13,7 @@ import com.csn.ems.R;
  * Created by uyalanat on 23-10-2016.
  */
 
-public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<DashboardRecyclerViewAdapter.ViewHolder>{
+public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<DashboardRecyclerViewAdapter.ViewHolder> {
 
     String[] SubjectValues;
     Context context;
@@ -21,28 +21,28 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
     DashboardRecyclerViewAdapter.ViewHolder viewHolder1;
     TextView textView;
 
-    public DashboardRecyclerViewAdapter(Context context1, String[] SubjectValues1){
+    public DashboardRecyclerViewAdapter(Context context1, String[] SubjectValues1) {
 
         SubjectValues = SubjectValues1;
         context = context1;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView;
 
-        public ViewHolder(View v){
+        public ViewHolder(View v) {
 
             super(v);
 
-            textView = (TextView)v.findViewById(R.id.tvHome);
+            textView = (TextView) v.findViewById(R.id.tvHome);
         }
     }
 
     @Override
-    public DashboardRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public DashboardRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        view1 = LayoutInflater.from(context).inflate(R.layout.cell_homeicons,parent,false);
+        view1 = LayoutInflater.from(context).inflate(R.layout.cell_homeicons, parent, false);
 
         viewHolder1 = new DashboardRecyclerViewAdapter.ViewHolder(view1);
 
@@ -50,13 +50,13 @@ public class DashboardRecyclerViewAdapter extends RecyclerView.Adapter<Dashboard
     }
 
     @Override
-    public void onBindViewHolder(DashboardRecyclerViewAdapter.ViewHolder holder, int position){
+    public void onBindViewHolder(DashboardRecyclerViewAdapter.ViewHolder holder, int position) {
 
         holder.textView.setText(SubjectValues[position]);
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
 
         return SubjectValues.length;
     }

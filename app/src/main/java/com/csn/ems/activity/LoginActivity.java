@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.csn.ems.MainActivity;
 import com.csn.ems.R;
@@ -18,7 +16,7 @@ import com.csn.ems.R;
  * Created by uyalanat on 18-10-2016.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
 
@@ -36,8 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        bt_clear  = (Button) findViewById(R.id.btn_clear);
-        bt_submit= (Button) findViewById(R.id.btn_submit);
+        bt_clear = (Button) findViewById(R.id.btn_clear);
+        bt_submit = (Button) findViewById(R.id.btn_submit);
 
         userIdEditText = (TextInputEditText) findViewById(R.id.userId);
         passwordEditText = (TextInputEditText) findViewById(R.id.password);
@@ -49,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -57,16 +54,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (userIdEditText.getText().toString().isEmpty()) {
                     userIdEditText.setError("Please enter UserName to Login!");
                     userIdEditText.requestFocus();
-                }else if (passwordEditText.getText().toString().isEmpty()) {
+                } else if (passwordEditText.getText().toString().isEmpty()) {
                     this.passwordEditText.setError("Please enter Password to Login!");
 
                     passwordEditText.requestFocus();
-                }else{
-                    Intent intent_homescreen=new Intent(LoginActivity.this, MainActivity.class);
+                } else {
+                    Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent_homescreen);
                 }
-
-
 
 
                 break;
@@ -76,9 +71,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
-
-
 
 
 }

@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.csn.ems.R;
-import com.csn.ems.recyclerviewadapter.DashboardRecyclerViewAdapter;
 import com.csn.ems.activity.LoginActivity;
+import com.csn.ems.recyclerviewadapter.DashboardRecyclerViewAdapter;
 
 /**
  * Created by uyalanat on 20-10-2016.
@@ -32,14 +32,14 @@ public class DashBoardFragment extends Fragment {
                     "Hi Satish",
                     "Time Clock",
                     "Schedule"
-                 };
+            };
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.sample, container, false);
 
-        recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         recylerViewLayoutManager = new LinearLayoutManager(getActivity());
 
@@ -61,9 +61,10 @@ public class DashBoardFragment extends Fragment {
             //    action_editdetails
             case R.id.action_signout:
 
-                Intent intent_homescreen=new Intent(getActivity(), LoginActivity.class);
+                Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent_homescreen);
-                getActivity().finish();;
+                getActivity().finish();
+                ;
                 break;
         }
 

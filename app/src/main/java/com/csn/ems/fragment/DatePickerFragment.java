@@ -5,10 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -24,8 +22,6 @@ public class DatePickerFragment extends DialogFragment implements
     public DatePickerFragment(Button textview) {
         mTextView = textview;
     }
-
-
 
 
     @Override
@@ -51,7 +47,7 @@ public class DatePickerFragment extends DialogFragment implements
         String date_str = "";
 
 
-        if (new StringBuilder().append(month + 1).length() >= 2&&new StringBuilder().append(day).length()<2) {
+        if (new StringBuilder().append(month + 1).length() >= 2 && new StringBuilder().append(day).length() < 2) {
 //mm dd yy
             if (new StringBuilder().append(day).length() >= 2) {
                 mTextView.setText(new StringBuilder()

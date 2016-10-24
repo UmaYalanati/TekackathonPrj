@@ -13,7 +13,7 @@ import com.csn.ems.R;
  * Created by uyalanat on 21-10-2016.
  */
 
-public class ChangePasswordFragment  extends Fragment {
+public class ChangePasswordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.password_change, container, false);

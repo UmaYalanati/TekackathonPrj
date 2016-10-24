@@ -1,67 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginRight="6dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
 
         >
+
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="left"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:orientation="vertical">
+
             <TextView
-                android:textSize="16sp"
-                android:textColor="@color/black"
                 android:id="@+id/tvCodeNameDetail12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="From"
+                android:textColor="@color/black"
+                android:textSize="16sp"
 
                 />
 
             <EditText
-                android:padding="8dp"
-                android:background="@drawable/rectangularbox_warranty"
                 android:id="@+id/tvCodeNameDetail12ss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rectangularbox_warranty"
+                android:padding="8dp"
                 android:text="10-10-22"
 
                 />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_marginLeft="5dp"
-            android:orientation="vertical"
-            android:gravity="left"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:orientation="vertical">
+
             <TextView
-                android:textSize="16sp"
-                android:textColor="@color/black"
                 android:id="@+id/tvid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="To"
+                android:textColor="@color/black"
+                android:textSize="16sp"
 
                 />
-            <EditText
-                android:padding="8dp"
 
-                android:background="@drawable/rectangularbox_warranty"
+            <EditText
                 android:id="@+id/tv_id"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rectangularbox_warranty"
+                android:padding="8dp"
                 android:text="10-10-22"
 
                 />
@@ -72,19 +77,16 @@
 
         android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:scrollbars="vertical"
-            />
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 </LinearLayout>

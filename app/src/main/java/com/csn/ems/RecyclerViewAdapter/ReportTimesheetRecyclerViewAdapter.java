@@ -13,7 +13,7 @@ import com.csn.ems.R;
  * Created by uyalanat on 23-10-2016.
  */
 
-public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<ReportTimesheetRecyclerViewAdapter.ViewHolder>{
+public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<ReportTimesheetRecyclerViewAdapter.ViewHolder> {
 
     String[] SubjectValues;
     Context context;
@@ -21,28 +21,28 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
     ReportTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
     TextView textView;
 
-    public ReportTimesheetRecyclerViewAdapter(Context context1, String[] SubjectValues1){
+    public ReportTimesheetRecyclerViewAdapter(Context context1, String[] SubjectValues1) {
 
         SubjectValues = SubjectValues1;
         context = context1;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView;
 
-        public ViewHolder(View v){
+        public ViewHolder(View v) {
 
             super(v);
 
-            textView = (TextView)v.findViewById(R.id.tvleavedate);
+            textView = (TextView) v.findViewById(R.id.tvleavedate);
         }
     }
 
     @Override
-    public ReportTimesheetRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ReportTimesheetRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        view1 = LayoutInflater.from(context).inflate(R.layout.child_leaves,parent,false);
+        view1 = LayoutInflater.from(context).inflate(R.layout.child_leaves, parent, false);
 
         viewHolder1 = new ReportTimesheetRecyclerViewAdapter.ViewHolder(view1);
 
@@ -50,13 +50,13 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
     }
 
     @Override
-    public void onBindViewHolder(ReportTimesheetRecyclerViewAdapter.ViewHolder holder, int position){
+    public void onBindViewHolder(ReportTimesheetRecyclerViewAdapter.ViewHolder holder, int position) {
 
         holder.textView.setText(SubjectValues[position]);
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
 
         return SubjectValues.length;
     }

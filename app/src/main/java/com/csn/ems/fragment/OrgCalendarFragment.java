@@ -24,15 +24,12 @@ import java.util.Date;
 public class OrgCalendarFragment extends Fragment {
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
 
-       /* switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(getActivity(), "Refreshing data...", Toast.LENGTH_SHORT).show();
-                return true;
-        }*/
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -89,7 +86,7 @@ public class OrgCalendarFragment extends Fragment {
             }
 
         };
-        
+
         return view;
     }
 }

@@ -18,6 +18,7 @@ public class DisplayEmployeeDetailsFragment extends Fragment {
     public static DisplayEmployeeDetailsFragment newInstance() {
         return new DisplayEmployeeDetailsFragment();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_employeedetails, container, false);

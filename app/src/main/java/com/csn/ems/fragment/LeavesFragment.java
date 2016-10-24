@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,9 @@ import com.csn.ems.R;
  */
 
 public class LeavesFragment extends Fragment {
-    Fragment newFragment=null;
+    Fragment newFragment = null;
     MenuItem pinMenuItem;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -58,39 +57,34 @@ public class LeavesFragment extends Fragment {
             //    action_editdetails
             case R.id.action_leaaveinformation:
 
-                changeIcon(item,R.drawable.leaveinformation);
-                if (pinMenuItem!=null)
+                changeIcon(item, R.drawable.leaveinformation);
+                if (pinMenuItem != null)
                     pinMenuItem.setIcon(R.drawable.leave_black);
 
 
-                pinMenuItem=item;
+                pinMenuItem = item;
 
-                newFragment =  LeavesStatusFragment.newInstance();
-
+                newFragment = LeavesStatusFragment.newInstance();
 
 
                 break;
             case R.id.action_upcomingtimeoff:
-                changeIcon(item,R.drawable.leave);
-                if (pinMenuItem!=null)
-                pinMenuItem.setIcon(R.drawable.leaveinformation_black);
+                changeIcon(item, R.drawable.leave);
+                if (pinMenuItem != null)
+                    pinMenuItem.setIcon(R.drawable.leaveinformation_black);
 
 
-                pinMenuItem=item;
+                pinMenuItem = item;
 
-                newFragment =  UpcomingTimeOffFragment.newInstance();
+                newFragment = UpcomingTimeOffFragment.newInstance();
 
 
                 break;
-
 
 
         }
 
         try {
-
-
-
 
 
             // FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -109,7 +103,7 @@ public class LeavesFragment extends Fragment {
             e.printStackTrace();
         }
         return true;
-      //  return super.onOptionsItemSelected(item);
+        //  return super.onOptionsItemSelected(item);
     }
 
 
@@ -119,7 +113,7 @@ public class LeavesFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    public void changeIcon(final MenuItem item,final int drawableResourceId){
+    public void changeIcon(final MenuItem item, final int drawableResourceId) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

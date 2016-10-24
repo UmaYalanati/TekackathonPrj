@@ -16,8 +16,9 @@ import com.csn.ems.R;
  */
 
 public class TimeClockFragment extends Fragment {
-    Fragment newFragment=null;
-    MenuItem pinneditem, pinneditem1,pinneditem2;
+    Fragment newFragment = null;
+    MenuItem pinneditem, pinneditem1, pinneditem2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -44,54 +45,51 @@ public class TimeClockFragment extends Fragment {
     }
 
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
-       // getActivity().invalidateOptionsMenu();
+        // getActivity().invalidateOptionsMenu();
         switch (item.getItemId()) {
             //    action_editdetails
             case R.id.action_checkin:
-               // item.getTitle().equals()
-                changeIcon(item,R.drawable.timeicon);
-                pinneditem=item;
+                // item.getTitle().equals()
+                changeIcon(item, R.drawable.timeicon);
+                pinneditem = item;
                 newFragment = new CheckinCheckoutFragment();
 
-                if (pinneditem2!=null)
+                if (pinneditem2 != null)
                     pinneditem2.setIcon(R.drawable.timecardapproval_black);
 
-                if (pinneditem1!=null)
+                if (pinneditem1 != null)
                     pinneditem1.setIcon(R.drawable.timesheet_black);
 
 
                 break;
             case R.id.action_timesheet:
-                changeIcon(item,R.drawable.timesheet);
+                changeIcon(item, R.drawable.timesheet);
 
                 newFragment = new TimeSheetFragment();
-             //   getActivity().invalidateOptionsMenu();
-                pinneditem1=item;
+                //   getActivity().invalidateOptionsMenu();
+                pinneditem1 = item;
 
-                if (pinneditem!=null)
+                if (pinneditem != null)
                     pinneditem.setIcon(R.drawable.timeicon_black);
 
-                if (pinneditem2!=null)
+                if (pinneditem2 != null)
                     pinneditem2.setIcon(R.drawable.timecardapproval_black);
 
                 break;
             case R.id.action_approvedtimesheet:
-                changeIcon(item,R.drawable.timecardapproval);
+                changeIcon(item, R.drawable.timecardapproval);
 
                 newFragment = new ApprovedTimesheet();
-                pinneditem2=item;
+                pinneditem2 = item;
 
 
-
-                if (pinneditem!=null)
+                if (pinneditem != null)
                     pinneditem.setIcon(R.drawable.timeicon_black);
 
-                if (pinneditem1!=null)
+                if (pinneditem1 != null)
                     pinneditem1.setIcon(R.drawable.timesheet_black);
 
 
@@ -101,9 +99,6 @@ public class TimeClockFragment extends Fragment {
         }
 
         try {
-
-
-
 
 
             // FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -122,7 +117,7 @@ public class TimeClockFragment extends Fragment {
             e.printStackTrace();
         }
         return true;
-       // return super.onOptionsItemSelected(item);
+        // return super.onOptionsItemSelected(item);
     }
 
 
@@ -133,7 +128,7 @@ public class TimeClockFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public void changeIcon(final MenuItem item,final int drawableResourceId){
+    public void changeIcon(final MenuItem item, final int drawableResourceId) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

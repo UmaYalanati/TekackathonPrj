@@ -22,24 +22,25 @@ import java.util.Date;
  * Created by uyalanat on 22-10-2016.
  */
 
-public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener{
+public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener {
     TextView tvcurrentdate, tvcurrenttime;
-    Button btncheckin,btncheckout,btncontinueshift;
+    Button btncheckin, btncheckout, btncontinueshift;
     ImageButton imgbtnbreak;
-    LinearLayout layout_checkout,layout_checkin,ll_breaktime,ll_startbreak;
+    LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
         tvcurrentdate = (TextView) view.findViewById(R.id.tvcurrentdate);
         tvcurrenttime = (TextView) view.findViewById(R.id.tvcurrenttime);
-        btncheckin=(Button) view.findViewById(R.id.btncheckin);
-        btncheckout=(Button) view.findViewById(R.id.btncheckout);
-        btncontinueshift=(Button)view.findViewById(R.id.btncontinueshift);
-        imgbtnbreak=(ImageButton)view.findViewById(R.id.imgbtnbreak);
-        layout_checkout=(LinearLayout)view.findViewById(R.id.layout_checkout);
-        layout_checkin=(LinearLayout)view.findViewById(R.id.layout_checkin);
-        ll_breaktime=(LinearLayout)view.findViewById(R.id.ll_breaktime);
-        ll_startbreak=(LinearLayout)view.findViewById(R.id.ll_startbreak);
+        btncheckin = (Button) view.findViewById(R.id.btncheckin);
+        btncheckout = (Button) view.findViewById(R.id.btncheckout);
+        btncontinueshift = (Button) view.findViewById(R.id.btncontinueshift);
+        imgbtnbreak = (ImageButton) view.findViewById(R.id.imgbtnbreak);
+        layout_checkout = (LinearLayout) view.findViewById(R.id.layout_checkout);
+        layout_checkin = (LinearLayout) view.findViewById(R.id.layout_checkin);
+        ll_breaktime = (LinearLayout) view.findViewById(R.id.ll_breaktime);
+        ll_startbreak = (LinearLayout) view.findViewById(R.id.ll_startbreak);
         btncheckin.setOnClickListener(this);
         btncheckout.setOnClickListener(this);
         imgbtnbreak.setOnClickListener(this);
@@ -48,7 +49,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         try {
             String str_MyDate;
             Calendar c = Calendar.getInstance();
-            System.out.println("Current time => "+c.getTime());
+            System.out.println("Current time => " + c.getTime());
 
             SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
             String formattedDate = newDateFormat.format(c.getTime());
@@ -58,7 +59,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             newDateFormat.applyPattern("MMM d, yyyy");
             str_MyDate = newDateFormat.format(MyDate);
             tvcurrentdate.setText(str_MyDate);
-        }catch (ParseException e){
+        } catch (ParseException e) {
 
         }
 
@@ -74,7 +75,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 try {
-                    String am_pm=null;
+                    String am_pm = null;
 
                     Calendar cal = Calendar.getInstance();
 
@@ -86,10 +87,10 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
                     Calendar now = Calendar.getInstance();
                     int a = now.get(Calendar.AM_PM);
-                    if(a == Calendar.AM)
-                        am_pm=   "AM";
+                    if (a == Calendar.AM)
+                        am_pm = "AM";
                     else
-                        am_pm=   "PM";
+                        am_pm = "PM";
                     String curTime = String.valueOf(hour) + ":" + String.valueOf(minute) + " " + am_pm;
 
                     tvcurrenttime.setText(curTime);
@@ -121,16 +122,16 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    class CountDownRunner implements Runnable{
+    class CountDownRunner implements Runnable {
         // @Override
         public void run() {
-            while(!Thread.currentThread().isInterrupted()){
+            while (!Thread.currentThread().isInterrupted()) {
                 try {
                     doWork();
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                }catch(Exception e){
+                } catch (Exception e) {
                 }
             }
         }

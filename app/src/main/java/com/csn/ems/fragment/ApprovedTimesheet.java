@@ -49,11 +49,11 @@ public class ApprovedTimesheet extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_employeetimesheet, container, false);
 
         context = getActivity();
-        relativeLayout = (RelativeLayout)view. findViewById(R.id.relativelayout1);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
 
-        recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
-        tvtittle=(TextView)view.findViewById(R.id.tvtittle);
+        tvtittle = (TextView) view.findViewById(R.id.tvtittle);
 
         tvtittle.setText("Time Card Approval");
         recylerViewLayoutManager = new LinearLayoutManager(context);
@@ -63,7 +63,7 @@ public class ApprovedTimesheet extends Fragment {
         recyclerViewAdapter = new ApprovedTimesheetRecyclerViewAdapter(context, subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
-        spinner_listofsheet=(AppCompatSpinner)view.findViewById(R.id.spinner_listofsheet);
+        spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
 
         spinner_listofsheet.setVisibility(View.GONE);
 

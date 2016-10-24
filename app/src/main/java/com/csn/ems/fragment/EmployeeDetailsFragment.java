@@ -20,7 +20,8 @@ public class EmployeeDetailsFragment extends Fragment {
     Class fragmentClass = null;
     String tag = null;
 
-    MenuItem pinneditem, pinneditem1,pinneditem2;
+    MenuItem pinneditem, pinneditem1, pinneditem2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -47,44 +48,44 @@ public class EmployeeDetailsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
-        Fragment newFragment=null;
+        Fragment newFragment = null;
         switch (item.getItemId()) {
-        //    action_editdetails
+            //    action_editdetails
             case R.id.action_employeedetails:
 
-                changeIcon(item,R.drawable.employeedetails);
+                changeIcon(item, R.drawable.employeedetails);
 
-                     newFragment = new DisplayEmployeeDetailsFragment();
-                pinneditem=item;
-                if (pinneditem2!=null)
+                newFragment = new DisplayEmployeeDetailsFragment();
+                pinneditem = item;
+                if (pinneditem2 != null)
                     pinneditem2.setIcon(R.drawable.empdetails_black);
 
-                if (pinneditem1!=null)
+                if (pinneditem1 != null)
                     pinneditem1.setIcon(R.drawable.editdetails_black);
 
 
                 break;
             case R.id.action_editdetails:
-                changeIcon(item,R.drawable.editdetails);
+                changeIcon(item, R.drawable.editdetails);
 
-                     newFragment = new EditEmployeeDetailsFragment();
-                pinneditem1=item;
-                if (pinneditem2!=null)
+                newFragment = new EditEmployeeDetailsFragment();
+                pinneditem1 = item;
+                if (pinneditem2 != null)
                     pinneditem2.setIcon(R.drawable.empdetails_black);
 
-                if (pinneditem!=null)
+                if (pinneditem != null)
                     pinneditem.setIcon(R.drawable.employeedetails_black);
 
                 break;
             case R.id.action_changepassword:
-                changeIcon(item,R.drawable.empdetails);
+                changeIcon(item, R.drawable.empdetails);
 
-                     newFragment = new ChangePasswordFragment();
-                pinneditem2=item;
-                if (pinneditem1!=null)
+                newFragment = new ChangePasswordFragment();
+                pinneditem2 = item;
+                if (pinneditem1 != null)
                     pinneditem1.setIcon(R.drawable.editdetails_black);
 
-                if (pinneditem!=null)
+                if (pinneditem != null)
                     pinneditem.setIcon(R.drawable.employeedetails_black);
 
 
@@ -94,9 +95,6 @@ public class EmployeeDetailsFragment extends Fragment {
         }
 
         try {
-
-
-
 
 
             // FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -115,7 +113,7 @@ public class EmployeeDetailsFragment extends Fragment {
             e.printStackTrace();
         }
         return true;
-       // return super.onOptionsItemSelected(item);
+        // return super.onOptionsItemSelected(item);
     }
 
 
@@ -125,7 +123,7 @@ public class EmployeeDetailsFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    public void changeIcon(final MenuItem item,final int drawableResourceId){
+    public void changeIcon(final MenuItem item, final int drawableResourceId) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

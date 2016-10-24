@@ -47,9 +47,9 @@ public class ReportsTimesheetFragment extends Fragment {
         final View view = inflater.inflate(R.layout.reporttimesheet, container, false);
 
 
-        relativeLayout = (RelativeLayout)view. findViewById(R.id.relativelayout1);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
 
-        recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         recylerViewLayoutManager = new LinearLayoutManager(getActivity());
 
@@ -58,7 +58,6 @@ public class ReportsTimesheetFragment extends Fragment {
         recyclerViewAdapter = new ReportTimesheetRecyclerViewAdapter(getActivity(), subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
-
 
 
         return view;

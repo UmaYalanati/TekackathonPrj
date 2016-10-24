@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.csn.ems.R;
 import com.csn.ems.recyclerviewadapter.ReportTimesheetSecondRecyclerViewAdapter;
 
@@ -49,9 +48,7 @@ public class ReportsTimesheetSecond extends Fragment {
         final View view = inflater.inflate(R.layout.reporttimesheetsecond, container, false);
 
 
-
-
-        recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         recylerViewLayoutManager = new LinearLayoutManager(getActivity());
 
@@ -60,7 +57,6 @@ public class ReportsTimesheetSecond extends Fragment {
         recyclerViewAdapter = new ReportTimesheetSecondRecyclerViewAdapter(getActivity(), subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
-
 
 
         return view;

@@ -22,11 +22,12 @@ import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
  * Created by uyalanat on 22-10-2016.
  */
 
-public class TimeSheetFragment extends Fragment implements View.OnClickListener{
+public class TimeSheetFragment extends Fragment implements View.OnClickListener {
     public static TimeSheetFragment newInstance() {
         return new TimeSheetFragment();
     }
-    Button btnstarttime,btnendtime;
+
+    Button btnstarttime, btnendtime;
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;
     RecyclerView recyclerView;
@@ -53,11 +54,11 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener{
         final View view = inflater.inflate(R.layout.fragment_employeetimesheet, container, false);
 
         context = getActivity();
-        relativeLayout = (RelativeLayout)view. findViewById(R.id.relativelayout1);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
 
-        recyclerView = (RecyclerView)view. findViewById(R.id.my_recycler_view);
-        btnstarttime= (Button) view. findViewById(R.id.btnstarttime);
-                btnendtime= (Button)view. findViewById(R.id.btnendtime);
+        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
+        btnendtime = (Button) view.findViewById(R.id.btnendtime);
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
@@ -65,7 +66,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener{
         recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
-        spinner_listofsheet=(AppCompatSpinner)view.findViewById(R.id.spinner_listofsheet);
+        spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, SPINNERLIST);

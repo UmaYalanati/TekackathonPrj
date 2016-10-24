@@ -1,119 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:textSize="16sp"
-
-        android:textColor="@color/black"
-        android:text="Time Sheet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:id="@+id/textView3" />
-
-    <TextView
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:text="October"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_toRightOf="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp"
-
-        android:id="@+id/textView4" />
-
-    <LinearLayout
-        android:background="@drawable/rectangularbox"
-        android:gravity="center"
-        android:layout_width="30dp"
-        android:layout_height="25dp"
-        android:layout_alignTop="@+id/button"
-        android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button"
-        android:id="@+id/button2"
-        android:orientation="vertical">
-    <ImageView
-        android:background="@drawable/next"
-        android:text="Button"
-        android:layout_width="20dp"
-        android:layout_height="15dp"
-      />
-    </LinearLayout>
-
-    <ImageView
-        android:background="@drawable/reportexport"
-        android:text="Button"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:id="@+id/button3"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-
-
-    <LinearLayout
-        android:layout_marginLeft="4dp"
-        android:background="@drawable/rectangularbox"
-        android:id="@+id/button"
-        android:layout_width="30dp"
-        android:gravity="center"
-        android:layout_height="25dp"
-        android:orientation="vertical"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_toRightOf="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4">
-        <ImageView
-            android:layout_gravity="center"
-            android:background="@drawable/back"
-            android:text="Button"
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            />
-    </LinearLayout>
-</RelativeLayout>
-   <!-- <view
-        android:layout_marginTop="5dp"
-        android:background="@color/black"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>-->
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView3"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:text="Time Sheet"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView3"
+            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"
+            android:layout_toEndOf="@+id/textView3"
+            android:layout_toRightOf="@+id/textView3"
+            android:text="October"
+            android:textColor="@color/black"
+
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/button2"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/button"
+            android:layout_toEndOf="@+id/button"
+            android:layout_toRightOf="@+id/button"
+            android:background="@drawable/rectangularbox"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="15dp"
+                android:background="@drawable/next"
+                android:text="Button" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/button3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/reportexport"
+            android:text="Button" />
+
+
+        <LinearLayout
+            android:id="@+id/button"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_marginLeft="4dp"
+            android:layout_toEndOf="@+id/textView4"
+            android:layout_toRightOf="@+id/textView4"
+            android:background="@drawable/rectangularbox"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/back"
+                android:text="Button" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- <view
+         android:layout_marginTop="5dp"
+         android:background="@color/black"
+         android:layout_width="match_parent"
+         android:layout_height="1dp"/>-->
     <RelativeLayout
 
         android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <View
-            android:layout_marginTop="5dp"
-            android:background="@color/black"
             android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/black" />
+
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:scrollbars="vertical"
-            />
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 </LinearLayout>

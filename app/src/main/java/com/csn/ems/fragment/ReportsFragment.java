@@ -15,9 +15,10 @@ import com.csn.ems.R;
  * Created by uyalanat on 20-10-2016.
  */
 
-public class ReportsFragment  extends Fragment {
-    Fragment newFragment=null;
+public class ReportsFragment extends Fragment {
+    Fragment newFragment = null;
     MenuItem pinMenuItem;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -51,39 +52,35 @@ public class ReportsFragment  extends Fragment {
             //    action_editdetails
             case R.id.action_reportsheeet:
 
-                changeIcon(item,R.drawable.reportsheet);
+                changeIcon(item, R.drawable.reportsheet);
 
-                newFragment =  ReportsTimesheetFragment.newInstance();
+                newFragment = ReportsTimesheetFragment.newInstance();
 
-                if (pinMenuItem!=null)
+                if (pinMenuItem != null)
                     pinMenuItem.setIcon(R.drawable.paysheet_black);
 
 
-                pinMenuItem=item;
+                pinMenuItem = item;
 
                 break;
             case R.id.action_reportsheeetsecond:
-                changeIcon(item,R.drawable.paysheet);
+                changeIcon(item, R.drawable.paysheet);
 
-                newFragment =  ReportsTimesheetSecond.newInstance();
+                newFragment = ReportsTimesheetSecond.newInstance();
 
-                if (pinMenuItem!=null)
+                if (pinMenuItem != null)
                     pinMenuItem.setIcon(R.drawable.reportsheet_black);
 
 
-                pinMenuItem=item;
+                pinMenuItem = item;
 
 
                 break;
-
 
 
         }
 
         try {
-
-
-
 
 
             // FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -102,7 +99,7 @@ public class ReportsFragment  extends Fragment {
             e.printStackTrace();
         }
         return true;
-       // return super.onOptionsItemSelected(item);
+        // return super.onOptionsItemSelected(item);
     }
 
 
@@ -112,7 +109,7 @@ public class ReportsFragment  extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    public void changeIcon(final MenuItem item,final int drawableResourceId){
+    public void changeIcon(final MenuItem item, final int drawableResourceId) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

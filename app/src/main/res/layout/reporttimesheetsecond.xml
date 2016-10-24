@@ -1,169 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:textSize="16sp"
+            android:id="@+id/textView3"
 
-            android:textColor="@color/black"
-            android:text="Time Sheet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
-            android:id="@+id/textView3" />
+            android:text="Time Sheet"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <TextView
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:text="October"
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView3"
-            android:layout_toRightOf="@+id/textView3"
-            android:layout_toEndOf="@+id/textView3"
             android:layout_marginLeft="19dp"
             android:layout_marginStart="19dp"
+            android:layout_toEndOf="@+id/textView3"
+            android:layout_toRightOf="@+id/textView3"
+            android:text="October"
+            android:textColor="@color/black"
 
-            android:id="@+id/textView4" />
+            android:textSize="16sp" />
 
         <LinearLayout
-            android:background="@drawable/rectangularbox"
-            android:gravity="center"
+            android:id="@+id/button2"
             android:layout_width="30dp"
             android:layout_height="25dp"
             android:layout_alignTop="@+id/button"
-            android:layout_toRightOf="@+id/button"
             android:layout_toEndOf="@+id/button"
-            android:id="@+id/button2"
+            android:layout_toRightOf="@+id/button"
+            android:background="@drawable/rectangularbox"
+            android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
-                android:background="@drawable/next"
-                android:text="Button"
                 android:layout_width="20dp"
                 android:layout_height="15dp"
-                />
+                android:background="@drawable/next"
+                android:text="Button" />
         </LinearLayout>
 
         <ImageView
-            android:background="@drawable/reportexport"
-            android:text="Button"
+            android:id="@+id/button3"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:id="@+id/button3"
             android:layout_alignBottom="@+id/textView4"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/reportexport"
+            android:text="Button" />
 
 
         <LinearLayout
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/rectangularbox"
             android:id="@+id/button"
             android:layout_width="30dp"
-            android:gravity="center"
             android:layout_height="25dp"
-            android:orientation="vertical"
             android:layout_alignBottom="@+id/textView4"
+            android:layout_marginLeft="4dp"
+            android:layout_toEndOf="@+id/textView4"
             android:layout_toRightOf="@+id/textView4"
-            android:layout_toEndOf="@+id/textView4">
+            android:background="@drawable/rectangularbox"
+            android:gravity="center"
+            android:orientation="vertical">
+
             <ImageView
-                android:layout_gravity="center"
-                android:background="@drawable/back"
-                android:text="Button"
                 android:layout_width="20dp"
                 android:layout_height="15dp"
-                />
+                android:layout_gravity="center"
+                android:background="@drawable/back"
+                android:text="Button" />
         </LinearLayout>
     </RelativeLayout>
+
     <View
-        android:layout_marginTop="5dp"
-        android:background="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-    <LinearLayout
+        android:layout_height="1dp"
         android:layout_marginTop="5dp"
+        android:background="@color/black" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
-        <TextView
-            android:layout_marginLeft="8dp"
-            android:id="@+id/tvdelete"
+
+        <CheckBox
+            android:button="@drawable/abc_btn_check_material"
+            android:buttonTint="@color/colorAccent"
+            android:layout_marginTop="4dp"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/rectangularbox_warranty"
-
-            />
+            android:layout_marginLeft="8dp" />
         <TextView
-            android:textColor="@color/blakkish_textcolor"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
             android:id="@+id/tvmonth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:text="Month/Week"
+            android:textColor="@color/blakkish_textcolor"
 
             />
 
         <TextView
-            android:textColor="@color/blakkish_textcolor"
             android:id="@+id/tvpwd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="PWD"
-            android:layout_weight="1"
-            />
+            android:textColor="@color/blakkish_textcolor" />
+
         <TextView
-            android:textColor="@color/blakkish_textcolor"
-            android:layout_weight="1"
             android:id="@+id/tvawd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="AWD"
+            android:textColor="@color/blakkish_textcolor"
 
             />
+
         <TextView
-            android:textColor="@color/blakkish_textcolor"
-            android:layout_weight="1"
             android:id="@+id/tvlop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="LOP"
+            android:textColor="@color/blakkish_textcolor"
 
             />
+
         <TextView
-            android:textColor="@color/blakkish_textcolor"
-            android:layout_weight="1"
             android:id="@+id/tvleaves"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Leaves"
+            android:textColor="@color/blakkish_textcolor"
 
             />
     </LinearLayout>
+
     <View
-        android:layout_marginTop="5dp"
-        android:background="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/black" />
+
     <RelativeLayout
 
         android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
 
@@ -173,8 +178,7 @@
             android:clipToPadding="false"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:scrollbars="vertical"
-            />
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 </LinearLayout>
