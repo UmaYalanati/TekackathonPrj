@@ -49,15 +49,15 @@ public class TimeClockFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
-
+       // getActivity().invalidateOptionsMenu();
         switch (item.getItemId()) {
             //    action_editdetails
             case R.id.action_checkin:
-
+               // item.getTitle().equals()
                 changeIcon(item,R.drawable.timeicon);
 
                 newFragment = new CheckinCheckoutFragment();
-
+               // getActivity().invalidateOptionsMenu();
 
 
                 break;
@@ -65,7 +65,7 @@ public class TimeClockFragment extends Fragment {
                 changeIcon(item,R.drawable.timesheet);
 
                 newFragment = new TimeSheetFragment();
-
+                getActivity().invalidateOptionsMenu();
 
                 break;
             case R.id.action_approvedtimesheet:
