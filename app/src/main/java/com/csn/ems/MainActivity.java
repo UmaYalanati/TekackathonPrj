@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity
 
                 // Set action bar title
                 setTitle(tag);
-
+                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
                 invalidateOptionsMenu();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity
             tag = "Time Lock";
         } else if (id == R.id.nav_orgcalendar) {
             fragmentClass = OrgCalendarFragment.class;
-            tag = "Employee";
+            tag = "Org Calendar";
         } else if (id == R.id.nav_leave) {
             fragmentClass = LeavesFragment.class;
             tag = "Leave";
@@ -191,9 +192,14 @@ public class MainActivity extends AppCompatActivity
                 item.setChecked(true);
                 // Set action bar title
                 setTitle(item.getTitle());
-                setTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
-              //  getActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=\"red\">" + getString(R.string.app_name) + "</font>"));
-                invalidateOptionsMenu();
+
+              //  SpannableString s = new SpannableString(item.getTitle());
+               // s.setSpan(new ForegroundColorSpan(Color.GREEN), 0, item.getTitle().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+              //  getSupportActionBar().setTitle(s);
+
+              //  setTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
+                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
+               // invalidateOptionsMenu();
             } catch (Exception e) {
                 e.printStackTrace();
             }

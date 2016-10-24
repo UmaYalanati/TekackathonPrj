@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import com.csn.ems.R;
 
 public class LeavesFragment extends Fragment {
     Fragment newFragment=null;
-
+    MenuItem pinMenuItem;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -41,7 +43,12 @@ public class LeavesFragment extends Fragment {
 
         return view;
     }
+   /* public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.leaves, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
 
+         pinMenuItem = menu.findItem(R.id.action_leaaveinformation);
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -52,6 +59,11 @@ public class LeavesFragment extends Fragment {
             case R.id.action_leaaveinformation:
 
                 changeIcon(item,R.drawable.leaveinformation);
+                if (pinMenuItem!=null)
+                    pinMenuItem.setIcon(R.drawable.leave_black);
+
+
+                pinMenuItem=item;
 
                 newFragment =  LeavesStatusFragment.newInstance();
 
@@ -60,7 +72,12 @@ public class LeavesFragment extends Fragment {
                 break;
             case R.id.action_upcomingtimeoff:
                 changeIcon(item,R.drawable.leave);
+                if (pinMenuItem!=null)
+                pinMenuItem.setIcon(R.drawable.leaveinformation_black);
 
+
+                pinMenuItem=item;
+              
                 newFragment =  UpcomingTimeOffFragment.newInstance();
 
 
