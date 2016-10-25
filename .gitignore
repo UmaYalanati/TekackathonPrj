@@ -14,8 +14,10 @@ out/
 # Gradle files
 .gradle/
 build/
+/caldroid/build/
 
 build/*
+/caldroid/build/*
 !build/build.xml
 # Local configuration file (sdk path, etc)
 local.properties
