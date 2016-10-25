@@ -22,7 +22,7 @@ import com.csn.ems.recyclerviewadapter.DashboardRecyclerViewAdapter;
 
 public class DashBoardFragment extends Fragment {
 
-    RecyclerView recyclerView;
+   /* RecyclerView recyclerView;
     RelativeLayout relativeLayout;
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
@@ -32,14 +32,14 @@ public class DashBoardFragment extends Fragment {
                     "Hi Uma",
                     "Time Clock",
                     "Schedule"
-            };
+            };*/
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.sample, container, false);
+        final View view = inflater.inflate(R.layout.dashboardscreen, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+      /*  recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         recylerViewLayoutManager = new LinearLayoutManager(getActivity());
 
@@ -47,7 +47,7 @@ public class DashBoardFragment extends Fragment {
 
         recyclerViewAdapter = new DashboardRecyclerViewAdapter(getActivity(), subjects);
 
-        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setAdapter(recyclerViewAdapter);*/
 
 
         return view;

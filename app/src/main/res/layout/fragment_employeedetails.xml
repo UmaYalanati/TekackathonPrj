@@ -29,7 +29,7 @@
                 android:textColor="@color/blakkish_textcolor" />
 
             <TextView
-                android:id="@+id/tvCodeNameDetail12ss"
+                android:id="@+id/tvemployeefullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Uma yalanati"
@@ -45,14 +45,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvid"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ID"
                 android:textColor="@color/blakkish_textcolor" />
 
             <TextView
-                android:id="@+id/tv_id"
+                android:id="@+id/tvid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2143"
@@ -79,7 +79,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvusername"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="UserName"
@@ -88,7 +88,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_username"
+                android:id="@+id/tvusername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="uma.yaan"
@@ -104,14 +104,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvmobile"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mobile"
                 android:textColor="@color/blakkish_textcolor" />
 
             <TextView
-                android:id="@+id/tv_mobile"
+                android:id="@+id/tvmobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="898439482934"
@@ -138,14 +138,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvaddress"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Address"
                 android:textColor="@color/blakkish_textcolor" />
 
             <TextView
-                android:id="@+id/tv_address"
+                android:id="@+id/tvaddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="xxxxx"
@@ -161,14 +161,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvemail"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textColor="@color/blakkish_textcolor" />
 
             <TextView
-                android:id="@+id/tv_email"
+                android:id="@+id/tvemail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="xyz@gmail.com"
@@ -195,14 +195,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvposition"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Position"
                 android:textColor="@color/blakkish_textcolor" />
 
             <TextView
-                android:id="@+id/tv_position"
+                android:id="@+id/tvposition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Software Engineer"
