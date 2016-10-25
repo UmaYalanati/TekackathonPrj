@@ -44,13 +44,11 @@ public class EmployeeDetailsFragment extends Fragment {
 
         if (savedInstanceState == null) {
             try {
-                // FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
                 transaction.replace(R.id.fragment_container, new DisplayEmployeeDetailsFragment());
-                transaction.addToBackStack(null);
 
 // Commit the transaction
                 transaction.commit();
@@ -151,23 +149,15 @@ public class EmployeeDetailsFragment extends Fragment {
 //
 //                if (pinneditem != null)
 //                    pinneditem.setIcon(R.drawable.ic_employee);
-
                 break;
-
-
         }
 
         try {
-
-
             // FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
             transaction.replace(R.id.fragment_container, newFragment);
-            transaction.addToBackStack(null);
 
 // Commit the transaction
             transaction.commit();

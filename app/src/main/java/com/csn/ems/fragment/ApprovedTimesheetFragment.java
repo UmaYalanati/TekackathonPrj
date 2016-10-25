@@ -20,7 +20,7 @@ import com.csn.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
  * Created by uyalanat on 23-10-2016.
  */
 
-public class ApprovedTimesheet extends Fragment {
+public class ApprovedTimesheetFragment extends Fragment {
 
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;

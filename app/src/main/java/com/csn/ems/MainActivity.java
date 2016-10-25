@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,10 +15,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.callback.MenuItemSelectedCallback;
@@ -30,20 +33,23 @@ import com.csn.ems.fragment.TimeClockFragment;
 import com.csn.ems.model.EmployeeDetails;
 import com.squareup.picasso.Picasso;
 
+import static com.csn.ems.R.id.nav_dashboard;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MenuItemSelectedCallback {
 
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private int currentSelectedItem;
+    private static final String TAG = "MainActivity";
     EmployeeDetails employeeDetails = new EmployeeDetails();
     Fragment fragment;
     Class fragmentClass = null;
     String tag = null;
     TextView tvemployeename, tvemployeeemail;
     ImageView imageView_employee;
-
     int selectedMenuItem;
+    boolean doubleBackToExitPressedOnce = false;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private int currentSelectedItem;
 
     @Override
     protected void onResume() {
@@ -75,40 +81,62 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        fragmentClass = DashBoardFragment.class;
-        tag = "Dashboard";
-        if (fragmentClass != null) {
+        if (savedInstanceState == null) {
+            fragmentClass = DashBoardFragment.class;
+            tag = "Dashboard";
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
 
                 // Insert the fragment by replacing any existing fragment
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragment, fragment, tag)
-                        .addToBackStack(tag)
-//                        .addToBackStack(String.valueOf(previousItemChecked))
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment, fragment, tag)
                         .commit();
 
                 // Set action bar title
-                setTitle(tag);
-                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
-                invalidateOptionsMenu();
+
+                navigationView.setCheckedItem(nav_dashboard);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
         }
 
-
+        postInit();
     }
 
     @Override
     public void onBackPressed() {
-        //Back stack u r not handling,
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if (drawer != null) {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                final FragmentManager supportFragmentManager = getSupportFragmentManager();
+                if (supportFragmentManager.getBackStackEntryCount() > 0) {
+                    super.onBackPressed();
+                } else {
+                    if (!doubleBackToExitPressedOnce) {
+                        this.doubleBackToExitPressedOnce = true;
+                        Toast.makeText(this, "Please click BACK again to exit.", Toast.LENGTH_SHORT).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                doubleBackToExitPressedOnce = false;
+                            }
+                        }, 2000);
+                    } else {
+                        try {
+                            super.onBackPressed();
+                            System.exit(0);
+                            return;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            super.onBackPressed();
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -116,7 +144,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         //based on fragment, update menu here. Got it? Shall i show ? t
         //There must be a easy way to do this. but this will work 100% u r doing hide i am asking item click
-        if (currentSelectedItem == R.id.nav_dashboard) {
+        if (currentSelectedItem == nav_dashboard) {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
@@ -168,9 +196,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
         switch (item.getItemId()) {
             //    action_editdetails
             case R.id.action_signout:
@@ -180,21 +205,65 @@ public class MainActivity extends AppCompatActivity
                 finish();
                 break;
         }
-
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void postInit() {
+        getSupportFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        // Update your UI here.
+                        final int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+
+                        if (backStackEntryCount > 0) {
+                            final String pageName = getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount - 1).getName();
+                            if (pageName != null) {
+                                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + pageName + "</font>"));
+                                if (pageName.equals("Dashboard")) {
+                                    navigationView.setCheckedItem(R.id.nav_dashboard);
+                                    currentSelectedItem = R.id.nav_dashboard;
+                                } else if (pageName.equals("Employee")) {
+                                    navigationView.setCheckedItem(R.id.nav_employee);
+                                    currentSelectedItem = R.id.nav_employee;
+                                } else if (pageName.equals("Time Lock")) {
+                                    navigationView.setCheckedItem(R.id.nav_timeclock);
+                                    currentSelectedItem = R.id.nav_timeclock;
+                                } else if (pageName.equals("Org Calendar")) {
+                                    navigationView.setCheckedItem(R.id.nav_orgcalendar);
+                                    currentSelectedItem = R.id.nav_orgcalendar;
+                                } else if (pageName.equals("Leave")) {
+                                    navigationView.setCheckedItem(R.id.nav_leave);
+                                    currentSelectedItem = R.id.nav_leave;
+                                } else if (pageName.equals("Report")) {
+                                    navigationView.setCheckedItem(R.id.nav_reports);
+                                    currentSelectedItem = R.id.nav_reports;
+                                } else if (pageName.equals("Settings")) {
+                                    navigationView.setCheckedItem(R.id.nav_settings);
+                                    currentSelectedItem = R.id.nav_settings;
+                                }
+                            } else {
+                                Log.d(TAG, "onBackStackChanged: Null page name");
+                            }
+                        } else {
+                            getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4> Dashboard </font>"));
+                            navigationView.setCheckedItem(R.id.nav_dashboard);
+                            currentSelectedItem = R.id.nav_dashboard;
+                        }
+
+                        invalidateOptionsMenu();
+
+                    }
+                }
+
+        );
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-
         int id = item.getItemId();
         currentSelectedItem = id;
-
-        if (id == R.id.nav_dashboard) {
-
+        if (id == nav_dashboard) {
             fragmentClass = DashBoardFragment.class;
             tag = "Dashboard";
         } else if (id == R.id.nav_employee) {
@@ -230,13 +299,11 @@ public class MainActivity extends AppCompatActivity
                 // Highlight the selected item has been done by NavigationView
                 item.setChecked(true);
                 // Set action bar title
-                setTitle(item.getTitle());
 
                 //  SpannableString s = new SpannableString(item.getTitle());
                 // s.setSpan(new ForegroundColorSpan(Color.GREEN), 0, item.getTitle().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 //  getSupportActionBar().setTitle(s);
 
-                //  setTitleColor(ContextCompat.getColor(this, R.color.colorAccent));
                 getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
                 // invalidateOptionsMenu();
             } catch (Exception e) {
@@ -253,9 +320,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void selectedItem(MenuItem menuItem, int itemId) {
-        if(menuItem!=null) {
+        if (menuItem != null) {
             selectedMenuItem = menuItem.getItemId();
-        }else{
+        } else {
             selectedMenuItem = itemId;
         }
         invalidateOptionsMenu();

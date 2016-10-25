@@ -31,7 +31,7 @@ public class TimeClockFragment extends Fragment {
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
                 transaction.replace(R.id.fragment_container, new CheckinCheckoutFragment());
-                transaction.addToBackStack(null);
+//                transaction.addToBackStack(null);
 
 // Commit the transaction
                 transaction.commit();
@@ -82,7 +82,7 @@ public class TimeClockFragment extends Fragment {
             case R.id.action_approvedtimesheet:
                 changeIcon(item, R.drawable.ic_timesheetapproval_h);
 
-                newFragment = new ApprovedTimesheet();
+                newFragment = new ApprovedTimesheetFragment();
                 pinneditem2 = item;
 
 
@@ -108,7 +108,7 @@ public class TimeClockFragment extends Fragment {
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
             transaction.replace(R.id.fragment_container, newFragment);
-            transaction.addToBackStack(null);
+//            transaction.addToBackStack(null);
 
 // Commit the transaction
             transaction.commit();

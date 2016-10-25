@@ -24,22 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.id.ed_Name;
-import static com.csn.ems.R.id.ed_address;
-import static com.csn.ems.R.id.ed_address2;
-import static com.csn.ems.R.id.ed_businessAreaName;
-import static com.csn.ems.R.id.ed_city;
-import static com.csn.ems.R.id.ed_dob;
-import static com.csn.ems.R.id.ed_email;
-import static com.csn.ems.R.id.ed_gender;
-import static com.csn.ems.R.id.ed_hoursPerDay;
-import static com.csn.ems.R.id.ed_joiningDate;
-import static com.csn.ems.R.id.ed_mobilenor;
-import static com.csn.ems.R.id.ed_positionName;
-import static com.csn.ems.R.id.ed_state;
-import static com.csn.ems.R.id.ed_subBusinessAreaName;
-import static com.csn.ems.R.id.ed_zipcode;
-
 /**
  * Created by uyalanat on 20-10-2016.
  */

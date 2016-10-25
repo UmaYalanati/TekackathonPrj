@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.csn.ems.R;
 import com.csn.ems.activity.LoginActivity;
-import com.csn.ems.recyclerviewadapter.DashboardRecyclerViewAdapter;
 
 /**
  * Created by uyalanat on 20-10-2016.

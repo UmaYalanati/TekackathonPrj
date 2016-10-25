@@ -30,7 +30,7 @@ public class ReportsFragment extends Fragment {
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
                 transaction.replace(R.id.fragment_container, new ReportsTimesheetFragment());
-                transaction.addToBackStack(null);
+//                transaction.addToBackStack(null);
 
 // Commit the transaction
                 transaction.commit();
@@ -90,7 +90,7 @@ public class ReportsFragment extends Fragment {
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
             transaction.replace(R.id.fragment_container, newFragment);
-            transaction.addToBackStack(null);
+//            transaction.addToBackStack(null);
 
 // Commit the transaction
             transaction.commit();
