@@ -63,11 +63,20 @@ public class DatePickerFragment extends DialogFragment implements
             }
         } else {
             if (new StringBuilder().append(day).length() >= 2) {
-                mTextView.setText(new StringBuilder()
-                        .append(0).append(month + 1).append("-")
-                        .append(day).append("-")
-                        .append(str_year)
-                        .toString());
+                if (new StringBuilder().append(month + 1).length() >= 2){
+                    mTextView.setText(new StringBuilder()
+                            .append(month + 1).append("-")
+                            .append(day).append("-")
+                            .append(str_year)
+                            .toString());
+                }else{
+                    mTextView.setText(new StringBuilder()
+                            .append(0).append(month + 1).append("-")
+                            .append(day).append("-")
+                            .append(str_year)
+                            .toString());
+                }
+
 
             } else {
 

@@ -64,7 +64,7 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
 
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
-        getlistofleaves();
+
 
         return view;
     }
