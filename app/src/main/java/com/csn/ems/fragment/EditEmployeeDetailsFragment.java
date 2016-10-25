@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.util.Property;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ import static com.csn.ems.R.id.ed_Name;
 import static com.csn.ems.R.id.ed_NickName;
 
 
+
 /**
  * Created by uyalanat on 20-10-2016.
  */
@@ -39,6 +42,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
     EmployeeDetails employeeDetails = new EmployeeDetails();
 String TAG="EditEmployee";
     Button btnupdateemployee;
+    TextInputEditText ed_gender;
     TextInputEditText ed_Name,ed_NickName,ed_email,ed_dob,ed_mobilenor,ed_homenor,ed_address,ed_address2,ed_city,ed_state,ed_zipcode;
 
     TextInputEditText ed_joiningDate,ed_positionName,ed_businessAreaName,ed_subBusinessAreaName,ed_hoursPerDay;
@@ -46,7 +50,7 @@ String TAG="EditEmployee";
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.edit_profile, container, false);
 
-
+        ed_gender=(TextInputEditText) view.findViewById(R.id.ed_gender);
         btnupdateemployee=(Button) view.findViewById(R.id.btnupdateemployee);
                 ed_Name=(TextInputEditText) view.findViewById(R.id.ed_Name);
                 ed_NickName=(TextInputEditText) view.findViewById(R.id.ed_NickName);
@@ -135,6 +139,7 @@ String TAG="EditEmployee";
         ed_state.setText(employeeDetails.getStateName());
         ed_zipcode.setText(String.valueOf(employeeDetails.getPostalCode()));
         ed_dob.setText(employeeDetails.getdOB());
+        ed_gender.setText(employeeDetails.getGender());
         ed_joiningDate.setText(employeeDetails.getJoiningDate());
                 ed_positionName.setText(employeeDetails.getPositionName());
                 ed_businessAreaName.setText(employeeDetails.getBusinessAreaName());
@@ -152,6 +157,7 @@ String TAG="EditEmployee";
         employeeDetails.setdOB(ed_dob.getText().toString().trim());
         employeeDetails.setCity(ed_city.getText().toString().trim());
         employeeDetails.setStateName(ed_state.getText().toString().trim());
+        employeeDetails.setGender(ed_gender.getText().toString().trim());
         if (!ed_zipcode.getText().toString().trim().isEmpty())
         employeeDetails.setPostalCode(Integer.parseInt(ed_zipcode.getText().toString().trim()));
 

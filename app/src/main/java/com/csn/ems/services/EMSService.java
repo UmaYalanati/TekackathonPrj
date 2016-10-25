@@ -1,11 +1,15 @@
 package com.csn.ems.services;
 
+import com.csn.ems.model.CreateLeaveRequest;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.LeaveDetails;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
@@ -21,8 +25,10 @@ public interface EMSService {
     Call<EmployeeDetails> getEmployeeById(@Query("employeeId") int employeeId);
 
     @GET("Leave/GetLeaveDetails")
-    Call<LeaveDetails> getLeaveDetails(@Query("employeeId") int employeeId,@Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo);
+    Call<List<LeaveDetails>> getLeaveDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom, @Query("dateTo") String dateTo, @Query("LeaveStatusId") int leaveStatusId);
 
+    @POST("Leave/CreateLeaveRequest")
+    Call<CreateLeaveRequest> createLeaveRequest(@Body CreateLeaveRequest createLeaveRequest);
 
     /*  @GET("client")
     Call<List<Client>> listClients();

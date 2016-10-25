@@ -25,9 +25,13 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
-
+<View
+    android:layout_marginTop="6dp"
+    android:background="@color/gray_dark"
+    android:layout_width="match_parent"
+    android:layout_height="0.1dp"/>
             <android.support.design.widget.TextInputLayout
-
+android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp">
@@ -84,7 +88,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Dob:"
-
+                    android:focusableInTouchMode="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -118,14 +124,22 @@
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinner_gender"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
-                android:entries="@array/spinnerGener"
-                android:textSize="13sp" />
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/ed_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:focusableInTouchMode="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

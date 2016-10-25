@@ -58,10 +58,10 @@ public class TimeClockFragment extends Fragment {
                 newFragment = new CheckinCheckoutFragment();
 
                 if (pinneditem2 != null)
-                    pinneditem2.setIcon(R.drawable.timecardapproval_black);
+                    pinneditem2.setIcon(R.drawable.ic_timesheetapproval);
 
                 if (pinneditem1 != null)
-                    pinneditem1.setIcon(R.drawable.ic_timesheetapproval);
+                    pinneditem1.setIcon(R.drawable.ic_time_sheet);
 
 
                 break;

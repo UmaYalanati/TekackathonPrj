@@ -34,7 +34,7 @@ public class EmployeeDetails {
     private String contactNumber;
 
     @JsonProperty("Gender")
-    private String Gender;
+    private String gender;
 
     @JsonProperty("DOB")
     private String dOB;
@@ -114,7 +114,7 @@ public class EmployeeDetails {
                 ", employeeName='" + employeeName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +
-                ", Gender='" + Gender + '\'' +
+                ", Gender='" + gender + '\'' +
                 ", dOB='" + dOB + '\'' +
                 ", address1='" + address1 + '\'' +
                 ", address2='" + address2 + '\'' +
@@ -259,11 +259,11 @@ public class EmployeeDetails {
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public void setGender(String gender) {
-        Gender = gender;
+        gender = gender;
     }
 
     public String getdOB() {

@@ -4,15 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-
 /**
  * Created by uyalanat on 25-10-2016.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LeaveDetails implements Serializable {
-
+public class CreateLeaveRequest {
 
     @JsonProperty("LeaveId")
     private int leaveId;
@@ -23,24 +20,9 @@ public class LeaveDetails implements Serializable {
     @JsonProperty("AppliedDate")
     private String appliedDate;
 
-    @JsonProperty("DateFrom")
-    private String dateFrom;
-
-    @JsonProperty("DateTo")
-    private String dateTo;
-
-    @JsonProperty("LeaveTypeId")
-    private int leaveTypeId;
-
-    @JsonProperty("Comments")
-    private String comments;
-
-    @JsonProperty("AssignedTo")
-    private int assignedTo;
-
     @Override
     public String toString() {
-        return "LeaveDetails{" +
+        return "CreateLeaveRequest{" +
                 "leaveId=" + leaveId +
                 ", employeeId=" + employeeId +
                 ", appliedDate='" + appliedDate + '\'' +
@@ -48,11 +30,9 @@ public class LeaveDetails implements Serializable {
                 ", dateTo='" + dateTo + '\'' +
                 ", leaveTypeId=" + leaveTypeId +
                 ", comments='" + comments + '\'' +
-                ", assignedTo=" + assignedTo +
+                ", assignedTo='" + assignedTo + '\'' +
                 ", actionDate='" + actionDate + '\'' +
                 ", leaveStatusId=" + leaveStatusId +
-                ", leaveStatus='" + leaveStatus + '\'' +
-                ", leaveType='" + leaveType + '\'' +
                 '}';
     }
 
@@ -112,11 +92,11 @@ public class LeaveDetails implements Serializable {
         this.comments = comments;
     }
 
-    public int getAssignedTo() {
+    public String getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(int assignedTo) {
+    public void setAssignedTo(String assignedTo) {
         this.assignedTo = assignedTo;
     }
 
@@ -136,32 +116,24 @@ public class LeaveDetails implements Serializable {
         this.leaveStatusId = leaveStatusId;
     }
 
-    public String getLeaveStatus() {
-        return leaveStatus;
-    }
+    @JsonProperty("DateFrom")
+    private String dateFrom;
 
-    public void setLeaveStatus(String leaveStatus) {
-        this.leaveStatus = leaveStatus;
-    }
+    @JsonProperty("DateTo")
+    private String dateTo;
 
-    public String getLeaveType() {
-        return leaveType;
-    }
+    @JsonProperty("LeaveTypeId")
+    private int leaveTypeId;
 
-    public void setLeaveType(String leaveType) {
-        this.leaveType = leaveType;
-    }
+    @JsonProperty("Comments")
+    private String comments;
+
+    @JsonProperty("AssignedTo")
+    private String assignedTo;
 
     @JsonProperty("ActionDate")
-
     private String actionDate;
 
     @JsonProperty("LeaveStatusId")
     private int leaveStatusId;
-
-    @JsonProperty("LeaveStatus")
-    private String leaveStatus;
-
-    @JsonProperty("LeaveType")
-    private String leaveType;
 }
