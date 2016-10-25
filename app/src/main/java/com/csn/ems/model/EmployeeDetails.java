@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.json.JSONArray;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by uyalanat on 24-10-2016.
@@ -95,16 +96,21 @@ public class EmployeeDetails {
     @JsonProperty("Photo")
     private String photo;
 
-    public String getPhotoPath() {
-        return photoPath;
-    }
+    @JsonProperty("EmployeeLocation")
+    private List<EmployeeLocation> employeeLocation;
+
+    @JsonProperty("CreatedDate")
+    private String createdDate;
+
+    @JsonProperty("CreatedBy")
+    private int createdBy;
 
     @Override
     public String toString() {
         return "EmployeeDetails{" +
                 "employeeId=" + employeeId +
                 ", propertyOwnerName='" + propertyOwnerName + '\'' +
-                ", employeeCode=" + employeeCode +
+                ", employeeCode='" + employeeCode + '\'' +
                 ", employeeName='" + employeeName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +
@@ -129,10 +135,66 @@ public class EmployeeDetails {
                 ", SubBusinessAreaName='" + SubBusinessAreaName + '\'' +
                 ", scheduleName='" + scheduleName + '\'' +
                 ", photo='" + photo + '\'' +
+                ", employeeLocation=" + employeeLocation +
+                ", createdDate='" + createdDate + '\'' +
+                ", createdBy=" + createdBy +
+                ", modifiedDate='" + modifiedDate + '\'' +
+                ", MmdifiedBy=" + MmdifiedBy +
                 ", photoPath='" + photoPath + '\'' +
                 ", byteArrayPhoto=" + Arrays.toString(byteArrayPhoto) +
-               /* ", employeeLocation=" + employeeLocation +*/
                 '}';
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(int createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public int getMmdifiedBy() {
+        return MmdifiedBy;
+    }
+
+    public void setMmdifiedBy(int mmdifiedBy) {
+        MmdifiedBy = mmdifiedBy;
+    }
+
+    @JsonProperty("ModifiedDate")
+
+    private String modifiedDate;
+
+    @JsonProperty("ModifiedBy")
+    private int MmdifiedBy;
+
+
+    public List<EmployeeLocation> getEmployeeLocation() {
+        return employeeLocation;
+    }
+
+    public void setEmployeeLocation(List<EmployeeLocation> employeeLocation) {
+        this.employeeLocation = employeeLocation;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
     }
 
     public void setPhotoPath(String photoPath) {

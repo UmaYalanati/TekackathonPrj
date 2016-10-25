@@ -1,8 +1,7 @@
 package com.csn.ems.services;
 
-import android.util.Property;
-
 import com.csn.ems.model.EmployeeDetails;
+import com.csn.ems.model.LeaveDetails;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,7 +19,12 @@ public interface EMSService {
 
     @GET("Employee/GetEmployeeById")
     Call<EmployeeDetails> getEmployeeById(@Query("employeeId") int employeeId);
-  /*  @GET("client")
+
+    @GET("Leave/GetLeaveDetails")
+    Call<LeaveDetails> getLeaveDetails(@Query("employeeId") int employeeId,@Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo);
+
+
+    /*  @GET("client")
     Call<List<Client>> listClients();
 
     @GET("Property")

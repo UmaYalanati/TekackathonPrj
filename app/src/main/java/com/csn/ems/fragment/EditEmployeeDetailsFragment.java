@@ -47,7 +47,7 @@ String TAG="EditEmployee";
         final View view = inflater.inflate(R.layout.edit_profile, container, false);
 
 
-
+        btnupdateemployee=(Button) view.findViewById(R.id.btnupdateemployee);
                 ed_Name=(TextInputEditText) view.findViewById(R.id.ed_Name);
                 ed_NickName=(TextInputEditText) view.findViewById(R.id.ed_NickName);
         ed_address2=(TextInputEditText) view.findViewById(R.id.ed_address2);
@@ -71,6 +71,14 @@ String TAG="EditEmployee";
 
 
         loadConsolidatedData();
+
+
+        btnupdateemployee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadDetails();
+            }
+        });
         return view;
     }
 
