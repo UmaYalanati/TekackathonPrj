@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,15 +32,15 @@ import retrofit2.Response;
  * Created by uyalanat on 23-10-2016.
  */
 
-public class LeavesStatusFragment extends Fragment {
-String TAG="LeavesStatusFragment";
-  //  LeaveDetails leavedetails=new LeaveDetails();
+public class LeavesStatusFragment extends Fragment implements View.OnClickListener {
+    String TAG = "LeavesStatusFragment";
+    //  LeaveDetails leavedetails=new LeaveDetails();
     Context context;
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-
+    Button btnstarttime, btnendtime;
 
 
     public static LeavesStatusFragment newInstance() {
@@ -51,6 +52,8 @@ String TAG="LeavesStatusFragment";
         final View view = inflater.inflate(R.layout.leaveslist, container, false);
 
         context = getActivity();
+        btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
+        btnendtime = (Button) view.findViewById(R.id.btnendtime);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
@@ -59,76 +62,85 @@ String TAG="LeavesStatusFragment";
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-
+        btnstarttime.setOnClickListener(this);
+        btnendtime.setOnClickListener(this);
         getlistofleaves();
 
         return view;
     }
-void getlistofleaves(){
-    final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-    Call<List<LeaveDetails>> listCall= ServiceGenerator.createService().getLeaveDetails(2,"10/25/2016","10/28/2016",0);
+    void getlistofleaves(String startdate,String enddaate) {
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+
+        Call<List<LeaveDetails>> listCall = ServiceGenerator.createService().getLeaveDetails(2, startdate, enddaate, 0);
 
 
-
-    listCall.enqueue(new Callback<List<LeaveDetails>>() {
-        @Override
-        public void onResponse(Call<List<LeaveDetails>> call, Response<List<LeaveDetails>> response) {
-            if (loading.isShowing()) {
-                loading.dismiss();
-            }
-
-            if (response != null && !response.isSuccessful() && response.errorBody() != null) {
-                try {
-                    String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
-                    Log.e(TAG, "onResponse: " + errorMessage);
-                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    Log.e(TAG, "onResponse: IOException while parsing response error", e);
+        listCall.enqueue(new Callback<List<LeaveDetails>>() {
+            @Override
+            public void onResponse(Call<List<LeaveDetails>> call, Response<List<LeaveDetails>> response) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
                 }
-            } else if (response != null && response.isSuccessful()) {
+
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                        Log.e(TAG, "onResponse: " + errorMessage);
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                    }
+                } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
-                List<LeaveDetails> leaveDetails = response.body();
-                Log.i(TAG, "onResponse: Fetched " + leaveDetails.size() + " clients.");
+                    List<LeaveDetails> leaveDetails = response.body();
+                    Log.i(TAG, "onResponse: Fetched " + leaveDetails.size() + " clients.");
 //                    for (Client client : clients) {
 //                        Log.i(TAG, "onResponse: Client: "+client);
 //                    }
-               updateRecyclerViewForClients(leaveDetails);
+                    updateRecyclerViewForClients(leaveDetails);
+                }
             }
-        }
 
-        @Override
-        public void onFailure(Call<List<LeaveDetails>> call, Throwable t) {
-            if (loading.isShowing()) {
-                loading.dismiss();
+            @Override
+            public void onFailure(Call<List<LeaveDetails>> call, Throwable t) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+                Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
+                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                //    Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
             }
-            Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
-                    "Please try again after some time.", Toast.LENGTH_SHORT).show();
-        //    Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
-        }
-    });
-    loading.setCancelable(false);
-    loading.setIndeterminate(true);
-    loading.show();
-}
+        });
+        loading.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.show();
+    }
+
     private void updateRecyclerViewForClients(List<LeaveDetails> leaveDetails) {
-     //   Log.d(TAG, "updateRecyclerViewForClients() called for " + leaveDetails.size() + " Clients.");
+        //   Log.d(TAG, "updateRecyclerViewForClients() called for " + leaveDetails.size() + " Clients.");
 
-       // if (recyclerViewAdapter != null) {
-            ListofLivesRecyclerViewAdapter    adapter = new ListofLivesRecyclerViewAdapter(context, leaveDetails);
+        // if (recyclerViewAdapter != null) {
+        ListofLivesRecyclerViewAdapter adapter = new ListofLivesRecyclerViewAdapter(context, leaveDetails);
 
-            recyclerView.setAdapter(adapter);
-      //  }
+        recyclerView.setAdapter(adapter);
+        //  }
 
-      /*  RecyclerView.Adapter adapter = recyclerView.getAdapter();
-        if (adapter != null) {
-            ViewClientAdapter viewClientAdapter = (ViewClientAdapter) adapter;
-            viewClientAdapter.removeAllItems();
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnstarttime:
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime);
+
+                starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+                break;
+            case R.id.btnendtime:
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
+
+                endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+                getlistofleaves("10/25/2016", "10/28/2016");
+                break;
+
         }
-
-        ListofLivesRecyclerViewAdapter adapter = (ListofLivesRecyclerViewAdapter) viewClientRecyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.updateClients(clients);
-        }*/
     }
 }

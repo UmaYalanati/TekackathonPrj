@@ -64,7 +64,7 @@ public class DashBoardFragment extends Fragment {
                 Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent_homescreen);
                 getActivity().finish();
-                ;
+
                 break;
         }
 

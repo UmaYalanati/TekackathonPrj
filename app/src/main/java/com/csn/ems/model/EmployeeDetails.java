@@ -263,7 +263,7 @@ public class EmployeeDetails {
     }
 
     public void setGender(String gender) {
-        gender = gender;
+        this.gender = gender;
     }
 
     public String getdOB() {
