@@ -26,6 +26,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.csn.ems.R.id.ed_Name;
+import static com.csn.ems.R.id.ed_NickName;
+
+
 /**
  * Created by uyalanat on 20-10-2016.
  */
@@ -35,7 +39,9 @@ public class EditEmployeeDetailsFragment extends Fragment {
     EmployeeDetails employeeDetails = new EmployeeDetails();
 String TAG="EditEmployee";
     Button btnupdateemployee;
-    TextInputEditText ed_Name,ed_NickName,ed_email,ed_username,ed_mobilenor,ed_homenor,ed_address,ed_city,ed_state,ed_zipcode;
+    TextInputEditText ed_Name,ed_NickName,ed_email,ed_dob,ed_mobilenor,ed_homenor,ed_address,ed_address2,ed_city,ed_state,ed_zipcode;
+
+    TextInputEditText ed_joiningDate,ed_positionName,ed_businessAreaName,ed_subBusinessAreaName,ed_hoursPerDay;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.edit_profile, container, false);
@@ -44,8 +50,9 @@ String TAG="EditEmployee";
 
                 ed_Name=(TextInputEditText) view.findViewById(R.id.ed_Name);
                 ed_NickName=(TextInputEditText) view.findViewById(R.id.ed_NickName);
+        ed_address2=(TextInputEditText) view.findViewById(R.id.ed_address2);
                 ed_email=(TextInputEditText) view.findViewById(R.id.ed_email);
-                ed_username=(TextInputEditText) view.findViewById(R.id.ed_username);
+        ed_dob=(TextInputEditText) view.findViewById(R.id.ed_dob);
                 ed_mobilenor=(TextInputEditText) view.findViewById(R.id.ed_mobilenor);
                 ed_homenor=(TextInputEditText) view.findViewById(R.id.ed_homenor);
                 ed_address=(TextInputEditText) view.findViewById(R.id.ed_address);
@@ -53,11 +60,17 @@ String TAG="EditEmployee";
                 ed_state=(TextInputEditText) view.findViewById(R.id.ed_state);
                 ed_zipcode=(TextInputEditText) view.findViewById(R.id.ed_zipcode);
 
+        ed_joiningDate=(TextInputEditText) view.findViewById(R.id.ed_joiningDate);
+                ed_positionName=(TextInputEditText) view.findViewById(R.id.ed_positionName);
+                ed_businessAreaName=(TextInputEditText) view.findViewById(R.id.ed_businessAreaName);
+                ed_subBusinessAreaName=(TextInputEditText) view.findViewById(R.id.ed_subBusinessAreaName);
+                ed_hoursPerDay=(TextInputEditText) view.findViewById(R.id.ed_hoursPerDay);
 
 
 
 
-       // loadConsolidatedData();
+
+        loadConsolidatedData();
         return view;
     }
 
@@ -109,11 +122,16 @@ String TAG="EditEmployee";
         ed_email.setText(employeeDetails.getEmailId());
         ed_mobilenor.setText(employeeDetails.getContactNumber());
         ed_address.setText(employeeDetails.getAddress1());
+        ed_address2.setText(employeeDetails.getAddress2());
         ed_city.setText(employeeDetails.getCity());
         ed_state.setText(employeeDetails.getStateName());
         ed_zipcode.setText(String.valueOf(employeeDetails.getPostalCode()));
-
-
+        ed_dob.setText(employeeDetails.getdOB());
+        ed_joiningDate.setText(employeeDetails.getJoiningDate());
+                ed_positionName.setText(employeeDetails.getPositionName());
+                ed_businessAreaName.setText(employeeDetails.getBusinessAreaName());
+                ed_subBusinessAreaName.setText(employeeDetails.getSubBusinessAreaName());
+                ed_hoursPerDay.setText(employeeDetails.getHoursPerDay());
 
     }
     public void updateemployeedetails() {
@@ -122,10 +140,22 @@ String TAG="EditEmployee";
         employeeDetails.setEmailId(ed_email.getText().toString().trim());
         employeeDetails.setContactNumber(ed_mobilenor.getText().toString().trim());
         employeeDetails.setAddress1(ed_address.getText().toString().trim());
+        employeeDetails.setAddress2(ed_address2.getText().toString().trim());
+        employeeDetails.setdOB(ed_dob.getText().toString().trim());
         employeeDetails.setCity(ed_city.getText().toString().trim());
         employeeDetails.setStateName(ed_state.getText().toString().trim());
         if (!ed_zipcode.getText().toString().trim().isEmpty())
         employeeDetails.setPostalCode(Integer.parseInt(ed_zipcode.getText().toString().trim()));
+
+
+        employeeDetails.setJoiningDate(ed_joiningDate.getText().toString().trim());
+        employeeDetails.setPositionName(ed_positionName.getText().toString().trim());
+        employeeDetails.setBusinessAreaName(ed_businessAreaName.getText().toString().trim());
+        employeeDetails.setSubBusinessAreaName(ed_subBusinessAreaName.getText().toString().trim());
+        employeeDetails.setHoursPerDay(ed_hoursPerDay.getText().toString().trim());
+
+
+
     }
 
     void uploadDetails(){

@@ -21,7 +21,7 @@ public class EmployeeDetails {
     private String propertyOwnerName;
 
     @JsonProperty("EmployeeCode")
-    private int employeeCode;
+    private String employeeCode;
 
     @JsonProperty("EmployeeName")
     private String employeeName;
@@ -41,7 +41,7 @@ public class EmployeeDetails {
     @JsonProperty("Address1")
     private String address1;
 
-    @JsonProperty("address2")
+    @JsonProperty("Address2")
     private String address2;
 
     @JsonProperty("City")
@@ -95,11 +95,58 @@ public class EmployeeDetails {
     @JsonProperty("Photo")
     private String photo;
 
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeDetails{" +
+                "employeeId=" + employeeId +
+                ", propertyOwnerName='" + propertyOwnerName + '\'' +
+                ", employeeCode=" + employeeCode +
+                ", employeeName='" + employeeName + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", Gender='" + Gender + '\'' +
+                ", dOB='" + dOB + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", city='" + city + '\'' +
+                ", stateId=" + stateId +
+                ", postalCode=" + postalCode +
+                ", positionId=" + positionId +
+                ", businessAreaId=" + businessAreaId +
+                ", subBusinessAreaId=" + subBusinessAreaId +
+                ", scheduleId=" + scheduleId +
+                ", wage=" + wage +
+                ", hoursPerDay='" + hoursPerDay + '\'' +
+                ", joiningDate='" + joiningDate + '\'' +
+                ", status=" + status +
+                ", stateName='" + stateName + '\'' +
+                ", positionName='" + positionName + '\'' +
+                ", businessAreaName='" + businessAreaName + '\'' +
+                ", SubBusinessAreaName='" + SubBusinessAreaName + '\'' +
+                ", scheduleName='" + scheduleName + '\'' +
+                ", photo='" + photo + '\'' +
+                ", photoPath='" + photoPath + '\'' +
+                ", byteArrayPhoto=" + Arrays.toString(byteArrayPhoto) +
+               /* ", employeeLocation=" + employeeLocation +*/
+                '}';
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
     @JsonProperty("PhotoPath")
     private String photoPath;
 
-    @JsonProperty("EmployeeLocation")
-    private JSONArray employeeLocation;
+    @JsonProperty("ByteArrayPhoto")
+    private byte[] byteArrayPhoto;
+
+   /* @JsonProperty("EmployeeLocation")
+    private JSONArray employeeLocation;*/
 
     public int getEmployeeId() {
         return employeeId;
@@ -117,11 +164,11 @@ public class EmployeeDetails {
         this.propertyOwnerName = propertyOwnerName;
     }
 
-    public int getEmployeeCode() {
+    public String getEmployeeCode() {
         return employeeCode;
     }
 
-    public void setEmployeeCode(int employeeCode) {
+    public void setEmployeeCode(String employeeCode) {
         this.employeeCode = employeeCode;
     }
 
@@ -317,54 +364,20 @@ public class EmployeeDetails {
         this.photo = photo;
     }
 
-    public String getPhotoPath() {
-        return photoPath;
+    public byte[] getByteArrayPhoto() {
+        return byteArrayPhoto;
     }
 
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
+    public void setByteArrayPhoto(byte[] byteArrayPhoto) {
+        this.byteArrayPhoto = byteArrayPhoto;
     }
 
-    public JSONArray getEmployeeLocation() {
+ /*   public JSONArray getEmployeeLocation() {
         return employeeLocation;
     }
 
     public void setEmployeeLocation(JSONArray employeeLocation) {
         this.employeeLocation = employeeLocation;
-    }
+    }*/
 
-    @Override
-    public String toString() {
-        return "EmployeeDetails{" +
-                "employeeId=" + employeeId +
-                ", propertyOwnerName='" + propertyOwnerName + '\'' +
-                ", employeeCode=" + employeeCode +
-                ", employeeName='" + employeeName + '\'' +
-                ", emailId='" + emailId + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                ", Gender='" + Gender + '\'' +
-                ", dOB='" + dOB + '\'' +
-                ", address1='" + address1 + '\'' +
-                ", address2='" + address2 + '\'' +
-                ", city='" + city + '\'' +
-                ", stateId=" + stateId +
-                ", postalCode=" + postalCode +
-                ", positionId=" + positionId +
-                ", businessAreaId=" + businessAreaId +
-                ", subBusinessAreaId=" + subBusinessAreaId +
-                ", scheduleId=" + scheduleId +
-                ", wage=" + wage +
-                ", hoursPerDay='" + hoursPerDay + '\'' +
-                ", joiningDate='" + joiningDate + '\'' +
-                ", status=" + status +
-                ", stateName='" + stateName + '\'' +
-                ", positionName='" + positionName + '\'' +
-                ", businessAreaName='" + businessAreaName + '\'' +
-                ", SubBusinessAreaName='" + SubBusinessAreaName + '\'' +
-                ", scheduleName='" + scheduleName + '\'' +
-                ", photo='" + photo + '\'' +
-                ", PhotoPath=" + photoPath +
-                ", employeeLocation=" + employeeLocation +
-                '}';
-    }
 }

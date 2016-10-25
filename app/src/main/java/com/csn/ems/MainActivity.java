@@ -23,6 +23,10 @@ import com.csn.ems.fragment.LeavesFragment;
 import com.csn.ems.fragment.OrgCalendarFragment;
 import com.csn.ems.fragment.ReportsFragment;
 import com.csn.ems.fragment.TimeClockFragment;
+import com.csn.ems.model.EmployeeDetails;
+import com.squareup.picasso.Picasso;
+
+import static android.R.attr.width;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,12 +34,22 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private int currentSelectedItem;
-
+    EmployeeDetails employeeDetails = new EmployeeDetails();
     Fragment fragment;
     Class fragmentClass = null;
     String tag = null;
     TextView tvemployeename, tvemployeeemail;
     ImageView imageView_employee;
+
+    @Override
+    protected void onResume() {
+        if (employeeDetails.getPhotoPath()!=null)
+        {
+            Picasso.with(MainActivity.this)
+                    .load(employeeDetails.getPhotoPath()).into(imageView_employee);
+        }
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +61,12 @@ public class MainActivity extends AppCompatActivity
 
         tvemployeename = (TextView) findViewById(R.id.tvemployeename);
         tvemployeeemail = (TextView) findViewById(R.id.tvemployeeemail);
+
+
+
+
+
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

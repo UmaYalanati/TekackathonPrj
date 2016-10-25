@@ -80,7 +80,7 @@
                 android:layout_marginLeft="5dp">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/ed_username"
+                    android:id="@+id/ed_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Dob:"
