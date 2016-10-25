@@ -1,6 +1,9 @@
 package com.csn.ems;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.csn.ems.activity.LoginActivity;
+import com.csn.ems.callback.MenuItemSelectedCallback;
 import com.csn.ems.fragment.DashBoardFragment;
 import com.csn.ems.fragment.EmployeeDetailsFragment;
 import com.csn.ems.fragment.LeavesFragment;
@@ -26,10 +30,8 @@ import com.csn.ems.fragment.TimeClockFragment;
 import com.csn.ems.model.EmployeeDetails;
 import com.squareup.picasso.Picasso;
 
-import static android.R.attr.width;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MenuItemSelectedCallback {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -41,10 +43,11 @@ public class MainActivity extends AppCompatActivity
     TextView tvemployeename, tvemployeeemail;
     ImageView imageView_employee;
 
+    int selectedMenuItem;
+
     @Override
     protected void onResume() {
-        if (employeeDetails.getPhotoPath()!=null)
-        {
+        if (employeeDetails.getPhotoPath() != null) {
             Picasso.with(MainActivity.this)
                     .load(employeeDetails.getPhotoPath()).into(imageView_employee);
         }
@@ -61,11 +64,6 @@ public class MainActivity extends AppCompatActivity
 
         tvemployeename = (TextView) findViewById(R.id.tvemployeename);
         tvemployeeemail = (TextView) findViewById(R.id.tvemployeeemail);
-
-
-
-
-
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -145,6 +143,26 @@ public class MainActivity extends AppCompatActivity
         } else {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
         }
+
+        for (int i = 0; i < menu.size(); i++) {
+            final MenuItem menuItem = menu.getItem(i);
+            final int itemId = menuItem.getItemId();
+            final Drawable drawable = menuItem.getIcon();
+
+            int selectedColor = R.color.black;
+            if (itemId == selectedMenuItem) {
+                selectedColor = R.color.colorAccent;
+            }
+
+            if (drawable != null) {
+                drawable.mutate();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    drawable.setColorFilter(getResources().getColor(selectedColor, getTheme()), PorterDuff.Mode.SRC_ATOP);
+                } else {
+                    drawable.setColorFilter(getResources().getColor(selectedColor), PorterDuff.Mode.SRC_ATOP);
+                }
+            }
+        }
         return true;
     }
 
@@ -180,10 +198,8 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = DashBoardFragment.class;
             tag = "Dashboard";
         } else if (id == R.id.nav_employee) {
-
             fragmentClass = EmployeeDetailsFragment.class;
             tag = "Employee";
-
         } else if (id == R.id.nav_timeclock) {
             fragmentClass = TimeClockFragment.class;
             tag = "Time Lock";
@@ -235,4 +251,13 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void selectedItem(MenuItem menuItem, int itemId) {
+        if(menuItem!=null) {
+            selectedMenuItem = menuItem.getItemId();
+        }else{
+            selectedMenuItem = itemId;
+        }
+        invalidateOptionsMenu();
+    }
 }
