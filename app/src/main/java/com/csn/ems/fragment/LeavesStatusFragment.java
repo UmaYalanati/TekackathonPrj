@@ -22,6 +22,8 @@ import com.csn.ems.recyclerviewadapter.ListofLivesRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -61,6 +63,20 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String toDate = newDateFormat.format(c.getTime());
+
+        Calendar calendar = Calendar.getInstance(); // this would default to now
+        calendar.add(Calendar.DAY_OF_MONTH, -15);
+        String fromDate = newDateFormat.format(calendar.getTime());
+
+        btnendtime.setText(toDate);
+        btnstarttime.setText(fromDate);
+
+        getlistofleaves(btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
 
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
@@ -138,7 +154,7 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
                 DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
-                getlistofleaves("10/25/2016", "10/28/2016");
+                getlistofleaves(btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
                 break;
 
         }

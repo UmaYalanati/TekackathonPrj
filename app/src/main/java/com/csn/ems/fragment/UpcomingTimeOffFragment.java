@@ -53,6 +53,20 @@ EditText ed_comments;
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         btnsubmitrequest = (Button) view.findViewById(R.id.btnsubmitrequest);
         ed_comments= (EditText) view.findViewById(R.id.ed_comments);
+
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String toDate = newDateFormat.format(c.getTime());
+
+        Calendar calendar = Calendar.getInstance(); // this would default to now
+        calendar.add(Calendar.DAY_OF_MONTH, -15);
+        String fromDate = newDateFormat.format(calendar.getTime());
+
+        btnendtime.setText(toDate);
+        btnstarttime.setText(fromDate);
+
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
         btnsubmitrequest.setOnClickListener(this);

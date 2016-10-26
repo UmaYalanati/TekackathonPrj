@@ -105,7 +105,7 @@ try{
     }
     void uploadDetails(final String username_n, String password){
 
-        final ProgressDialog loading = ProgressDialog.show(LoginActivity.this, "Uploading Data", "Please wait...", false, false);
+        final ProgressDialog loading = ProgressDialog.show(LoginActivity.this, "", "Please wait...", false, false);
 
         EMSService service = ServiceGenerator.createService();
         Call<Login> employeeDetailsCall = service.getLogin(username_n,password);

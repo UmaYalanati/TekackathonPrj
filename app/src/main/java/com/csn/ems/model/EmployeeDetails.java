@@ -15,6 +15,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployeeDetails {
+
     @JsonProperty("EmployeeId")
     private int employeeId;
 

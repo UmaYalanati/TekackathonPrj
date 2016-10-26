@@ -1,5 +1,6 @@
 package com.csn.ems.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,15 +8,33 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.model.LeaveDetails;
+import com.csn.ems.model.TimeSheetDetails;
+import com.csn.ems.recyclerviewadapter.ListofLivesRecyclerViewAdapter;
 import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
+import com.csn.ems.services.ServiceGenerator;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.csn.ems.R.id.btnendtime;
+import static com.csn.ems.R.id.btnstarttime;
 
 
 /**
@@ -26,7 +45,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener 
     public static TimeSheetFragment newInstance() {
         return new TimeSheetFragment();
     }
-
+String TAG="TimeSheetFragment";
     Button btnstarttime, btnendtime;
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;
@@ -35,19 +54,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener 
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
     AppCompatSpinner spinner_listofsheet;
-    String[] subjects =
-            {
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016",
-                    "Oct 10,2016"};
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +70,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener 
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-        recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
+     //   recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
@@ -74,19 +81,21 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener 
         spinner_listofsheet.setAdapter(arrayAdapter);
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String toDate = newDateFormat.format(c.getTime());
+
+        Calendar calendar = Calendar.getInstance(); // this would default to now
+        calendar.add(Calendar.DAY_OF_MONTH, -15);
+        String fromDate = newDateFormat.format(calendar.getTime());
+
+        btnendtime.setText(toDate);
+        btnstarttime.setText(fromDate);
+        getlistofleaves(1,btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
         return view;
     }
-/*    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(year, monthOfYear, dayOfMonth);
-        setDate(c.getTime().getTime());
-    }
-    int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-            | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH
-            | DateUtils.FORMAT_ABBREV_WEEKDAY;
-    String dateString = DateUtils.formatDateTime(getActivity(),millisecond, flags);
-    textDate.setText(dateString);
-}*/
 
     @Override
     public void onClick(View v) {
@@ -100,8 +109,65 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener 
                 DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+                getlistofleaves(1,btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
                 break;
 
         }
+    }
+
+    void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+
+        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(employeeId, startdate, enddaate, status);
+
+
+        listCall.enqueue(new Callback<List<TimeSheetDetails>>() {
+            @Override
+            public void onResponse(Call<List<TimeSheetDetails>> call, Response<List<TimeSheetDetails>> response) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                        Log.e(TAG, "onResponse: " + errorMessage);
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                    }
+                } else if (response != null && response.isSuccessful()) {
+//DO SUCCESS HANDLING HERE
+                    List<TimeSheetDetails> timesheetDetails = response.body();
+                    Log.i(TAG, "onResponse: Fetched " + timesheetDetails.size() + " clients.");
+//                    for (Client client : clients) {
+//                        Log.i(TAG, "onResponse: Client: "+client);
+//                    }
+                   updateRecyclerViewForClients(timesheetDetails);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TimeSheetDetails>> call, Throwable t) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+                Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
+                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                //    Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+            }
+        });
+        loading.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.show();
+    }
+
+    private void updateRecyclerViewForClients(List<TimeSheetDetails> timesheetDetails) {
+
+        TimesheetRecyclerViewAdapter adapter = new TimesheetRecyclerViewAdapter(context, timesheetDetails);
+
+        recyclerView.setAdapter(adapter);
+        //  }
+
     }
 }

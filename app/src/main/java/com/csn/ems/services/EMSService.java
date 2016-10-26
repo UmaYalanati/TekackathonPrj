@@ -4,6 +4,7 @@ import com.csn.ems.model.CreateLeaveRequest;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.model.Login;
+import com.csn.ems.model.TimeSheetDetails;
 
 import java.util.List;
 
@@ -37,7 +38,11 @@ public interface EMSService {
     @POST("Login/ChangePassword")
     Call<Login> changePassword(@Query("UserName") String userName,@Query("Password") String password);
 
+    @GET("TimeSheet/GetTimeSheetDetails")
+    Call<List<TimeSheetDetails>> getTimeSheetDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo,@Query("status") String status);
 
+    @PUT("TimeSheet/UpdateTimeCardApproval")
+    Call<TimeSheetDetails> updateTimeCardApproval(@Body TimeSheetDetails timeSheetDetails);
     //http://www.csn.ems.com.iis3002.databasemart.net/api/Login/ChangePassword
 
     /*  @GET("client")
