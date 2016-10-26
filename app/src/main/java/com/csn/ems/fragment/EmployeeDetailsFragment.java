@@ -20,11 +20,9 @@ import java.lang.reflect.Field;
  */
 
 public class EmployeeDetailsFragment extends Fragment {
-    Fragment fragOne;
-    Class fragmentClass = null;
-    String tag = null;
 
-    MenuItem pinneditem, pinneditem1, pinneditem2;
+
+
     private MenuItemSelectedCallback menuItemSelectedCallback;
 
     int selectedItem;
@@ -76,37 +74,7 @@ public class EmployeeDetailsFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        Log.d(TAG, "onCreateOptionsMenu() called with: menu = [" + menu + "], inflater = [" + inflater + "]");
-//
-//        inflater.inflate(R.menu.main, menu);
-//
-//        for (int i = 0; i < menu.size(); i++) {
-//            final MenuItem menuItem = menu.getItem(i);
-//            final int itemId = menuItem.getItemId();
-//            final Drawable drawable = menuItem.getIcon();
-//
-//            int selectedColor = R.color.black;
-//            if (itemId == selectedItem) {
-//                Log.d(TAG, "onCreateOptionsMenu: Selected");
-//                selectedColor = R.color.colorAccent;
-//            } else {
-//                Log.d(TAG, "onCreateOptionsMenu: Unselected");
-//            }
-//
-//            if (drawable != null) {
-//                drawable.mutate();
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    drawable.setColorFilter(getContext().getResources().getColor(selectedColor, getContext().getTheme()), PorterDuff.Mode.SRC_ATOP);
-//                } else {
-//                    drawable.setColorFilter(getContext().getResources().getColor(selectedColor), PorterDuff.Mode.SRC_ATOP);
-//                }
-//            }
-//        }
-//
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,38 +85,19 @@ public class EmployeeDetailsFragment extends Fragment {
         switch (item.getItemId()) {
             //    action_editdetails
             case R.id.action_employeedetails:
-//                changeIcon(item, R.drawable.ic_employee_h);
-//
+
                 newFragment = new DisplayEmployeeDetailsFragment();
 
-//                pinneditem = item;
-//                if (pinneditem2 != null)
-//                    pinneditem2.setIcon(R.drawable.ic_password);
-//
-//                if (pinneditem1 != null)
-//                    pinneditem1.setIcon(R.drawable.ic_employee_edit);
                 break;
             case R.id.action_editdetails:
-//                changeIcon(item, R.drawable.ic_employee_edit_h);
-//
+
                 newFragment = new EditEmployeeDetailsFragment();
-//                pinneditem1 = item;
-//                if (pinneditem2 != null)
-//                    pinneditem2.setIcon(R.drawable.ic_password);
-//
-//                if (pinneditem != null)
-//                    pinneditem.setIcon(R.drawable.ic_employee);
+
                 break;
             case R.id.action_changepassword:
-//                changeIcon(item, R.drawable.ic_password_h);
-//
+
                 newFragment = new ChangePasswordFragment();
-//                pinneditem2 = item;
-//                if (pinneditem1 != null)
-//                    pinneditem1.setIcon(R.drawable.ic_employee_edit);
-//
-//                if (pinneditem != null)
-//                    pinneditem.setIcon(R.drawable.ic_employee);
+
                 break;
         }
 

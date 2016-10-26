@@ -1,15 +1,33 @@
 package com.csn.ems.activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.csn.ems.MainActivity;
 import com.csn.ems.R;
+import com.csn.ems.model.Login;
+import com.csn.ems.model.Login;
+import com.csn.ems.services.EMSService;
+import com.csn.ems.services.ServiceGenerator;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -19,10 +37,10 @@ import com.csn.ems.R;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
-
+public static String userName;
     private Button bt_submit, bt_clear;
 
-
+    Login loginset=new Login();
     private TextInputEditText userIdEditText;
     private TextInputEditText passwordEditText;
 
@@ -59,8 +77,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     passwordEditText.requestFocus();
                 } else {
-                    Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent_homescreen);
+                    try{
+                        byte[] bytesOfMessage = passwordEditText.getText().toString().trim().getBytes("UTF-8");
+try{
+
+    MessageDigest md = MessageDigest.getInstance("MD5");
+    byte[] thedigest = md.digest(bytesOfMessage);
+}catch (NoSuchAlgorithmException e){
+
+}
+                    }catch (UnsupportedEncodingException e){
+
+                    }
+
+                    uploadDetails(userIdEditText.getText().toString().trim(),passwordEditText.getText().toString().trim());
+                  /*  Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent_homescreen);*/
                 }
 
 
@@ -71,7 +103,81 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
+    void uploadDetails(final String username_n, String password){
 
+        final ProgressDialog loading = ProgressDialog.show(LoginActivity.this, "Uploading Data", "Please wait...", false, false);
+
+        EMSService service = ServiceGenerator.createService();
+        Call<Login> employeeDetailsCall = service.getLogin(username_n,password);
+        employeeDetailsCall.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                        Log.e(TAG, "onResponse: " + errorMessage);
+                        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                    }
+                } else if (response != null && response.isSuccessful()) {
+//DO SUCCESS HANDLING HERE
+
+                    Login emp = response.body();
+                    if (emp != null) {
+                        Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setTitle("Logged Successfully!")
+                                .setMessage("")
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        userName=username_n;
+                                        Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent_homescreen);
+                                    }
+                                })
+                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialog) {
+                                        //  clear_Fields();
+                                        // loadPage(1);
+                                    }
+                                })
+                                .show();
+                    } else {
+                        new AlertDialog.Builder(LoginActivity.this)
+                                .setTitle("Login  Failed!")
+                                .setMessage("We are unable to save your Loginin our database this time.\n\n" +
+                                        "Please try validating your parameters once or Try again later.")
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+                Toast.makeText(getApplicationContext(), "Error connecting with Web Services...\n" +
+                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                if (t != null) {
+                    Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+                } else {
+                }
+            }
+        });
+        loading.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.show();
+
+    }
 
 }
 

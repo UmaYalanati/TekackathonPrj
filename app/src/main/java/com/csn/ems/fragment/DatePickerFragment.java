@@ -59,7 +59,6 @@ public class DatePickerFragment extends DialogFragment implements
 
             } else {
 
-
                 mTextView.setText(new StringBuilder()
                         .append(0)
                         .append(month + 1).append("-").append(day).append("-").append(str_year)

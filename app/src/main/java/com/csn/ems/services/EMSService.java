@@ -3,6 +3,7 @@ package com.csn.ems.services;
 import com.csn.ems.model.CreateLeaveRequest;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.LeaveDetails;
+import com.csn.ems.model.Login;
 
 import java.util.List;
 
@@ -29,6 +30,15 @@ public interface EMSService {
 
     @POST("Leave/CreateLeaveRequest")
     Call<CreateLeaveRequest> createLeaveRequest(@Body CreateLeaveRequest createLeaveRequest);
+
+    @GET("Login/GetLogin")
+    Call<Login> getLogin(@Query("UserName") String userName,@Query("Password") String password);
+
+    @POST("Login/ChangePassword")
+    Call<Login> changePassword(@Query("UserName") String userName,@Query("Password") String password);
+
+
+    //http://www.csn.ems.com.iis3002.databasemart.net/api/Login/ChangePassword
 
     /*  @GET("client")
     Call<List<Client>> listClients();

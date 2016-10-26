@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.csn.ems.R;
+import com.csn.ems.callback.MenuItemSelectedCallback;
 
 /**
  * Created by uyalanat on 20-10-2016.
@@ -17,11 +19,19 @@ import com.csn.ems.R;
 
 public class TimeClockFragment extends Fragment {
     Fragment newFragment = null;
-    MenuItem pinneditem, pinneditem1, pinneditem2;
+    int selectedItem;
+String TAG="TimeClockFragment";
+    private MenuItemSelectedCallback menuItemSelectedCallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
+        if (getContext() instanceof MenuItemSelectedCallback) {
+            Log.d(TAG, "onCreateView: Instance matched");
+            menuItemSelectedCallback = (MenuItemSelectedCallback) getContext();
+        } else {
+            Log.d(TAG, "onCreateView: Not instance");
+        }
 
         if (savedInstanceState == null) {
             try {
@@ -36,6 +46,11 @@ public class TimeClockFragment extends Fragment {
 // Commit the transaction
                 transaction.commit();
 
+                selectedItem = R.id.action_upcomingtimeoff;
+
+                if (menuItemSelectedCallback != null) {
+                    menuItemSelectedCallback.selectedItem(null, selectedItem);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -47,50 +62,31 @@ public class TimeClockFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecting action bar app icon/title
-        // getActivity().invalidateOptionsMenu();
+        menuItemSelectedCallback.selectedItem(item, item.getItemId());
+        selectedItem = item.getItemId();
+
         switch (item.getItemId()) {
             //    action_editdetails
             case R.id.action_checkin:
                 // item.getTitle().equals()
-                changeIcon(item, R.drawable.ic_time_clock_h);
-                pinneditem = item;
+
                 newFragment = new CheckinCheckoutFragment();
 
-                if (pinneditem2 != null)
-                    pinneditem2.setIcon(R.drawable.ic_timesheetapproval);
 
-                if (pinneditem1 != null)
-                    pinneditem1.setIcon(R.drawable.ic_time_sheet);
 
 
                 break;
             case R.id.action_timesheet:
-                changeIcon(item, R.drawable.ic_time_sheet_h);
+
 
                 newFragment = new TimeSheetFragment();
-                //   getActivity().invalidateOptionsMenu();
-                pinneditem1 = item;
 
-                if (pinneditem != null)
-                    pinneditem.setIcon(R.drawable.ic_time_clock);
-
-                if (pinneditem2 != null)
-                    pinneditem2.setIcon(R.drawable.ic_timesheetapproval);
 
                 break;
             case R.id.action_approvedtimesheet:
-                changeIcon(item, R.drawable.ic_timesheetapproval_h);
+
 
                 newFragment = new ApprovedTimesheetFragment();
-                pinneditem2 = item;
-
-
-                if (pinneditem != null)
-                    pinneditem.setIcon(R.drawable.ic_time_clock);
-
-                if (pinneditem1 != null)
-                    pinneditem1.setIcon(R.drawable.ic_time_sheet);
 
 
                 break;
@@ -128,16 +124,5 @@ public class TimeClockFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public void changeIcon(final MenuItem item, final int drawableResourceId) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
 
-
-                if (item != null) {
-                    item.setIcon(drawableResourceId);
-                }
-            }
-        });
-    }
 }
