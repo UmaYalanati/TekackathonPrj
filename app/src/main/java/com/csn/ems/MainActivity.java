@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity
 
         displaydetails();
         if (savedInstanceState == null) {
+          //  onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
             fragmentClass = DashBoardFragment.class;
             tag = "Dashboard";
             try {
@@ -299,7 +300,8 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = EmployeeDetailsFragment.class;
             tag = "Settings";
         }
-
+      //
+         onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
         if (fragmentClass != null) {
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
@@ -388,6 +390,9 @@ int empid=Integer.parseInt(SharedPreferenceUtils
     }
     public void setEmployeeDetails(EmployeeDetails employeeDetails) {
         if (employeeDetails.getPhotoPath() != null) {
+           //  Bitmap bmp=null;
+          //  image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
+         ///   image_employee.setImageBitmap(getBitmapFromURL(employeeDetails.getPhotoPath()));
           //  Picasso.with(MainActivity.this)
             //        .load("http://"+employeeDetails.getPhotoPath()).into((ImageView) navigationView.findViewById(R.id.imageView_employee));
          //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
@@ -397,6 +402,11 @@ int empid=Integer.parseInt(SharedPreferenceUtils
 
         if (employeeDetails.getEmailId()!=null)
             tvemployeeemail.setText(employeeDetails.getEmailId());*/
+    }
+
+    @Override
+    public boolean navigateUpTo(Intent upIntent) {
+        return super.navigateUpTo(upIntent);
     }
 
     public static Bitmap getBitmapFromURL(String src) {

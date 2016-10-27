@@ -157,6 +157,26 @@ try{
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.employeeId,
                                         String.valueOf(emp.getEmployeeId())).commitSplash();
+
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.employeename,
+                                        String.valueOf(emp.getEmployeeName())).commitSplash();
+
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.emaailid,
+                                        String.valueOf(emp.getEmailId())).commitSplash();
+
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.photoPath,
+                                        String.valueOf(emp.getPhotoPath())).commitSplash();
+
+
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setTitle("Logged Successfully!")
@@ -169,7 +189,7 @@ try{
                                         Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent_homescreen);
 
-//Toast.makeText(LoginActivity.this,emp.getEmployeeId(),Toast.LENGTH_SHORT).show();
+
                                     }
                                 })
                                 .setOnCancelListener(new DialogInterface.OnCancelListener() {

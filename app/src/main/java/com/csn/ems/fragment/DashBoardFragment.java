@@ -5,58 +5,107 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
 import com.csn.ems.activity.LoginActivity;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.InTakeMasterDetails;
 import com.csn.ems.services.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.csn.ems.R.id.btnendtime;
+import static com.csn.ems.R.id.btnstarttime;
+import static com.csn.ems.R.id.spinner_listofsheet;
+
 /**
  * Created by uyalanat on 20-10-2016.
  */
 
-public class DashBoardFragment extends Fragment {
+public class DashBoardFragment extends Fragment implements View.OnClickListener{
 String TAG="DashBoardFragment";
-   /* RecyclerView recyclerView;
-    RelativeLayout relativeLayout;
-    RecyclerView.Adapter recyclerViewAdapter;
-    RecyclerView.LayoutManager recylerViewLayoutManager;
-
-    String[] subjects =
-            {
-                    "Hi Uma",
-                    "Time Clock",
-                    "Schedule"
-            };*/
-
+   CardView card_view;
+    ImageView imgprofilepic;
+    TextView tvemployeename,tvcompanyname,tvcheckintime,tvschedule,tvnorofdays,tvmonth,tvday;
+FrameLayout fragment_container;
     InTakeMasterDetails inTakeMasterDetails=new InTakeMasterDetails();
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dashboardscreen, container, false);
+        card_view=(CardView) view.findViewById(R.id.card_view);
+                imgprofilepic=(ImageView) view.findViewById(R.id.imgprofilepic);
+                tvemployeename=(TextView)view.findViewById(R.id.tvemployeename);
+                tvcompanyname=(TextView)view.findViewById(R.id.tvcompanyname);
+                tvcheckintime=(TextView)view.findViewById(R.id.tvcheckintime);
+                tvschedule=(TextView)view.findViewById(R.id.tvschedule);
+                tvnorofdays=(TextView)view.findViewById(R.id.tvnorofdays);
+                tvmonth=(TextView)view.findViewById(R.id.tvmonth);
+                tvday=(TextView)view.findViewById(R.id.tvday);
+        fragment_container=(FrameLayout) view.findViewById(R.id.fragment_container);
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMM");
+        SimpleDateFormat day_date = new SimpleDateFormat("dd");
+        String month_name = month_date.format(cal.getTime());
+        String day_name = day_date.format(cal.getTime());
+        tvmonth.setText(month_name);
+        tvday.setText(day_name);
+        card_view.setOnClickListener(this);
+if (SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.employeename)!=null)
+        tvemployeename.setText("Hi "+SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeename).toString().trim());
 
-      /*  recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.checkintime)!=null)
+            tvschedule.setText(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.checkintime).toString().trim());
 
-        recylerViewLayoutManager = new LinearLayoutManager(getActivity());
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.photoPath)!=null) {
+            //  Bitmap bmp=null;
+            //  image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
+            ///   image_employee.setImageBitmap(getBitmapFromURL(employeeDetails.getPhotoPath()));
+            Picasso.with(getActivity())
+                   .load("http://"+SharedPreferenceUtils
+                           .getInstance(getActivity())
+                           .getSplashCacheItem(
+                                   EmsConstants.photoPath).toString().trim()).into(imgprofilepic);
+            //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
+        }else{
+            imgprofilepic.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);
+        }
 
-        recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-        recyclerViewAdapter = new DashboardRecyclerViewAdapter(getActivity(), subjects);
 
-        recyclerView.setAdapter(recyclerViewAdapter);*/
-
-       // displaydetails();
         return view;
     }
 
@@ -120,5 +169,49 @@ String TAG="DashBoardFragment";
         loading.setCancelable(false);
         loading.setIndeterminate(true);
         loading.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment newFragment = null;
+        switch (v.getId()) {
+            case R.id.card_view:
+              //  Toast.makeText(getActivity(),"uma",1000).show();
+                try {
+                    fragment_container.setVisibility(View.VISIBLE);
+                    newFragment=  EmployeeDetailsFragment.newInstance();;
+                    // FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack if needed
+                    transaction.replace(R.id.fragment_container, newFragment);
+
+// Commit the transaction
+                    transaction.commit();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+           /* case btnendtime:
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
+
+                endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+                if (spinner_listofsheet.getSelectedItem().toString().equals("Select")){
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
+                }else{
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
+                }
+
+                break;*/
+
+        }
     }
 }

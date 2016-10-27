@@ -21,7 +21,9 @@ import java.lang.reflect.Field;
 
 public class EmployeeDetailsFragment extends Fragment {
 
-
+    public static EmployeeDetailsFragment newInstance() {
+        return new EmployeeDetailsFragment();
+    }
 
     private MenuItemSelectedCallback menuItemSelectedCallback;
 

@@ -8,7 +8,10 @@ public class EmsConstants {
     public static String username="username";
     public static String employeeId="EmployeeId";
     public static int empId;
-   // public static String username="username";
+   public static String employeename="employeename";
+    public static String checkintime="checkintime";
+    public static String emaailid="emaailid";
+    public static String photoPath="photoPath";
     public static final String SHARED_PREF_SETTINGS = "Settings";
     public static final String SHARED_PREF_LOGIN = "Login";
 

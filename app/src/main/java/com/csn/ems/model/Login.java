@@ -22,6 +22,13 @@ public class Login {
     @JsonProperty("locationName")
     private String locationName;
 
+    @JsonProperty("OrganizationName")
+    private String organizationName;
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
     @Override
     public String toString() {
         return "Login{" +
@@ -29,9 +36,14 @@ public class Login {
                 ", employeeName='" + employeeName + '\'' +
                 ", locationId=" + locationId +
                 ", locationName='" + locationName + '\'' +
+                ", organizationName='" + organizationName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", photoPath='" + photoPath + '\'' +
                 '}';
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
     @JsonProperty("EmailId")
