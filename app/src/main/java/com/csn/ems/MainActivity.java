@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
 
         displaydetails();
         if (savedInstanceState == null) {
-          //  onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
             fragmentClass = DashBoardFragment.class;
             tag = "Dashboard";
             try {
@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
+
         } else if (currentSelectedItem == R.id.nav_employee) {
             getMenuInflater().inflate(R.menu.main, menu);
             /* MenuItem item = menu.findItem(R.id.action_some);
@@ -280,6 +281,7 @@ public class MainActivity extends AppCompatActivity
         currentSelectedItem = id;
         if (id == nav_dashboard) {
             fragmentClass = DashBoardFragment.class;
+          //  onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
             tag = "Dashboard";
         } else if (id == R.id.nav_employee) {
             fragmentClass = EmployeeDetailsFragment.class;
@@ -301,7 +303,7 @@ public class MainActivity extends AppCompatActivity
             tag = "Settings";
         }
       //
-         onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
+      //   onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
         if (fragmentClass != null) {
             try {
                 fragment = (Fragment) fragmentClass.newInstance();

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -27,6 +28,7 @@ import com.csn.ems.services.ServiceGenerator;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -90,10 +92,38 @@ String TAG="TimeSheetFragment";
 
         btnendtime.setText(toDate);
         btnstarttime.setText(fromDate);
+
+      //  spinner_listofsheet.setoni
+
+        spinner_listofsheet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if (selectedItem.equals("Select")){
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
+                }else{
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
+                }
+            } // to close the onItemSelected
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
         getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
+
+
+
         return view;
     }
 
@@ -109,6 +139,8 @@ String TAG="TimeSheetFragment";
                 DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+               // Date date2 = sdf.parse(getTodaysDate());
+               // Date date1 = sdf.parse(SharedPreferenceUtils.getInstance(context).getSettingsCacheItem(WatscoConstants.RATEUS_DATE).toString());
                 if (spinner_listofsheet.getSelectedItem().toString().equals("Select")){
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
