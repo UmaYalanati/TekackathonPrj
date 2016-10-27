@@ -61,7 +61,7 @@
                     android:id="@+id/userId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+android:text="APEmp001"
                     android:hint="UserName"
                     android:inputType="text" />
 
@@ -74,7 +74,7 @@
                 app:passwordToggleEnabled="false">
 
                 <android.support.design.widget.TextInputEditText
-
+android:text="csn@123"
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

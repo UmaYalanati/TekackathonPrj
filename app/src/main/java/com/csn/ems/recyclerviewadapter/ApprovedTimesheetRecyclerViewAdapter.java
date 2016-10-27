@@ -133,6 +133,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                 public void onShow(DialogInterface dialog) {
                     Button allocateButton = allocationDialog.getButton(DialogInterface.BUTTON_POSITIVE);
                     Button clearButton = allocationDialog.getButton(DialogInterface.BUTTON_NEUTRAL);
+                    Button rejectButton = allocationDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 
                     allocateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -140,14 +141,16 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                             boolean isFocusRequested = false;
                             String allocatedDate = allocationDateTextField.getText().toString();
                            /// updateemployeedetails();
-
+                            allocationDialog.dismiss();
+                            updateemployeedetails( timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
                         }
                     });
 
-                    clearButton.setOnClickListener(new View.OnClickListener() {
+                    rejectButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // allocationDialog.dismiss();
+                            updateemployeedetails( timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
+                             allocationDialog.dismiss();
                         }
                     });
                 }

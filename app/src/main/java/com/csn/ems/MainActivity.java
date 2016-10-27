@@ -1,5 +1,6 @@
 package com.csn.ems;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 
 import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.callback.MenuItemSelectedCallback;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.fragment.DashBoardFragment;
 import com.csn.ems.fragment.EmployeeDetailsFragment;
 import com.csn.ems.fragment.LeavesFragment;
@@ -31,7 +34,14 @@ import com.csn.ems.fragment.OrgCalendarFragment;
 import com.csn.ems.fragment.ReportsFragment;
 import com.csn.ems.fragment.TimeClockFragment;
 import com.csn.ems.model.EmployeeDetails;
+import com.csn.ems.services.ServiceGenerator;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.csn.ems.R.id.nav_dashboard;
 
@@ -53,10 +63,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        if (employeeDetails.getPhotoPath() != null) {
-            Picasso.with(MainActivity.this)
-                    .load(employeeDetails.getPhotoPath()).into(imageView_employee);
-        }
+
         super.onResume();
     }
 
@@ -71,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         tvemployeename = (TextView) findViewById(R.id.tvemployeename);
         tvemployeeemail = (TextView) findViewById(R.id.tvemployeeemail);
 
+        displaydetails();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -326,5 +334,61 @@ public class MainActivity extends AppCompatActivity
             selectedMenuItem = itemId;
         }
         invalidateOptionsMenu();
+    }
+    void displaydetails(){
+        final ProgressDialog loading = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please wait...", false, false);
+int empid=Integer.parseInt(SharedPreferenceUtils
+        .getInstance(getApplicationContext())
+        .getSplashCacheItem(
+                EmsConstants.employeeId).toString().trim());
+        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
+
+        listCall.enqueue(new Callback<EmployeeDetails>() {
+            @Override
+            public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                        Log.e(TAG, "onResponse: " + errorMessage);
+                        Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                    }
+                } else if (response != null && response.isSuccessful()) {
+                    //DO SUCCESS HANDLING HERE
+                    employeeDetails = response.body();
+                    Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
+                    setEmployeeDetails();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeDetails> call, Throwable t) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+                Toast.makeText(MainActivity.this, "Error connecting with Web Services...\n" +
+                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+            }
+        });
+        loading.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.show();
+    }
+    public void setEmployeeDetails() {
+        if (employeeDetails.getPhotoPath() != null) {
+            Picasso.with(MainActivity.this)
+                    .load(employeeDetails.getPhotoPath()).into(imageView_employee);
+        }
+        if (employeeDetails.getEmployeeName()!=null)
+       tvemployeename.setText(employeeDetails.getEmployeeName());
+
+        if (employeeDetails.getEmailId()!=null)
+        tvemployeeemail.setText(employeeDetails.getEmailId());
     }
 }

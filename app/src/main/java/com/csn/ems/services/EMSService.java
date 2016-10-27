@@ -2,6 +2,7 @@ package com.csn.ems.services;
 
 import com.csn.ems.model.CreateLeaveRequest;
 import com.csn.ems.model.EmployeeDetails;
+import com.csn.ems.model.InTakeMasterDetails;
 import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.model.Login;
 import com.csn.ems.model.TimeSheetDetails;
@@ -43,6 +44,11 @@ public interface EMSService {
 
     @PUT("TimeSheet/UpdateTimeCardApproval")
     Call<TimeSheetDetails> updateTimeCardApproval(@Body TimeSheetDetails timeSheetDetails);
+
+    @GET("InTakeMaster/GetInTakeMasterDetails")
+    Call<InTakeMasterDetails> getInTakeMasterDetails(@Body InTakeMasterDetails inTakeMasterDetails);
+
+
     //http://www.csn.ems.com.iis3002.databasemart.net/api/Login/ChangePassword
 
     /*  @GET("client")

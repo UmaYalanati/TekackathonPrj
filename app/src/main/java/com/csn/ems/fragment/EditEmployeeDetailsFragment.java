@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
@@ -88,8 +90,11 @@ String TAG="EditEmployee";
 
     public void loadConsolidatedData() {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
-
-        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(1);
+        int empid=Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {
             @Override

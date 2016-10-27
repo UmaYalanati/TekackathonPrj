@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import com.csn.ems.MainActivity;
 import com.csn.ems.R;
-import com.csn.ems.model.Login;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.Login;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
@@ -28,6 +29,9 @@ import java.security.NoSuchAlgorithmException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.csn.ems.emsconstants.EmsConstants.empId;
+import static com.csn.ems.emsconstants.EmsConstants.employeeId;
 
 
 /**
@@ -127,8 +131,19 @@ try{
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
 
-                    Login emp = response.body();
+                 final   Login emp = response.body();
                     if (emp != null) {
+                        empId=emp.getEmployeeId();
+                       SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.username,
+                                        username_n).commitSplash();
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.employeeId,
+                                        String.valueOf(emp.getEmployeeId())).commitSplash();
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setTitle("Logged Successfully!")
@@ -137,8 +152,11 @@ try{
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         userName=username_n;
+
                                         Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent_homescreen);
+
+//Toast.makeText(LoginActivity.this,emp.getEmployeeId(),Toast.LENGTH_SHORT).show();
                                     }
                                 })
                                 .setOnCancelListener(new DialogInterface.OnCancelListener() {

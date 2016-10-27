@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.recyclerviewadapter.ListofLivesRecyclerViewAdapter;
@@ -93,7 +95,10 @@ String TAG="TimeSheetFragment";
 
         btnendtime.setText(toDate);
         btnstarttime.setText(fromDate);
-        getlistofleaves(1,btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+        getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),null);
         return view;
     }
 
@@ -109,7 +114,18 @@ String TAG="TimeSheetFragment";
                 DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
-                getlistofleaves(1,btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+                if (spinner_listofsheet.getSelectedItem().toString().equals("Select")){
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),null);
+                }else{
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
+                }
+
                 break;
 
         }
