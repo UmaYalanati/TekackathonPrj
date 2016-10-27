@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
 import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
@@ -81,7 +83,10 @@ String TAG="TimesheetFragment";
         btnendtime.setText(toDate);
         btnstarttime.setText(fromDate);
 
-        getlistofleaves(1,btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+        getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
 
        // recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);

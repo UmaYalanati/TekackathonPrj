@@ -20,9 +20,7 @@ import android.widget.Toast;
 import com.csn.ems.R;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
-import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.model.TimeSheetDetails;
-import com.csn.ems.recyclerviewadapter.ListofLivesRecyclerViewAdapter;
 import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
 
@@ -34,9 +32,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.csn.ems.R.id.btnendtime;
-import static com.csn.ems.R.id.btnstarttime;
 
 
 /**
@@ -98,7 +93,7 @@ String TAG="TimeSheetFragment";
         getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),null);
+                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
         return view;
     }
 
@@ -118,7 +113,7 @@ String TAG="TimeSheetFragment";
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
                             .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),null);
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
                 }else{
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())

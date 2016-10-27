@@ -51,19 +51,32 @@ public static String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loginscreen);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if (SharedPreferenceUtils
+                .getInstance(LoginActivity.this)
+                .getSplashCacheItem(
+                        EmsConstants.employeeId)!=null&&!SharedPreferenceUtils
+                .getInstance(LoginActivity.this)
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim().isEmpty()){
+            Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent_homescreen);
+        }else{
+            setContentView(R.layout.loginscreen);
 
-        bt_clear = (Button) findViewById(R.id.btn_clear);
-        bt_submit = (Button) findViewById(R.id.btn_submit);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        userIdEditText = (TextInputEditText) findViewById(R.id.userId);
-        passwordEditText = (TextInputEditText) findViewById(R.id.password);
+            bt_clear = (Button) findViewById(R.id.btn_clear);
+            bt_submit = (Button) findViewById(R.id.btn_submit);
 
-        bt_submit.setOnClickListener(this);
-        bt_clear.setOnClickListener(this);
+            userIdEditText = (TextInputEditText) findViewById(R.id.userId);
+            passwordEditText = (TextInputEditText) findViewById(R.id.password);
+
+            bt_submit.setOnClickListener(this);
+            bt_clear.setOnClickListener(this);
+        }
+
 
 
     }

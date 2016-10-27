@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by uyalanat on 27-10-2016.
  */
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+//@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InTakeMasterDetails {
 

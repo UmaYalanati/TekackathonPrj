@@ -2,6 +2,8 @@ package com.csn.ems;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -38,12 +40,16 @@ import com.csn.ems.services.ServiceGenerator;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.csn.ems.R.id.nav_dashboard;
+import static java.lang.System.load;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MenuItemSelectedCallback {
@@ -54,7 +60,7 @@ public class MainActivity extends AppCompatActivity
     Class fragmentClass = null;
     String tag = null;
     TextView tvemployeename, tvemployeeemail;
-    ImageView imageView_employee;
+    ImageView image_employee;
     int selectedMenuItem;
     boolean doubleBackToExitPressedOnce = false;
     private DrawerLayout drawerLayout;
@@ -73,12 +79,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        imageView_employee = (ImageView) findViewById(R.id.imageView_employee);
 
-        tvemployeename = (TextView) findViewById(R.id.tvemployeename);
-        tvemployeeemail = (TextView) findViewById(R.id.tvemployeeemail);
-
-        displaydetails();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,7 +89,12 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
 
+        tvemployeename = (TextView)navigationView. findViewById(R.id.tvemployeename);
+        tvemployeeemail = (TextView)navigationView. findViewById(R.id.tvemployeeemail);
+
+        displaydetails();
         if (savedInstanceState == null) {
             fragmentClass = DashBoardFragment.class;
             tag = "Dashboard";
@@ -362,7 +368,7 @@ int empid=Integer.parseInt(SharedPreferenceUtils
                     //DO SUCCESS HANDLING HERE
                     employeeDetails = response.body();
                     Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
-                    setEmployeeDetails();
+                    setEmployeeDetails(employeeDetails);
                 }
             }
 
@@ -380,15 +386,34 @@ int empid=Integer.parseInt(SharedPreferenceUtils
         loading.setIndeterminate(true);
         loading.show();
     }
-    public void setEmployeeDetails() {
+    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
         if (employeeDetails.getPhotoPath() != null) {
-            Picasso.with(MainActivity.this)
-                    .load(employeeDetails.getPhotoPath()).into(imageView_employee);
+          //  Picasso.with(MainActivity.this)
+            //        .load("http://"+employeeDetails.getPhotoPath()).into((ImageView) navigationView.findViewById(R.id.imageView_employee));
+         //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
         }
-        if (employeeDetails.getEmployeeName()!=null)
-       tvemployeename.setText(employeeDetails.getEmployeeName());
+      /*  if (employeeDetails.getEmployeeName()!=null)
+            tvemployeename.setText(employeeDetails.getEmployeeName());
 
         if (employeeDetails.getEmailId()!=null)
-        tvemployeeemail.setText(employeeDetails.getEmailId());
+            tvemployeeemail.setText(employeeDetails.getEmailId());*/
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            Log.e("src",src);
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            Log.e("Bitmap","returned");
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Exception",e.getMessage());
+            return null;
+        }
     }
 }

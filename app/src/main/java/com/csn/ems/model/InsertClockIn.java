@@ -1,15 +1,15 @@
 package com.csn.ems.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by uyalanat on 26-10-2016.
+ * Created by uyalanat on 27-10-2016.
  */
-//@JsonInclude(JsonInclude.Include.NON_EMPTY)
+//
+// @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TimeSheetDetails {
+public class InsertClockIn {
 
     @JsonProperty("TimeSheetId")
     private int timeSheetId;
@@ -27,16 +27,16 @@ public class TimeSheetDetails {
     private String checkOut;
 
     @JsonProperty("CheckInLattitude")
-    private double  checkInLattitude;
+    private double checkInLattitude;
 
     @JsonProperty("CheckOutLattitude")
-    private double  checkOutLattitude;
+    private double checkOutLattitude;
 
     @JsonProperty("CheckOutLongitude")
-    private double  checkOutLongitude;
+    private double checkOutLongitude;
 
     @JsonProperty("CheckInLongitude")
-    private double  checkInLongitude;
+    private double checkInLongitude;
 
     @JsonProperty("AssignedTo")
     private String assignedTo;
@@ -50,29 +50,27 @@ public class TimeSheetDetails {
     @JsonProperty("Status")
     private String status;
 
-
-
-    public int getTimeSheetId() {
-        return timeSheetId;
-    }
-
     @Override
     public String toString() {
-        return "TimeSheetDetails{" +
+        return "InsertClockIn{" +
                 "timeSheetId=" + timeSheetId +
                 ", employeeId=" + employeeId +
                 ", workingDate='" + workingDate + '\'' +
                 ", checkIn='" + checkIn + '\'' +
                 ", checkOut='" + checkOut + '\'' +
-                ", checkInLattitude='" + checkInLattitude + '\'' +
-                ", checkOutLattitude='" + checkOutLattitude + '\'' +
-                ", checkOutLongitude='" + checkOutLongitude + '\'' +
-                ", checkInLongitude='" + checkInLongitude + '\'' +
+                ", checkInLattitude=" + checkInLattitude +
+                ", checkOutLattitude=" + checkOutLattitude +
+                ", checkOutLongitude=" + checkOutLongitude +
+                ", checkInLongitude=" + checkInLongitude +
                 ", assignedTo='" + assignedTo + '\'' +
                 ", approvalType='" + approvalType + '\'' +
                 ", note='" + note + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public int getTimeSheetId() {
+        return timeSheetId;
     }
 
     public void setTimeSheetId(int timeSheetId) {
@@ -111,35 +109,35 @@ public class TimeSheetDetails {
         this.checkOut = checkOut;
     }
 
-    public double  getCheckInLattitude() {
+    public double getCheckInLattitude() {
         return checkInLattitude;
     }
 
-    public void setCheckInLattitude(double  checkInLattitude) {
+    public void setCheckInLattitude(double checkInLattitude) {
         this.checkInLattitude = checkInLattitude;
     }
 
-    public double  getCheckOutLattitude() {
+    public double getCheckOutLattitude() {
         return checkOutLattitude;
     }
 
-    public void setCheckOutLattitude(double  checkOutLattitude) {
+    public void setCheckOutLattitude(double checkOutLattitude) {
         this.checkOutLattitude = checkOutLattitude;
     }
 
-    public double  getCheckOutLongitude() {
+    public double getCheckOutLongitude() {
         return checkOutLongitude;
     }
 
-    public void setCheckOutLongitude(double  checkOutLongitude) {
+    public void setCheckOutLongitude(double checkOutLongitude) {
         this.checkOutLongitude = checkOutLongitude;
     }
 
-    public double  getCheckInLongitude() {
+    public double getCheckInLongitude() {
         return checkInLongitude;
     }
 
-    public void setCheckInLongitude(double  checkInLongitude) {
+    public void setCheckInLongitude(double checkInLongitude) {
         this.checkInLongitude = checkInLongitude;
     }
 
@@ -174,7 +172,4 @@ public class TimeSheetDetails {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
-
 }
