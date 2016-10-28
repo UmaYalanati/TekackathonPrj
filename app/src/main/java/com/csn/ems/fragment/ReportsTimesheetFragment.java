@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
@@ -21,6 +23,8 @@ import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
+
+import org.joda.time.LocalDate;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,8 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.id.btnendtime;
-import static com.csn.ems.R.id.btnstarttime;
+import static com.csn.ems.R.id.spinner_listofsheet;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -41,6 +44,24 @@ import static com.csn.ems.R.id.btnstarttime;
 
 public class ReportsTimesheetFragment  extends Fragment {
 
+    public static final int JANUARY = 1;
+
+    public static final int DECEMBER = 12;
+
+    public static final int FIRST_OF_THE_MONTH = 1;
+    static int month;
+    String[] str = {"January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"};
     public static ReportsTimesheetFragment newInstance() {
         return new ReportsTimesheetFragment();
     }
@@ -50,8 +71,10 @@ public class ReportsTimesheetFragment  extends Fragment {
     RelativeLayout relativeLayout;
     ApprovedTimesheetRecyclerViewAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-    AppCompatSpinner spinner_listofsheet;
+    //AppCompatSpinner spinner_listofsheet;
 
+    LinearLayout ll_next,ll_back;
+    TextView tvmonthname;
     String TAG="TimesheetFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,52 +82,75 @@ public class ReportsTimesheetFragment  extends Fragment {
 
         context = getActivity();
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
-
+        tvmonthname= (TextView) view.findViewById(R.id.tvmonthname);
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-
+        ll_next = (LinearLayout) view.findViewById(R.id.ll_next);
+                ll_back = (LinearLayout) view.findViewById(R.id.ll_back);
 
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
         //  recyclerViewAdapter = new ApprovedTimesheetRecyclerViewAdapter(context, subjects);
+        Date date = new Date();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        month = cal.get(Calendar.MONTH);
+     final   int year = cal.get(Calendar.YEAR);
+        getLastDayOfMonth(year,month);
+        System.out.println(new SimpleDateFormat("MMMM").format(cal.getTime()));
+        tvmonthname.setText(new SimpleDateFormat("MMMM").format(cal.getTime()));
+
+       // spinner_listofsheet = (AppCompatSpinner) view.findViewById(spinner_listofsheet);
+
+      //  spinner_listofsheet.setVisibility(View.GONE);
+
+        ll_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (month<12) {
+                    month++;
+                    String monthString;
+                    if(month<str.length) {
+                        monthString = str[month - 1];
+                        tvmonthname.setText(monthString);
+                    }
+                    else
+                        monthString = "Invalid month";
+                }
+                            else {
+                    month=0;
+                }
 
 
-        Calendar c = Calendar.getInstance();
-        System.out.println("Current time => " + c.getTime());
 
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String toDate = newDateFormat.format(c.getTime());
+                getLastDayOfMonth(year,month);
+                }
 
-        Calendar calendar = Calendar.getInstance(); // this would default to now
-        calendar.add(Calendar.DAY_OF_MONTH, -15);
-        String fromDate = newDateFormat.format(calendar.getTime());
+        });
 
+        ll_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (month>=0) {
+                    month--;
+                }
+                getLastDayOfMonth(year,month);
 
+                String monthString;
+                if(month<str.length) {
+                    monthString = str[month - 1];
+                    tvmonthname.setText(monthString);
+                }
+                else
+                    monthString = "Invalid month";
 
-     //   getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-           //     .getInstance(getActivity())
-         //       .getSplashCacheItem(
-              //          EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+            }
 
-        // recyclerView.setAdapter(recyclerViewAdapter);
-        spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
-
-        spinner_listofsheet.setVisibility(View.GONE);
-
-
-      /*  Date begining, ending;
-        Calendar calendar_start =BusinessUnitUtility.getCalendarForNow();
-        calendar_start.set(Calendar.DAY_OF_MONTH,calendar_start.getActualMinimum(Calendar.DAY_OF_MONTH));
-        begining = calendar_start.getTime();
-        String start= DateDifference.dateToString(begining,"dd-MMM-yyyy");//sdf.format(begining);
+        });
 
 
-        //            for End Date of month
-        Calendar calendar_end = BusinessUnitUtility.getCalendarForNow();
-        calendar_end.set(Calendar.DAY_OF_MONTH,calendar_end.getActualMaximum(Calendar.DAY_OF_MONTH));
-        ending = calendar_end.getTime();
-        String end=DateDifference.dateToString(ending,"dd-MMM-yyyy");*/
         return view;
     }
     void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
@@ -161,6 +207,22 @@ public class ReportsTimesheetFragment  extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
         //  }
 
+    }
+    public void  getLastDayOfMonth(final int month, final int year) {
+        int lastDay = 0;
+        int firstDay = 0;
+
+        if ((month >= JANUARY) && (month <= DECEMBER)) {
+            LocalDate aDate = new LocalDate(year, month, FIRST_OF_THE_MONTH);
+
+            lastDay = aDate.dayOfMonth().getMaximumValue();
+            firstDay = aDate.dayOfMonth().getMinimumValue();
+        }
+
+        getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim()),String.valueOf(firstDay),String.valueOf(lastDay),"ALL");
     }
 }
 

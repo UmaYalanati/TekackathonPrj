@@ -78,6 +78,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
 
+    compile 'net.danlew:android.joda:2.9.4.2'
 
     //Jackson APIs
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.0.rc1'
