@@ -33,17 +33,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.id.btnendtime;
-import static com.csn.ems.R.id.btnstarttime;
-import static com.csn.ems.R.id.spinner_listofsheet;
-
 /**
  * Created by uyalanat on 20-10-2016.
  */
 
 public class DashBoardFragment extends Fragment implements View.OnClickListener {
     String TAG = "DashBoardFragment";
-    CardView card_view,card_view_timeclcok,card_view_orgcalendar;
+    CardView card_view, card_view_timeclcok, card_view_orgcalendar;
     ImageView imgprofilepic;
     TextView tvemployeename, tvcompanyname, tvcheckintime, tvschedule, tvnorofdays, tvmonth, tvday;
     FrameLayout fragment_container;
@@ -55,8 +51,8 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dashboardscreen, container, false);
         card_view = (CardView) view.findViewById(R.id.card_view);
-        card_view_timeclcok= (CardView) view.findViewById(R.id.card_view_timeclcok);
-        card_view_orgcalendar= (CardView) view.findViewById(R.id.card_view_orgcalendar);
+        card_view_timeclcok = (CardView) view.findViewById(R.id.card_view_timeclcok);
+        card_view_orgcalendar = (CardView) view.findViewById(R.id.card_view_orgcalendar);
         imgprofilepic = (ImageView) view.findViewById(R.id.imgprofilepic);
         tvemployeename = (TextView) view.findViewById(R.id.tvemployeename);
         tvcompanyname = (TextView) view.findViewById(R.id.tvcompanyname);
@@ -111,16 +107,18 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
             imgprofilepic.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);
         }
 
-if (SharedPreferenceUtils
-        .getInstance(getActivity())
-        .getSplashCacheItem(
-                EmsConstants.organizationame)!=null)
-{
-    tvcompanyname.setText("with "+SharedPreferenceUtils
-            .getInstance(getActivity())
-            .getSplashCacheItem(
-                    EmsConstants.organizationame).toString());
-}
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.organizationame) != null) {
+            tvcompanyname.setText("with " + SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.organizationame).toString());
+        }
+
+        navigationDrawerCallback = (NavigationDrawerCallback) getContext();
+
         return view;
     }
 
@@ -193,27 +191,18 @@ if (SharedPreferenceUtils
 
     @Override
     public void onClick(View v) {
-        Fragment newFragment = null;
-        switch (v.getId()) {
-            case R.id.card_view:
-
-
-                if (navigationDrawerCallback != null) {
+        if (navigationDrawerCallback != null) {
+            switch (v.getId()) {
+                case R.id.card_view:
                     navigationDrawerCallback.navigateToItem(R.id.nav_employee);
-                }
-
-                break;
-            case R.id.card_view_timeclcok:
-                if (navigationDrawerCallback != null) {
+                    break;
+                case R.id.card_view_timeclcok:
                     navigationDrawerCallback.navigateToItem(R.id.nav_timeclock);
-                }
-
-                break;
-            case R.id.card_view_orgcalendar:
-                if (navigationDrawerCallback != null) {
+                    break;
+                case R.id.card_view_orgcalendar:
                     navigationDrawerCallback.navigateToItem(R.id.nav_orgcalendar);
-                }
-break;
+                    break;
+            }
         }
     }
 }
