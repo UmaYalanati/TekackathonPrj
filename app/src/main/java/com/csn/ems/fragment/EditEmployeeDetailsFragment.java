@@ -4,10 +4,12 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -88,6 +90,8 @@ public class EditEmployeeDetailsFragment extends Fragment {
         ed_subBusinessAreaName = (TextInputEditText) view.findViewById(R.id.ed_subBusinessAreaName);
         ed_hoursPerDay = (TextInputEditText) view.findViewById(R.id.ed_hoursPerDay);
 
+        Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
+        circleImageView.setImageDrawable(drawable);
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +101,6 @@ public class EditEmployeeDetailsFragment extends Fragment {
         });
 
         loadConsolidatedData();
-
 
         btnupdateemployee.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,9 +319,13 @@ public class EditEmployeeDetailsFragment extends Fragment {
                         @Override
                         public void call(Uri uri) {
                             Log.d(TAG, "call() called with: " + "uri = [" + uri + "]");
-                            Glide.with(EditEmployeeDetailsFragment.this).load(uri).centerCrop().placeholder(R.drawable.ic_menu_camera)
-                                    .crossFade()
+                            Glide.with(EditEmployeeDetailsFragment.this)
+                                    .load(uri)
+                                    .dontAnimate()
+                                    .error(R.drawable.ic_menu_camera)
+                                    .fallback(R.drawable.ic_menu_camera)
                                     .into(circleImageView);
+
                             try {
                                 InputStream iStream = getActivity().getContentResolver().openInputStream(uri);
 //                                byte[] bytes = ImageCompressor.compressImage(getBytes(iStream));
@@ -336,9 +343,13 @@ public class EditEmployeeDetailsFragment extends Fragment {
                     RxImagePicker.with(getContext()).requestImage(Sources.GALLERY).subscribe(new Action1<Uri>() {
                         @Override
                         public void call(Uri uri) {
-                            Glide.with(EditEmployeeDetailsFragment.this).load(uri).centerCrop().placeholder(R.drawable.ic_menu_camera)
-                                    .crossFade()
+                            Glide.with(EditEmployeeDetailsFragment.this)
+                                    .load(uri)
+                                    .dontAnimate()
+                                    .error(R.drawable.ic_menu_camera)
+                                    .fallback(R.drawable.ic_menu_camera)
                                     .into(circleImageView);
+
                             InputStream iStream;
                             try {
                                 iStream = getActivity().getContentResolver().openInputStream(uri);

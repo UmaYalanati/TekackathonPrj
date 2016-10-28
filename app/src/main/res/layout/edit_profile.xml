@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
@@ -26,29 +27,30 @@
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
-<View
-    android:layout_marginTop="6dp"
-    android:background="@color/gray_dark"
-    android:layout_width="match_parent"
-    android:layout_height="0.1dp"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="6dp"
+                android:background="@color/gray_dark" />
 
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_gravity="center"
                 android:id="@+id/circleImageView"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
                 android:scaleType="centerCrop"
                 app:civ_border_color="@color/gray"
                 app:civ_border_width="1dp"
-                android:background="@drawable/ic_dashboard_profile_pic" />
+                tools:src="@drawable/ic_dashboard_profile_pic" />
 
             <android.support.design.widget.TextInputLayout
-                android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp">
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/ed_Name"
@@ -101,10 +103,10 @@
                     android:id="@+id/ed_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Dob:"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Dob:"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -138,6 +140,7 @@
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,12 +151,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,6 +172,7 @@
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -237,10 +242,10 @@
                     android:id="@+id/ed_joiningDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="JoiningDate:"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="JoiningDate:"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -254,10 +259,10 @@
                     android:id="@+id/ed_positionName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="PositionName:"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="PositionName:"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -271,12 +276,12 @@
                     android:id="@+id/ed_businessAreaName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="BusinessAreaName:"
-                    android:focusableInTouchMode="false"
+                    android:clickable="false"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:focusableInTouchMode="false"
 
-                    android:clickable="false"
+                    android:hint="BusinessAreaName:"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -290,10 +295,10 @@
                     android:id="@+id/ed_subBusinessAreaName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SubBusinessAreaName:"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="SubBusinessAreaName:"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -307,25 +312,21 @@
                     android:id="@+id/ed_hoursPerDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="HoursPerDay:"
-                    android:focusableInTouchMode="false"
                     android:cursorVisible="false"
                     android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="HoursPerDay:"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
 
 
-
-
-
-           <!-- <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinner_language"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="13sp" />-->
-
+            <!-- <android.support.v7.widget.AppCompatSpinner
+                 android:id="@+id/spinner_language"
+                 style="@style/Widget.AppCompat.Spinner.Underlined"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:textSize="13sp" />-->
 
 
             <Button

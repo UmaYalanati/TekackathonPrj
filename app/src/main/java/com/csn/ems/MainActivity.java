@@ -16,12 +16,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +45,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,16 +61,19 @@ public class MainActivity extends AppCompatActivity
     Class fragmentClass = null;
     String tag = null;
     TextView tvemployeename, tvemployeeemail;
-    ImageView image_employee;
+    CircleImageView image_employee;
     int selectedMenuItem;
     boolean doubleBackToExitPressedOnce = false;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private int currentSelectedItem;
 
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     @Override
     protected void onResume() {
-
         super.onResume();
     }
 
@@ -80,7 +84,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,7 +92,9 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        image_employee = (ImageView) navigationView.findViewById(R.id.imageView_employee);
+
+        image_employee = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView_employee);
+//        image_employee.setImageResource(R.drawable.coffee_cup);
 
         tvemployeename = (TextView) navigationView.findViewById(R.id.tvemployeename);
         tvemployeeemail = (TextView) navigationView.findViewById(R.id.tvemployeeemail);
@@ -160,6 +165,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void updateImage(Bitmap bitmap) {
+        Log.d(TAG, "updateImage() called with: bitmap sized [" + bitmap.getByteCount() + "] bytes.");
         if (image_employee != null) {
             image_employee.setImageBitmap(bitmap);
         }
