@@ -38,6 +38,7 @@ import com.csn.ems.fragment.ReportsFragment;
 import com.csn.ems.fragment.TimeClockFragment;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.services.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,7 +94,45 @@ public class MainActivity extends AppCompatActivity
         tvemployeename = (TextView) navigationView.findViewById(R.id.tvemployeename);
         tvemployeeemail = (TextView) navigationView.findViewById(R.id.tvemployeeemail);
 
-        displaydetails();
+        if (SharedPreferenceUtils
+                .getInstance(getApplicationContext())
+                .getSplashCacheItem(
+                        EmsConstants.employeename)!=null&&!SharedPreferenceUtils
+                .getInstance(getApplicationContext())
+                .getSplashCacheItem(
+                        EmsConstants.employeename).toString().trim().isEmpty()){
+            tvemployeename.setText(SharedPreferenceUtils
+                    .getInstance(getApplicationContext())
+                    .getSplashCacheItem(
+                            EmsConstants.employeename).toString().trim());
+        }
+
+        if (SharedPreferenceUtils
+                .getInstance(getApplicationContext())
+                .getSplashCacheItem(
+                        EmsConstants.emaailid)!=null&&!SharedPreferenceUtils
+                .getInstance(getApplicationContext())
+                .getSplashCacheItem(
+                        EmsConstants.emaailid).toString().trim().isEmpty()){
+            tvemployeeemail.setText(SharedPreferenceUtils
+                    .getInstance(getApplicationContext())
+                    .getSplashCacheItem(
+                            EmsConstants.emaailid).toString().trim());
+        }
+
+
+        if (SharedPreferenceUtils
+                .getInstance(getApplicationContext())
+                .getSplashCacheItem(
+                        EmsConstants.photoPath)!=null&&!SharedPreferenceUtils
+                .getInstance(getApplicationContext())
+                .getSplashCacheItem(
+                        EmsConstants.photoPath).toString().trim().isEmpty()){
+            Picasso.with(MainActivity.this)
+                    .load("http://"+employeeDetails.getPhotoPath()).into(image_employee);
+        }
+
+
         if (savedInstanceState == null) {
 //            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
             fragmentClass = DashBoardFragment.class;

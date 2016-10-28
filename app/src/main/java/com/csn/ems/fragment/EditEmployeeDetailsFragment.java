@@ -2,36 +2,39 @@ package com.csn.ems.fragment;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
-import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.csn.ems.R;
+import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
+import com.mlsdev.rximagepicker.RxImagePicker;
+import com.mlsdev.rximagepicker.Sources;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.csn.ems.R.id.ed_Name;
-import static com.csn.ems.R.id.ed_NickName;
+import rx.functions.Action1;
 
 
 
@@ -40,7 +43,7 @@ import static com.csn.ems.R.id.ed_NickName;
  */
 
 public class EditEmployeeDetailsFragment extends Fragment {
-
+    de.hdodenhof.circleimageview.CircleImageView circleImageView;
     EmployeeDetails employeeDetails = new EmployeeDetails();
 String TAG="EditEmployee";
     Button btnupdateemployee;
@@ -51,7 +54,8 @@ String TAG="EditEmployee";
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.edit_profile, container, false);
-
+        ;
+        circleImageView=( de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.circleImageView);
         ed_gender=(TextInputEditText) view.findViewById(R.id.ed_gender);
         btnupdateemployee=(Button) view.findViewById(R.id.btnupdateemployee);
                 ed_Name=(TextInputEditText) view.findViewById(R.id.ed_Name);
@@ -74,7 +78,12 @@ String TAG="EditEmployee";
 
 
 
-
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadImage();
+            }
+        });
 
         loadConsolidatedData();
 
@@ -202,6 +211,27 @@ String TAG="EditEmployee";
 //DO SUCCESS HANDLING HERE
 
                         EmployeeDetails emp = response.body();
+
+
+                        SharedPreferenceUtils
+                                .getInstance(getActivity())
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.employeename,
+                                        String.valueOf(emp.getEmployeeName())).commitSplash();
+
+                        SharedPreferenceUtils
+                                .getInstance(getActivity())
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.emaailid,
+                                        String.valueOf(emp.getEmailId())).commitSplash();
+
+                        SharedPreferenceUtils
+                                .getInstance(getActivity())
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.photoPath,
+                                        String.valueOf(emp.getPhotoPath())).commitSplash();
+
+
                         if (emp != null) {
                             Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                             new AlertDialog.Builder(getContext())
@@ -250,5 +280,75 @@ String TAG="EditEmployee";
             loading.setIndeterminate(true);
             loading.show();
 
+    }
+    void loadImage(){
+        final CharSequence[] items = {"Take Photo", "Choose from Library",
+                "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (items[item].equals("Take Photo")) {
+                    RxImagePicker.with(getContext()).requestImage(Sources.CAMERA).subscribe(new Action1<Uri>() {
+                        @Override
+                        public void call(Uri uri) {
+                            Log.d(TAG, "call() called with: " + "uri = [" + uri + "]");
+                            Glide.with(EditEmployeeDetailsFragment.this).load(uri).centerCrop().placeholder(R.drawable.ic_menu_camera)
+                                    .crossFade()
+                                    .into(circleImageView);
+                            try {
+                                InputStream iStream = getActivity().getContentResolver().openInputStream(uri);
+//                                byte[] bytes = ImageCompressor.compressImage(getBytes(iStream));
+                                byte[] bytes = getBytes(iStream);
+                                employeeDetails.setByteArrayPhoto(bytes);
+                              //  getHoarding().setHoardingImage(bytes);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } else if (items[item].equals("Choose from Library")) {
+                    RxImagePicker.with(getContext()).requestImage(Sources.GALLERY).subscribe(new Action1<Uri>() {
+                        @Override
+                        public void call(Uri uri) {
+                            Glide.with(EditEmployeeDetailsFragment.this).load(uri).centerCrop().placeholder(R.drawable.ic_menu_camera)
+                                    .crossFade()
+                                    .into(circleImageView);
+                            InputStream iStream;
+                            try {
+                                iStream = getActivity().getContentResolver().openInputStream(uri);
+//                                byte[] bytes = ImageCompressor.compressImage(getBytes(iStream));
+                                byte[] bytes = getBytes(iStream);
+                                employeeDetails.setByteArrayPhoto(bytes);
+                              //  getHoarding().setHoardingImage(bytes);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
     }
 }
