@@ -104,8 +104,16 @@ if (SharedPreferenceUtils
             imgprofilepic.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);
         }
 
-
-
+if (SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.organizationame)!=null)
+{
+    tvcompanyname.setText("with "+SharedPreferenceUtils
+            .getInstance(getActivity())
+            .getSplashCacheItem(
+                    EmsConstants.organizationame).toString());
+}
         return view;
     }
 

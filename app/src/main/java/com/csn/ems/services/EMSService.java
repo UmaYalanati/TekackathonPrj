@@ -1,5 +1,6 @@
 package com.csn.ems.services;
 
+import com.csn.ems.model.BreakDetails;
 import com.csn.ems.model.CreateLeaveRequest;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.InTakeMasterDetails;
@@ -62,7 +63,8 @@ public interface EMSService {
     @PUT("TimeSheet/UpdateBreakOut")
     Call<InsertBreakIn> updateBreakOut(@Body InsertBreakIn insertBreakIn);
 
-
+    @GET("TimeSheet/GetBreakDetails")
+    Call<List<BreakDetails>> getBreakDetails(@Query("employeeId") int employeeId);
 
     /*  @GET("client")
     Call<List<Client>> listClients();

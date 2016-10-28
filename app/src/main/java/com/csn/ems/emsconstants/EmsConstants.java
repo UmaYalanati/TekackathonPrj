@@ -12,6 +12,7 @@ public class EmsConstants {
     public static String checkintime="checkintime";
     public static String emaailid="emaailid";
     public static String photoPath="photoPath";
+    public static String organizationame="organizationame";
     public static final String SHARED_PREF_SETTINGS = "Settings";
     public static final String SHARED_PREF_LOGIN = "Login";
 

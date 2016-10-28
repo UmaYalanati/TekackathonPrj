@@ -17,12 +17,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
+import com.csn.ems.model.BreakDetails;
 import com.csn.ems.model.InsertBreakIn;
 import com.csn.ems.model.InsertClockIn;
 import com.csn.ems.services.EMSService;
@@ -49,7 +51,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     protected LocationManager locationManager;
     protected LocationListener locationListener;
 
-
+    ListView listView_breakDetails;
     String provider;
     protected String latitude,longitude;
     protected boolean gps_enabled,network_enabled;
@@ -65,6 +67,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
+        listView_breakDetails= (ListView) view.findViewById(R.id.listView_breakDetails);
         tvcurrentdate = (TextView) view.findViewById(R.id.tvcurrentdate);
         tvcheckoutcurrentdate= (TextView) view.findViewById(R.id.tvcheckoutcurrentdate);
         tvcurrenttime = (TextView) view.findViewById(R.id.tvcurrenttime);
@@ -345,7 +348,53 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
         }
     }
-    
+    public void getbreaktimes(){
+        {
+            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+            int empid=Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
+            Call<BreakDetails> listCall = ServiceGenerator.createService().getBreakDetails(empid);
+
+            listCall.enqueue(new Callback<BreakDetails>() {
+                @Override
+                public void onResponse(Call<BreakDetails> call, Response<BreakDetails> response) {
+                    if (loading.isShowing()) {
+                        loading.dismiss();
+                    }
+
+                    if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                        try {
+                            String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                            Log.e(TAG, "onResponse: " + errorMessage);
+                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                        }
+                    } else if (response != null && response.isSuccessful()) {
+                        //DO SUCCESS HANDLING HERE
+                        employeeDetails = response.body();
+                        Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
+                        setBreakDetails();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BreakDetails> call, Throwable t) {
+                    if (loading.isShowing()) {
+                        loading.dismiss();
+                    }
+                    Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
+                            "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+                }
+            });
+            loading.setCancelable(false);
+            loading.setIndeterminate(true);
+            loading.show();
+        }
+    }
     public void doWork() {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
