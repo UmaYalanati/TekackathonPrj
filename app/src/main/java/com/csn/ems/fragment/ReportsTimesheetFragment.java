@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,13 +35,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.id.spinner_listofsheet;
-
 /**
  * Created by uyalanat on 23-10-2016.
  */
 
-public class ReportsTimesheetFragment  extends Fragment {
+public class ReportsTimesheetFragment extends Fragment {
 
     public static final int JANUARY = 1;
 
@@ -62,9 +59,11 @@ public class ReportsTimesheetFragment  extends Fragment {
             "October",
             "November",
             "December"};
+
     public static ReportsTimesheetFragment newInstance() {
         return new ReportsTimesheetFragment();
     }
+
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;
     RecyclerView recyclerView;
@@ -73,19 +72,20 @@ public class ReportsTimesheetFragment  extends Fragment {
     RecyclerView.LayoutManager recylerViewLayoutManager;
     //AppCompatSpinner spinner_listofsheet;
 
-    LinearLayout ll_next,ll_back;
+    LinearLayout ll_next, ll_back;
     TextView tvmonthname;
-    String TAG="TimesheetFragment";
+    String TAG = "TimesheetFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.reporttimesheet, container, false);
 
         context = getActivity();
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
-        tvmonthname= (TextView) view.findViewById(R.id.tvmonthname);
+        tvmonthname = (TextView) view.findViewById(R.id.tvmonthname);
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         ll_next = (LinearLayout) view.findViewById(R.id.ll_next);
-                ll_back = (LinearLayout) view.findViewById(R.id.ll_back);
+        ll_back = (LinearLayout) view.findViewById(R.id.ll_back);
 
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
@@ -97,55 +97,57 @@ public class ReportsTimesheetFragment  extends Fragment {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         month = cal.get(Calendar.MONTH);
-     final   int year = cal.get(Calendar.YEAR);
-        getLastDayOfMonth(month+1,year);
+        final int year = cal.get(Calendar.YEAR);
+        getLastDayOfMonth(month + 1, year);
         System.out.println(new SimpleDateFormat("MMMM").format(cal.getTime()));
         tvmonthname.setText(new SimpleDateFormat("MMMM").format(cal.getTime()));
 
-       // spinner_listofsheet = (AppCompatSpinner) view.findViewById(spinner_listofsheet);
+        // spinner_listofsheet = (AppCompatSpinner) view.findViewById(spinner_listofsheet);
 
-      //  spinner_listofsheet.setVisibility(View.GONE);
+        //  spinner_listofsheet.setVisibility(View.GONE);
 
         ll_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (month<12) {
-                    month++;
+
+                if (month < 11) {
+                   // month++;
+                    month=month+1;
                     String monthString;
-                    if(month<str.length) {
-                        monthString = str[month - 1];
+                    if (month+1 < str.length) {
+                        monthString = str[month+1 - 1];
                         tvmonthname.setText(monthString);
-                    }
-                    else
+                    } else {
                         monthString = "Invalid month";
-                }
-                            else {
-                    month=0;
+                    }
+                } else {
+                    //listen i am telling for november i am getting 0
+                    month = 0;
                 }
 
 
-
-                getLastDayOfMonth(year,month);
-                }
+                getLastDayOfMonth(month+1,year);
+            }
 
         });
 
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (month>=0) {
+                if (month >= 0) {
                     month--;
+                    month=month-1;
                 }
-                getLastDayOfMonth(month+1,year);
+                getLastDayOfMonth(month + 1, year);
 
                 String monthString;
-                if(month<str.length) {
+                if (month < str.length) {
                     monthString = str[month - 1];
                     tvmonthname.setText(monthString);
-                }
-                else
+                } else {
                     monthString = "Invalid month";
-
+                }
+               // getLastDayOfMonth(month+1,year);
             }
 
         });
@@ -153,7 +155,8 @@ public class ReportsTimesheetFragment  extends Fragment {
 
         return view;
     }
-    void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
+
+    void getlistofleaves(int employeeId, String startdate, String enddaate, String status) {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
         Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(employeeId, startdate, enddaate, status);
@@ -208,7 +211,8 @@ public class ReportsTimesheetFragment  extends Fragment {
         //  }
 
     }
-    public void  getLastDayOfMonth(final int month, final int year) {
+
+    public void getLastDayOfMonth(final int month, final int year) {
         int lastDay = 0;
         int firstDay = 0;
 
@@ -222,7 +226,7 @@ public class ReportsTimesheetFragment  extends Fragment {
         getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()),String.valueOf(firstDay),String.valueOf(lastDay),"ALL");
+                        EmsConstants.employeeId).toString().trim()), String.valueOf(firstDay), String.valueOf(lastDay), "ALL");
     }
 }
 
