@@ -33,13 +33,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.csn.ems.R.id.btnendtime;
+import static com.csn.ems.R.id.btnstarttime;
+import static com.csn.ems.R.id.spinner_listofsheet;
+
 /**
  * Created by uyalanat on 20-10-2016.
  */
 
 public class DashBoardFragment extends Fragment implements View.OnClickListener {
     String TAG = "DashBoardFragment";
-    CardView card_view;
+    CardView card_view,card_view_timeclcok,card_view_orgcalendar;
     ImageView imgprofilepic;
     TextView tvemployeename, tvcompanyname, tvcheckintime, tvschedule, tvnorofdays, tvmonth, tvday;
     FrameLayout fragment_container;
@@ -51,6 +55,8 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dashboardscreen, container, false);
         card_view = (CardView) view.findViewById(R.id.card_view);
+        card_view_timeclcok= (CardView) view.findViewById(R.id.card_view_timeclcok);
+        card_view_orgcalendar= (CardView) view.findViewById(R.id.card_view_orgcalendar);
         imgprofilepic = (ImageView) view.findViewById(R.id.imgprofilepic);
         tvemployeename = (TextView) view.findViewById(R.id.tvemployeename);
         tvcompanyname = (TextView) view.findViewById(R.id.tvcompanyname);
@@ -68,6 +74,8 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         tvmonth.setText(month_name);
         tvday.setText(day_name);
         card_view.setOnClickListener(this);
+        card_view_timeclcok.setOnClickListener(this);
+        card_view_orgcalendar.setOnClickListener(this);
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -120,7 +128,11 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         switch (item.getItemId()) {
             //    action_editdetails
             case R.id.action_signout:
-
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.employeeId,
+                                "").commitSplash();
                 Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent_homescreen);
                 getActivity().finish();
@@ -181,46 +193,23 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         Fragment newFragment = null;
         switch (v.getId()) {
             case R.id.card_view:
-                //  Toast.makeText(getActivity(),"uma",1000).show();
-//                try {
-//                    fragment_container.setVisibility(View.VISIBLE);
-//                    newFragment = EmployeeDetailsFragment.newInstance();
-//                    ;
-//                    // FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//// Replace whatever is in the fragment_container view with this fragment,
-//// and add the transaction to the back stack if needed
-//                    transaction.replace(R.id.fragment_container, newFragment);
-//
-//// Commit the transaction
-//                    transaction.commit();
 
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
 
                 if (navigationDrawerCallback != null) {
                     navigationDrawerCallback.navigateToItem(R.id.nav_employee);
                 }
 
                 break;
-           /* case btnendtime:
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
-
-                endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
-                if (spinner_listofsheet.getSelectedItem().toString().equals("Select")){
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
-                }else{
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
+            case R.id.card_view_timeclcok:
+                if (navigationDrawerCallback != null) {
+                    navigationDrawerCallback.navigateToItem(R.id.nav_timeclock);
                 }
 
-                break;*/
+                break;
+            case R.id.card_view_orgcalendar:
+                if (navigationDrawerCallback != null) {
+                    navigationDrawerCallback.navigateToItem(R.id.nav_orgcalendar);
+                }
 
         }
     }

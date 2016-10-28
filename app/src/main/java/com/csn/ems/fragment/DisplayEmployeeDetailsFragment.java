@@ -67,6 +67,12 @@ TextView tvhrsperday,tvdob;
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.employeeId,
+                                "").commitSplash();
+
                 Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent_homescreen);
                 getActivity().finish();

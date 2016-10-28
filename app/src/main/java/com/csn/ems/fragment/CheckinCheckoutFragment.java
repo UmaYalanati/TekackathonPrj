@@ -3,6 +3,7 @@ package com.csn.ems.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.InsertBreakIn;
@@ -230,6 +232,11 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                                         }
                                     })
                                     .show();
+                            SharedPreferenceUtils
+                                    .getInstance(getActivity())
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.timesheetId,
+                                            String.valueOf(emp.getTimeSheetId())).commitSplash();
                         } else {
                             new AlertDialog.Builder(getContext())
                                     .setTitle("InsertClockIn Creation Failed!")
@@ -385,6 +392,14 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 checkIn(true);
                 break;
             case R.id.btncheckout:
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.timesheetId,
+                                "").commitSplash();
+                Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent_homescreen);
+                getActivity().finish();
                 layout_checkin.setVisibility(View.VISIBLE);
                 layout_checkout.setVisibility(View.GONE);
                 checkIn(false);
