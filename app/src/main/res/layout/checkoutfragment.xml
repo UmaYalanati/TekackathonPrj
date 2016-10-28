@@ -126,7 +126,7 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
-    <com.es.CEdev.NestedListView
+    <com.csn.ems.emsconstants.NestedListView
         android:layout_marginTop="5dp"
         android:id="@+id/listView_breakDetails"
         android:layout_width="fill_parent"
@@ -135,7 +135,7 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:scrollbars="@null" >
-    </com.es.CEdev.NestedListView>
+    </com.csn.ems.emsconstants.NestedListView>
     <LinearLayout
         android:id="@+id/ll_startbreak"
         android:layout_width="match_parent"

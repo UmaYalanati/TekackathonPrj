@@ -29,6 +29,8 @@ import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.BreakDetails;
 import com.csn.ems.model.InsertBreakIn;
 import com.csn.ems.model.InsertClockIn;
+import com.csn.ems.model.TimeSheetDetails;
+import com.csn.ems.recyclerviewadapter.BreaklistAdapter;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 
@@ -37,6 +39,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +52,7 @@ import retrofit2.Response;
 public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener , LocationListener {
 
     String TAG="CheckoutFragment";
-
+    BreakDetails breakDetails=new BreakDetails();
     protected LocationManager locationManager;
     protected LocationListener locationListener;
 
@@ -120,7 +123,17 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         } catch (SecurityException e) {
             Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
         }
-
+if (SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.timesheetId)!=null&&!SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.timesheetId).toString().trim().isEmpty()){
+    getbreaktimes();
+    layout_checkin.setVisibility(View.GONE);
+    layout_checkout.setVisibility(View.VISIBLE);
+                }
 
         return view;
     }
@@ -362,11 +375,16 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim());
-            Call<BreakDetails> listCall = ServiceGenerator.createService().getBreakDetails(empid);
+           /* int timesheetid=Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.timesheetId).toString().trim());*/
+            int timesheetid=1;
+            Call<List<BreakDetails>> listCall = ServiceGenerator.createService().getBreakDetails(timesheetid,empid);
 
-            listCall.enqueue(new Callback<BreakDetails>() {
+            listCall.enqueue(new Callback<List<BreakDetails>>() {
                 @Override
-                public void onResponse(Call<BreakDetails> call, Response<BreakDetails> response) {
+                public void onResponse(Call<List<BreakDetails>> call, Response<List<BreakDetails>> response) {
                     if (loading.isShowing()) {
                         loading.dismiss();
                     }
@@ -381,14 +399,16 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                         }
                     } else if (response != null && response.isSuccessful()) {
                         //DO SUCCESS HANDLING HERE
-                        employeeDetails = response.body();
-                        Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
-                        setBreakDetails();
+                      //  breakDetails = response.body();
+
+                        List<BreakDetails> breakDetails = response.body();
+                        Log.i(TAG, "onResponse: Fetched " + breakDetails + " PropertyTypes.");
+                        setBreakDetails(breakDetails);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<BreakDetails> call, Throwable t) {
+                public void onFailure(Call<List<BreakDetails>> call, Throwable t) {
                     if (loading.isShowing()) {
                         loading.dismiss();
                     }
@@ -401,6 +421,10 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             loading.setIndeterminate(true);
             loading.show();
         }
+    }
+    void setBreakDetails(List<BreakDetails> breakDetails){
+        BreaklistAdapter adapter=new BreaklistAdapter(getActivity(),breakDetails);
+        listView_breakDetails.setAdapter(adapter);
     }
     public void doWork() {
         getActivity().runOnUiThread(new Runnable() {
@@ -446,9 +470,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                         .editSplash()
                         .addSplashCacheItem(EmsConstants.timesheetId,
                                 "").commitSplash();
-                Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent_homescreen);
-                getActivity().finish();
+
                 layout_checkin.setVisibility(View.VISIBLE);
                 layout_checkout.setVisibility(View.GONE);
                 checkIn(false);

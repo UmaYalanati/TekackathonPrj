@@ -64,7 +64,7 @@ public interface EMSService {
     Call<InsertBreakIn> updateBreakOut(@Body InsertBreakIn insertBreakIn);
 
     @GET("TimeSheet/GetBreakDetails")
-    Call<List<BreakDetails>> getBreakDetails(@Query("employeeId") int employeeId);
+    Call<List<BreakDetails>> getBreakDetails(@Query("timeSheetId") int timeSheetId,@Query("employeeId") int employeeId);
 
     /*  @GET("client")
     Call<List<Client>> listClients();

@@ -213,7 +213,7 @@ if (SharedPreferenceUtils
                 if (navigationDrawerCallback != null) {
                     navigationDrawerCallback.navigateToItem(R.id.nav_orgcalendar);
                 }
-
+break;
         }
     }
 }
