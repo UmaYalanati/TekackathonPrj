@@ -111,13 +111,16 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
             imgprofilepic.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);
         }
 
-        if (getContext() instanceof NavigationDrawerCallback) {
-            Log.d(TAG, "onCreateView: Context instance of NavigationDrawerCallback");
-            navigationDrawerCallback = (NavigationDrawerCallback) getContext();
-        } else {
-            Log.d(TAG, "onCreateView: Context NOT instance of NavigationDrawerCallback");
-        }
-
+if (SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.organizationame)!=null)
+{
+    tvcompanyname.setText("with "+SharedPreferenceUtils
+            .getInstance(getActivity())
+            .getSplashCacheItem(
+                    EmsConstants.organizationame).toString());
+}
         return view;
     }
 

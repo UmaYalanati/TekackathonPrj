@@ -175,6 +175,11 @@ try{
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.photoPath,
                                         String.valueOf(emp.getPhotoPath())).commitSplash();
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.organizationame,
+                                        String.valueOf(emp.getOrganizationName())).commitSplash();
 
 
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
