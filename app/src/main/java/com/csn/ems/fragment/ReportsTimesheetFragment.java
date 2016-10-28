@@ -98,7 +98,7 @@ public class ReportsTimesheetFragment  extends Fragment {
         cal.setTime(date);
         month = cal.get(Calendar.MONTH);
      final   int year = cal.get(Calendar.YEAR);
-        getLastDayOfMonth(year,month);
+        getLastDayOfMonth(month+1,year);
         System.out.println(new SimpleDateFormat("MMMM").format(cal.getTime()));
         tvmonthname.setText(new SimpleDateFormat("MMMM").format(cal.getTime()));
 
@@ -136,7 +136,7 @@ public class ReportsTimesheetFragment  extends Fragment {
                 if (month>=0) {
                     month--;
                 }
-                getLastDayOfMonth(year,month);
+                getLastDayOfMonth(month+1,year);
 
                 String monthString;
                 if(month<str.length) {
