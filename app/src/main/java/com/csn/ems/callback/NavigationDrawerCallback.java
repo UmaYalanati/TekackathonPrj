@@ -1,5 +1,7 @@
 package com.csn.ems.callback;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Mayank Tiwari on 28/10/16.
  */
@@ -7,5 +9,7 @@ package com.csn.ems.callback;
 public interface NavigationDrawerCallback {
 
     public void navigateToItem(int itemId);
+
+    public void updateImage(Bitmap bitmap);
 
 }

@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity
         if (SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.employeename)!=null&&!SharedPreferenceUtils
+                        EmsConstants.employeename) != null && !SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.employeename).toString().trim().isEmpty()){
+                        EmsConstants.employeename).toString().trim().isEmpty()) {
             tvemployeename.setText(SharedPreferenceUtils
                     .getInstance(getApplicationContext())
                     .getSplashCacheItem(
@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity
         if (SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.emaailid)!=null&&!SharedPreferenceUtils
+                        EmsConstants.emaailid) != null && !SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.emaailid).toString().trim().isEmpty()){
+                        EmsConstants.emaailid).toString().trim().isEmpty()) {
             tvemployeeemail.setText(SharedPreferenceUtils
                     .getInstance(getApplicationContext())
                     .getSplashCacheItem(
@@ -124,12 +124,12 @@ public class MainActivity extends AppCompatActivity
         if (SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.photoPath)!=null&&!SharedPreferenceUtils
+                        EmsConstants.photoPath) != null && !SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.photoPath).toString().trim().isEmpty()){
+                        EmsConstants.photoPath).toString().trim().isEmpty()) {
             Picasso.with(MainActivity.this)
-                    .load("http://"+employeeDetails.getPhotoPath()).into(image_employee);
+                    .load("http://" + employeeDetails.getPhotoPath()).into(image_employee);
         }
 
 
@@ -156,6 +156,13 @@ public class MainActivity extends AppCompatActivity
         }
 
         postInit();
+    }
+
+    @Override
+    public void updateImage(Bitmap bitmap) {
+        if (image_employee != null) {
+            image_employee.setImageBitmap(bitmap);
+        }
     }
 
     @Override
