@@ -322,8 +322,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                             Glide.with(EditEmployeeDetailsFragment.this)
                                     .load(uri)
                                     .dontAnimate()
-                                    .error(R.drawable.ic_menu_camera)
-                                    .fallback(R.drawable.ic_menu_camera)
+                                    .error(R.drawable.ic_dashboard_profile_pic)
                                     .into(circleImageView);
 
                             try {
@@ -346,8 +345,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                             Glide.with(EditEmployeeDetailsFragment.this)
                                     .load(uri)
                                     .dontAnimate()
-                                    .error(R.drawable.ic_menu_camera)
-                                    .fallback(R.drawable.ic_menu_camera)
+                                    .error(R.drawable.ic_dashboard_profile_pic)
                                     .into(circleImageView);
 
                             InputStream iStream;

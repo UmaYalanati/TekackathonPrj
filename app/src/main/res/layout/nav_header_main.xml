@@ -13,15 +13,14 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_employee"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing" />
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/tvemployeename"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="EMS"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
