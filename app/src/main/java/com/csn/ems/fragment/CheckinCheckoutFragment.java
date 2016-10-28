@@ -3,7 +3,6 @@ package com.csn.ems.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,23 +22,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
-import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.BreakDetails;
 import com.csn.ems.model.InsertBreakIn;
 import com.csn.ems.model.InsertClockIn;
-import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.recyclerviewadapter.BreaklistAdapter;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,7 +60,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     protected String latitude,longitude;
     protected boolean gps_enabled,network_enabled;
 
-    TextView tvcurrentdate, tvcurrenttime,tvtotalahrs,tvcheckoutcurrentdate;
+    TextView tvcheckintime, tvcurrentdate, tvcurrenttime,tvtotalahrs,tvcheckoutcurrentdate;
     Button btncheckin, btncheckout, btncontinueshift;
     ImageButton imgbtnbreak;
     LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak;
@@ -73,6 +72,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
         listView_breakDetails= (ListView) view.findViewById(R.id.listView_breakDetails);
+        tvcheckintime= (TextView) view.findViewById(R.id.tvcheckintime);
         tvcurrentdate = (TextView) view.findViewById(R.id.tvcurrentdate);
         tvcheckoutcurrentdate= (TextView) view.findViewById(R.id.tvcheckoutcurrentdate);
         tvcurrenttime = (TextView) view.findViewById(R.id.tvcurrenttime);
@@ -122,6 +122,18 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         } catch (SecurityException e) {
             Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
+        }
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.checkinTime)!=null&&!SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.checkinTime).toString().trim().isEmpty()){
+            tvcheckintime.setText(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.checkinTime).toString().trim());
         }
 if (SharedPreferenceUtils
         .getInstance(getActivity())
@@ -460,11 +472,24 @@ if (SharedPreferenceUtils
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btncheckin:
+
+
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.checkinTime,
+                                tvcurrenttime.getText().toString().trim()).commitSplash();
+                tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
                 layout_checkin.setVisibility(View.GONE);
                 layout_checkout.setVisibility(View.VISIBLE);
                 checkIn(true);
                 break;
             case R.id.btncheckout:
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.checkinTime,
+                                "").commitSplash();
                 SharedPreferenceUtils
                         .getInstance(getActivity())
                         .editSplash()
@@ -479,8 +504,22 @@ if (SharedPreferenceUtils
                 ll_startbreak.setVisibility(View.VISIBLE);
                 ll_breaktime.setVisibility(View.GONE);
 
+
+                if (SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.timesheetId)!=null&&!SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.timesheetId).toString().trim().isEmpty()){
+                    getbreaktimes();
+                    layout_checkin.setVisibility(View.GONE);
+                    layout_checkout.setVisibility(View.VISIBLE);
+                }
+                breakIn(false);
                 break;
             case R.id.imgbtnbreak:
+                breakIn(true);
                 ll_startbreak.setVisibility(View.GONE);
                 ll_breaktime.setVisibility(View.VISIBLE);
 

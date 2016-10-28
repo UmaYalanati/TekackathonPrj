@@ -8,10 +8,8 @@
         android:id="@+id/tvcheckoutcurrentdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-
         android:text="Oct 17,2016"
         android:textColor="@android:color/black"
         android:textSize="15sp" />
@@ -60,11 +58,21 @@
             android:gravity="right"
             android:paddingRight="5dp"
             android:text="10:30 PM"
-
+android:id="@+id/tvcheckintime"
             />
 
 
     </LinearLayout>
+
+    <com.csn.ems.emsconstants.NestedListView
+        android:id="@+id/listView_breakDetails"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:scrollbars="@null"></com.csn.ems.emsconstants.NestedListView>
 
     <LinearLayout
         android:id="@+id/ll_breaktime"
@@ -126,16 +134,7 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
-    <com.csn.ems.emsconstants.NestedListView
-        android:layout_marginTop="5dp"
-        android:id="@+id/listView_breakDetails"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:scrollbars="@null" >
-    </com.csn.ems.emsconstants.NestedListView>
+
     <LinearLayout
         android:id="@+id/ll_startbreak"
         android:layout_width="match_parent"
@@ -148,8 +147,6 @@
 
 
         <EditText
-
-
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
