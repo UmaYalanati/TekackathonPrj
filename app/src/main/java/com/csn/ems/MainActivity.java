@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.callback.MenuItemSelectedCallback;
+import com.csn.ems.callback.NavigationDrawerCallback;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.fragment.DashBoardFragment;
@@ -37,7 +38,6 @@ import com.csn.ems.fragment.ReportsFragment;
 import com.csn.ems.fragment.TimeClockFragment;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.services.ServiceGenerator;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,10 +49,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.csn.ems.R.id.nav_dashboard;
-import static java.lang.System.load;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MenuItemSelectedCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, MenuItemSelectedCallback, NavigationDrawerCallback {
 
     private static final String TAG = "MainActivity";
     EmployeeDetails employeeDetails = new EmployeeDetails();
@@ -89,14 +88,14 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
+        image_employee = (ImageView) navigationView.findViewById(R.id.imageView_employee);
 
-        tvemployeename = (TextView)navigationView. findViewById(R.id.tvemployeename);
-        tvemployeeemail = (TextView)navigationView. findViewById(R.id.tvemployeeemail);
+        tvemployeename = (TextView) navigationView.findViewById(R.id.tvemployeename);
+        tvemployeeemail = (TextView) navigationView.findViewById(R.id.tvemployeeemail);
 
         displaydetails();
         if (savedInstanceState == null) {
-            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
+//            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
             fragmentClass = DashBoardFragment.class;
             tag = "Dashboard";
             try {
@@ -274,6 +273,14 @@ public class MainActivity extends AppCompatActivity
         );
     }
 
+    @Override
+    public void navigateToItem(int itemId) {
+        Log.d(TAG, "navigateToItem() called with: itemId = [" + itemId + "]");
+        if (itemId > 0) {
+            onNavigationItemSelected(navigationView.getMenu().findItem(itemId));
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -281,7 +288,7 @@ public class MainActivity extends AppCompatActivity
         currentSelectedItem = id;
         if (id == nav_dashboard) {
             fragmentClass = DashBoardFragment.class;
-          //  onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
+            //  onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
             tag = "Dashboard";
         } else if (id == R.id.nav_employee) {
             fragmentClass = EmployeeDetailsFragment.class;
@@ -302,8 +309,8 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = EmployeeDetailsFragment.class;
             tag = "Settings";
         }
-      //
-      //   onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
+        //
+        //   onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
         if (fragmentClass != null) {
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
@@ -345,12 +352,13 @@ public class MainActivity extends AppCompatActivity
         }
         invalidateOptionsMenu();
     }
-    void displaydetails(){
+
+    void displaydetails() {
         final ProgressDialog loading = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please wait...", false, false);
-int empid=Integer.parseInt(SharedPreferenceUtils
-        .getInstance(getApplicationContext())
-        .getSplashCacheItem(
-                EmsConstants.employeeId).toString().trim());
+        int empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getApplicationContext())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
         Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {
@@ -390,14 +398,15 @@ int empid=Integer.parseInt(SharedPreferenceUtils
         loading.setIndeterminate(true);
         loading.show();
     }
+
     public void setEmployeeDetails(EmployeeDetails employeeDetails) {
         if (employeeDetails.getPhotoPath() != null) {
-           //  Bitmap bmp=null;
-          //  image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
-         ///   image_employee.setImageBitmap(getBitmapFromURL(employeeDetails.getPhotoPath()));
-          //  Picasso.with(MainActivity.this)
+            //  Bitmap bmp=null;
+            //  image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
+            ///   image_employee.setImageBitmap(getBitmapFromURL(employeeDetails.getPhotoPath()));
+            //  Picasso.with(MainActivity.this)
             //        .load("http://"+employeeDetails.getPhotoPath()).into((ImageView) navigationView.findViewById(R.id.imageView_employee));
-         //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
+            //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
         }
       /*  if (employeeDetails.getEmployeeName()!=null)
             tvemployeename.setText(employeeDetails.getEmployeeName());
@@ -413,18 +422,18 @@ int empid=Integer.parseInt(SharedPreferenceUtils
 
     public static Bitmap getBitmapFromURL(String src) {
         try {
-            Log.e("src",src);
+            Log.e("src", src);
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap","returned");
+            Log.e("Bitmap", "returned");
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("Exception",e.getMessage());
+            Log.e("Exception", e.getMessage());
             return null;
         }
     }
