@@ -9,6 +9,7 @@ import com.csn.ems.model.InsertClockIn;
 import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.model.Login;
 import com.csn.ems.model.TimeSheetDetails;
+import com.csn.ems.model.UpcomingEvents;
 
 import java.util.List;
 
@@ -65,6 +66,10 @@ public interface EMSService {
 
     @GET("TimeSheet/GetBreakDetails")
     Call<List<BreakDetails>> getBreakDetails(@Query("timeSheetId") int timeSheetId,@Query("employeeId") int employeeId);
+
+
+    @GET("OrgManagement/GetUpcomingEvents")
+    Call<List<UpcomingEvents>> getUpcomingEvents(@Query("selectedDate") String selectedDate);
 
     /*  @GET("client")
     Call<List<Client>> listClients();

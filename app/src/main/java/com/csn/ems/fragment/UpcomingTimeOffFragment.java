@@ -12,11 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.CreateLeaveRequest;
-import com.csn.ems.model.CreateLeaveRequest;
+import com.csn.ems.model.UpcomingEvents;
+import com.csn.ems.recyclerviewadapter.UpcomingEventsAdapter;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 
@@ -25,14 +29,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.csn.ems.R.id.btnendtime;
-import static com.csn.ems.R.id.btnstarttime;
-import static com.csn.ems.R.id.tvcurrentdate;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -40,15 +41,18 @@ import static com.csn.ems.R.id.tvcurrentdate;
 
 public class UpcomingTimeOffFragment extends Fragment implements View.OnClickListener {
   String  TAG="UpcomingTimeOffFragment";
+    ListView listView_upcomingholidayslist;
     public static UpcomingTimeOffFragment newInstance() {
         return new UpcomingTimeOffFragment();
     }
+    String toDate;
 CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
     Button btnstarttime, btnendtime,btnsubmitrequest;
 EditText ed_comments;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.upcomingtimeoff, container, false);
+        listView_upcomingholidayslist= (ListView) view.findViewById(R.id.listView_upcomingholidayslist);
         btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         btnsubmitrequest = (Button) view.findViewById(R.id.btnsubmitrequest);
@@ -58,12 +62,12 @@ EditText ed_comments;
         System.out.println("Current time => " + c.getTime());
 
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String toDate = newDateFormat.format(c.getTime());
+         toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
         calendar.add(Calendar.DAY_OF_MONTH, -15);
         String fromDate = newDateFormat.format(calendar.getTime());
-
+        upcomingDetails();
         btnendtime.setText(toDate);
         btnstarttime.setText(fromDate);
 
@@ -193,6 +197,64 @@ EditText ed_comments;
         loading.setCancelable(false);
         loading.setIndeterminate(true);
         loading.show();
+
+    }
+    
+    public void upcomingDetails(){
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+        int empid=Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+           /* int timesheetid=Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.timesheetId).toString().trim());*/
+        int timesheetid=1;
+        Call<List<UpcomingEvents>> listCall = ServiceGenerator.createService().getUpcomingEvents(toDate);
+
+        listCall.enqueue(new Callback<List<UpcomingEvents>>() {
+            @Override
+            public void onResponse(Call<List<UpcomingEvents>> call, Response<List<UpcomingEvents>> response) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                        Log.e(TAG, "onResponse: " + errorMessage);
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                    }
+                } else if (response != null && response.isSuccessful()) {
+                    //DO SUCCESS HANDLING HERE
+                    //  breakDetails = response.body();
+
+                    List<UpcomingEvents> breakDetails = response.body();
+                    Log.i(TAG, "onResponse: Fetched " + breakDetails + " PropertyTypes.");
+                    setUpcomingEvents(breakDetails);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UpcomingEvents>> call, Throwable t) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+                Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
+                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+            }
+        });
+        loading.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.show();
+    }
+    public void setUpcomingEvents(List<UpcomingEvents> breakDetails){
+        UpcomingEventsAdapter adapter=new UpcomingEventsAdapter(getActivity(),breakDetails);
+        listView_upcomingholidayslist.setAdapter(adapter);
 
     }
 }
