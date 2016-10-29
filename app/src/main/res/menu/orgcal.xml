@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.toolbar.MainActivity">
+
+    <item
+        android:id="@+id/action_prgcal"
+        android:icon="@drawable/ic_org_cal_h"
+        android:orderInCategory="1"
+        android:title="Logout"
+        app:showAsAction="ifRoom" />
+
+
+</menu>

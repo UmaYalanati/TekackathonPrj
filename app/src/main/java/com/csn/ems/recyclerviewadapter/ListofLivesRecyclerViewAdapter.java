@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.csn.ems.R.id.tvleavedate;
+
 /**
  * Created by uyalanat on 23-10-2016.
  */
@@ -64,22 +66,20 @@ public class ListofLivesRecyclerViewAdapter extends RecyclerView.Adapter<ListofL
 
 
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String[] parts = leaveDetails.get(position).getDateFrom().split("T");
-        String[] partss = leaveDetails.get(position).getDateTo().split("T");
-        String inputString1 = parts[0];
-        String inputString2 = partss[0];
-        System.out.println ("Days: " + parts[0]);
-        holder.tvleavedate.setText(parts[0]+" To "+partss[0]);
-        try {
-            Date date1 = myFormat.parse(inputString1);
-            Date date2 = myFormat.parse(inputString2);
-            long diff = date2.getTime() - date1.getTime();
-
-      holder.tvnumofleaves.setText(String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+"Day(s)"));
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (leaveDetails.get(position).getAppliedDate()!=null) {
+            holder.tvleavedate.setText(leaveDetails.get(position).getAppliedDate());
         }
+       if (leaveDetails.get(position).getDateFrom()!=null&&leaveDetails.get(position).getDateTo()!=null) {
+           try {
+               Date date1 = myFormat.parse(leaveDetails.get(position).getDateFrom());
+               Date date2 = myFormat.parse(leaveDetails.get(position).getDateTo());
+               long diff = date2.getTime() - date1.getTime();
 
+               holder.tvnumofleaves.setText(String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + "Day(s)"));
+           } catch (ParseException e) {
+               e.printStackTrace();
+           }
+       }
 
     }
 

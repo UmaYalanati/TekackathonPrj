@@ -92,7 +92,7 @@
             android:layout_toRightOf="@+id/tvcheckouttime"
             app:srcCompat="@drawable/location" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tvapprovalstatus"
             android:layout_width="12dp"
             android:layout_height="12dp"

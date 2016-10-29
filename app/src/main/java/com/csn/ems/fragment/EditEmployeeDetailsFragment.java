@@ -29,6 +29,7 @@ import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 import com.mlsdev.rximagepicker.RxImagePicker;
 import com.mlsdev.rximagepicker.Sources;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -39,6 +40,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rx.functions.Action1;
+
+import static com.csn.ems.R.id.imgprofilepic;
 
 
 /**
@@ -90,8 +93,8 @@ public class EditEmployeeDetailsFragment extends Fragment {
         ed_subBusinessAreaName = (TextInputEditText) view.findViewById(R.id.ed_subBusinessAreaName);
         ed_hoursPerDay = (TextInputEditText) view.findViewById(R.id.ed_hoursPerDay);
 
-        Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
-        circleImageView.setImageDrawable(drawable);
+       /* Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
+        circleImageView.setImageDrawable(drawable);*/
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +177,13 @@ public class EditEmployeeDetailsFragment extends Fragment {
         ed_businessAreaName.setText(employeeDetails.getBusinessAreaName());
         ed_subBusinessAreaName.setText(employeeDetails.getSubBusinessAreaName());
         ed_hoursPerDay.setText(employeeDetails.getHoursPerDay());
+        if (employeeDetails.getPhotoPath()!=null){
+        Picasso.with(getActivity())
+                .load("http://" +employeeDetails.getPhotoPath()).into(circleImageView);
+        //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
+    } else {
+        circleImageView.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);
+    }
 
     }
 

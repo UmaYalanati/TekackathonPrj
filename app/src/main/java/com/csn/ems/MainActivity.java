@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity
         image_employee = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView_employee);
 //        image_employee.setImageResource(R.drawable.coffee_cup);
 
-        tvemployeename = (TextView) navigationView.findViewById(R.id.tvemployeename);
-        tvemployeeemail = (TextView) navigationView.findViewById(R.id.tvemployeeemail);
+        tvemployeename = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvemployeename);
+        tvemployeeemail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvemployeeemail);
 
         if (SharedPreferenceUtils
                 .getInstance(getApplicationContext())
@@ -134,7 +134,10 @@ public class MainActivity extends AppCompatActivity
                 .getSplashCacheItem(
                         EmsConstants.photoPath).toString().trim().isEmpty()) {
             Picasso.with(MainActivity.this)
-                    .load("http://" + employeeDetails.getPhotoPath()).into(image_employee);
+                    .load("http://" + SharedPreferenceUtils
+                            .getInstance(MainActivity.this)
+                            .getSplashCacheItem(
+                                    EmsConstants.photoPath).toString().trim()).into(image_employee);
         }
 
 
@@ -221,6 +224,10 @@ public class MainActivity extends AppCompatActivity
              item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_timeclock) {
             getMenuInflater().inflate(R.menu.timeclock, menu);
+            /*MenuItem item = menu.findItem(R.id.action_some);
+            item.setVisible(false);*/
+        }else if (currentSelectedItem == R.id.nav_orgcalendar) {
+            getMenuInflater().inflate(R.menu.orgcal, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_leave) {

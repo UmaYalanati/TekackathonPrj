@@ -36,12 +36,12 @@
 
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/csnlogo"/>
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Title"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="EMS" />
+                android:text="CSN-EMS" />
 
 
             <android.support.design.widget.TextInputLayout
@@ -61,7 +61,7 @@
                     android:id="@+id/userId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-android:text="APEmp001"
+
                     android:hint="UserName"
                     android:inputType="text" />
 
@@ -74,7 +74,7 @@ android:text="APEmp001"
                 app:passwordToggleEnabled="false">
 
                 <android.support.design.widget.TextInputEditText
-android:text="csn@123"
+
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

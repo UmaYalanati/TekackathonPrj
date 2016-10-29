@@ -1,8 +1,9 @@
 package com.csn.ems.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
 
 /**
  * Created by uyalanat on 26-10-2016.
@@ -25,8 +26,11 @@ public class Login {
     @JsonProperty("OrganizationName")
     private String organizationName;
 
-    public String getOrganizationName() {
-        return organizationName;
+    @JsonProperty("UserRolePermission")
+    private List<UserRolePermission> userRolePermission;
+
+    public List<UserRolePermission> getUserRolePermission() {
+        return userRolePermission;
     }
 
     @Override
@@ -37,9 +41,18 @@ public class Login {
                 ", locationId=" + locationId +
                 ", locationName='" + locationName + '\'' +
                 ", organizationName='" + organizationName + '\'' +
+                ", userRolePermission=" + userRolePermission +
                 ", emailId='" + emailId + '\'' +
                 ", photoPath='" + photoPath + '\'' +
                 '}';
+    }
+
+    public void setUserRolePermission(List<UserRolePermission> userRolePermission) {
+        this.userRolePermission = userRolePermission;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
     }
 
     public void setOrganizationName(String organizationName) {

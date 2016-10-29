@@ -242,8 +242,8 @@ if (SharedPreferenceUtils
                         InsertClockIn emp = response.body();
                         if (emp != null) {
                             Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                            new AlertDialog.Builder(getContext())
-                                    .setTitle("InsertClockIn Uploaded Successfully!")
+                      /*      new AlertDialog.Builder(getContext())
+                                    .setTitle("InsertClockIn  Successfully!")
                                     .setMessage("")
                                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                         @Override
@@ -259,7 +259,7 @@ if (SharedPreferenceUtils
                                             // loadPage(1);
                                         }
                                     })
-                                    .show();
+                                    .show();*/
                             SharedPreferenceUtils
                                     .getInstance(getActivity())
                                     .editSplash()

@@ -82,8 +82,9 @@ public class ReportsTimesheetFragment extends Fragment {
 
         context = getActivity();
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativelayout1);
-        tvmonthname = (TextView) view.findViewById(R.id.tvmonthname);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        tvmonthname = (TextView) view.findViewById(R.id.tvmonthname);
         ll_next = (LinearLayout) view.findViewById(R.id.ll_next);
         ll_back = (LinearLayout) view.findViewById(R.id.ll_back);
 
@@ -102,10 +103,6 @@ public class ReportsTimesheetFragment extends Fragment {
         System.out.println(new SimpleDateFormat("MMMM").format(cal.getTime()));
         tvmonthname.setText(new SimpleDateFormat("MMMM").format(cal.getTime()));
 
-        // spinner_listofsheet = (AppCompatSpinner) view.findViewById(spinner_listofsheet);
-
-        //  spinner_listofsheet.setVisibility(View.GONE);
-
         ll_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,15 +111,17 @@ public class ReportsTimesheetFragment extends Fragment {
                    // month++;
                     month=month+1;
                     String monthString;
-                    if (month+1 < str.length) {
+
                         monthString = str[month+1 - 1];
                         tvmonthname.setText(monthString);
-                    } else {
-                        monthString = "Invalid month";
-                    }
+
                 } else {
-                    //listen i am telling for november i am getting 0
+
                     month = 0;
+                    String monthString;
+
+                    monthString = str[month+1 - 1];
+                    tvmonthname.setText(monthString);
                 }
 
 
@@ -142,7 +141,7 @@ public class ReportsTimesheetFragment extends Fragment {
 
                 String monthString;
                 if (month < str.length) {
-                    monthString = str[month - 1];
+                    monthString = str[month+1 - 1];
                     tvmonthname.setText(monthString);
                 } else {
                     monthString = "Invalid month";
@@ -226,7 +225,7 @@ public class ReportsTimesheetFragment extends Fragment {
         getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()), String.valueOf(firstDay), String.valueOf(lastDay), "ALL");
+                        EmsConstants.employeeId).toString().trim()), String.valueOf(month)+"/"+String.valueOf(firstDay)+"/"+String.valueOf(year), String.valueOf(month)+"/"+String.valueOf(lastDay)+"/"+String.valueOf(year), "ALL");
     }
 }
 

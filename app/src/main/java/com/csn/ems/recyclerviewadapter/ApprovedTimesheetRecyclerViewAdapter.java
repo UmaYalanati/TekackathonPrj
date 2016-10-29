@@ -10,21 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.csn.ems.R.id.tvapprovalstatus;
 
 /**
  * Created by uyalanat on 24-10-2016.
@@ -37,7 +44,8 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     Context context;
     View view1;
     ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
-    TextView textView, tvapprovalstatus;
+    public TextView textView,tvcheckintime,tvcheckouttime,tvtotalhrs;
+    ImageView tvapprovalstatus;
     List<TimeSheetDetails> timesheetDetails;
 
     public ApprovedTimesheetRecyclerViewAdapter(Context context1, List<TimeSheetDetails> timesheetDetails) {
@@ -49,14 +57,17 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView;
-        public TextView tvapprovalstatus;
+        public TextView textView,tvcheckintime,tvcheckouttime,tvtotalhrs;
+        public ImageView tvapprovalstatus;
 
         public ViewHolder(View v) {
 
             super(v);
-            tvapprovalstatus = (TextView) v.findViewById(R.id.tvapprovalstatus);
+            tvapprovalstatus = (ImageView) v.findViewById(R.id.tvapprovalstatus);
             textView = (TextView) v.findViewById(R.id.tvdate);
+            tvcheckintime= (TextView) v.findViewById(R.id.tvcheckintime);
+            tvcheckouttime= (TextView) v.findViewById(R.id.tvcheckouttime);
+            tvtotalhrs= (TextView) v.findViewById(R.id.tvtotalhrs);
             //      tvapprovalstatus.setVisibility(View.GONE);
 
             v.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +75,15 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                 @Override
                 public void onClick(View v) {
                    int pos = getAdapterPosition();
-                   // int posi=getPosition();
-                  //  int itemPosition = mRecyclerView.getChildLayoutPosition(view);
-                    Alertview(timesheetDetails.get(pos).getTimeSheetId(),timesheetDetails.get(pos).getEmployeeId(),timesheetDetails.get(pos).getWorkingDate(),timesheetDetails.get(pos).getCheckIn(),timesheetDetails.get(pos).getCheckOut(),timesheetDetails.get(pos).getCheckInLattitude(),timesheetDetails.get(pos).getCheckOutLongitude(),timesheetDetails.get(pos).getCheckOutLattitude(),timesheetDetails.get(pos).getCheckOutLongitude(),timesheetDetails.get(pos).getAssignedTo(),timesheetDetails.get(pos).getApprovalType(),timesheetDetails.get(pos).getNote(),timesheetDetails.get(pos).getStatus());
+                   if (SharedPreferenceUtils
+                           .getInstance(context)
+                           .getSplashCacheItem(
+                                   EmsConstants.rolename)!=null&&SharedPreferenceUtils
+                           .getInstance(context)
+                           .getSplashCacheItem(
+                                   EmsConstants.rolename).equals("Manager")) {
+                       Alertview(timesheetDetails.get(pos).getTimeSheetId(), timesheetDetails.get(pos).getEmployeeId(), timesheetDetails.get(pos).getWorkingDate(), timesheetDetails.get(pos).getCheckIn(), timesheetDetails.get(pos).getCheckOut(), timesheetDetails.get(pos).getCheckInLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getCheckOutLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getAssignedTo(), timesheetDetails.get(pos).getApprovalType(), timesheetDetails.get(pos).getNote(), timesheetDetails.get(pos).getStatus());
+                   }
                 }
             });
         }
@@ -86,6 +103,60 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     public void onBindViewHolder(ApprovedTimesheetRecyclerViewAdapter.ViewHolder holder, int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
+/*if (timesheetDetails.get(position).getStatus()!=null) {
+    if (timesheetDetails.get(position).getStatus().equals("Approved"))
+        tvapprovalstatus.setBackgroundResource(R.drawable.bluedot);
+    else {
+        tvapprovalstatus.setBackgroundResource(R.drawable.reddot);
+    }
+}*/
+
+
+        String intime="";
+
+        String ottime="";
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
+        Date dt=null;
+        Date dt_out=null;
+        try {
+            if (timesheetDetails.get(position).getCheckIn() != null)
+            {
+                dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
+
+
+            }
+            if (timesheetDetails.get(position).getCheckOut() != null)
+            {
+
+                dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
+
+            }
+            System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
+            intime=sdfs.format(dt);
+            ottime=sdfs.format(dt_out);
+
+
+            holder.tvcheckintime.setText(intime);
+            holder.tvcheckouttime.setText(ottime);
+
+            if (timesheetDetails.get(position).getCheckIn() != null&&timesheetDetails.get(position).getCheckOut() != null){
+                //   long secs = (dt.getTime() - dt.getTime()) / 1000;
+                //   int hours = secs / 3600;
+                final int MILLI_TO_HOUR = 1000 * 60 * 60;
+                int hours= (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
+                //  Period p = new Period(dt, dt_out);
+
+             //   holder.tvtotalhrs.setText(String.valueOf(holder)+"hrs");
+                // int hours = p.getHours();
+            }
+
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
 
     }
 

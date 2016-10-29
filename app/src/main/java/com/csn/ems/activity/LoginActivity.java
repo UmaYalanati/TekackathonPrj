@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -31,7 +32,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.csn.ems.emsconstants.EmsConstants.empId;
-import static com.csn.ems.emsconstants.EmsConstants.employeeId;
 
 
 /**
@@ -51,7 +51,8 @@ public static String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+      //  getSupportActionBar().hide();
+      //  getActionBar().hide();
         if (SharedPreferenceUtils
                 .getInstance(LoginActivity.this)
                 .getSplashCacheItem(
@@ -62,6 +63,7 @@ public static String userName;
             Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent_homescreen);
         }else{
+           // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.loginscreen);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -169,6 +171,12 @@ try{
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.emaailid,
                                         String.valueOf(emp.getEmailId())).commitSplash();
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.rolename,
+                                        emp.getUserRolePermission().get(0).getRoleName()
+                                ).commitSplash();
 
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)

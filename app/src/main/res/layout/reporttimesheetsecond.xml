@@ -24,7 +24,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvmonthname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView3"
@@ -38,12 +38,12 @@
             android:textSize="16sp" />
 
         <LinearLayout
-            android:id="@+id/button2"
+            android:id="@+id/ll_next"
             android:layout_width="30dp"
             android:layout_height="25dp"
-            android:layout_alignTop="@+id/button"
-            android:layout_toEndOf="@+id/button"
-            android:layout_toRightOf="@+id/button"
+            android:layout_alignTop="@+id/ll_back"
+            android:layout_toEndOf="@+id/ll_back"
+            android:layout_toRightOf="@+id/ll_back"
             android:background="@drawable/rectangularbox"
             android:gravity="center"
             android:orientation="vertical">
@@ -52,14 +52,15 @@
                 android:layout_width="20dp"
                 android:layout_height="15dp"
                 android:background="@drawable/next"
-                android:text="Button" />
+                 />
         </LinearLayout>
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/button3"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignBottom="@+id/tvmonthname"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="16dp"
@@ -69,13 +70,13 @@
 
 
         <LinearLayout
-            android:id="@+id/button"
+            android:id="@+id/ll_back"
             android:layout_width="30dp"
             android:layout_height="25dp"
-            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignBottom="@+id/tvmonthname"
             android:layout_marginLeft="4dp"
-            android:layout_toEndOf="@+id/textView4"
-            android:layout_toRightOf="@+id/textView4"
+            android:layout_toEndOf="@+id/tvmonthname"
+            android:layout_toRightOf="@+id/tvmonthname"
             android:background="@drawable/rectangularbox"
             android:gravity="center"
             android:orientation="vertical">

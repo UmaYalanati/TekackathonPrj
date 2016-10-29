@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.csn.ems.R;
+import com.csn.ems.model.TimeSheetReport;
+
+import java.util.List;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -15,15 +18,15 @@ import com.csn.ems.R;
 
 public class ReportTimesheetSecondRecyclerViewAdapter extends RecyclerView.Adapter<ReportTimesheetSecondRecyclerViewAdapter.ViewHolder> {
 
-    String[] SubjectValues;
+    List<TimeSheetReport> timesheetDetails;
     Context context;
     View view1;
     ReportTimesheetSecondRecyclerViewAdapter.ViewHolder viewHolder1;
     TextView textView;
 
-    public ReportTimesheetSecondRecyclerViewAdapter(Context context1, String[] SubjectValues1) {
+    public ReportTimesheetSecondRecyclerViewAdapter(Context context1, List<TimeSheetReport> timesheetDetails) {
 
-        SubjectValues = SubjectValues1;
+        this.timesheetDetails = timesheetDetails;
         context = context1;
     }
 
@@ -52,13 +55,13 @@ public class ReportTimesheetSecondRecyclerViewAdapter extends RecyclerView.Adapt
     @Override
     public void onBindViewHolder(ReportTimesheetSecondRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        holder.textView.setText(SubjectValues[position]);
+        holder.textView.setText(timesheetDetails.get(position).getMonth());
     }
 
     @Override
     public int getItemCount() {
 
-        return SubjectValues.length;
+        return timesheetDetails.size();
     }
 }
 

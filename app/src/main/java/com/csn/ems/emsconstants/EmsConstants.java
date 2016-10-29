@@ -11,6 +11,8 @@ public class EmsConstants {
     public static String checkinTime="checkinTime";
     public static int empId;
    public static String employeename="employeename";
+    public static String rolename="rolename";
+
     public static String checkintime="checkintime";
     public static String emaailid="emaailid";
     public static String photoPath="photoPath";

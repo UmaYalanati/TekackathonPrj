@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.recyclerviewadapter.ListofLivesRecyclerViewAdapter;
@@ -88,7 +90,10 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
     void getlistofleaves(String startdate,String enddaate) {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<List<LeaveDetails>> listCall = ServiceGenerator.createService().getLeaveDetails(2, startdate, enddaate, 0);
+        Call<List<LeaveDetails>> listCall = ServiceGenerator.createService().getLeaveDetails(Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim()), startdate, enddaate, 0);
 
 
         listCall.enqueue(new Callback<List<LeaveDetails>>() {
