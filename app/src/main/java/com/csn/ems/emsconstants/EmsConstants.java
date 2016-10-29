@@ -9,6 +9,7 @@ public class EmsConstants {
     public static String employeeId="EmployeeId";
     public static String timesheetId="Timesheetid";
     public static String checkinTime="checkinTime";
+    public static String breakinTime="breakinTime";
     public static int empId;
    public static String employeename="employeename";
     public static String rolename="rolename";

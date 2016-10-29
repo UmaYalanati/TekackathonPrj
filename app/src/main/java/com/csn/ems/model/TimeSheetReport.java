@@ -25,6 +25,16 @@ public class TimeSheetReport {
     @JsonProperty("Leaves")
     private int leaves;
 
+
+    @JsonProperty("TGS")
+    private int tGS;
+
+    @JsonProperty("TDS")
+    private int tDS;
+
+    @JsonProperty("TNA")
+    private int tNA;
+
     @Override
     public String toString() {
         return "TimeSheetReport{" +
@@ -33,7 +43,34 @@ public class TimeSheetReport {
                 ", aWD=" + aWD +
                 ", lOP=" + lOP +
                 ", leaves=" + leaves +
+                ", tGS=" + tGS +
+                ", tDS=" + tDS +
+                ", tNA=" + tNA +
                 '}';
+    }
+
+    public int gettGS() {
+        return tGS;
+    }
+
+    public void settGS(int tGS) {
+        this.tGS = tGS;
+    }
+
+    public int gettDS() {
+        return tDS;
+    }
+
+    public void settDS(int tDS) {
+        this.tDS = tDS;
+    }
+
+    public int gettNA() {
+        return tNA;
+    }
+
+    public void settNA(int tNA) {
+        this.tNA = tNA;
     }
 
     public String getMonth() {
