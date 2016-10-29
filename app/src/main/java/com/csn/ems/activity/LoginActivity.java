@@ -171,13 +171,14 @@ try{
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.emaailid,
                                         String.valueOf(emp.getEmailId())).commitSplash();
-                        SharedPreferenceUtils
-                                .getInstance(LoginActivity.this)
-                                .editSplash()
-                                .addSplashCacheItem(EmsConstants.rolename,
-                                        emp.getUserRolePermission().get(0).getRoleName()
-                                ).commitSplash();
-
+                        if (emp.getUserRolePermission().size()>0) {
+                            SharedPreferenceUtils
+                                    .getInstance(LoginActivity.this)
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.rolename,
+                                            emp.getUserRolePermission().get(0).getRoleName()
+                                    ).commitSplash();
+                        }
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()

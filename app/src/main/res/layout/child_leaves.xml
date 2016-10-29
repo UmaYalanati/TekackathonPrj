@@ -11,10 +11,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <LinearLayout
-        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
         android:orientation="vertical">
 
         <TextView

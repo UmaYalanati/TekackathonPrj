@@ -35,8 +35,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="7dp"
                 android:tint="@color/white"
-                app:srcCompat="@drawable/dashboardprofileicon"
-               />
+                app:srcCompat="@drawable/dashboardprofileicon" />
+
             <TextView
                 android:id="@+id/tvHome"
                 android:layout_width="wrap_content"
@@ -62,14 +62,14 @@
                 android:visibility="visible" />
 
             <TextView
-                android:textColor="@color/blakkish_textcolor"
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tvHome"
                 android:layout_alignStart="@+id/tvHome"
                 android:layout_below="@+id/tvHome"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="@color/blakkish_textcolor" />
 
         </RelativeLayout>
 
@@ -77,8 +77,8 @@
             android:id="@+id/viewHome"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-android:visibility="gone"
-            android:background="@color/gray" />
+            android:background="@color/gray"
+            android:visibility="gone" />
 
 
     </LinearLayout>

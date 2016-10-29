@@ -31,8 +31,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.id.tvapprovalstatus;
-
 /**
  * Created by uyalanat on 24-10-2016.
  */
@@ -44,7 +42,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     Context context;
     View view1;
     ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
-    public TextView textView,tvcheckintime,tvcheckouttime,tvtotalhrs;
+    public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
     ImageView tvapprovalstatus;
     List<TimeSheetDetails> timesheetDetails;
 
@@ -57,7 +55,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView,tvcheckintime,tvcheckouttime,tvtotalhrs;
+        public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
         public ImageView tvapprovalstatus;
 
         public ViewHolder(View v) {
@@ -65,25 +63,25 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
             super(v);
             tvapprovalstatus = (ImageView) v.findViewById(R.id.tvapprovalstatus);
             textView = (TextView) v.findViewById(R.id.tvdate);
-            tvcheckintime= (TextView) v.findViewById(R.id.tvcheckintime);
-            tvcheckouttime= (TextView) v.findViewById(R.id.tvcheckouttime);
-            tvtotalhrs= (TextView) v.findViewById(R.id.tvtotalhrs);
+            tvcheckintime = (TextView) v.findViewById(R.id.tvcheckintime);
+            tvcheckouttime = (TextView) v.findViewById(R.id.tvcheckouttime);
+            tvtotalhrs = (TextView) v.findViewById(R.id.tvtotalhrs);
             //      tvapprovalstatus.setVisibility(View.GONE);
 
             v.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                   int pos = getAdapterPosition();
-                   if (SharedPreferenceUtils
-                           .getInstance(context)
-                           .getSplashCacheItem(
-                                   EmsConstants.rolename)!=null&&SharedPreferenceUtils
-                           .getInstance(context)
-                           .getSplashCacheItem(
-                                   EmsConstants.rolename).equals("Manager")) {
-                       Alertview(timesheetDetails.get(pos).getTimeSheetId(), timesheetDetails.get(pos).getEmployeeId(), timesheetDetails.get(pos).getWorkingDate(), timesheetDetails.get(pos).getCheckIn(), timesheetDetails.get(pos).getCheckOut(), timesheetDetails.get(pos).getCheckInLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getCheckOutLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getAssignedTo(), timesheetDetails.get(pos).getApprovalType(), timesheetDetails.get(pos).getNote(), timesheetDetails.get(pos).getStatus());
-                   }
+                    int pos = getAdapterPosition();
+                    if (SharedPreferenceUtils
+                            .getInstance(context)
+                            .getSplashCacheItem(
+                                    EmsConstants.rolename) != null && SharedPreferenceUtils
+                            .getInstance(context)
+                            .getSplashCacheItem(
+                                    EmsConstants.rolename).equals("Manager")) {
+                        Alertview(timesheetDetails.get(pos).getTimeSheetId(), timesheetDetails.get(pos).getEmployeeId(), timesheetDetails.get(pos).getWorkingDate(), timesheetDetails.get(pos).getCheckIn(), timesheetDetails.get(pos).getCheckOut(), timesheetDetails.get(pos).getCheckInLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getCheckOutLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getAssignedTo(), timesheetDetails.get(pos).getApprovalType(), timesheetDetails.get(pos).getNote(), timesheetDetails.get(pos).getStatus());
+                    }
                 }
             });
         }
@@ -112,43 +110,41 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
 }*/
 
 
-        String intime="";
+        String intime = "";
 
-        String ottime="";
+        String ottime = "";
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
-        Date dt=null;
-        Date dt_out=null;
+        Date dt = null;
+        Date dt_out = null;
         try {
-            if (timesheetDetails.get(position).getCheckIn() != null)
-            {
+            if (timesheetDetails.get(position).getCheckIn() != null) {
                 dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
-
+                System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
+                intime = sdfs.format(dt);
+                holder.tvcheckintime.setText(intime);
 
             }
-            if (timesheetDetails.get(position).getCheckOut() != null)
-            {
+            if (timesheetDetails.get(position).getCheckOut() != null) {
 
                 dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
-
+                ottime = sdfs.format(dt_out);
+                holder.tvcheckouttime.setText(ottime);
             }
-            System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-            intime=sdfs.format(dt);
-            ottime=sdfs.format(dt_out);
 
 
-            holder.tvcheckintime.setText(intime);
-            holder.tvcheckouttime.setText(ottime);
-
-            if (timesheetDetails.get(position).getCheckIn() != null&&timesheetDetails.get(position).getCheckOut() != null){
+            if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
                 //   long secs = (dt.getTime() - dt.getTime()) / 1000;
                 //   int hours = secs / 3600;
                 final int MILLI_TO_HOUR = 1000 * 60 * 60;
-                int hours= (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
+                int hours = (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
                 //  Period p = new Period(dt, dt_out);
 
-             //   holder.tvtotalhrs.setText(String.valueOf(holder)+"hrs");
+                long diff = dt.getTime() - dt_out.getTime();
+                long diffHours = diff / (60 * 60 * 1000) % 24;
+                holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
+
                 // int hours = p.getHours();
             }
 
@@ -166,7 +162,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
         return timesheetDetails.size();
     }
 
-    public void Alertview(final int timesheetid,final int EmployeeId,final String WorkingDate,final String CheckIn,final String CheckOut,final double CheckInLattitude,final double checkInLongitude,final double checkOutLattitude,final double checkOutLongitude,final String AssignedTo,final String ApprovalType,final String Note,final String status) {
+    public void Alertview(final int timesheetid, final int EmployeeId, final String WorkingDate, final String CheckIn, final String CheckOut, final double CheckInLattitude, final double checkInLongitude, final double checkOutLattitude, final double checkOutLongitude, final String AssignedTo, final String ApprovalType, final String Note, final String status) {
         {
 
 
@@ -176,7 +172,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                     R.layout.custom_approveleave, null);
 
             final TextInputEditText allocationDateTextField = (TextInputEditText) dialogView.findViewById(R.id.ed_comments);
-          //  final RadioGroup active_inactiveRadioButtonGroup = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
+            //  final RadioGroup active_inactiveRadioButtonGroup = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
 
 
             allocationDialog = new AlertDialog.Builder(context)
@@ -186,13 +182,13 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                     .setPositiveButton("Approve", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            updateemployeedetails( timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
                         }
                     })
                     .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            updateemployeedetails( timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
                             //Log.i(TAG, "onClick: Clearing " + operation + " Allocation Details");
                         }
                     })
@@ -211,17 +207,17 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                         public void onClick(View v) {
                             boolean isFocusRequested = false;
                             String allocatedDate = allocationDateTextField.getText().toString();
-                           /// updateemployeedetails();
+                            /// updateemployeedetails();
                             allocationDialog.dismiss();
-                            updateemployeedetails( timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
                         }
                     });
 
                     rejectButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            updateemployeedetails( timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
-                             allocationDialog.dismiss();
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
+                            allocationDialog.dismiss();
                         }
                     });
                 }
@@ -232,7 +228,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
         }
     }
 
-    public void updateemployeedetails(int timesheetid,int EmployeeId,String WorkingDate,String CheckIn,String CheckOut,double CheckInLattitude,double checkInLongitude,double checkOutLattitude,double checkOutLongitude,String AssignedTo,String ApprovalType,String Note,String status) {
+    public void updateemployeedetails(int timesheetid, int EmployeeId, String WorkingDate, String CheckIn, String CheckOut, double CheckInLattitude, double checkInLongitude, double checkOutLattitude, double checkOutLongitude, String AssignedTo, String ApprovalType, String Note, String status) {
         timeSheetDetails.setTimeSheetId(timesheetid);
         timeSheetDetails.setEmployeeId(EmployeeId);
         timeSheetDetails.setWorkingDate(WorkingDate);

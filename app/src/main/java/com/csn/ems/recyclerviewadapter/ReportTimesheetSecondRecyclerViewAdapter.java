@@ -12,11 +12,6 @@ import com.csn.ems.model.TimeSheetReport;
 
 import java.util.List;
 
-import static com.csn.ems.R.id.tvawd;
-import static com.csn.ems.R.id.tvleaves;
-import static com.csn.ems.R.id.tvlop;
-import static com.csn.ems.R.id.tvpwd;
-
 /**
  * Created by uyalanat on 23-10-2016.
  */
@@ -37,20 +32,20 @@ public class ReportTimesheetSecondRecyclerViewAdapter extends RecyclerView.Adapt
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView,tvawd,tvpwd,tvlop,tvleaves,tvtgs,tvtds,tvtna;
+        public TextView textView, tvawd, tvpwd, tvlop, tvleaves, tvtgs, tvtds, tvtna;
 
         public ViewHolder(View v) {
 
             super(v);
 
             textView = (TextView) v.findViewById(R.id.tvmonth);
-            tvawd= (TextView) v.findViewById(R.id.tvawd);
-                    tvpwd= (TextView) v.findViewById(R.id.tvpwd);
-                    tvlop= (TextView) v.findViewById(R.id.tvlop);
-                    tvleaves= (TextView) v.findViewById(R.id.tvleaves);
-            tvtgs= (TextView) v.findViewById(R.id.tvtgs);
-                    tvtds= (TextView) v.findViewById(R.id.tvtds);
-                    tvtna= (TextView) v.findViewById(R.id.tvtna);
+            tvawd = (TextView) v.findViewById(R.id.tvawd);
+            tvpwd = (TextView) v.findViewById(R.id.tvpwd);
+            tvlop = (TextView) v.findViewById(R.id.tvlop);
+            tvleaves = (TextView) v.findViewById(R.id.tvleaves);
+            tvtgs = (TextView) v.findViewById(R.id.tvtgs);
+            tvtds = (TextView) v.findViewById(R.id.tvtds);
+            tvtna = (TextView) v.findViewById(R.id.tvtna);
         }
     }
 
@@ -68,13 +63,13 @@ public class ReportTimesheetSecondRecyclerViewAdapter extends RecyclerView.Adapt
     public void onBindViewHolder(ReportTimesheetSecondRecyclerViewAdapter.ViewHolder holder, int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getMonth());
-        holder.tvawd.setText(timesheetDetails.get(position).getaWD());
-                holder.tvpwd.setText(timesheetDetails.get(position).getpWD());
-                holder.tvlop.setText(timesheetDetails.get(position).getlOP());
-                holder.tvleaves.setText(timesheetDetails.get(position).getLeaves());
-        holder.tvtgs.setText(timesheetDetails.get(position).gettGS());
-                holder.tvtds.setText(timesheetDetails.get(position).gettDS());
-                holder.tvtna.setText(timesheetDetails.get(position).gettNA());
+        holder.tvawd.setText(String.valueOf(timesheetDetails.get(position).getaWD()));
+        holder.tvpwd.setText(String.valueOf(timesheetDetails.get(position).getpWD()));
+        holder.tvlop.setText(String.valueOf(timesheetDetails.get(position).getlOP()));
+        holder.tvleaves.setText(String.valueOf(timesheetDetails.get(position).getLeaves()));
+        holder.tvtgs.setText(String.valueOf(timesheetDetails.get(position).gettGS()));
+        holder.tvtds.setText(String.valueOf(timesheetDetails.get(position).gettDS()));
+        holder.tvtna.setText(String.valueOf(timesheetDetails.get(position).gettNA()));
     }
 
     @Override

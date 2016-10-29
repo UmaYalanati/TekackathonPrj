@@ -2,6 +2,7 @@ package com.csn.ems.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -47,6 +48,10 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
 
     private NavigationDrawerCallback navigationDrawerCallback;
 
+
+    public static DashBoardFragment newInstance() {
+        return new DashBoardFragment();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dashboardscreen, container, false);
@@ -75,21 +80,21 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeename) != null)
+                        EmsConstants.employeename) != null) {
             tvemployeename.setText("Hi " + SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeename).toString().trim());
-
+        }
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.checkintime) != null)
+                        EmsConstants.checkintime) != null) {
             tvschedule.setText(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.checkintime).toString().trim());
-
+        }
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(

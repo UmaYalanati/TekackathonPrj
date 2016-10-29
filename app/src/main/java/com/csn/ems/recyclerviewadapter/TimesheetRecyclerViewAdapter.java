@@ -28,7 +28,8 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
     ViewHolder viewHolder1;
     TextView textView, tvapprovalstatus;
     List<TimeSheetDetails> timesheetDetails;
-    public TimesheetRecyclerViewAdapter(Context context1,   List<TimeSheetDetails> timesheetDetails) {
+
+    public TimesheetRecyclerViewAdapter(Context context1, List<TimeSheetDetails> timesheetDetails) {
 
         this.timesheetDetails = timesheetDetails;
         context = context1;
@@ -36,7 +37,7 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView,tvcheckintime,tvcheckouttime,tvtotalhrs;
+        public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
         public ImageView tvapprovalstatus;
 
         public ViewHolder(View v) {
@@ -44,9 +45,9 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
             super(v);
             tvapprovalstatus = (ImageView) v.findViewById(R.id.tvapprovalstatus);
             textView = (TextView) v.findViewById(R.id.tvdate);
-            tvcheckintime= (TextView) v.findViewById(R.id.tvcheckintime);
-            tvtotalhrs= (TextView) v.findViewById(R.id.tvtotalhrs);
-            tvcheckouttime= (TextView) v.findViewById(R.id.tvcheckouttime);
+            tvcheckintime = (TextView) v.findViewById(R.id.tvcheckintime);
+            tvtotalhrs = (TextView) v.findViewById(R.id.tvtotalhrs);
+            tvcheckouttime = (TextView) v.findViewById(R.id.tvcheckouttime);
             tvapprovalstatus.setVisibility(View.GONE);
         }
     }
@@ -65,44 +66,44 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
-        String intime="";
+        String intime = "";
 
-        String ottime="";
+        String ottime = "";
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
-        Date dt=null;
-        Date dt_out=null;
+        Date dt = null;
+        Date dt_out = null;
         try {
-            if (timesheetDetails.get(position).getCheckIn() != null)
-            {
+            if (timesheetDetails.get(position).getCheckIn() != null) {
                 dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
 
 
             }
-            if (timesheetDetails.get(position).getCheckOut() != null)
-            {
+            if (timesheetDetails.get(position).getCheckOut() != null) {
 
                 dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
 
             }
             System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-            intime=sdfs.format(dt);
-            ottime=sdfs.format(dt_out);
+            intime = sdfs.format(dt);
+            ottime = sdfs.format(dt_out);
 
 
             holder.tvcheckintime.setText(intime);
             holder.tvcheckouttime.setText(ottime);
 
-            if (timesheetDetails.get(position).getCheckIn() != null&&timesheetDetails.get(position).getCheckOut() != null){
-             //   long secs = (dt.getTime() - dt.getTime()) / 1000;
-             //   int hours = secs / 3600;
+            if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
+                //   long secs = (dt.getTime() - dt.getTime()) / 1000;
+                //   int hours = secs / 3600;
                 final int MILLI_TO_HOUR = 1000 * 60 * 60;
-                int hours= (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
-               //  Period p = new Period(dt, dt_out);
-
-              //  holder.tvtotalhrs.setText(String.valueOf(holder)+"hrs");
-               // int hours = p.getHours();
+                int hours = (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
+                //
+                //  Period p = new Period(dt, dt_out);
+                long diff = dt.getTime() - dt_out.getTime();
+                long diffHours = diff / (60 * 60 * 1000) % 24;
+                holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
+                // int hours = p.getHours();
             }
 
 
