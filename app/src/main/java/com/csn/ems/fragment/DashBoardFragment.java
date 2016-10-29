@@ -99,9 +99,7 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.photoPath) != null) {
-            //  Bitmap bmp=null;
-            //  image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
-            ///   image_employee.setImageBitmap(getBitmapFromURL(employeeDetails.getPhotoPath()));
+
             Picasso.with(getActivity())
                     .load("http://" + SharedPreferenceUtils
                             .getInstance(getActivity())

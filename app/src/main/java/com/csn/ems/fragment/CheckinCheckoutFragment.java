@@ -1,8 +1,10 @@
 package com.csn.ems.fragment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -32,24 +34,27 @@ import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.csn.ems.R.drawable.location;
 
 /**
  * Created by uyalanat on 22-10-2016.
  */
 
 public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener , LocationListener {
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     String TAG="CheckoutFragment";
     BreakDetails breakDetails=new BreakDetails();
     protected LocationManager locationManager;
@@ -118,12 +123,94 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         myThread = new Thread(runnable);
         myThread.start();
 
-        locationManager = (LocationManager)getActivity(). getSystemService(Context.LOCATION_SERVICE);
-        try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        } catch (SecurityException e) {
-            Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
+
+
+
+
+        // Getting LocationManager object from System Service
+        // LOCATION_SERVICE
+        LocationManager locationManager = (LocationManager) getActivity()
+                .getSystemService(Activity.LOCATION_SERVICE);
+
+        // Creating a criteria object to retrieve provider
+        // Criteria criteria = new Criteria();
+
+        // Getting the name of the best provider
+        // String provider = locationManager.getBestProvider(criteria,
+        // true);
+
+        Location location=null;
+
+        // Getting Current Location
+			/*
+			 * if
+			 * (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER
+			 * )) { location= locationManager
+			 * .getLastKnownLocation(LocationManager.NETWORK_PROVIDER); }else {
+			 * location= locationManager
+			 * .getLastKnownLocation(LocationManager.GPS_PROVIDER); }
+			 */
+try{
+        location = locationManager
+                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    } catch (SecurityException e) {
+        Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
+    }
+        boolean isGPSEnabled = false;
+        boolean isNetworkEnabled = false;
+        // getting GPS status
+        isGPSEnabled = locationManager
+                .isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        // getting network status
+        isNetworkEnabled = locationManager
+                .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        if (!isGPSEnabled && !isNetworkEnabled) {
+            // no network provider is enabled
+        } else {
+            // this.canGetLocation = true;
+            if (isNetworkEnabled) {
+                try{
+                locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                Log.d("Network", "Network Enabled");
+                if (locationManager != null) {
+                    location = locationManager
+                            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null) {
+                        onLocationChanged(location);
+
+                    }
+                }
+            } catch (SecurityException e) {
+                Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
+            }
+            } else if (isGPSEnabled) {
+                // if GPS Enabled get lat/long using GPS Services
+                if (location == null) {
+                    try{
+                    locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                    Log.d("GPS", "GPS Enabled");
+                    if (locationManager != null) {
+                        location = locationManager
+                                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if (location != null) {
+                            onLocationChanged(location);
+                        }
+                    }
+                } catch (SecurityException e) {
+                    Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
+                }
+                }
+            }
         }
+
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -152,10 +239,10 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 if (SharedPreferenceUtils
         .getInstance(getActivity())
         .getSplashCacheItem(
-                EmsConstants.timesheetId)!=null&&!SharedPreferenceUtils
+                EmsConstants.checkinTime)!=null&&!SharedPreferenceUtils
         .getInstance(getActivity())
         .getSplashCacheItem(
-                EmsConstants.timesheetId).toString().trim().isEmpty()){
+                EmsConstants.checkinTime).toString().trim().isEmpty()){
     getbreaktimes();
     layout_checkin.setVisibility(View.GONE);
     layout_checkout.setVisibility(View.VISIBLE);
