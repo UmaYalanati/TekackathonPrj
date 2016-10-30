@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.csn.ems.R.id.tvbreaktime;
+
 /**
  * Created by uyalanat on 22-10-2016.
  */
@@ -74,30 +76,51 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
         SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
         Date dt = null;
         Date dt_out = null;
-        try {
+
+        if (timesheetDetails.get(position).getCheckIn() != null) {
+            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
+        }
+        if (timesheetDetails.get(position).getCheckOut() != null) {
+            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+        }
+
+ /*       try {
             if (timesheetDetails.get(position).getCheckIn() != null) {
-                dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
-                System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-                intime = sdfs.format(dt);
-                holder.tvcheckintime.setText(intime);
+
+                if (timesheetDetails.get(position).getCheckIn().contains("AM")
+                        || timesheetDetails.get(position).getCheckIn().contains("PM")) {
+                    holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckIn());
+                }else {
+                    dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
+                    System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
+                    intime = sdfs.format(dt);
+                    holder.tvcheckintime.setText(intime);
+                }
             }
             if (timesheetDetails.get(position).getCheckOut() != null) {
+                if (timesheetDetails.get(position).getCheckOut().contains("AM")
+                        || timesheetDetails.get(position).getCheckOut().contains("PM")) {
+                    holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+                } else {
+                    dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
+                    ottime = sdfs.format(dt_out);
+                    holder.tvcheckouttime.setText(ottime);
+                }
 
-                dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
-                ottime = sdfs.format(dt_out);
-                holder.tvcheckouttime.setText(ottime);
 
             }
 
 
+        } catch (ParseException e) {
 
-
-
-
-
+            e.printStackTrace();
+        }*/
+        try{
             if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
                 //   long secs = (dt.getTime() - dt.getTime()) / 1000;
                 //   int hours = secs / 3600;
+                dt = sdfs.parse(timesheetDetails.get(position).getCheckIn());
+                dt_out = sdfs.parse(timesheetDetails.get(position).getCheckOut());
                 final int MILLI_TO_HOUR = 1000 * 60 * 60;
                 int hours = (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
                 //
@@ -107,12 +130,10 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
                 holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
                 // int hours = p.getHours();
             }
+        }catch (ParseException e){
 
-
-        } catch (ParseException e) {
-
-            e.printStackTrace();
         }
+
     }
 
     @Override

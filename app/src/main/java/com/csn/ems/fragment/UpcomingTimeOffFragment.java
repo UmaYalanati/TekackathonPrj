@@ -77,11 +77,11 @@ EditText ed_comments;
          toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
-        calendar.add(Calendar.DAY_OF_MONTH, -15);
+        calendar.add(Calendar.DAY_OF_MONTH, +1);
         String fromDate = newDateFormat.format(calendar.getTime());
         upcomingDetails();
-        btnendtime.setText(toDate);
-        btnstarttime.setText(fromDate);
+        btnendtime.setText(fromDate);
+        btnstarttime.setText(toDate);
 
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
@@ -129,7 +129,8 @@ leav_postion=arg2;
 
     void setData(){
         leaveTypeId= EMSApplication.inTakeMasterDetails.getLeaveTypes().get(leav_postion).getId();
-        createLeaveRequest.setLeaveId(leaveTypeId);
+       createLeaveRequest.setLeaveTypeId(leaveTypeId);
+       // createLeaveRequest.setLeaveleaveTypeId);
         createLeaveRequest.setEmployeeId( Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -139,7 +140,8 @@ leav_postion=arg2;
             Calendar c = Calendar.getInstance();
             System.out.println("Current time => " + c.getTime());
 
-            SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
             String formattedDate = newDateFormat.format(c.getTime());
 
 
@@ -152,7 +154,7 @@ leav_postion=arg2;
         }
         createLeaveRequest.setDateFrom(btnstarttime.getText().toString().trim());
         createLeaveRequest.setDateTo(btnendtime.getText().toString().trim());
-        createLeaveRequest.setLeaveId(1);
+        createLeaveRequest.setLeaveId(0);
         createLeaveRequest.setComments(ed_comments.getText().toString().trim());
         createLeaveRequest.setAssignedTo(null);
         createLeaveRequest.setActionDate(null);

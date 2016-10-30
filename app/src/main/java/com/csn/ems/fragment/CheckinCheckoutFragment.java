@@ -291,12 +291,16 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.timesheetId).toString().trim());
+        int breakinid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.breakinid).toString().trim());
         insertBreakIn.setTimeSheetId(timesheetid);
-
+        insertBreakIn.setBreakId(breakinid);
         insertBreakIn.setComments(edcomments.getText().toString());
         insertBreakIn.setBreakOutOutLattitude(lat);
         insertBreakIn.setBreakOutLongitude(lng);
-        insertBreakIn.setBreakOut(tvbreaktime.getText().toString().trim());
+        insertBreakIn.setBreakOut(tvcurrenttime.getText().toString().trim());
     }
 
     public void updateBreakin() {
@@ -431,7 +435,11 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                         InsertBreakIn emp = response.body();
                         if (emp != null) {
                             Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-
+                            SharedPreferenceUtils
+                                    .getInstance(getActivity())
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.breakinid,
+                                            String.valueOf(emp.getBreakId())).commitSplash();
                         } else {
                             new AlertDialog.Builder(getContext())
                                     .setTitle("InsertClockIn Creation Failed!")
@@ -580,7 +588,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 ll_startbreak.setVisibility(View.VISIBLE);
                 ll_breaktime.setVisibility(View.GONE);
 
-
+                breakIn(false);
                 if (SharedPreferenceUtils
                         .getInstance(getActivity())
                         .getSplashCacheItem(
@@ -592,7 +600,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                     layout_checkin.setVisibility(View.GONE);
                     layout_checkout.setVisibility(View.VISIBLE);
                 }
-                breakIn(false);
+
                 break;
             case R.id.imgbtnbreak:
                 breakIn(true);

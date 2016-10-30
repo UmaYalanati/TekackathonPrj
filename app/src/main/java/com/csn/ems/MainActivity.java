@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     Class fragmentClass = null;
     String tag = null;
     TextView tvemployeename, tvemployeeemail;
-    CircleImageView image_employee;
+    de.hdodenhof.circleimageview.CircleImageView image_employee;
     int selectedMenuItem;
     boolean doubleBackToExitPressedOnce = false;
     private DrawerLayout drawerLayout;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        image_employee = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView_employee);
+        image_employee = (de.hdodenhof.circleimageview.CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView_employee);
 //        image_employee.setImageResource(R.drawable.coffee_cup);
 
         tvemployeename = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvemployeename);

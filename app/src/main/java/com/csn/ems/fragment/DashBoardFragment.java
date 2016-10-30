@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class DashBoardFragment extends Fragment implements View.OnClickListener {
     String TAG = "DashBoardFragment";
     CardView card_view, card_view_timeclcok, card_view_orgcalendar;
-    ImageView imgprofilepic;
+    de.hdodenhof.circleimageview.CircleImageView imgprofilepic;
     TextView tvemployeename, tvcompanyname, tvcheckintime, tvschedule, tvnorofdays, tvmonth, tvday;
     FrameLayout fragment_container;
     InTakeMasterDetails inTakeMasterDetails = new InTakeMasterDetails();
@@ -58,7 +58,7 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         card_view = (CardView) view.findViewById(R.id.card_view);
         card_view_timeclcok = (CardView) view.findViewById(R.id.card_view_timeclcok);
         card_view_orgcalendar = (CardView) view.findViewById(R.id.card_view_orgcalendar);
-        imgprofilepic = (ImageView) view.findViewById(R.id.imgprofilepic);
+        imgprofilepic = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.imgprofilepic);
         tvemployeename = (TextView) view.findViewById(R.id.tvemployeename);
         tvcompanyname = (TextView) view.findViewById(R.id.tvcompanyname);
         tvcheckintime = (TextView) view.findViewById(R.id.tvcheckintime);
@@ -99,12 +99,31 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.photoPath) != null) {
+if ( !SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.photoPath).toString().trim().contains("www.")){
+    Picasso.with(getActivity())
+            .load("http://" +"ww.csn.ems.com.iis3002.databasemart.net/" +SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.emaailid).toString().trim()+"/"+SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.photoPath).toString().trim()).into(imgprofilepic);
+                }else{
+    Picasso.with(getActivity())
+            .load("http://" + SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.photoPath).toString().trim()).into(imgprofilepic);
+                }
 
-            Picasso.with(getActivity())
-                    .load("http://" + SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.photoPath).toString().trim()).into(imgprofilepic);
+
+            Toast.makeText(getActivity(),SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.photoPath).toString().trim(),Toast.LENGTH_SHORT).show();
             //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
         } else {
             imgprofilepic.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);
