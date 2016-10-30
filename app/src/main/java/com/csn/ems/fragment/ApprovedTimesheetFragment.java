@@ -73,7 +73,8 @@ String TAG="TimesheetFragment";
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+     //   SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now

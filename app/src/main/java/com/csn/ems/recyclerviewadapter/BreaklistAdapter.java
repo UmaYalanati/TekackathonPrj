@@ -63,29 +63,60 @@ public class BreaklistAdapter extends BaseAdapter {
 		String intime="";
 
 		String ottime="";
-
+		Date dt_out=null;
 	SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 	SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
 	Date dt=null;
-		Date dt_out=null;
+
 	try {
 		if (breakDetails.get(position).getBreakIn() != null)
 		{
-			dt = sdf.parse(breakDetails.get(position).getBreakIn());
-			dt_out = sdf.parse(breakDetails.get(position).getBreakOut());
+			if (breakDetails.get(position).getBreakIn().contains("AM")||breakDetails.get(position).getBreakIn().contains("PM"))
+			{
+				tvbreaktime.setText("Break("+breakDetails.get(position).getBreakIn()+"---"+"0.0"+")");
+			}else{
+
+				dt = sdf.parse(breakDetails.get(position).getBreakIn());
+				System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
+				intime=sdfs.format(dt);
+				tvbreaktime.setText("Break("+intime+"---"+"0.0"+")");
+			}
+
+
 
 	}
-		System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-		intime=sdfs.format(dt);
-		ottime=sdfs.format(dt_out);
+
 	} catch (ParseException e) {
-		// TODO Auto-generated catch block
+
 		e.printStackTrace();
 	}
+if (breakDetails.get(position).getBreakOut() != null){
+	try{
+
+		if (breakDetails.get(position).getBreakOut().contains("AM")||breakDetails.get(position).getBreakOut().contains("PM"))
+		{
+			tvbreaktime.setText("Break("+breakDetails.get(position).getBreakIn()+"---"+"0.0"+")");
+			tvbreaktime.setText("Break("+breakDetails.get(position).getBreakIn()+"---"+breakDetails.get(position).getBreakOut()+")");
+		}else{
+
+			dt_out = sdf.parse(breakDetails.get(position).getBreakOut());
+			ottime=sdfs.format(dt_out);
+			tvbreaktime.setText("Break("+intime+"---"+ottime+")");
+		}
 
 
 
-		tvbreaktime.setText("Break("+intime+"---"+ottime+")");
+
+} catch (ParseException e) {
+
+		e.printStackTrace();
+	}
+}
+
+if (breakDetails.get(position).getBreakIn() != null&&breakDetails.get(position).getBreakOut() != null){
+	tvbreaktime.setText("Break("+intime+"---"+ottime+")");
+}
+
 		return convertView;
 	}
 }

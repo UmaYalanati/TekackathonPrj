@@ -2,9 +2,7 @@ package com.csn.ems.fragment;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -45,47 +43,46 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.drawable.location;
-
 /**
  * Created by uyalanat on 22-10-2016.
  */
 
-public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener , LocationListener {
+public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener, LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-    String TAG="CheckoutFragment";
-    BreakDetails breakDetails=new BreakDetails();
+    String TAG = "CheckoutFragment";
+    BreakDetails breakDetails = new BreakDetails();
     protected LocationManager locationManager;
     protected LocationListener locationListener;
 
     ListView listView_breakDetails;
     String provider;
-    protected String latitude,longitude;
-    protected boolean gps_enabled,network_enabled;
+    protected String latitude, longitude;
+    protected boolean gps_enabled, network_enabled;
 
-    TextView tvcheckintime, tvcurrentdate, tvcurrenttime,tvbreaktime,tvtotalahrs,tvcheckoutcurrentdate;
+    TextView tvcheckintime, tvcurrentdate, tvcurrenttime, tvbreaktime, tvtotalahrs, tvcheckoutcurrentdate;
     Button btncheckin, btncheckout, btncontinueshift;
     ImageButton imgbtnbreak;
     EditText edcomments;
     LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak;
-      double lat,lng;
-    InsertClockIn insertClockIn=new InsertClockIn();
-    InsertBreakIn insertBreakIn=new InsertBreakIn();
+    double lat, lng;
+    InsertClockIn insertClockIn = new InsertClockIn();
+    InsertBreakIn insertBreakIn = new InsertBreakIn();
     String formattedDate;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
-        edcomments= (EditText) view.findViewById(R.id.edcomments);
-        listView_breakDetails= (ListView) view.findViewById(R.id.listView_breakDetails);
-        tvcheckintime= (TextView) view.findViewById(R.id.tvcheckintime);
+        edcomments = (EditText) view.findViewById(R.id.edcomments);
+        listView_breakDetails = (ListView) view.findViewById(R.id.listView_breakDetails);
+        tvcheckintime = (TextView) view.findViewById(R.id.tvcheckintime);
         tvcurrentdate = (TextView) view.findViewById(R.id.tvcurrentdate);
-        tvcheckoutcurrentdate= (TextView) view.findViewById(R.id.tvcheckoutcurrentdate);
+        tvcheckoutcurrentdate = (TextView) view.findViewById(R.id.tvcheckoutcurrentdate);
         tvcurrenttime = (TextView) view.findViewById(R.id.tvcurrenttime);
-        tvbreaktime= (TextView) view.findViewById(R.id.tvbreaktime);
-        tvtotalahrs= (TextView) view.findViewById(R.id.tvtotalahrs);
+        tvbreaktime = (TextView) view.findViewById(R.id.tvbreaktime);
+        tvtotalahrs = (TextView) view.findViewById(R.id.tvtotalahrs);
         btncheckin = (Button) view.findViewById(R.id.btncheckin);
         btncheckout = (Button) view.findViewById(R.id.btncheckout);
         btncontinueshift = (Button) view.findViewById(R.id.btncontinueshift);
@@ -105,7 +102,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             System.out.println("Current time => " + c.getTime());
 
             SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-             formattedDate = newDateFormat.format(c.getTime());
+            formattedDate = newDateFormat.format(c.getTime());
 
 
             Date MyDate = newDateFormat.parse(formattedDate);
@@ -113,7 +110,6 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             str_MyDate = newDateFormat.format(MyDate);
             tvcurrentdate.setText(str_MyDate);
             tvcheckoutcurrentdate.setText(str_MyDate);
-
 
 
         } catch (ParseException e) {
@@ -130,15 +126,15 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 .getSystemService(Activity.LOCATION_SERVICE);
 
 
-        Location location=null;
+        Location location = null;
 
 
-try{
-        location = locationManager
-                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    } catch (SecurityException e) {
-        Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
-    }
+        try {
+            location = locationManager
+                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } catch (SecurityException e) {
+            Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
+        }
         boolean isGPSEnabled = false;
         boolean isNetworkEnabled = false;
         // getting GPS status
@@ -154,42 +150,42 @@ try{
         } else {
             // this.canGetLocation = true;
             if (isNetworkEnabled) {
-                try{
-                locationManager.requestLocationUpdates(
-                        LocationManager.NETWORK_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                Log.d("Network", "Network Enabled");
-                if (locationManager != null) {
-                    location = locationManager
-                            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (location != null) {
-                        onLocationChanged(location);
-
-                    }
-                }
-            } catch (SecurityException e) {
-                Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
-            }
-            } else if (isGPSEnabled) {
-                // if GPS Enabled get lat/long using GPS Services
-                if (location == null) {
-                    try{
+                try {
                     locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER,
+                            LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    Log.d("GPS", "GPS Enabled");
+                    Log.d("Network", "Network Enabled");
                     if (locationManager != null) {
                         location = locationManager
-                                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
                             onLocationChanged(location);
+
                         }
                     }
                 } catch (SecurityException e) {
-                    Log.e("PERMISSION_EXCEPTION","PERMISSION_NOT_GRANTED");
+                    Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
                 }
+            } else if (isGPSEnabled) {
+                // if GPS Enabled get lat/long using GPS Services
+                if (location == null) {
+                    try {
+                        locationManager.requestLocationUpdates(
+                                LocationManager.GPS_PROVIDER,
+                                MIN_TIME_BW_UPDATES,
+                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                        Log.d("GPS", "GPS Enabled");
+                        if (locationManager != null) {
+                            location = locationManager
+                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (location != null) {
+                                onLocationChanged(location);
+                            }
+                        }
+                    } catch (SecurityException e) {
+                        Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
+                    }
                 }
             }
         }
@@ -197,10 +193,10 @@ try{
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.checkinTime)!=null&&!SharedPreferenceUtils
+                        EmsConstants.checkinTime) != null && !SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.checkinTime).toString().trim().isEmpty()){
+                        EmsConstants.checkinTime).toString().trim().isEmpty()) {
             tvcheckintime.setText(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
@@ -209,53 +205,59 @@ try{
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.breakinTime)!=null&&!SharedPreferenceUtils
+                        EmsConstants.breakinTime) != null && !SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.breakinTime).toString().trim().isEmpty()){
+                        EmsConstants.breakinTime).toString().trim().isEmpty()) {
             tvbreaktime.setText(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.breakinTime).toString().trim());
         }
 
-if (SharedPreferenceUtils
-        .getInstance(getActivity())
-        .getSplashCacheItem(
-                EmsConstants.checkinTime)!=null&&!SharedPreferenceUtils
-        .getInstance(getActivity())
-        .getSplashCacheItem(
-                EmsConstants.checkinTime).toString().trim().isEmpty()){
-    getbreaktimes();
-    layout_checkin.setVisibility(View.GONE);
-    layout_checkout.setVisibility(View.VISIBLE);
-                }
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.checkinTime) != null && !SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.checkinTime).toString().trim().isEmpty()) {
+            getbreaktimes();
+            layout_checkin.setVisibility(View.GONE);
+            layout_checkout.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
+
     @Override
     public void onLocationChanged(Location location) {
-        lat=location.getLatitude();
-        lng=location.getLongitude();
+        lat = location.getLatitude();
+        lng = location.getLongitude();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("Latitude","disable");
+        Log.d("Latitude", "disable");
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("Latitude","enable");
+        Log.d("Latitude", "enable");
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("Latitude","status");
+        Log.d("Latitude", "status");
     }
-    
-    
-    public void  updateCheckin(){
+
+
+    public void updateCheckin() {
+      /*  int timesheetid=Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.timesheetId).toString().trim());
+        insertClockIn.setTimeSheetId(timesheetid);*/
         insertClockIn.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -266,7 +268,13 @@ if (SharedPreferenceUtils
         insertClockIn.setCheckIn(tvcurrenttime.getText().toString().trim());
 
     }
-    public void  updateCheckOut(){
+
+    public void updateCheckOut() {
+        int timesheetid=Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.timesheetId).toString().trim());
+        insertClockIn.setTimeSheetId(timesheetid);
         insertClockIn.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -277,20 +285,22 @@ if (SharedPreferenceUtils
         insertClockIn.setCheckOut(tvtotalahrs.getText().toString().trim());
 
     }
-public void updatebreakout(){
-    int timesheetid=Integer.parseInt(SharedPreferenceUtils
-            .getInstance(getActivity())
-            .getSplashCacheItem(
-                    EmsConstants.timesheetId).toString().trim());
-    insertBreakIn.setTimeSheetId(timesheetid);
 
-    insertBreakIn.setComments(edcomments.getText().toString());
-    insertBreakIn.setBreakOutOutLattitude(lat);
-    insertBreakIn.setBreakOutLongitude(lng);
-    insertBreakIn.setBreakOut(tvbreaktime.getText().toString().trim());
-}
-    public void  updateBreakin(){
-        int timesheetid=Integer.parseInt(SharedPreferenceUtils
+    public void updatebreakout() {
+        int timesheetid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.timesheetId).toString().trim());
+        insertBreakIn.setTimeSheetId(timesheetid);
+
+        insertBreakIn.setComments(edcomments.getText().toString());
+        insertBreakIn.setBreakOutOutLattitude(lat);
+        insertBreakIn.setBreakOutLongitude(lng);
+        insertBreakIn.setBreakOut(tvbreaktime.getText().toString().trim());
+    }
+
+    public void updateBreakin() {
+        int timesheetid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.timesheetId).toString().trim());
@@ -298,24 +308,35 @@ public void updatebreakout(){
 
         insertBreakIn.setComments(edcomments.getText().toString());
         insertBreakIn.setBreakInLattitude(lat);
-        insertBreakIn.setCheckOutLattitude(lng);
+        insertBreakIn.setBreakInLongitude(lng);
         insertBreakIn.setBreakIn(tvbreaktime.getText().toString().trim());
     }
-    public void checkIn(boolean checkin){
+
+    public void checkIn(boolean checkin) {
         {
 
-            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading Data", "Please wait...", false, false);
+            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
 
             EMSService service = ServiceGenerator.createService();
             Call<InsertClockIn> insertClockInCall;
             if (checkin) {
                 updateCheckin();
                 insertClockInCall = service.insertClockIn(insertClockIn);
-            }
-            else
-            {
+            } else {
                 updateCheckOut();
                 insertClockInCall = service.updateClockOut(insertClockIn);
+
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.checkinTime,
+                                "").commitSplash();
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.timesheetId,
+                                "").commitSplash();
+
             }
             insertClockInCall.enqueue(new Callback<InsertClockIn>() {
                 @Override
@@ -338,24 +359,7 @@ public void updatebreakout(){
                         InsertClockIn emp = response.body();
                         if (emp != null) {
                             Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                      /*      new AlertDialog.Builder(getContext())
-                                    .setTitle("InsertClockIn  Successfully!")
-                                    .setMessage("")
-                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
 
-                                            //loadPage(1);
-                                        }
-                                    })
-                                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                        @Override
-                                        public void onCancel(DialogInterface dialog) {
-                                            //  clear_Fields();
-                                            // loadPage(1);
-                                        }
-                                    })
-                                    .show();*/
                             SharedPreferenceUtils
                                     .getInstance(getActivity())
                                     .editSplash()
@@ -391,19 +395,18 @@ public void updatebreakout(){
 
         }
     }
-    public void breakIn(boolean breakin){
+
+    public void breakIn(boolean breakin) {
         {
 
-            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading Data", "Please wait...", false, false);
+            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
 
             EMSService service = ServiceGenerator.createService();
             Call<InsertBreakIn> insertClockInCall;
             if (breakin) {
                 updateBreakin();
                 insertClockInCall = service.InsertBreakIn(insertBreakIn);
-            }
-            else
-            {
+            } else {
                 updatebreakout();
                 insertClockInCall = service.updateBreakOut(insertBreakIn);
             }
@@ -428,24 +431,7 @@ public void updatebreakout(){
                         InsertBreakIn emp = response.body();
                         if (emp != null) {
                             Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                            new AlertDialog.Builder(getContext())
-                                    .setTitle("InsertClockIn Uploaded Successfully!")
-                                    .setMessage("")
-                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
 
-                                            //loadPage(1);
-                                        }
-                                    })
-                                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                        @Override
-                                        public void onCancel(DialogInterface dialog) {
-                                            //  clear_Fields();
-                                            // loadPage(1);
-                                        }
-                                    })
-                                    .show();
                         } else {
                             new AlertDialog.Builder(getContext())
                                     .setTitle("InsertClockIn Creation Failed!")
@@ -476,19 +462,20 @@ public void updatebreakout(){
 
         }
     }
-    public void getbreaktimes(){
+
+    public void getbreaktimes() {
         {
             final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
-            int empid=Integer.parseInt(SharedPreferenceUtils
+            int empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim());
-           int timesheetid=Integer.parseInt(SharedPreferenceUtils
+            int timesheetid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.timesheetId).toString().trim());
-          //  int timesheetid=1;
-            Call<List<BreakDetails>> listCall = ServiceGenerator.createService().getBreakDetails(timesheetid,empid);
+            //  int timesheetid=1;
+            Call<List<BreakDetails>> listCall = ServiceGenerator.createService().getBreakDetails(timesheetid, empid);
 
             listCall.enqueue(new Callback<List<BreakDetails>>() {
                 @Override
@@ -507,7 +494,7 @@ public void updatebreakout(){
                         }
                     } else if (response != null && response.isSuccessful()) {
                         //DO SUCCESS HANDLING HERE
-                      //  breakDetails = response.body();
+                        //  breakDetails = response.body();
 
                         List<BreakDetails> breakDetails = response.body();
                         Log.i(TAG, "onResponse: Fetched " + breakDetails + " PropertyTypes.");
@@ -530,10 +517,12 @@ public void updatebreakout(){
             loading.show();
         }
     }
-    void setBreakDetails(List<BreakDetails> breakDetails){
-        BreaklistAdapter adapter=new BreaklistAdapter(getActivity(),breakDetails);
+
+    void setBreakDetails(List<BreakDetails> breakDetails) {
+        BreaklistAdapter adapter = new BreaklistAdapter(getActivity(), breakDetails);
         listView_breakDetails.setAdapter(adapter);
     }
+
     public void doWork() {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
@@ -582,16 +571,6 @@ public void updatebreakout(){
                 checkIn(true);
                 break;
             case R.id.btncheckout:
-                SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .editSplash()
-                        .addSplashCacheItem(EmsConstants.checkinTime,
-                                "").commitSplash();
-                SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .editSplash()
-                        .addSplashCacheItem(EmsConstants.timesheetId,
-                                "").commitSplash();
 
                 layout_checkin.setVisibility(View.VISIBLE);
                 layout_checkout.setVisibility(View.GONE);
@@ -605,10 +584,10 @@ public void updatebreakout(){
                 if (SharedPreferenceUtils
                         .getInstance(getActivity())
                         .getSplashCacheItem(
-                                EmsConstants.timesheetId)!=null&&!SharedPreferenceUtils
+                                EmsConstants.timesheetId) != null && !SharedPreferenceUtils
                         .getInstance(getActivity())
                         .getSplashCacheItem(
-                                EmsConstants.timesheetId).toString().trim().isEmpty()){
+                                EmsConstants.timesheetId).toString().trim().isEmpty()) {
                     getbreaktimes();
                     layout_checkin.setVisibility(View.GONE);
                     layout_checkout.setVisibility(View.VISIBLE);

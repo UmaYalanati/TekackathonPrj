@@ -134,7 +134,7 @@ public class ReportsTimesheetFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (month >= 0) {
-                    month--;
+                  //  month--;
                     month=month-1;
                 }
                 getLastDayOfMonth(month + 1, year);

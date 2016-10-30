@@ -27,7 +27,7 @@ public class InsertBreakIn {
     private double breakInLattitude;
 
     @JsonProperty("BreakInLongitude")
-    private double checkOutLattitude;
+    private double breakInLongitude;
 
     @JsonProperty("BreakOutOutLattitude")
     private double breakOutOutLattitude;
@@ -46,7 +46,7 @@ public class InsertBreakIn {
                 ", breakIn='" + breakIn + '\'' +
                 ", breakOut='" + breakOut + '\'' +
                 ", breakInLattitude=" + breakInLattitude +
-                ", checkOutLattitude=" + checkOutLattitude +
+                ", breakInLongitude=" + breakInLongitude +
                 ", breakOutOutLattitude=" + breakOutOutLattitude +
                 ", breakOutLongitude=" + breakOutLongitude +
                 ", comments='" + comments + '\'' +
@@ -93,12 +93,12 @@ public class InsertBreakIn {
         this.breakInLattitude = breakInLattitude;
     }
 
-    public double getCheckOutLattitude() {
-        return checkOutLattitude;
+    public double getBreakInLongitude() {
+        return breakInLongitude;
     }
 
-    public void setCheckOutLattitude(double checkOutLattitude) {
-        this.checkOutLattitude = checkOutLattitude;
+    public void setBreakInLongitude(double breakInLongitude) {
+        this.breakInLongitude = breakInLongitude;
     }
 
     public double getBreakOutOutLattitude() {

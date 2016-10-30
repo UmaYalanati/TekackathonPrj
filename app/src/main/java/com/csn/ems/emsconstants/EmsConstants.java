@@ -7,6 +7,7 @@ package com.csn.ems.emsconstants;
 public class EmsConstants {
     public static String username="username";
     public static String employeeId="EmployeeId";
+    public static String approvalval="approvalval";
     public static String timesheetId="Timesheetid";
     public static String checkinTime="checkinTime";
     public static String breakinTime="breakinTime";

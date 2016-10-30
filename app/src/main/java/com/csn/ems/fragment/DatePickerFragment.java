@@ -55,27 +55,27 @@ public class DatePickerFragment extends DialogFragment implements
 //mm dd yy
             if (new StringBuilder().append(day).length() >= 2) {
                 mTextView.setText(new StringBuilder()
-                        .append(month + 1).append("-").append(day).append("-").append(str_year).toString());
+                        .append(month + 1).append("/").append(day).append("/").append(str_year).toString());
 
             } else {
 
                 mTextView.setText(new StringBuilder()
                         .append(0)
-                        .append(month + 1).append("-").append(day).append("-").append(str_year)
+                        .append(month + 1).append("/").append(day).append("/").append(str_year)
                         .toString());
             }
         } else {
             if (new StringBuilder().append(day).length() >= 2) {
                 if (new StringBuilder().append(month + 1).length() >= 2){
                     mTextView.setText(new StringBuilder()
-                            .append(month + 1).append("-")
-                            .append(day).append("-")
+                            .append(month + 1).append("/")
+                            .append(day).append("/")
                             .append(str_year)
                             .toString());
                 }else{
                     mTextView.setText(new StringBuilder()
-                            .append(0).append(month + 1).append("-")
-                            .append(day).append("-")
+                            .append(0).append(month + 1).append("/")
+                            .append(day).append("/")
                             .append(str_year)
                             .toString());
                 }
@@ -85,8 +85,8 @@ public class DatePickerFragment extends DialogFragment implements
 
 
                 mTextView.setText(new StringBuilder()
-                        .append(0).append(month + 1).append("-")
-                        .append(0).append(day).append("-")
+                        .append(0).append(month + 1).append("/")
+                        .append(0).append(day).append("/")
                         .append(str_year).toString());
             }
 

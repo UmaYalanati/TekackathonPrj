@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.csn.ems.R.id.tvcurrenttime;
 
 /**
  * Created by uyalanat on 24-10-2016.
@@ -165,16 +169,50 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     public void Alertview(final int timesheetid, final int EmployeeId, final String WorkingDate, final String CheckIn, final String CheckOut, final double CheckInLattitude, final double checkInLongitude, final double checkOutLattitude, final double checkOutLongitude, final String AssignedTo, final String ApprovalType, final String Note, final String status) {
         {
 
-
+              String approvalval="FullDay";
             //  View dialogView = context.inflater.inflate(R.layout.custom_approveleave, null);
-
-            View dialogView = LayoutInflater.from(context).inflate(
+            SharedPreferenceUtils
+                    .getInstance(context)
+                    .editSplash()
+                    .addSplashCacheItem(EmsConstants.approvalval,
+                            approvalval).commitSplash();
+        final    View dialogView = LayoutInflater.from(context).inflate(
                     R.layout.custom_approveleave, null);
 
             final TextInputEditText allocationDateTextField = (TextInputEditText) dialogView.findViewById(R.id.ed_comments);
             //  final RadioGroup active_inactiveRadioButtonGroup = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
+      final      RadioGroup rg = (RadioGroup) dialogView.findViewById(R.id.radioGroup1);
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+            {
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch(checkedId){
+                        case R.id.radioButton1:
+                            String radiovalue = ((RadioButton)dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                           // approvalval=radiovalue;
+                            SharedPreferenceUtils
+                                    .getInstance(context)
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.approvalval,
+                                            radiovalue).commitSplash();
+                            break;
+
+                        case R.id.radioButton2:
+                            String radiovalue1 = ((RadioButton)dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                            // approvalval=radiovalue;
+                            SharedPreferenceUtils
+                                    .getInstance(context)
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.approvalval,
+                                            radiovalue1).commitSplash();
+                            break;
 
 
+
+                    }
+
+
+                }
+            });
             allocationDialog = new AlertDialog.Builder(context)
                     .setView(dialogView)
                     .setTitle("Time Sheet Approval ")
@@ -182,13 +220,19 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                     .setPositiveButton("Approve", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, SharedPreferenceUtils
+                                    .getInstance(context)
+                                    .getSplashCacheItem(
+                                            EmsConstants.approvalval).toString().trim(), Note, status);
                         }
                     })
                     .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, status);
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, SharedPreferenceUtils
+                                    .getInstance(context)
+                                    .getSplashCacheItem(
+                                            EmsConstants.approvalval).toString().trim(), Note, status);
                             //Log.i(TAG, "onClick: Clearing " + operation + " Allocation Details");
                         }
                     })

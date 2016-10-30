@@ -77,21 +77,23 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
         try {
             if (timesheetDetails.get(position).getCheckIn() != null) {
                 dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
-
-
+                System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
+                intime = sdfs.format(dt);
+                holder.tvcheckintime.setText(intime);
             }
             if (timesheetDetails.get(position).getCheckOut() != null) {
 
                 dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
+                ottime = sdfs.format(dt_out);
+                holder.tvcheckouttime.setText(ottime);
 
             }
-            System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-            intime = sdfs.format(dt);
-            ottime = sdfs.format(dt_out);
 
 
-            holder.tvcheckintime.setText(intime);
-            holder.tvcheckouttime.setText(ottime);
+
+
+
+
 
             if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
                 //   long secs = (dt.getTime() - dt.getTime()) / 1000;
