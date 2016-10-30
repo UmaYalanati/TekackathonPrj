@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -68,6 +69,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     TextView tvcheckintime, tvcurrentdate, tvcurrenttime,tvbreaktime,tvtotalahrs,tvcheckoutcurrentdate;
     Button btncheckin, btncheckout, btncontinueshift;
     ImageButton imgbtnbreak;
+    EditText edcomments;
     LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak;
       double lat,lng;
     InsertClockIn insertClockIn=new InsertClockIn();
@@ -76,6 +78,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
+        edcomments= (EditText) view.findViewById(R.id.edcomments);
         listView_breakDetails= (ListView) view.findViewById(R.id.listView_breakDetails);
         tvcheckintime= (TextView) view.findViewById(R.id.tvcheckintime);
         tvcurrentdate = (TextView) view.findViewById(R.id.tvcurrentdate);
@@ -123,33 +126,13 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         myThread = new Thread(runnable);
         myThread.start();
 
-
-
-
-
-        // Getting LocationManager object from System Service
-        // LOCATION_SERVICE
         LocationManager locationManager = (LocationManager) getActivity()
                 .getSystemService(Activity.LOCATION_SERVICE);
 
-        // Creating a criteria object to retrieve provider
-        // Criteria criteria = new Criteria();
-
-        // Getting the name of the best provider
-        // String provider = locationManager.getBestProvider(criteria,
-        // true);
 
         Location location=null;
 
-        // Getting Current Location
-			/*
-			 * if
-			 * (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER
-			 * )) { location= locationManager
-			 * .getLastKnownLocation(LocationManager.NETWORK_PROVIDER); }else {
-			 * location= locationManager
-			 * .getLastKnownLocation(LocationManager.GPS_PROVIDER); }
-			 */
+
 try{
         location = locationManager
                 .getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -294,17 +277,29 @@ if (SharedPreferenceUtils
         insertClockIn.setCheckOut(tvtotalahrs.getText().toString().trim());
 
     }
+public void updatebreakout(){
+    int timesheetid=Integer.parseInt(SharedPreferenceUtils
+            .getInstance(getActivity())
+            .getSplashCacheItem(
+                    EmsConstants.timesheetId).toString().trim());
+    insertBreakIn.setTimeSheetId(timesheetid);
 
+    insertBreakIn.setComments(edcomments.getText().toString());
+    insertBreakIn.setBreakOutOutLattitude(lat);
+    insertBreakIn.setBreakOutLongitude(lng);
+    insertBreakIn.setBreakOut(tvbreaktime.getText().toString().trim());
+}
     public void  updateBreakin(){
-        insertClockIn.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
+        int timesheetid=Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()));
-        insertClockIn.setWorkingDate(formattedDate);
-        insertClockIn.setCheckInLattitude(lat);
-        insertClockIn.setCheckInLongitude(lng);
-        insertClockIn.setCheckIn(tvcurrenttime.getText().toString().trim());
-insertBreakIn.setBreakIn(tvbreaktime.getText().toString().trim());
+                        EmsConstants.timesheetId).toString().trim());
+        insertBreakIn.setTimeSheetId(timesheetid);
+
+        insertBreakIn.setComments(edcomments.getText().toString());
+        insertBreakIn.setBreakInLattitude(lat);
+        insertBreakIn.setCheckOutLattitude(lng);
+        insertBreakIn.setBreakIn(tvbreaktime.getText().toString().trim());
     }
     public void checkIn(boolean checkin){
         {
@@ -409,7 +404,7 @@ insertBreakIn.setBreakIn(tvbreaktime.getText().toString().trim());
             }
             else
             {
-                updateBreakin();
+                updatebreakout();
                 insertClockInCall = service.updateBreakOut(insertBreakIn);
             }
             insertClockInCall.enqueue(new Callback<InsertBreakIn>() {
