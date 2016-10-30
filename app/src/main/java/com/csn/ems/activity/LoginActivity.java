@@ -181,6 +181,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.username,
                                         username_n).commitSplash();
+
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
@@ -198,14 +199,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.emaailid,
                                         String.valueOf(emp.getEmailId())).commitSplash();
-                        if (emp.getUserRolePermission().size() > 0) {
+                        if (emp.getRoleName()!=null) {
                             SharedPreferenceUtils
                                     .getInstance(LoginActivity.this)
                                     .editSplash()
                                     .addSplashCacheItem(EmsConstants.rolename,
-                                            emp.getUserRolePermission().get(0).getRoleName()
+                                            emp.getRoleName()
                                     ).commitSplash();
                         }
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.childEmployeeId,
+                                        String.valueOf(emp.getChildEmployeeId())).commitSplash();
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()

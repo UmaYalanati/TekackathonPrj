@@ -84,7 +84,10 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                             .getInstance(context)
                             .getSplashCacheItem(
                                     EmsConstants.rolename).equals("Manager")) {
-                        Alertview(timesheetDetails.get(pos).getTimeSheetId(), timesheetDetails.get(pos).getEmployeeId(), timesheetDetails.get(pos).getWorkingDate(), timesheetDetails.get(pos).getCheckIn(), timesheetDetails.get(pos).getCheckOut(), timesheetDetails.get(pos).getCheckInLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getCheckOutLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getAssignedTo(), timesheetDetails.get(pos).getApprovalType(), timesheetDetails.get(pos).getNote(), timesheetDetails.get(pos).getStatus());
+                        Alertview(timesheetDetails.get(pos).getTimeSheetId(), Integer.parseInt(SharedPreferenceUtils
+                                .getInstance(context)
+                                .getSplashCacheItem(
+                                        EmsConstants.childEmployeeId).toString()), timesheetDetails.get(pos).getWorkingDate(), timesheetDetails.get(pos).getCheckIn(), timesheetDetails.get(pos).getCheckOut(), timesheetDetails.get(pos).getCheckInLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getCheckOutLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getAssignedTo(), timesheetDetails.get(pos).getApprovalType(), timesheetDetails.get(pos).getNote(), timesheetDetails.get(pos).getStatus());
                     }
                 }
             });

@@ -90,24 +90,118 @@
                 android:text="Button" />
         </LinearLayout>
     </RelativeLayout>
-    <!-- <view
-         android:layout_marginTop="5dp"
-         android:background="@color/black"
-         android:layout_width="match_parent"
-         android:layout_height="1dp"/>-->
-    <RelativeLayout
 
-        android:id="@+id/relativelayout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
             android:background="@color/black" />
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        <TextView
+
+            android:id="@+id/tvdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="18dp"
+            android:text="Date"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvcheckintime"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvdate"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/tvdate"
+            android:layout_toRightOf="@+id/tvdate"
+
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="Clock In"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvcheckouttime"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvcheckintime"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/imageButton"
+            android:layout_toRightOf="@+id/imageButton"
+
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="Clock Out"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tvtotalhrs"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvcheckouttime"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/imageButton2"
+            android:layout_toRightOf="@+id/imageButton2"
+            android:text="Length"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvcheckintime"
+            android:layout_marginLeft="6dp"
+            android:layout_toEndOf="@+id/tvcheckintime"
+            android:layout_toRightOf="@+id/tvcheckintime"
+           android:text="Location" />
+
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageButton"
+            android:layout_marginLeft="6dp"
+            android:layout_toEndOf="@+id/tvcheckouttime"
+            android:layout_toRightOf="@+id/tvcheckouttime"
+            android:text="Location"  />
+
+        <TextView
+            android:id="@+id/tvapprovalstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageButton2"
+            android:layout_marginLeft="5dp"
+android:textSize="12sp"
+            android:layout_toEndOf="@+id/tvtotalhrs"
+            android:layout_toRightOf="@+id/tvtotalhrs"
+
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="Status" />
+    </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -116,5 +210,5 @@
             android:paddingTop="16dp"
             android:scrollbars="vertical" />
 
-    </RelativeLayout>
+
 </LinearLayout>

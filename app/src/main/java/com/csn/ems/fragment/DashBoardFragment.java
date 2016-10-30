@@ -120,10 +120,10 @@ if ( !SharedPreferenceUtils
                 }
 
 
-            Toast.makeText(getActivity(),SharedPreferenceUtils
+          /*  Toast.makeText(getActivity(),SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.photoPath).toString().trim(),Toast.LENGTH_SHORT).show();
+                            EmsConstants.photoPath).toString().trim(),Toast.LENGTH_SHORT).show();*/
             //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
         } else {
             imgprofilepic.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);

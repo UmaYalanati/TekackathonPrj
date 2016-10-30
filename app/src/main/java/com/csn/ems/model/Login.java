@@ -29,13 +29,14 @@ public class Login {
     @JsonProperty("Message")
     private String message;
 
-    public String getMessage() {
-        return message;
-    }
+    @JsonProperty("ChildEmployeeId")
+    private String childEmployeeId;
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    @JsonProperty("RoleName")
+    private String roleName;
+
+    @JsonProperty("ChildRoleName")
+    private String childRoleName;
 
     @Override
     public String toString() {
@@ -46,10 +47,45 @@ public class Login {
                 ", locationName='" + locationName + '\'' +
                 ", organizationName='" + organizationName + '\'' +
                 ", message='" + message + '\'' +
+                ", childEmployeeId='" + childEmployeeId + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", childRoleName='" + childRoleName + '\'' +
                 ", userRolePermission=" + userRolePermission +
                 ", emailId='" + emailId + '\'' +
                 ", photoPath='" + photoPath + '\'' +
                 '}';
+    }
+
+    public String getChildEmployeeId() {
+        return childEmployeeId;
+    }
+
+    public void setChildEmployeeId(String childEmployeeId) {
+        this.childEmployeeId = childEmployeeId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getChildRoleName() {
+        return childRoleName;
+    }
+
+    public void setChildRoleName(String childRoleName) {
+        this.childRoleName = childRoleName;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @JsonProperty("UserRolePermission")
