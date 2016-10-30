@@ -74,7 +74,7 @@ public interface EMSService {
     Call<List<UpcomingEvents>> getUpcomingEvents(@Query("selectedDate") String selectedDate);
 
     @GET("OrgManagement/GetScheduleTime")
-    Call<List<ScheduleTime>> getScheduleTime(@Query("employeeId") int employeeId,@Query("selectedDate") String selectedDate);
+    Call<ScheduleTime> getScheduleTime(@Query("employeeId") int employeeId,@Query("selectedDate") String selectedDate);
 
     @GET("TimeSheetReport/GetTimeSheetReport")
     Call<List<TimeSheetReport>> getTimeSheetReport(@Query("employeeId") int employeeId, @Query("selectedDate") String selectedDate);

@@ -21,6 +21,7 @@ import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
+import com.csn.ems.recyclerviewadapter.ReportTimesheetRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
 
 import org.joda.time.LocalDate;
@@ -68,7 +69,7 @@ public class ReportsTimesheetFragment extends Fragment {
     Context context;
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
-    ApprovedTimesheetRecyclerViewAdapter recyclerViewAdapter;
+    ReportTimesheetRecyclerViewAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
     //AppCompatSpinner spinner_listofsheet;
 
@@ -204,7 +205,7 @@ public class ReportsTimesheetFragment extends Fragment {
 
     private void updateRecyclerViewForClients(List<TimeSheetDetails> timesheetDetails) {
 
-        recyclerViewAdapter = new ApprovedTimesheetRecyclerViewAdapter(getActivity(), timesheetDetails);
+        recyclerViewAdapter = new ReportTimesheetRecyclerViewAdapter(getActivity(), timesheetDetails);
 
         recyclerView.setAdapter(recyclerViewAdapter);
         //  }

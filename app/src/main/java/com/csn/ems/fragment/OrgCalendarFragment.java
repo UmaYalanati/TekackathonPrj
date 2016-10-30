@@ -1,10 +1,13 @@
 package com.csn.ems.fragment;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -30,16 +33,49 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.csn.ems.EMSApplication.inTakeMasterDetails;
+
 /**
  * Created by uyalanat on 18-10-2016.
  */
 
 public class OrgCalendarFragment extends Fragment {
+    final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+  //  formatter.applyPattern("MMM d, yyyy");
+    String toDate;
+    TextView tvdatee,tvendTime,tvholiday,tvweekOff,tvstartTime;
+    ScheduleTime scheduleTime=new ScheduleTime();
+
+    String TAG = "OrgCalendarFragment";
+     CaldroidListener listener;
+
+    private boolean undo = false;
     private CaldroidFragment caldroidFragment;
     private CaldroidFragment dialogCaldroidFragment;
-    String toDate;
-    TextView tvdatee;
-String TAG="OrgCalendarFragment";
+
+    private void setCustomResourceForDates() {
+        Calendar cal = Calendar.getInstance();
+
+        // Min date is last 7 days
+        cal.add(Calendar.DATE, -7);
+        Date blueDate = cal.getTime();
+
+        // Max date is next 7 days
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 7);
+
+        Date greenDate = cal.getTime();
+
+        if (caldroidFragment != null) {
+            ColorDrawable blue = new ColorDrawable(getResources().getColor(R.color.blue));
+            ColorDrawable green = new ColorDrawable(Color.GREEN);
+            caldroidFragment.setBackgroundDrawableForDate(blue, blueDate);
+            caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
+            caldroidFragment.setTextColorForDate(R.color.white, blueDate);
+            caldroidFragment.setTextColorForDate(R.color.white, greenDate);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
@@ -58,9 +94,12 @@ String TAG="OrgCalendarFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        tvdatee=(TextView)view.findViewById(R.id.tvdatee);
+        tvdatee = (TextView) view.findViewById(R.id.tvdatee);
 
-        final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+        tvendTime= (TextView) view.findViewById(R.id.tvendTime);
+                tvholiday= (TextView) view.findViewById(R.id.tvholiday);
+                tvweekOff= (TextView) view.findViewById(R.id.tvweekOff);
+                tvstartTime= (TextView) view.findViewById(R.id.tvstartTime);
         caldroidFragment = new CaldroidFragment();
 
         // Attach to the activity
@@ -71,49 +110,66 @@ String TAG="OrgCalendarFragment";
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+     final   SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         toDate = newDateFormat.format(c.getTime());
         tvdatee.setText(toDate);
         // Setup listener
-        final CaldroidListener listener = new CaldroidListener() {
+        listener = new CaldroidListener() {
 
             @Override
             public void onSelectDate(Date date, View view) {
-                Toast.makeText(getActivity(), formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
+              /*  Toast.makeText(getActivity(), formatter.format(date),
+                        Toast.LENGTH_SHORT).show();*/
+                toDate=newDateFormat.format(date);
+                displayDatedetails();
+                if (caldroidFragment!=null) {
+                    caldroidFragment.refreshView();
+                }
+                ColorDrawable green = new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                caldroidFragment = new CaldroidFragment();
+
+                // Attach to the activity
+                FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+                t.replace(R.id.calendar1, caldroidFragment);
+                t.commit();
+                caldroidFragment.setBackgroundDrawableForDate(green, date);
+                caldroidFragment.refreshView();
+                caldroidFragment.setCaldroidListener(listener);
             }
 
             @Override
             public void onChangeMonth(int month, int year) {
-                String text = "month: " + month + " year: " + year;
+              /*  String text = "month: " + month + " year: " + year;
                 Toast.makeText(getActivity(), text,
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
             public void onLongClickDate(Date date, View view) {
-                Toast.makeText(getActivity(),
+                /*Toast.makeText(getActivity(),
                         "Long click " + formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
             public void onCaldroidViewCreated() {
                 if (caldroidFragment.getLeftArrowButton() != null) {
-                    Toast.makeText(getActivity(),
+                   /* Toast.makeText(getActivity(),
                             "Caldroid view is created", Toast.LENGTH_SHORT)
-                            .show();
+                            .show();*/
                 }
             }
 
         };
 
-        dialogCaldroidFragment = new CaldroidFragment();
-        dialogCaldroidFragment.setCaldroidListener(listener);
+        //  dialogCaldroidFragment = new CaldroidFragment();
+        // dialogCaldroidFragment.setCaldroidListener(listener);
+        // Setup Caldroid
+        caldroidFragment.setCaldroidListener(listener);
         return view;
     }
     
-/*    void displayDatedetails(){
+  void displayDatedetails(){
         
             final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
@@ -139,7 +195,22 @@ String TAG="OrgCalendarFragment";
                         }
                     } else if (response != null && response.isSuccessful()) {
                         //DO SUCCESS HANDLING HERE
-                        inTakeMasterDetails = response.body();
+                        scheduleTime = response.body();
+                        tvdatee.setText(toDate);
+                        if (scheduleTime.getStartTime()!=null){
+                            tvstartTime.setText("Start Time :"+scheduleTime.getStartTime());
+                        }
+                        if (scheduleTime.getEndTime()!=null){
+                            tvendTime.setText("End Time :"+scheduleTime.getEndTime());
+                        }
+
+                        if (scheduleTime.getHoliday()!=null){
+                            tvendTime.setText(scheduleTime.getHoliday());
+                        }
+
+                        if (scheduleTime.getWeekOff()!=null){
+                            tvendTime.setText(scheduleTime.getWeekOff());
+                        }
                         Log.i(TAG, "onResponse: Fetched " + inTakeMasterDetails + " PropertyTypes.");
                         // setScheduleTime();
                     }
@@ -159,5 +230,5 @@ String TAG="OrgCalendarFragment";
             loading.setIndeterminate(true);
             loading.show();
         
-    }*/
+    }
 }
