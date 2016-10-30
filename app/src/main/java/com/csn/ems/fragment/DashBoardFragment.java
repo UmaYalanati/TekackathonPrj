@@ -152,7 +152,7 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
     void displaydetails() {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<InTakeMasterDetails> listCall = ServiceGenerator.createService().getInTakeMasterDetails(inTakeMasterDetails);
+        Call<InTakeMasterDetails> listCall = ServiceGenerator.createService().getInTakeMasterDetails();
 
         listCall.enqueue(new Callback<InTakeMasterDetails>() {
             @Override

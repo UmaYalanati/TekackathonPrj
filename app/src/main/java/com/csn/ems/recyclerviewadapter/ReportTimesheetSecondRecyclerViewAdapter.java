@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.csn.ems.R;
@@ -23,21 +24,22 @@ public class ReportTimesheetSecondRecyclerViewAdapter extends RecyclerView.Adapt
     View view1;
     ReportTimesheetSecondRecyclerViewAdapter.ViewHolder viewHolder1;
     TextView textView;
-
-    public ReportTimesheetSecondRecyclerViewAdapter(Context context1, List<TimeSheetReport> timesheetDetails) {
+    public boolean check;
+    public ReportTimesheetSecondRecyclerViewAdapter(Context context1, List<TimeSheetReport> timesheetDetails,boolean check) {
 
         this.timesheetDetails = timesheetDetails;
-        context = context1;
+        this.check=check;
+        this.context = context1;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView, tvawd, tvpwd, tvlop, tvleaves, tvtgs, tvtds, tvtna;
-
+public CheckBox checkbox;
         public ViewHolder(View v) {
 
             super(v);
-
+            checkbox= (CheckBox) v.findViewById(R.id.checkbox);
             textView = (TextView) v.findViewById(R.id.tvmonth);
             tvawd = (TextView) v.findViewById(R.id.tvawd);
             tvpwd = (TextView) v.findViewById(R.id.tvpwd);
@@ -46,6 +48,8 @@ public class ReportTimesheetSecondRecyclerViewAdapter extends RecyclerView.Adapt
             tvtgs = (TextView) v.findViewById(R.id.tvtgs);
             tvtds = (TextView) v.findViewById(R.id.tvtds);
             tvtna = (TextView) v.findViewById(R.id.tvtna);
+
+
         }
     }
 
@@ -61,6 +65,12 @@ public class ReportTimesheetSecondRecyclerViewAdapter extends RecyclerView.Adapt
 
     @Override
     public void onBindViewHolder(ReportTimesheetSecondRecyclerViewAdapter.ViewHolder holder, int position) {
+
+        if (check){
+            holder.checkbox.setChecked(true);
+        }else {
+            holder.checkbox.setChecked(false);
+        }
 
         holder.textView.setText(timesheetDetails.get(position).getMonth());
         holder.tvawd.setText(String.valueOf(timesheetDetails.get(position).getaWD()));

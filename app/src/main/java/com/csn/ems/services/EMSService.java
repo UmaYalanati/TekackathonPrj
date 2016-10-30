@@ -52,7 +52,7 @@ public interface EMSService {
     Call<TimeSheetDetails> updateTimeCardApproval(@Body TimeSheetDetails timeSheetDetails);
 
     @GET("InTakeMaster/GetInTakeMasterDetails")
-    Call<InTakeMasterDetails> getInTakeMasterDetails(@Body InTakeMasterDetails inTakeMasterDetails);
+    Call<InTakeMasterDetails> getInTakeMasterDetails();
 
     @POST("TimeSheet/InsertClockIn")
     Call<InsertClockIn> insertClockIn(@Body InsertClockIn insertClockIn);

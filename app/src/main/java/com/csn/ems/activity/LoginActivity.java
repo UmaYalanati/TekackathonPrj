@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -41,29 +40,29 @@ import static com.csn.ems.emsconstants.EmsConstants.empId;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
-public static String userName;
+    public static String userName;
     private Button bt_submit, bt_clear;
 
-    Login loginset=new Login();
+    Login loginset = new Login();
     private TextInputEditText userIdEditText;
     private TextInputEditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  getSupportActionBar().hide();
-      //  getActionBar().hide();
+        //  getSupportActionBar().hide();
+        //  getActionBar().hide();
         if (SharedPreferenceUtils
                 .getInstance(LoginActivity.this)
                 .getSplashCacheItem(
-                        EmsConstants.employeeId)!=null&&!SharedPreferenceUtils
+                        EmsConstants.employeeId) != null && !SharedPreferenceUtils
                 .getInstance(LoginActivity.this)
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim().isEmpty()){
+                        EmsConstants.employeeId).toString().trim().isEmpty()) {
             Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent_homescreen);
-        }else{
-           // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.loginscreen);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,7 +77,6 @@ public static String userName;
             bt_submit.setOnClickListener(this);
             bt_clear.setOnClickListener(this);
         }
-
 
 
     }
@@ -96,20 +94,20 @@ public static String userName;
 
                     passwordEditText.requestFocus();
                 } else {
-                    try{
+                    try {
                         byte[] bytesOfMessage = passwordEditText.getText().toString().trim().getBytes("UTF-8");
-try{
+                        try {
 
-    MessageDigest md = MessageDigest.getInstance("MD5");
-    byte[] thedigest = md.digest(bytesOfMessage);
-}catch (NoSuchAlgorithmException e){
+                            MessageDigest md = MessageDigest.getInstance("MD5");
+                            byte[] thedigest = md.digest(bytesOfMessage);
+                        } catch (NoSuchAlgorithmException e) {
 
-}
-                    }catch (UnsupportedEncodingException e){
+                        }
+                    } catch (UnsupportedEncodingException e) {
 
                     }
 
-                    uploadDetails(userIdEditText.getText().toString().trim(),passwordEditText.getText().toString().trim());
+                    uploadDetails(userIdEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
                   /*  Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent_homescreen);*/
                 }
@@ -122,12 +120,13 @@ try{
         }
 
     }
-    void uploadDetails(final String username_n, String password){
+
+    void uploadDetails(final String username_n, String password) {
 
         final ProgressDialog loading = ProgressDialog.show(LoginActivity.this, "", "Please wait...", false, false);
 
         EMSService service = ServiceGenerator.createService();
-        Call<Login> employeeDetailsCall = service.getLogin(username_n,password);
+        Call<Login> employeeDetailsCall = service.getLogin(username_n, password);
         employeeDetailsCall.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
@@ -139,17 +138,45 @@ try{
                     try {
                         String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
                         Log.e(TAG, "onResponse: " + errorMessage);
-                        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        if (response.code() == 400) {
+                            new AlertDialog.Builder(LoginActivity.this)
+                                    .setTitle("Sorry")
+                                    .setMessage("LogIn Failed")
+                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            userName = username_n;
+
+
+                                        }
+                                    })
+                                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                        @Override
+                                        public void onCancel(DialogInterface dialog) {
+                                            //  clear_Fields();
+                                            // loadPage(1);
+                                        }
+                                    })
+                                    .show();
+
+
+                            // response.errorBody().toString()
+
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+
                     } catch (IOException e) {
                         Log.e(TAG, "onResponse: IOException while parsing response error", e);
                     }
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
-
-                 final   Login emp = response.body();
+//if (response.body().)
+                    final Login emp = response.body();
                     if (emp != null) {
-                        empId=emp.getEmployeeId();
-                       SharedPreferenceUtils
+                        empId = emp.getEmployeeId();
+                        SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.username,
@@ -171,7 +198,7 @@ try{
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.emaailid,
                                         String.valueOf(emp.getEmailId())).commitSplash();
-                        if (emp.getUserRolePermission().size()>0) {
+                        if (emp.getUserRolePermission().size() > 0) {
                             SharedPreferenceUtils
                                     .getInstance(LoginActivity.this)
                                     .editSplash()
@@ -198,7 +225,7 @@ try{
                                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        userName=username_n;
+                                        userName = username_n;
 
                                         Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent_homescreen);

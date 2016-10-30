@@ -26,11 +26,15 @@ public class Login {
     @JsonProperty("OrganizationName")
     private String organizationName;
 
-    @JsonProperty("UserRolePermission")
-    private List<UserRolePermission> userRolePermission;
+    @JsonProperty("Message")
+    private String message;
 
-    public List<UserRolePermission> getUserRolePermission() {
-        return userRolePermission;
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
@@ -41,10 +45,18 @@ public class Login {
                 ", locationId=" + locationId +
                 ", locationName='" + locationName + '\'' +
                 ", organizationName='" + organizationName + '\'' +
+                ", message='" + message + '\'' +
                 ", userRolePermission=" + userRolePermission +
                 ", emailId='" + emailId + '\'' +
                 ", photoPath='" + photoPath + '\'' +
                 '}';
+    }
+
+    @JsonProperty("UserRolePermission")
+    private List<UserRolePermission> userRolePermission;
+
+    public List<UserRolePermission> getUserRolePermission() {
+        return userRolePermission;
     }
 
     public void setUserRolePermission(List<UserRolePermission> userRolePermission) {

@@ -19,6 +19,7 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:id="@+id/checkbox"
             android:button="@drawable/abc_btn_check_material"
             android:buttonTint="@color/colorAccent"
             android:layout_marginTop="4dp"

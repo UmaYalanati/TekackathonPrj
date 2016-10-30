@@ -10,16 +10,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.csn.ems.EMSApplication;
 import com.csn.ems.R;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.CreateLeaveRequest;
+import com.csn.ems.model.InTakeMasterDetails;
 import com.csn.ems.model.UpcomingEvents;
+import com.csn.ems.recyclerviewadapter.LeaveTypeAdapter;
 import com.csn.ems.recyclerviewadapter.UpcomingEventsAdapter;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
@@ -49,6 +54,9 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
 CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
     Button btnstarttime, btnendtime,btnsubmitrequest;
 EditText ed_comments;
+    InTakeMasterDetails inTakeMasterDetails = new InTakeMasterDetails();
+    Spinner spinner_leavetype;
+    int leaveTypeId,leav_postion=0;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.upcomingtimeoff, container, false);
@@ -57,7 +65,10 @@ EditText ed_comments;
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         btnsubmitrequest = (Button) view.findViewById(R.id.btnsubmitrequest);
         ed_comments= (EditText) view.findViewById(R.id.ed_comments);
+        spinner_leavetype= (Spinner) view.findViewById(R.id.spinner_leavetype);
 
+        LeaveTypeAdapter adapter=new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveTypes());
+        spinner_leavetype.setAdapter(adapter);
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
@@ -74,6 +85,25 @@ EditText ed_comments;
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
         btnsubmitrequest.setOnClickListener(this);
+
+
+        spinner_leavetype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+
+                int selectedPosition = arg2; //Here is your selected position
+leav_postion=arg2;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+
+            }
+
+        });
         return view;
     }
 
@@ -97,9 +127,12 @@ EditText ed_comments;
     }
 
     void setData(){
-       // "LeaveTypeId":1,"Comments":"HealthProblem","AssignedTo":null,"ActionDate":null,"LeaveStatusId":4}
-        createLeaveRequest.setLeaveId(2);
-        createLeaveRequest.setEmployeeId(2);
+        leaveTypeId= EMSApplication.inTakeMasterDetails.getLeaveTypes().get(leav_postion).getId();
+        createLeaveRequest.setLeaveId(leaveTypeId);
+        createLeaveRequest.setEmployeeId( Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim()));
         try {
             String str_MyDate;
             Calendar c = Calendar.getInstance();

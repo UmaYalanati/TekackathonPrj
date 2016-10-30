@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ public class ReportsTimesheetSecond extends Fragment {
     public static final int JANUARY = 1;
 
     public static final int DECEMBER = 12;
-
+CheckBox checkbox_select;
     public static final int FIRST_OF_THE_MONTH = 1;
     static int month;
     String[] str = {"January",
@@ -73,7 +75,7 @@ public class ReportsTimesheetSecond extends Fragment {
 
     ReportTimesheetSecondRecyclerViewAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-
+    List<TimeSheetReport> timesheetDetails;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,16 +84,14 @@ public class ReportsTimesheetSecond extends Fragment {
         tvmonthname = (TextView) view.findViewById(R.id.tvmonthname);
         ll_next = (LinearLayout) view.findViewById(R.id.ll_next);
         ll_back = (LinearLayout) view.findViewById(R.id.ll_back);
-
+        checkbox_select= (CheckBox) view.findViewById(R.id.checkbox_select);
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         recylerViewLayoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-      //  recyclerViewAdapter = new ReportTimesheetSecondRecyclerViewAdapter(getActivity(), subjects);
 
-       // recyclerView.setAdapter(recyclerViewAdapter);
 
 
         Date date = new Date();
@@ -154,6 +154,19 @@ public class ReportsTimesheetSecond extends Fragment {
 
         });
 
+        checkbox_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isPressed()){
+                    if (isChecked){
+                        updateRecyclerViewForClients(timesheetDetails,true);
+                    }else{
+                        updateRecyclerViewForClients(timesheetDetails,false);
+                    }
+                }
+            }
+        });
+
         return view;
     }
 
@@ -180,12 +193,12 @@ public class ReportsTimesheetSecond extends Fragment {
                     }
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
-                    List<TimeSheetReport> timesheetDetails = response.body();
+                    timesheetDetails = response.body();
                     Log.i(TAG, "onResponse: Fetched " + timesheetDetails.size() + " clients.");
 //                    for (Client client : clients) {
 //                        Log.i(TAG, "onResponse: Client: "+client);
 //                    }
-                    updateRecyclerViewForClients(timesheetDetails);
+                    updateRecyclerViewForClients(timesheetDetails,false);
                 }
             }
 
@@ -204,11 +217,12 @@ public class ReportsTimesheetSecond extends Fragment {
         loading.show();
     }
 
-    private void updateRecyclerViewForClients(List<TimeSheetReport> timesheetDetails) {
+    private void updateRecyclerViewForClients(List<TimeSheetReport> timesheetDetails,boolean check) {
 
-        recyclerViewAdapter = new ReportTimesheetSecondRecyclerViewAdapter(getActivity(), timesheetDetails);
+        recyclerViewAdapter = new ReportTimesheetSecondRecyclerViewAdapter(getActivity(), timesheetDetails,check);
 
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.notifyDataSetChanged();
         //  }
 
     }
