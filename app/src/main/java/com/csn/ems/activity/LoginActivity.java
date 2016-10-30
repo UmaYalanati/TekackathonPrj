@@ -207,11 +207,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             emp.getRoleName()
                                     ).commitSplash();
                         }
-                        SharedPreferenceUtils
-                                .getInstance(LoginActivity.this)
-                                .editSplash()
-                                .addSplashCacheItem(EmsConstants.childEmployeeId,
-                                        String.valueOf(emp.getChildEmployeeId())).commitSplash();
+                        if (emp.getChildEmployeeId()!=0) {
+                            SharedPreferenceUtils
+                                    .getInstance(LoginActivity.this)
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.childEmployeeId,
+                                            String.valueOf(emp.getChildEmployeeId())).commitSplash();
+                        }
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
