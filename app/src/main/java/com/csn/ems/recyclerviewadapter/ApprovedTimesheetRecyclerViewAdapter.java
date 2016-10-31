@@ -123,6 +123,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd hh:mm a");
         Date dt = null;
         Date dt_out = null;
         try {

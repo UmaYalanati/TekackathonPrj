@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.EMSApplication;
@@ -40,6 +41,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 /**
  * Created by uyalanat on 23-10-2016.
  */
@@ -56,6 +59,7 @@ CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
 EditText ed_comments;
     InTakeMasterDetails inTakeMasterDetails = new InTakeMasterDetails();
     Spinner spinner_leavetype;
+    TextView tvtittle;
     int leaveTypeId,leav_postion=0;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ EditText ed_comments;
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         btnsubmitrequest = (Button) view.findViewById(R.id.btnsubmitrequest);
         ed_comments= (EditText) view.findViewById(R.id.ed_comments);
+        tvtittle= (TextView) view.findViewById(R.id.tvtittle);
         spinner_leavetype= (Spinner) view.findViewById(R.id.spinner_leavetype);
 
         LeaveTypeAdapter adapter=new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveTypes());
@@ -112,14 +117,16 @@ leav_postion=arg2;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime);
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString());
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                 break;
             case R.id.btnendtime:
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
+
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString().trim());
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+
                 break;
             case R.id.btnsubmitrequest:
                 createLeave();
@@ -270,6 +277,7 @@ leav_postion=arg2;
 
                     List<UpcomingEvents> breakDetails = response.body();
                     Log.i(TAG, "onResponse: Fetched " + breakDetails + " PropertyTypes.");
+
                     setUpcomingEvents(breakDetails);
                 }
             }
@@ -289,6 +297,9 @@ leav_postion=arg2;
         loading.show();
     }
     public void setUpcomingEvents(List<UpcomingEvents> breakDetails){
+        if (breakDetails.size()>0){
+            tvtittle.setVisibility(View.VISIBLE);
+        }
         UpcomingEventsAdapter adapter=new UpcomingEventsAdapter(getActivity(),breakDetails);
         listView_upcomingholidayslist.setAdapter(adapter);
 

@@ -10,8 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.csn.ems.MainActivity;
 import com.csn.ems.R;
 import com.csn.ems.callback.MenuItemSelectedCallback;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 
 /**
  * Created by uyalanat on 20-10-2016.
@@ -38,15 +41,26 @@ String TAG="TimeClockFragment";
                 // FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack if needed
-                transaction.replace(R.id.fragment_container, new CheckinCheckoutFragment());
+                if (SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename) != null && !SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename).equals("Manager")) {
+                    transaction.replace(R.id.fragment_container, new CheckinCheckoutFragment());
+                    selectedItem = R.id.action_checkin;
+                }else {
+                    transaction.replace(R.id.fragment_container, new TimeSheetFragment());
+                    selectedItem = R.id.action_timesheet;
+                }
+
 //                transaction.addToBackStack(null);
 
 // Commit the transaction
                 transaction.commit();
 
-                selectedItem = R.id.action_upcomingtimeoff;
+
 
                 if (menuItemSelectedCallback != null) {
                     menuItemSelectedCallback.selectedItem(null, selectedItem);

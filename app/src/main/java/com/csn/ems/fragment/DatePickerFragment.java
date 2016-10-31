@@ -8,7 +8,12 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import static android.R.attr.y;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -16,15 +21,16 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
-
+    String date;
     Button mTextView;
     DatePickerDialog mDatePickerDialog;
 
     public DatePickerFragment() {
     }
 
-    public DatePickerFragment(Button textview) {
-        mTextView = textview;
+    public DatePickerFragment(Button textview,String date) {
+        this.mTextView = textview;
+        this.date= date;
     }
 
 
@@ -36,9 +42,24 @@ public class DatePickerFragment extends DialogFragment implements
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog fff;
+        Date d=null;
+        int year1=year,month1=month,day1=day;
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+             d = sdf.parse(date);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(d);
+             year1 = cal.get(Calendar.YEAR);
+             month1 = cal.get(Calendar.MONTH);
+             day1 = cal.get(Calendar.DAY_OF_MONTH);
 
-        fff = new DatePickerDialog(getActivity(), this, year, month,
-                day);
+
+        }catch (ParseException e){
+
+        }
+        fff = new DatePickerDialog(getActivity(), this, year1, month1,
+                day1);
+        fff.getDatePicker().setMinDate(d.getTime());
         // Create a new instance of DatePickerDialog and return it
         return fff;
     }
@@ -49,6 +70,13 @@ public class DatePickerFragment extends DialogFragment implements
 
         String str_year = String.valueOf(year);
         String date_str = "";
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date d = sdf.parse(date);
+            view.setMinDate(d.getTime());
+        }catch (ParseException e){
+
+        }
 
 
         if (new StringBuilder().append(month + 1).length() >= 2 && new StringBuilder().append(day).length() < 2) {

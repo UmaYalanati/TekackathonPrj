@@ -108,6 +108,22 @@ public class MainActivity extends AppCompatActivity
         tvemployeeemail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvemployeeemail);
 
         if (SharedPreferenceUtils
+                .getInstance(MainActivity.this)
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(MainActivity.this)
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_orgcalendar).setVisible(false);
+            nav_Menu.findItem(R.id.nav_leave).setVisible(false);
+            nav_Menu.findItem(R.id.nav_reports).setVisible(false);
+            nav_Menu.findItem(R.id.nav_settings).setVisible(true);
+        }
+
+
+
+        if (SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
                         EmsConstants.employeename) != null && !SharedPreferenceUtils
@@ -137,10 +153,10 @@ public class MainActivity extends AppCompatActivity
         if (SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.photoPath) != null && !SharedPreferenceUtils
+                        EmsConstants.photoPath) != null && SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
-                        EmsConstants.photoPath).toString().trim().isEmpty()) {
+                        EmsConstants.photoPath).toString().trim().contains("www")) {
             Picasso.with(MainActivity.this)
                     .load("http://" + SharedPreferenceUtils
                             .getInstance(MainActivity.this)
@@ -296,8 +312,20 @@ public class MainActivity extends AppCompatActivity
              item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_timeclock) {
             getMenuInflater().inflate(R.menu.timeclock, menu);
-            /*MenuItem item = menu.findItem(R.id.action_some);
-            item.setVisible(false);*/
+            if (SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename) != null && !SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename).equals("Manager")) {
+                MenuItem item = menu.findItem(R.id.action_approvedtimesheet);
+                item.setVisible(false);
+            }else {
+                MenuItem item = menu.findItem(R.id.action_checkin);
+                item.setVisible(false);
+            }
+
         }else if (currentSelectedItem == R.id.nav_orgcalendar) {
             getMenuInflater().inflate(R.menu.orgcal, menu);
             /*MenuItem item = menu.findItem(R.id.action_some);
@@ -457,7 +485,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
 
-                // Insert the fragment by replacing any existing fragment
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment, fragment, tag)
                         .addToBackStack(tag)
@@ -465,11 +493,7 @@ public class MainActivity extends AppCompatActivity
                         .commit();
                 // Highlight the selected item has been done by NavigationView
                 item.setChecked(true);
-                // Set action bar title
 
-                //  SpannableString s = new SpannableString(item.getTitle());
-                // s.setSpan(new ForegroundColorSpan(Color.GREEN), 0, item.getTitle().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                //  getSupportActionBar().setTitle(s);
 
                 getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
                 // invalidateOptionsMenu();
@@ -494,7 +518,17 @@ public class MainActivity extends AppCompatActivity
         }
         invalidateOptionsMenu();
     }
-
+ /*   @Override
+    public void selectedItemHide(MenuItem menuItem, int itemId) {
+        if (menuItem != null) {
+            selectedMenuItem = menuItem.getItemId();
+           // selectedMenuItem.setVisible(false);
+            //selectedMenuItem.setVisible(false);
+        } else {
+            selectedMenuItem = itemId;
+        }
+        invalidateOptionsMenu();
+    }*/
     void displaydetails() {
         final ProgressDialog loading = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please wait...", false, false);
         int empid = Integer.parseInt(SharedPreferenceUtils

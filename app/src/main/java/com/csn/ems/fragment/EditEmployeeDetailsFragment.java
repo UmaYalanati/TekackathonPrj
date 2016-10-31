@@ -41,6 +41,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.functions.Action1;
 
+import static com.csn.ems.R.id.card_view_orgcalendar;
+import static com.csn.ems.R.id.card_view_timeclcok;
 import static com.csn.ems.R.id.imgprofilepic;
 
 
@@ -120,6 +122,24 @@ public class EditEmployeeDetailsFragment extends Fragment {
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
+
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.childEmployeeId).toString().trim());
+        }else {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
+        }
         Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {
@@ -177,15 +197,15 @@ public class EditEmployeeDetailsFragment extends Fragment {
         ed_businessAreaName.setText(employeeDetails.getBusinessAreaName());
         ed_subBusinessAreaName.setText(employeeDetails.getSubBusinessAreaName());
         ed_hoursPerDay.setText(employeeDetails.getHoursPerDay());
-        if (employeeDetails.getPhotoPath()!=null){
+        if (employeeDetails.getPhotoPath()!=null&&employeeDetails.getPhotoPath().contains("www")){
         Picasso.with(getActivity())
                 .load("http://" +employeeDetails.getPhotoPath()).into(circleImageView);
         //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
-    } else {
+    }/* else {
       circleImageView.setBackgroundResource(R.drawable.male_profilepic);
-          /*  Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
-            circleImageView.setImageDrawable(drawable);*/
-    }
+          *//*  Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
+            circleImageView.setImageDrawable(drawable);*//*
+    }*/
 
     }
 

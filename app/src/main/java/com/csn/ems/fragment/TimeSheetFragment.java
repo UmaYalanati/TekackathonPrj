@@ -132,12 +132,25 @@ String TAG="TimeSheetFragment";
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime);
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString());
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
+
+                if (spinner_listofsheet.getSelectedItem().toString().equals("Select")){
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
+                }else{
+                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
+                }
+
                 break;
             case R.id.btnendtime:
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString());
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                // Date date2 = sdf.parse(getTodaysDate());

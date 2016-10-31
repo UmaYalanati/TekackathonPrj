@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.csn.ems.MainActivity;
 import com.csn.ems.R;
 import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.activity.SplashActivity;
@@ -78,6 +80,17 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         card_view.setOnClickListener(this);
         card_view_timeclcok.setOnClickListener(this);
         card_view_orgcalendar.setOnClickListener(this);
+
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            card_view_timeclcok.setVisibility(View.GONE);
+            card_view_orgcalendar.setVisibility(View.GONE);
+        }
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -90,31 +103,29 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.checkintime) != null) {
+                        EmsConstants.checkinTime) != null && !SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.checkinTime).toString().trim().isEmpty()) {
+/*            Toast.makeText(getActivity(),SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.checkinTime).toString().trim(),Toast.LENGTH_SHORT).show();*/
             tvschedule.setText(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.checkintime).toString().trim());
+                            EmsConstants.checkinTime).toString().trim());
         }
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.photoPath) != null) {
-if ( !SharedPreferenceUtils
+if (SharedPreferenceUtils
         .getInstance(getActivity())
         .getSplashCacheItem(
-                EmsConstants.photoPath).toString().trim().contains("www.")){
+                EmsConstants.photoPath).toString().trim().contains("www")){
     Picasso.with(getActivity())
-            .load("http://" +"ww.csn.ems.com.iis3002.databasemart.net/" +SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.emaailid).toString().trim()+"/"+SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.photoPath).toString().trim()).into(imgprofilepic);
-                }else{
-    Picasso.with(getActivity())
-            .load("http://" + SharedPreferenceUtils
+            .load("http://" +SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.photoPath).toString().trim()).into(imgprofilepic);

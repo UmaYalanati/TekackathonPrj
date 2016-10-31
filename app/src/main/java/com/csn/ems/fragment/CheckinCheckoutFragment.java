@@ -579,7 +579,15 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                         am_pm = "AM";
                     else
                         am_pm = "PM";
-                    String curTime = String.valueOf(hour) + ":" + String.valueOf(minute) + " " + am_pm;
+
+
+                    String curTime="";
+                    if (String.valueOf(minute).length()<2){
+                        curTime = String.valueOf(hour) + ":" + "0"+String.valueOf(minute) + " " + am_pm;
+                    }else{
+                        curTime = String.valueOf(hour) + ":" + String.valueOf(minute) + " " + am_pm;
+                    }
+
 
                     tvcurrenttime.setText(curTime);
                     tvbreaktime.setText(curTime);

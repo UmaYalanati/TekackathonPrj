@@ -50,7 +50,7 @@ public class BreaklistAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(context).inflate(R.layout.cell_break, null);
         TextView tvbreaktime = (TextView) convertView.findViewById(R.id.tvbreaktime);
-
+TextView tvbreakdesc= (TextView) convertView.findViewById(R.id.tvbreakdesc);
 
         if (breakDetails.get(position).getBreakIn() != null && breakDetails.get(position).getBreakOut() != null) {
             tvbreaktime.setText("Break(" + breakDetails.get(position).getBreakIn() + "---" + breakDetails.get(position).getBreakOut() + ")");
@@ -61,8 +61,13 @@ public class BreaklistAdapter extends BaseAdapter {
         if (breakDetails.get(position).getBreakOut() == null && breakDetails.get(position).getBreakIn() != null) {
             tvbreaktime.setText("Break(" + breakDetails.get(position).getBreakIn() + "---" + "0.0" + ")");
         }
-
-
+if (breakDetails.get(position).getComments()!=null)
+{
+    tvbreakdesc.setVisibility(View.VISIBLE);
+    tvbreakdesc.setText(breakDetails.get(position).getComments());
+}else {
+    tvbreakdesc.setVisibility(View.GONE);
+}
         return convertView;
     }
 }

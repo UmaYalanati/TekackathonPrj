@@ -88,6 +88,24 @@ void displaydetails(){
             .getInstance(getActivity())
             .getSplashCacheItem(
                     EmsConstants.employeeId).toString().trim());
+
+    if (SharedPreferenceUtils
+            .getInstance(getActivity())
+            .getSplashCacheItem(
+                    EmsConstants.rolename) != null && SharedPreferenceUtils
+            .getInstance(getActivity())
+            .getSplashCacheItem(
+                    EmsConstants.rolename).equals("Manager")) {
+        empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.childEmployeeId).toString().trim());
+    }else {
+        empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+    }
     Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
     listCall.enqueue(new Callback<EmployeeDetails>() {

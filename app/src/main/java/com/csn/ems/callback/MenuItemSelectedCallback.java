@@ -9,5 +9,5 @@ import android.view.MenuItem;
 public interface MenuItemSelectedCallback {
 
     public void selectedItem(MenuItem menuItem, int itemId);
-
+   // public void selectedItemHide(MenuItem menuItem, int itemId);
 }

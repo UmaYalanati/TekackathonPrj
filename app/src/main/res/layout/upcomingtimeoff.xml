@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tvtittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +56,7 @@
         android:background="@drawable/rectangularbox_warranty"
         android:focusableInTouchMode="false"
         android:padding="8dp"
-        android:text="Satish"
+        android:text=""
 
         />
 

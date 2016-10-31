@@ -152,12 +152,12 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime);
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString());
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                 break;
             case R.id.btnendtime:
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime);
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString());
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                 getlistofleaves(btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());

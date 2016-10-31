@@ -49,10 +49,11 @@ public class ReportsFragment extends Fragment {
                 transaction.commit();
 
 
-                selectedItem = R.id.action_upcomingtimeoff;
+                selectedItem = R.id.action_reportsheeet;
 
                 if (menuItemSelectedCallback != null) {
                     menuItemSelectedCallback.selectedItem(null, selectedItem);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

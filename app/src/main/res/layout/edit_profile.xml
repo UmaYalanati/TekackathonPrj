@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -42,11 +41,10 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
                 android:scaleType="centerCrop"
-                app:civ_border_color="@color/gray"
-                app:civ_border_width="1dp"
+                android:src="@drawable/male_profilepic"
                 android:tint="@color/transparent"
-
-                 />
+                app:civ_border_color="@color/gray"
+                app:civ_border_width="1dp" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -152,10 +150,10 @@
                     android:id="@+id/ed_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
+                    android:hint="Gender"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
