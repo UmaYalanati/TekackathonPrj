@@ -182,7 +182,9 @@ public class EditEmployeeDetailsFragment extends Fragment {
                 .load("http://" +employeeDetails.getPhotoPath()).into(circleImageView);
         //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
     } else {
-        circleImageView.setBackgroundResource(R.drawable.ic_dashboard_profile_pic);
+      circleImageView.setBackgroundResource(R.drawable.male_profilepic);
+          /*  Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
+            circleImageView.setImageDrawable(drawable);*/
     }
 
     }

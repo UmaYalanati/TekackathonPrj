@@ -113,6 +113,7 @@ public class OrgCalendarFragment extends Fragment {
      final   SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         toDate = newDateFormat.format(c.getTime());
         tvdatee.setText(toDate);
+        displayDatedetails();
         // Setup listener
         listener = new CaldroidListener() {
 

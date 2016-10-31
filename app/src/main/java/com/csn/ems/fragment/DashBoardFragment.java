@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.csn.ems.R;
 import com.csn.ems.activity.LoginActivity;
+import com.csn.ems.activity.SplashActivity;
 import com.csn.ems.callback.NavigationDrawerCallback;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
@@ -156,7 +157,7 @@ if ( !SharedPreferenceUtils
                         .editSplash()
                         .addSplashCacheItem(EmsConstants.employeeId,
                                 "").commitSplash();
-                Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
+                Intent intent_homescreen = new Intent(getActivity(), SplashActivity.class);
                 startActivity(intent_homescreen);
                 getActivity().finish();
 

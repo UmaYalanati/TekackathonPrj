@@ -467,6 +467,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                                     .editSplash()
                                     .addSplashCacheItem(EmsConstants.breakinid,
                                             String.valueOf(emp.getBreakId())).commitSplash();
+                            edcomments.setText("");
                         } else {
                             new AlertDialog.Builder(getContext())
                                     .setTitle("InsertClockIn Creation Failed!")

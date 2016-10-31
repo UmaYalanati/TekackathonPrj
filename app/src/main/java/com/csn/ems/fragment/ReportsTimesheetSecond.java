@@ -237,11 +237,24 @@ CheckBox checkbox_select;
             lastDay = aDate.dayOfMonth().getMaximumValue();
             firstDay = aDate.dayOfMonth().getMinimumValue();
         }
+if (SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.childEmployeeId)!=null&&!SharedPreferenceUtils
+        .getInstance(getActivity())
+        .getSplashCacheItem(
+                EmsConstants.childEmployeeId).toString().trim().isEmpty()){
+    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+            .getInstance(getActivity())
+            .getSplashCacheItem(
+                    EmsConstants.childEmployeeId).toString().trim()), String.valueOf(month)+"/"+String.valueOf(firstDay)+"/"+String.valueOf(year));
+                }else{
+    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+            .getInstance(getActivity())
+            .getSplashCacheItem(
+                    EmsConstants.employeeId).toString().trim()), String.valueOf(month)+"/"+String.valueOf(firstDay)+"/"+String.valueOf(year));
+                }
 
-        getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()), String.valueOf(month)+"/"+String.valueOf(firstDay)+"/"+String.valueOf(year));
     }
 }
 

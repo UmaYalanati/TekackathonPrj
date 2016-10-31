@@ -1,6 +1,7 @@
 package com.csn.ems.services;
 
 import com.csn.ems.model.BreakDetails;
+import com.csn.ems.model.ChangePassword;
 import com.csn.ems.model.CreateLeaveRequest;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.InTakeMasterDetails;
@@ -43,7 +44,7 @@ public interface EMSService {
     Call<Login> getLogin(@Query("UserName") String userName,@Query("Password") String password);
 
     @POST("Login/ChangePassword")
-    Call<Login> changePassword(@Query("UserName") String userName,@Query("Password") String password);
+    Call<ChangePassword> changePassword(@Body ChangePassword changePassword);
 
     @GET("TimeSheet/GetTimeSheetDetails")
     Call<List<TimeSheetDetails>> getTimeSheetDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo,@Query("status") String status);

@@ -45,7 +45,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -273,6 +272,16 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             //    action_editdetails
             case R.id.action_signout:
+                SharedPreferenceUtils
+                        .getInstance(MainActivity.this)
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.employeeId,
+                                "").commitSplash();
+                SharedPreferenceUtils
+                        .getInstance(MainActivity.this)
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.childEmployeeId,
+                                "").commitSplash();
 
                 Intent intent_homescreen = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent_homescreen);
