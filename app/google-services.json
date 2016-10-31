@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1053495868775",
+    "firebase_url": "https://ems-csn-be7d4.firebaseio.com",
+    "project_id": "ems-csn-be7d4",
+    "storage_bucket": "ems-csn-be7d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053495868775:android:c79dbfba61bc78e9",
+        "android_client_info": {
+          "package_name": "com.csn.ems"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053495868775-ovsbcjb2a0o4k9tl9m0fa0ruiiplv4mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.csn.ems",
+            "certificate_hash": "F65DC9A7455A8E595D7DC5F96D0AAFB9463EF3AA"
+          }
+        },
+        {
+          "client_id": "1053495868775-3a2csfn86eqjqn1m111mvaripnnp8gu9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZfJZ-8uKTWkown0pCe3ss3KtZ4XZ46MI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053495868775-3a2csfn86eqjqn1m111mvaripnnp8gu9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

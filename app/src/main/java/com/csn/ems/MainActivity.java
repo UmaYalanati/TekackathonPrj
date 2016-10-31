@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -38,12 +39,18 @@ import com.csn.ems.fragment.ReportsFragment;
 import com.csn.ems.fragment.TimeClockFragment;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.services.ServiceGenerator;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,13 +66,15 @@ public class MainActivity extends AppCompatActivity
     Fragment fragment;
     Class fragmentClass = null;
     String tag = null;
-    TextView tvemployeename, tvemployeeemail;
+    private TextView tvemployeename, tvemployeeemail;
     de.hdodenhof.circleimageview.CircleImageView image_employee;
     int selectedMenuItem;
     boolean doubleBackToExitPressedOnce = false;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private int currentSelectedItem;
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -163,6 +172,8 @@ public class MainActivity extends AppCompatActivity
         }
 
         postInit();
+//Test if this is getting called
+        setupFirebase();
     }
 
     @Override
@@ -205,6 +216,68 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Init. Firebase here.
+     */
+    private void setupFirebase() {
+        Log.d(TAG, "setupFirebase() called");
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
+        // Define Firebase Remote Config Settings.
+        FirebaseRemoteConfigSettings firebaseRemoteConfigSettings =
+                new FirebaseRemoteConfigSettings.Builder()
+                        .setDeveloperModeEnabled(true)
+                        .build();
+
+        // Define default config values. Defaults are used when fetched config values are not
+        // available. Eg: if an error occurred fetching values from the server.
+        Map<String, Object> defaultConfigMap = new HashMap<>();
+        defaultConfigMap.put("killswitch", false);
+
+        // Apply config settings and default values.
+        mFirebaseRemoteConfig.setConfigSettings(firebaseRemoteConfigSettings);
+        mFirebaseRemoteConfig.setDefaults(defaultConfigMap);
+
+        long cacheExpiration = 3600; // 1 hour in seconds
+        // If developer mode is enabled reduce cacheExpiration to 0 so that
+        // each fetch goes to the server. This should not be used in release
+        // builds.
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings()
+                .isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: task.isSuccessful");
+//                            Toast.makeText(HomeActivity.this, "Fetch Succeeded",
+//                                    Toast.LENGTH_SHORT).show();
+
+                            // Once the config is successfully fetched it must be activated before newly fetched
+                            // values are returned.
+                            mFirebaseRemoteConfig.activateFetched();
+                            applyRetrievedSwitch();
+                        }
+                        else {
+                            Log.d(TAG, "onComplete: task.isNotSuccessful");
+//                            Toast.makeText(HomeActivity.this, "Fetch Failed",
+//                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void applyRetrievedSwitch() {
+        final boolean killswitch = mFirebaseRemoteConfig.getBoolean("killswitch");
+        Log.d(TAG, "ç: killswitch: "+killswitch);
+        if (killswitch) {
+            throw new NullPointerException();
         }
     }
 
@@ -292,6 +365,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void postInit() {
+        Log.d(TAG, "postInit() called");
         getSupportFragmentManager().addOnBackStackChangedListener(
                 new FragmentManager.OnBackStackChangedListener() {
                     public void onBackStackChanged() {
