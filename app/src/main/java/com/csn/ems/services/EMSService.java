@@ -7,10 +7,12 @@ import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.InTakeMasterDetails;
 import com.csn.ems.model.InsertBreakIn;
 import com.csn.ems.model.InsertClockIn;
+import com.csn.ems.model.LeaveCategorylist;
 import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.model.Login;
 import com.csn.ems.model.ScheduleTime;
 import com.csn.ems.model.TimeSheetDetails;
+import com.csn.ems.model.TimeSheetDetailsApprove;
 import com.csn.ems.model.TimeSheetReport;
 import com.csn.ems.model.UpcomingEvents;
 
@@ -50,7 +52,7 @@ public interface EMSService {
     Call<List<TimeSheetDetails>> getTimeSheetDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo,@Query("status") String status);
 
     @PUT("TimeSheet/UpdateTimeCardApproval")
-    Call<TimeSheetDetails> updateTimeCardApproval(@Body TimeSheetDetails timeSheetDetails);
+    Call<TimeSheetDetailsApprove> updateTimeCardApproval(@Body TimeSheetDetailsApprove timeSheetDetails);
 
     @GET("InTakeMaster/GetInTakeMasterDetails")
     Call<InTakeMasterDetails> getInTakeMasterDetails();
@@ -81,6 +83,7 @@ public interface EMSService {
     Call<List<TimeSheetReport>> getTimeSheetReport(@Query("employeeId") int employeeId, @Query("selectedDate") String selectedDate);
     //
 
-
+    @GET("leave/GetLeaveCategorylist")
+    Call<LeaveCategorylist> getLeaveCategorylist(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo);
 
 }

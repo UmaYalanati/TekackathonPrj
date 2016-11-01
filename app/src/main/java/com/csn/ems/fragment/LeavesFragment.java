@@ -79,7 +79,7 @@ public class LeavesFragment extends Fragment {
 
                 pinMenuItem = item;*/
 
-                newFragment = LeavesStatusFragment.newInstance();
+                newFragment = ListofLeavesFragment.newInstance();
 
 
                 break;

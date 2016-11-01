@@ -227,16 +227,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                        new AlertDialog.Builder(LoginActivity.this)
+                        userName = username_n;
+
+                        Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent_homescreen);
+                      /*  new AlertDialog.Builder(LoginActivity.this)
                                 .setTitle("Logged Successfully!")
                                 .setMessage("")
                                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        userName = username_n;
 
-                                        Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent_homescreen);
 
 
                                     }
@@ -248,7 +249,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         // loadPage(1);
                                     }
                                 })
-                                .show();
+                                .show();*/
                     } else {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setTitle("Login  Failed!")

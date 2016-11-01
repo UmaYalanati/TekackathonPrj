@@ -1,7 +1,6 @@
 package com.csn.ems.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -29,6 +28,9 @@ public class LeaveDetails implements Serializable {
     @JsonProperty("DateTo")
     private String dateTo;
 
+    @JsonProperty("LeaveDate")
+    private String leaveDate;
+
     @JsonProperty("LeaveTypeId")
     private int leaveTypeId;
 
@@ -46,6 +48,7 @@ public class LeaveDetails implements Serializable {
                 ", appliedDate='" + appliedDate + '\'' +
                 ", dateFrom='" + dateFrom + '\'' +
                 ", dateTo='" + dateTo + '\'' +
+                ", leaveDate='" + leaveDate + '\'' +
                 ", leaveTypeId=" + leaveTypeId +
                 ", comments='" + comments + '\'' +
                 ", assignedTo=" + assignedTo +
@@ -54,6 +57,14 @@ public class LeaveDetails implements Serializable {
                 ", leaveStatus='" + leaveStatus + '\'' +
                 ", leaveType='" + leaveType + '\'' +
                 '}';
+    }
+
+    public String getLeaveDate() {
+        return leaveDate;
+    }
+
+    public void setLeaveDate(String leaveDate) {
+        this.leaveDate = leaveDate;
     }
 
     public int getLeaveId() {

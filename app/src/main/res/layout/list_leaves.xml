@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCodeNameDetail12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+
+                />
+
+            <Button
+                android:paddingTop="10dp"
+                android:gravity="left"
+                android:id="@+id/btnstarttime"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rectangularbox_warranty"
+                android:text="10-10-22"
+                android:textSize="16sp"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+
+                />
+
+            <Button
+                android:paddingTop="10dp"
+                android:gravity="left"
+                android:id="@+id/btnendtime"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rectangularbox_warranty"
+                android:text="10-10-22"
+                android:textSize="16sp"
+
+                />
+        </LinearLayout>
+    </LinearLayout>
+        <TextView
+
+            android:visibility="gone"
+            android:id="@+id/tvPending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Pending"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+android:textStyle="bold"
+            />
+
+        <com.csn.ems.emsconstants.NestedListView
+            android:id="@+id/listView_pending"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:scrollbars="@null"></com.csn.ems.emsconstants.NestedListView>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvapproved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Approved"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+android:textStyle="bold"
+            />
+
+        <com.csn.ems.emsconstants.NestedListView
+            android:id="@+id/listView_approved"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:scrollbars="@null"></com.csn.ems.emsconstants.NestedListView>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvRejected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Rejected"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+        <com.csn.ems.emsconstants.NestedListView
+            android:id="@+id/listView_rejected"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:scrollbars="@null"></com.csn.ems.emsconstants.NestedListView>
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>

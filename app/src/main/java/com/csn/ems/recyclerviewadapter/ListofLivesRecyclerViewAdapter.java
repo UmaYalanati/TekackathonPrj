@@ -65,8 +65,8 @@ public class ListofLivesRecyclerViewAdapter extends RecyclerView.Adapter<ListofL
 
 
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if (leaveDetails.get(position).getAppliedDate() != null) {
-            holder.tvleavedate.setText(leaveDetails.get(position).getAppliedDate());
+        if (leaveDetails.get(position).getLeaveDate() != null) {
+            holder.tvleavedate.setText(leaveDetails.get(position).getLeaveDate());
         }
         if (leaveDetails.get(position).getDateFrom() != null && leaveDetails.get(position).getDateTo() != null) {
             try {

@@ -284,82 +284,9 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
         timeSheetDetails.setApprovalType(ApprovalType);
         timeSheetDetails.setNote(Note);
         timeSheetDetails.setStatus(status);
-        uploadDetails();
+      //  uploadDetails();
 
     }
 
-    void uploadDetails() {
-        //updateemployeedetails();
-        final ProgressDialog loading = ProgressDialog.show(context, "Uploading Data", "Please wait...", false, false);
 
-        EMSService service = ServiceGenerator.createService();
-        Call<TimeSheetDetails> timeSheetDetailsCall = service.updateTimeCardApproval(timeSheetDetails);
-        timeSheetDetailsCall.enqueue(new Callback<TimeSheetDetails>() {
-            @Override
-            public void onResponse(Call<TimeSheetDetails> call, Response<TimeSheetDetails> response) {
-                if (loading.isShowing()) {
-                    loading.dismiss();
-                }
-
-                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
-                    try {
-                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
-                        // Log.e(TAG, "onResponse: " + errorMessage);
-                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        // Log.e(TAG, "onResponse: IOException while parsing response error", e);
-                    }
-                } else if (response != null && response.isSuccessful()) {
-//DO SUCCESS HANDLING HERE
-
-                    TimeSheetDetails emp = response.body();
-                    if (emp != null) {
-                        // Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                        new AlertDialog.Builder(context)
-                                .setTitle("Approved Successfully!")
-                                .setMessage("")
-                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        //loadPage(1);
-                                    }
-                                })
-                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                    @Override
-                                    public void onCancel(DialogInterface dialog) {
-                                        //  clear_Fields();
-                                        // loadPage(1);
-                                    }
-                                })
-                                .show();
-                    } else {
-                        new AlertDialog.Builder(context)
-                                .setTitle("TimeSheetDetails Creation Failed!")
-                                .setMessage("We are unable to save your TimeSheetDetailsin our database this time.\n\n" +
-                                        "Please try validating your parameters once or Try again later.")
-                                .setPositiveButton(R.string.ok, null)
-                                .show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TimeSheetDetails> call, Throwable t) {
-                if (loading.isShowing()) {
-                    loading.dismiss();
-                }
-                Toast.makeText(context, "Error connecting with Web Services...\n" +
-                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
-                if (t != null) {
-                    // Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
-                } else {
-                }
-            }
-        });
-        loading.setCancelable(false);
-        loading.setIndeterminate(true);
-        loading.show();
-
-    }
 }

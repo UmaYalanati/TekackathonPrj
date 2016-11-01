@@ -308,8 +308,17 @@ public class MainActivity extends AppCompatActivity
 
         } else if (currentSelectedItem == R.id.nav_employee) {
             getMenuInflater().inflate(R.menu.main, menu);
-             MenuItem item = menu.findItem(R.id.action_editdetails);
-             item.setVisible(false);
+
+            if (SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename) != null && SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename).equals("Manager")) {
+                MenuItem item = menu.findItem(R.id.action_editdetails);
+                item.setVisible(false);
+            }
         } else if (currentSelectedItem == R.id.nav_timeclock) {
             getMenuInflater().inflate(R.menu.timeclock, menu);
             if (SharedPreferenceUtils
