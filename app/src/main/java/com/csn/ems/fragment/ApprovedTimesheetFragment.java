@@ -99,9 +99,31 @@ String TAG="TimesheetFragment";
         return view;
     }
     void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
+
+
+int empid=employeeId;
+
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.childEmployeeId).toString().trim());
+        }else {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
+        }
+
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(employeeId, startdate, enddaate, status);
+        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(empid, startdate, enddaate, status);
 
 
         listCall.enqueue(new Callback<List<TimeSheetDetails>>() {

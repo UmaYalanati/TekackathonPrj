@@ -119,7 +119,7 @@ CheckBox checkbox_select;
 
                 } else {
 
-                    month = 0;
+                    month = 1;
                     String monthString;
 
                     monthString = str[month+1 - 1];
@@ -142,7 +142,7 @@ CheckBox checkbox_select;
                 getLastDayOfMonth(month + 1, year);
 
                 String monthString;
-                if (month < str.length) {
+                if (month+1 < str.length) {
                     monthString = str[month+1 - 1];
                     tvmonthname.setText(monthString);
                 } else {

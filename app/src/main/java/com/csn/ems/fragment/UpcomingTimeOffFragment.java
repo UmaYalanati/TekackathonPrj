@@ -117,13 +117,13 @@ leav_postion=arg2;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString());
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString(),true);
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                 break;
             case R.id.btnendtime:
 
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString().trim());
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString().trim(),true);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
 

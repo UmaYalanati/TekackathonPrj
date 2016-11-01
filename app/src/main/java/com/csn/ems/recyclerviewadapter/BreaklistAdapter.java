@@ -61,7 +61,7 @@ TextView tvbreakdesc= (TextView) convertView.findViewById(R.id.tvbreakdesc);
         if (breakDetails.get(position).getBreakOut() == null && breakDetails.get(position).getBreakIn() != null) {
             tvbreaktime.setText("Break(" + breakDetails.get(position).getBreakIn() + "---" + "0.0" + ")");
         }
-if (breakDetails.get(position).getComments()!=null)
+if (breakDetails.get(position).getComments()!=null&&!breakDetails.get(position).getComments().trim().isEmpty())
 {
     tvbreakdesc.setVisibility(View.VISIBLE);
     tvbreakdesc.setText(breakDetails.get(position).getComments());

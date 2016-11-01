@@ -18,22 +18,26 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.csn.ems.EMSApplication;
 import com.csn.ems.R;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
+import com.csn.ems.model.LeaveStatus;
 import com.csn.ems.model.TimeSheetDetails;
+import com.csn.ems.recyclerviewadapter.LeaveTypeAdapter;
 import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.csn.ems.R.id.spinner_leavetype;
 
 
 /**
@@ -53,7 +57,7 @@ String TAG="TimeSheetFragment";
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
     AppCompatSpinner spinner_listofsheet;
-
+int selectedItemposition=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,7 +81,11 @@ String TAG="TimeSheetFragment";
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
 
-        spinner_listofsheet.setAdapter(arrayAdapter);
+       // spinner_listofsheet.setAdapter(arrayAdapter);
+       // LeaveStatus
+        LeaveTypeAdapter adapter=new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveStatus());
+        spinner_listofsheet.setAdapter(adapter);
+        /////Uma
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
         Calendar c = Calendar.getInstance();
@@ -100,18 +108,13 @@ String TAG="TimeSheetFragment";
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                if (selectedItem.equals("Select")){
+               // String selectedItem = parent.getItemAtPosition(position).toString();
+                selectedItemposition=position;
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
                             .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
-                }else{
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
-                }
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(position).getName());
+
             } // to close the onItemSelected
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -121,7 +124,7 @@ String TAG="TimeSheetFragment";
         getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
+                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
 
 
 
@@ -132,40 +135,30 @@ String TAG="TimeSheetFragment";
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString());
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString(),false);
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
 
-                if (spinner_listofsheet.getSelectedItem().toString().equals("Select")){
+
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
                             .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
-                }else{
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
-                }
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+
 
                 break;
             case R.id.btnendtime:
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString());
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString(),false);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                // Date date2 = sdf.parse(getTodaysDate());
                // Date date1 = sdf.parse(SharedPreferenceUtils.getInstance(context).getSettingsCacheItem(WatscoConstants.RATEUS_DATE).toString());
-                if (spinner_listofsheet.getSelectedItem().toString().equals("Select")){
+
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
                             .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"ALL");
-                }else{
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),spinner_listofsheet.getSelectedItem().toString());
-                }
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+
 
                 break;
 
@@ -173,9 +166,29 @@ String TAG="TimeSheetFragment";
     }
 
     void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
+
+        int empid=employeeId;
+
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.childEmployeeId).toString().trim());
+        }else {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
+        }
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(employeeId, startdate, enddaate, status);
+        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(empid, startdate, enddaate, status);
 
 
         listCall.enqueue(new Callback<List<TimeSheetDetails>>() {

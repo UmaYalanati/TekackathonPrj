@@ -24,13 +24,14 @@ public class DatePickerFragment extends DialogFragment implements
     String date;
     Button mTextView;
     DatePickerDialog mDatePickerDialog;
-
+boolean isdateset;
     public DatePickerFragment() {
     }
 
-    public DatePickerFragment(Button textview,String date) {
+    public DatePickerFragment(Button textview,String date,boolean isdateset) {
         this.mTextView = textview;
         this.date= date;
+        this.isdateset=isdateset;
     }
 
 
@@ -57,9 +58,12 @@ public class DatePickerFragment extends DialogFragment implements
         }catch (ParseException e){
 
         }
-        fff = new DatePickerDialog(getActivity(), this, year1, month1,
-                day1);
-        fff.getDatePicker().setMinDate(d.getTime());
+        fff = new DatePickerDialog(getActivity(), this, year, month,
+                day);
+        if (isdateset){
+            fff.getDatePicker().setMinDate(d.getTime());
+        }
+
         // Create a new instance of DatePickerDialog and return it
         return fff;
     }

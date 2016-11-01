@@ -252,6 +252,17 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             getbreaktimes();
             layout_checkin.setVisibility(View.GONE);
             layout_checkout.setVisibility(View.VISIBLE);
+          //  EmsConstants.breakinTime
+            if (SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.breakinTime) != null && !SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.breakinTime).toString().trim().isEmpty()){
+                ll_startbreak.setVisibility(View.GONE);
+                ll_breaktime.setVisibility(View.VISIBLE);
+            }
         }
 
         return view;

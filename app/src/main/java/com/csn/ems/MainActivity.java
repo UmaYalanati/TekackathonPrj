@@ -308,8 +308,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (currentSelectedItem == R.id.nav_employee) {
             getMenuInflater().inflate(R.menu.main, menu);
-            /* MenuItem item = menu.findItem(R.id.action_some);
-             item.setVisible(false);*/
+             MenuItem item = menu.findItem(R.id.action_editdetails);
+             item.setVisible(false);
         } else if (currentSelectedItem == R.id.nav_timeclock) {
             getMenuInflater().inflate(R.menu.timeclock, menu);
             if (SharedPreferenceUtils
@@ -340,8 +340,8 @@ public class MainActivity extends AppCompatActivity
             item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_settings) {
             getMenuInflater().inflate(R.menu.main, menu);
-            /*MenuItem item = menu.findItem(R.id.action_some);
-            item.setVisible(false);*/
+            MenuItem item = menu.findItem(R.id.action_editdetails);
+            item.setVisible(false);
         } else {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
         }
@@ -382,6 +382,11 @@ public class MainActivity extends AppCompatActivity
                         .getInstance(MainActivity.this)
                         .editSplash()
                         .addSplashCacheItem(EmsConstants.childEmployeeId,
+                                "").commitSplash();
+                SharedPreferenceUtils
+                        .getInstance(MainActivity.this)
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.breakinTime,
                                 "").commitSplash();
 
                 Intent intent_homescreen = new Intent(MainActivity.this, LoginActivity.class);

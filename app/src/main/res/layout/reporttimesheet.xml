@@ -49,7 +49,7 @@
             android:orientation="vertical">
 
             <ImageView
-                
+
                 android:layout_width="20dp"
                 android:layout_height="15dp"
                 android:background="@drawable/next"
@@ -57,7 +57,6 @@
         </LinearLayout>
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/ll_back3"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -67,7 +66,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/reportexport"
-            android:text="Button" />
+            android:text="Button"
+            android:visibility="gone" />
 
 
         <LinearLayout
@@ -92,20 +92,21 @@
     </RelativeLayout>
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/black" />
-    <RelativeLayout
-        android:visibility="gone"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/black" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
         <TextView
 
-            android:id="@+id/tvdate"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtdate"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -114,101 +115,102 @@
             android:layout_marginTop="18dp"
             android:text="Date"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/tvcheckintime"
+            android:id="@+id/txtcheckintime"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvdate"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="14dp"
-            android:layout_toEndOf="@+id/tvdate"
-            android:layout_toRightOf="@+id/tvdate"
+            android:layout_alignTop="@+id/txtdate"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/txtdate"
+            android:layout_toRightOf="@+id/txtdate"
 
+            android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:text="Clock In"
-            android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/tvcheckouttime"
+            android:id="@+id/txtcheckouttime"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvcheckintime"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_toEndOf="@+id/imageButton"
-            android:layout_toRightOf="@+id/imageButton"
+            android:layout_alignTop="@+id/txtcheckintime"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/txtlocation"
+            android:layout_toRightOf="@+id/txtlocation"
 
+            android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:text="Clock Out"
-            android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
-            android:gravity="center"
-            android:id="@+id/tvtotalhrs"
-            android:layout_width="50dp"
+            android:id="@+id/txttotalhrs"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvcheckouttime"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/imageButton2"
-            android:layout_toRightOf="@+id/imageButton2"
+            android:layout_alignTop="@+id/txtcheckouttime"
+
+            android:layout_toEndOf="@+id/txtlocation2"
+            android:layout_toRightOf="@+id/txtlocation2"
+            android:gravity="center"
             android:text="Length"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:id="@+id/imageButton"
+            android:id="@+id/txtlocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tvcheckintime"
+            android:layout_alignBottom="@+id/txtcheckintime"
             android:layout_marginLeft="6dp"
-            android:layout_toEndOf="@+id/tvcheckintime"
-            android:layout_toRightOf="@+id/tvcheckintime"
-           android:text="Location" />
+            android:layout_toEndOf="@+id/txtcheckintime"
+            android:layout_toRightOf="@+id/txtcheckintime"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
 
         <TextView
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtlocation2"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageButton"
+            android:layout_alignTop="@+id/txtlocation"
             android:layout_marginLeft="6dp"
-            android:layout_toEndOf="@+id/tvcheckouttime"
-            android:layout_toRightOf="@+id/tvcheckouttime"
-            android:text="Location"  />
+            android:layout_toEndOf="@+id/txtcheckouttime"
+            android:layout_toRightOf="@+id/txtcheckouttime"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/tvapprovalstatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageButton2"
+            android:layout_alignTop="@+id/txtlocation2"
             android:layout_marginLeft="5dp"
-android:textSize="12sp"
-            android:layout_toEndOf="@+id/tvtotalhrs"
-            android:layout_toRightOf="@+id/tvtotalhrs"
-
+            android:layout_toEndOf="@+id/txttotalhrs"
+            android:layout_toRightOf="@+id/txttotalhrs"
             android:gravity="center"
+
+            android:text="Status"
             android:textColor="@color/black"
-            android:text="Status" />
+            android:textSize="11sp" />
     </RelativeLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:scrollbars="vertical" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
+        android:scrollbars="vertical" />
 
 
 </LinearLayout>
