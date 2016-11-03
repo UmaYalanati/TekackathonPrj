@@ -59,7 +59,7 @@ TextView tvbreakdesc= (TextView) convertView.findViewById(R.id.tvbreakdesc);
             tvbreaktime.setText("Break(" + "0.0" + "---" + breakDetails.get(position).getBreakOut() + ")");
         }
         if (breakDetails.get(position).getBreakOut() == null && breakDetails.get(position).getBreakIn() != null) {
-            tvbreaktime.setText("Break(" + breakDetails.get(position).getBreakIn() + "---" + "0.0" + ")");
+            tvbreaktime.setText("Break Started(" + breakDetails.get(position).getBreakIn() + "---" + "0.0" + ")");
         }
 if (breakDetails.get(position).getComments()!=null&&!breakDetails.get(position).getComments().trim().isEmpty())
 {

@@ -1,22 +1,24 @@
 package com.csn.ems.recyclerviewadapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.activity.GoogleMaps;
+import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.model.TimeSheetDetails;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import static com.csn.ems.R.id.tvbreaktime;
 
 /**
  * Created by uyalanat on 22-10-2016.
@@ -41,6 +43,7 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
 
         public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
         public ImageView tvapprovalstatus;
+        ImageView imageButton, imageButton2;
 
         public ViewHolder(View v) {
 
@@ -50,6 +53,8 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
             tvcheckintime = (TextView) v.findViewById(R.id.tvcheckintime);
             tvtotalhrs = (TextView) v.findViewById(R.id.tvtotalhrs);
             tvcheckouttime = (TextView) v.findViewById(R.id.tvcheckouttime);
+            imageButton = (ImageView) v.findViewById(R.id.imageButton);
+            imageButton2 = (ImageView) v.findViewById(R.id.imageButton2);
             tvapprovalstatus.setVisibility(View.GONE);
         }
     }
@@ -65,9 +70,36 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
+
+        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
+                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
+                } else {
+                    EmsConstants.latitude = timesheetDetails.get(position).getCheckInLattitude();
+                    EmsConstants.longitude = timesheetDetails.get(position).getCheckInLongitude();
+                    Intent i = new Intent(context, GoogleMaps.class);
+                    context.startActivity(i);
+                }
+            }
+        });
+        holder.imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
+                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
+                } else {
+                    EmsConstants.latitude = timesheetDetails.get(position).getCheckOutLattitude();
+                    EmsConstants.longitude = timesheetDetails.get(position).getCheckOutLongitude();
+                    Intent i = new Intent(context, GoogleMaps.class);
+                    context.startActivity(i);
+                }
+            }
+        });
         String intime = "";
 
         String ottime = "";
@@ -116,7 +148,7 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
 
             e.printStackTrace();
         }*/
-        try{
+        try {
             if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
                 //   long secs = (dt.getTime() - dt.getTime()) / 1000;
                 //   int hours = secs / 3600;
@@ -130,16 +162,14 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
                 long diffHours = diff / (60 * 60 * 1000) % 24;*/
 
 
-
-
-              String  str_intime = timesheetDetails.get(position).getCheckIn();
+                String str_intime = timesheetDetails.get(position).getCheckIn();
                 String[] splited = str_intime.split("\\s+");
 
-                String  str_ottime = timesheetDetails.get(position).getCheckOut();
+                String str_ottime = timesheetDetails.get(position).getCheckOut();
                 String[] splited_out = str_intime.split("\\s+");
                 SimpleDateFormat formate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                str_intime="01/15/2012 "+splited[0]+":10";
-                str_ottime="01/15/2012 "+splited_out[0]+":10";
+                str_intime = "01/15/2012 " + splited[0] + ":10";
+                str_ottime = "01/15/2012 " + splited_out[0] + ":10";
                 Date d1 = null;
                 Date d2 = null;
                 d1 = format.parse(str_intime);
@@ -151,7 +181,7 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
                 holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
                 // int hours = p.getHours();
             }
-        }catch (ParseException e){
+        } catch (ParseException e) {
 
         }
 

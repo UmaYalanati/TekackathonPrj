@@ -231,25 +231,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent_homescreen);
-                      /*  new AlertDialog.Builder(LoginActivity.this)
-                                .setTitle("Logged Successfully!")
-                                .setMessage("")
-                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
 
-
-
-                                    }
-                                })
-                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                    @Override
-                                    public void onCancel(DialogInterface dialog) {
-                                        //  clear_Fields();
-                                        // loadPage(1);
-                                    }
-                                })
-                                .show();*/
                     } else {
                         new AlertDialog.Builder(LoginActivity.this)
                                 .setTitle("Login  Failed!")

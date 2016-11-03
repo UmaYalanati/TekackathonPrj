@@ -2,26 +2,21 @@ package com.csn.ems.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.csn.ems.MainActivity;
 import com.csn.ems.R;
-import com.csn.ems.activity.LoginActivity;
-import com.csn.ems.activity.SplashActivity;
+import com.csn.ems.SplashActivity;
 import com.csn.ems.callback.NavigationDrawerCallback;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;

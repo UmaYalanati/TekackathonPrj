@@ -349,8 +349,16 @@ public class MainActivity extends AppCompatActivity
             item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_settings) {
             getMenuInflater().inflate(R.menu.main, menu);
-            MenuItem item = menu.findItem(R.id.action_editdetails);
-            item.setVisible(false);
+            if (SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename) != null && SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename).equals("Manager")) {
+                MenuItem item = menu.findItem(R.id.action_editdetails);
+                item.setVisible(false);
+            }
         } else {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
         }

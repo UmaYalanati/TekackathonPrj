@@ -44,10 +44,11 @@
         android:text="Employee"
         android:textColor="@color/black"
         android:textSize="16sp"
-
+        android:visibility="gone"
         />
 
     <EditText
+        android:visibility="gone"
         android:id="@+id/ed_employee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

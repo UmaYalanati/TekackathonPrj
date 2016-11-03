@@ -162,7 +162,7 @@
             android:layout_toEndOf="@+id/txttotalhrs"
             android:layout_toRightOf="@+id/txttotalhrs"
             android:gravity="center"
-android:visibility="gone"
+
             android:text="Status"
             android:textColor="@color/black"
             android:textSize="11sp" />

@@ -8,18 +8,31 @@ android {
         applicationId "com.csn.ems"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         multiDexEnabled true
+    }
+    dataBinding{
+        enabled = true;
+    }
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file("emskeystore.jks");
+            storePassword("csnems");
+            keyAlias "ems";
+            keyPassword "csnems";
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
     }
 
@@ -55,38 +68,27 @@ dependencies {
     //Firebase
     compile 'com.google.firebase:firebase-core:9.6.1'
     compile 'com.google.firebase:firebase-config:9.6.1'
-
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
-
     compile 'com.squareup.picasso:picasso:2.5.0'
-
-
-
-
     compile 'com.android.support:percent:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     //    compile 'com.android.support:palette-v7:24.2.0'
-
     //Recycler View Animator
     compile 'jp.wasabeef:recyclerview-animators:2.2.3'
-
     compile 'commons-io:commons-io:2.4'
   /*  compile 'com.google.android.gms:play-services-maps:9.6.1'
     compile 'com.google.android.gms:play-services-location:9.6.1'
     compile 'com.google.android.gms:play-services:9.6.1'*/
-
     compile 'com.google.android.gms:play-services-fitness:9.6.1'
     compile 'com.google.android.gms:play-services-wearable:9.6.1'
     compile 'com.google.android.gms:play-services-appindexing:9.6.1'
     compile 'commons-io:commons-io:2.4'
     compile 'com.google.android.gms:play-services-maps:9.6.1'
-
     compile 'com.google.android.gms:play-services-location:9.6.1'
     // compile 'com.google.android.gms:play-services-location:9.0.2'
-
     compile 'com.google.android.gms:play-services-ads:9.6.1'
     compile 'com.google.android.gms:play-services-auth:9.6.1'
     compile 'com.google.android.gms:play-services-gcm:9.6.1'

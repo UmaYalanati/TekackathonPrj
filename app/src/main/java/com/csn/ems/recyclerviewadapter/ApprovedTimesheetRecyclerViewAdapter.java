@@ -3,6 +3,7 @@ package com.csn.ems.recyclerviewadapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.R;
+import com.csn.ems.activity.GoogleMaps;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.TimeSheetDetails;
@@ -44,9 +46,9 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     TimeSheetDetailsApprove timeSheetDetails1 = new TimeSheetDetailsApprove();
     Context context;
     View view1;
-     String radiovalue;
-    String approvalType="";
-    String note="";
+    String radiovalue;
+    String approvalType = "";
+    String note = "";
     ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
     public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
     ImageView tvapprovalstatus;
@@ -63,6 +65,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
 
         public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
         public ImageView tvapprovalstatus;
+        ImageView imageButton, imageButton2;
 
         public ViewHolder(View v) {
 
@@ -72,6 +75,8 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
             tvcheckintime = (TextView) v.findViewById(R.id.tvcheckintime);
             tvcheckouttime = (TextView) v.findViewById(R.id.tvcheckouttime);
             tvtotalhrs = (TextView) v.findViewById(R.id.tvtotalhrs);
+            imageButton = (ImageView) v.findViewById(R.id.imageButton);
+            imageButton2 = (ImageView) v.findViewById(R.id.imageButton2);
             //      tvapprovalstatus.setVisibility(View.GONE);
 
             v.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +112,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     }
 
     @Override
-    public void onBindViewHolder(ApprovedTimesheetRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ApprovedTimesheetRecyclerViewAdapter.ViewHolder holder, final int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
 /*if (timesheetDetails.get(position).getStatus()!=null) {
@@ -117,7 +122,32 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
         tvapprovalstatus.setBackgroundResource(R.drawable.reddot);
     }
 }*/
-
+        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
+                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
+                } else {
+                    EmsConstants.latitude = timesheetDetails.get(position).getCheckInLattitude();
+                    EmsConstants.longitude = timesheetDetails.get(position).getCheckInLongitude();
+                    Intent i = new Intent(context, GoogleMaps.class);
+                    context.startActivity(i);
+                }
+            }
+        });
+        holder.imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
+                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
+                } else {
+                    EmsConstants.latitude = timesheetDetails.get(position).getCheckOutLattitude();
+                    EmsConstants.longitude = timesheetDetails.get(position).getCheckOutLongitude();
+                    Intent i = new Intent(context, GoogleMaps.class);
+                    context.startActivity(i);
+                }
+            }
+        });
 
         String intime = "";
 
@@ -175,35 +205,24 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     public void Alertview(final int timesheetid, final int EmployeeId, final String WorkingDate, final String CheckIn, final String CheckOut, final double CheckInLattitude, final double checkInLongitude, final double checkOutLattitude, final double checkOutLongitude, final String AssignedTo, final String ApprovalType, final String Note, final String status) {
         {
 
-              String approvalval="FullDay";
+            String approvalval = "FullDay";
             //  View dialogView = context.inflater.inflate(R.layout.custom_approveleave, null);
             SharedPreferenceUtils
                     .getInstance(context)
                     .editSplash()
                     .addSplashCacheItem(EmsConstants.approvalval,
                             approvalval).commitSplash();
-        final    View dialogView = LayoutInflater.from(context).inflate(
+            final View dialogView = LayoutInflater.from(context).inflate(
                     R.layout.custom_approveleave, null);
 
             final TextInputEditText allocationDateTextField = (TextInputEditText) dialogView.findViewById(R.id.ed_comments);
-            note=allocationDateTextField.getText().toString().trim();
-      final      RadioGroup rg = (RadioGroup) dialogView.findViewById(R.id.radioGroup1);
-            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-            {
+            note = allocationDateTextField.getText().toString().trim();
+            final RadioGroup rg = (RadioGroup) dialogView.findViewById(R.id.radioGroup1);
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    switch(checkedId){
+                    switch (checkedId) {
                         case R.id.radioButton1:
-                             radiovalue = ((RadioButton)dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
-                           // approvalval=radiovalue;
-                            SharedPreferenceUtils
-                                    .getInstance(context)
-                                    .editSplash()
-                                    .addSplashCacheItem(EmsConstants.approvalval,
-                                            radiovalue).commitSplash();
-                            break;
-
-                        case R.id.radioButton2:
-                             radiovalue = ((RadioButton)dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                            radiovalue = ((RadioButton) dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                             // approvalval=radiovalue;
                             SharedPreferenceUtils
                                     .getInstance(context)
@@ -212,6 +231,15 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                                             radiovalue).commitSplash();
                             break;
 
+                        case R.id.radioButton2:
+                            radiovalue = ((RadioButton) dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                            // approvalval=radiovalue;
+                            SharedPreferenceUtils
+                                    .getInstance(context)
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.approvalval,
+                                            radiovalue).commitSplash();
+                            break;
 
 
                     }
@@ -259,8 +287,8 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                             String allocatedDate = allocationDateTextField.getText().toString();
                             /// updateemployeedetails();
                             allocationDialog.dismiss();
-                            approvalType="Approved";
-                           updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
+                            approvalType = "Approved";
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
                         }
                     });
 
@@ -268,8 +296,8 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                         @Override
                         public void onClick(View v) {
 
-                            approvalType="Rejected";
-                           updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
+                            approvalType = "Rejected";
+                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
                             allocationDialog.dismiss();
                         }
                     });

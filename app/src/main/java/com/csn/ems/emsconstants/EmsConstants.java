@@ -5,6 +5,8 @@ package com.csn.ems.emsconstants;
  */
 
 public class EmsConstants {
+    public static double latitude=17.4909262;
+    public static double longitude=78.4000156;
     public static String childEmployeeId="childEmployeeId";
     public static String username="username";
     public static String employeeId="EmployeeId";

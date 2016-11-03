@@ -83,7 +83,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     Button btncheckin, btncheckout, btncontinueshift;
     ImageButton imgbtnbreak;
     EditText edcomments;
-    LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak;
+    LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak,ll_breaktime_second;
     double lat, lng;
     InsertClockIn insertClockIn = new InsertClockIn();
     InsertBreakIn insertBreakIn = new InsertBreakIn();
@@ -108,6 +108,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         layout_checkin = (LinearLayout) view.findViewById(R.id.layout_checkin);
         ll_breaktime = (LinearLayout) view.findViewById(R.id.ll_breaktime);
         ll_startbreak = (LinearLayout) view.findViewById(R.id.ll_startbreak);
+        ll_breaktime_second = (LinearLayout) view.findViewById(R.id.ll_breaktime_second);
         btncheckin.setOnClickListener(this);
         btncheckout.setOnClickListener(this);
         imgbtnbreak.setOnClickListener(this);
@@ -252,7 +253,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             getbreaktimes();
             layout_checkin.setVisibility(View.GONE);
             layout_checkout.setVisibility(View.VISIBLE);
-          //  EmsConstants.breakinTime
+            ll_breaktime_second.setVisibility(View.GONE);
             if (SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
@@ -566,8 +567,13 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     }
 
     void setBreakDetails(List<BreakDetails> breakDetails) {
-        BreaklistAdapter adapter = new BreaklistAdapter(getActivity(), breakDetails);
-        listView_breakDetails.setAdapter(adapter);
+        if (breakDetails!=null&&breakDetails.size()>0) {
+          //  ll_breaktime_second.setVisibility(View.GONE);
+            BreaklistAdapter adapter = new BreaklistAdapter(getActivity(), breakDetails);
+            listView_breakDetails.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+        }
     }
 
     public void doWork() {
@@ -636,6 +642,11 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 ll_breaktime.setVisibility(View.GONE);
 
                 breakIn(false);
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.breakinTime,
+                                "").commitSplash();
                 if (SharedPreferenceUtils
                         .getInstance(getActivity())
                         .getSplashCacheItem(
@@ -644,6 +655,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                         .getSplashCacheItem(
                                 EmsConstants.timesheetId).toString().trim().isEmpty()) {
                     getbreaktimes();
+                    ll_breaktime_second.setVisibility(View.VISIBLE);
                     layout_checkin.setVisibility(View.GONE);
                     layout_checkout.setVisibility(View.VISIBLE);
                 }
@@ -659,6 +671,8 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 ll_startbreak.setVisibility(View.GONE);
                 ll_breaktime.setVisibility(View.VISIBLE);
 
+                getbreaktimes();
+                ll_breaktime_second.setVisibility(View.GONE);
                 break;
         }
     }
