@@ -18,7 +18,7 @@ import static android.R.attr.y;
 /**
  * Created by uyalanat on 23-10-2016.
  */
-
+@SuppressLint("ValidFragment")
 public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
     String date;

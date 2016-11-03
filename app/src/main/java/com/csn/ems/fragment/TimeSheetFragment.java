@@ -1,5 +1,9 @@
 package com.csn.ems.fragment;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -29,8 +34,10 @@ import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -135,7 +142,7 @@ int selectedItemposition=0;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString(),false);
+                DatePickerFragment2 starttimeFragment = new DatePickerFragment2(btnstarttime,btnstarttime.getText().toString(),false);
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
 
@@ -148,16 +155,12 @@ int selectedItemposition=0;
 
                 break;
             case R.id.btnendtime:
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString(),false);
+                DatePickerFragment2 endtimeFragment = new DatePickerFragment2(btnendtime,btnstarttime.getText().toString(),false);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                // Date date2 = sdf.parse(getTodaysDate());
                // Date date1 = sdf.parse(SharedPreferenceUtils.getInstance(context).getSettingsCacheItem(WatscoConstants.RATEUS_DATE).toString());
 
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
 
 
                 break;
@@ -240,4 +243,118 @@ int selectedItemposition=0;
         //  }
 
     }
+    @SuppressLint("ValidFragment")
+    public class DatePickerFragment2 extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+        String date;
+        Button mTextView;
+        DatePickerDialog mDatePickerDialog;
+        boolean isdateset;
+        public DatePickerFragment2() {
+        }
+
+        public DatePickerFragment2(Button textview,String date,boolean isdateset) {
+            this.mTextView = textview;
+            this.date= date;
+            this.isdateset=isdateset;
+        }
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog fff;
+            Date d=null;
+            int year1=year,month1=month,day1=day;
+            try{
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                d = sdf.parse(date);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(d);
+                year1 = cal.get(Calendar.YEAR);
+                month1 = cal.get(Calendar.MONTH);
+                day1 = cal.get(Calendar.DAY_OF_MONTH);
+
+
+            }catch (ParseException e){
+
+            }
+            fff = new DatePickerDialog(getActivity(), this, year, month,
+                    day);
+            if (isdateset){
+                fff.getDatePicker().setMinDate(d.getTime());
+            }
+
+            // Create a new instance of DatePickerDialog and return it
+            return fff;
+        }
+
+        @SuppressLint("NewApi")
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            view.setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
+
+            String str_year = String.valueOf(year);
+            String date_str = "";
+            try{
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Date d = sdf.parse(date);
+                view.setMinDate(d.getTime());
+            }catch (ParseException e){
+
+            }
+
+
+            if (new StringBuilder().append(month + 1).length() >= 2 && new StringBuilder().append(day).length() < 2) {
+//mm dd yy
+                if (new StringBuilder().append(day).length() >= 2) {
+                    mTextView.setText(new StringBuilder()
+                            .append(month + 1).append("/").append(day).append("/").append(str_year).toString());
+
+                } else {
+
+                    mTextView.setText(new StringBuilder()
+
+                            .append(month + 1).append("/").append(0).append(day).append("/").append(str_year)
+                            .toString());
+                }
+            } else {
+                if (new StringBuilder().append(day).length() >= 2) {
+                    if (new StringBuilder().append(month + 1).length() >= 2){
+                        mTextView.setText(new StringBuilder()
+                                .append(month + 1).append("/")
+                                .append(day).append("/")
+                                .append(str_year)
+                                .toString());
+                    }else{
+                        mTextView.setText(new StringBuilder()
+                                .append(0).append(month + 1).append("/")
+                                .append(day).append("/")
+                                .append(str_year)
+                                .toString());
+                    }
+
+
+                } else {
+
+
+                    mTextView.setText(new StringBuilder()
+                            .append(0).append(month + 1).append("/")
+                            .append(0).append(day).append("/")
+                            .append(str_year).toString());
+                }
+
+
+            }
+            getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+
+        }
+    }
+
 }

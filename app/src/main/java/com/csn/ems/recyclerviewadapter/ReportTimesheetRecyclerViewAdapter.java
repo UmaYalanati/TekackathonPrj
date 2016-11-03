@@ -160,23 +160,23 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
         Date dt_out = null;
      //
 
-        try {
+
             if (timesheetDetails.get(position).getCheckIn() != null) {
-                dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
-                System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-                intime = sdfs.format(dt);
-                holder.tvcheckintime.setText(intime);
+              //  dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
+               // System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
+               // intime = sdfs.format(dt);
+                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
 
             }
             if (timesheetDetails.get(position).getCheckOut() != null) {
 
-                dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
-                ottime = sdfs.format(dt_out);
-                holder.tvcheckouttime.setText(ottime);
+             //   dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
+               // ottime = sdfs.format(dt_out);
+                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
             }
 
 
-            if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
+       /*     if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
                 //   long secs = (dt.getTime() - dt.getTime()) / 1000;
                 //   int hours = secs / 3600;
                 final int MILLI_TO_HOUR = 1000 * 60 * 60;
@@ -188,13 +188,10 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
                 holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
 
                 // int hours = p.getHours();
-            }
+            }*/
 
 
-        } catch (ParseException e) {
 
-            e.printStackTrace();
-        }
 
     }
 

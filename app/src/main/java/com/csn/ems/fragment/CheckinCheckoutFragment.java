@@ -292,11 +292,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
 
     public void updateCheckin() {
-      /*  int timesheetid=Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.timesheetId).toString().trim());
-        insertClockIn.setTimeSheetId(timesheetid);*/
+
         insertClockIn.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -629,19 +625,31 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
                 layout_checkin.setVisibility(View.GONE);
                 layout_checkout.setVisibility(View.VISIBLE);
-                checkIn(true);
+                if (String.valueOf(lat).equals("0.0")){
+                    Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                }else {
+                    checkIn(true);
+                }
+
                 break;
             case R.id.btncheckout:
 
                 layout_checkin.setVisibility(View.VISIBLE);
                 layout_checkout.setVisibility(View.GONE);
-                checkIn(false);
+                if (String.valueOf(lat).equals("0.0")){
+Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                }else {
+                    checkIn(false);
+                }
                 break;
             case R.id.btncontinueshift:
                 ll_startbreak.setVisibility(View.VISIBLE);
                 ll_breaktime.setVisibility(View.GONE);
-
-                breakIn(false);
+                if (String.valueOf(lat).equals("0.0")){
+                    Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                }else {
+                    breakIn(false);
+                }
                 SharedPreferenceUtils
                         .getInstance(getActivity())
                         .editSplash()
@@ -662,7 +670,11 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
                 break;
             case R.id.imgbtnbreak:
-                breakIn(true);
+                if (String.valueOf(lat).equals("0.0")){
+                    Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                }else {
+                    breakIn(true);
+                }
                 SharedPreferenceUtils
                         .getInstance(getActivity())
                         .editSplash()
