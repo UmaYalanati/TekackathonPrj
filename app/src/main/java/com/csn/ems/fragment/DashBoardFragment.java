@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,10 @@ import retrofit2.Response;
  */
 
 public class DashBoardFragment extends Fragment implements View.OnClickListener {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     String TAG = "DashBoardFragment";
     CardView card_view, card_view_timeclcok, card_view_orgcalendar;
     de.hdodenhof.circleimageview.CircleImageView imgprofilepic;

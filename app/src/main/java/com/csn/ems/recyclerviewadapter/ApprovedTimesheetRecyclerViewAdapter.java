@@ -149,50 +149,28 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
             }
         });
 
-        String intime = "";
 
-        String ottime = "";
-
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-        SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
-        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd hh:mm a");
-        Date dt = null;
-        Date dt_out = null;
-        try {
             if (timesheetDetails.get(position).getCheckIn() != null) {
-                dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
-                System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-                intime = sdfs.format(dt);
-                holder.tvcheckintime.setText(intime);
+
+                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
 
             }
             if (timesheetDetails.get(position).getCheckOut() != null) {
 
-                dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
-                ottime = sdfs.format(dt_out);
-                holder.tvcheckouttime.setText(ottime);
+              /*  dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
+                ottime = sdfs.format(dt_out);*/
+                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
             }
 
 
-            if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
-                //   long secs = (dt.getTime() - dt.getTime()) / 1000;
-                //   int hours = secs / 3600;
-                final int MILLI_TO_HOUR = 1000 * 60 * 60;
-                int hours = (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
-                //  Period p = new Period(dt, dt_out);
+            if (timesheetDetails.get(position).getCalculatedLength() != null) {
 
-                long diff = dt.getTime() - dt_out.getTime();
-                long diffHours = diff / (60 * 60 * 1000) % 24;
-                holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
+                holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
 
                 // int hours = p.getHours();
             }
 
 
-        } catch (ParseException e) {
-
-            e.printStackTrace();
-        }
 
     }
 
@@ -353,7 +331,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                     }
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
-
+notifyDataSetChanged();
                     TimeSheetDetailsApprove emp = response.body();
                     if (emp != null) {
                         // Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);

@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csn.ems.EMSApplication;
@@ -65,7 +66,7 @@ String TAG="TimeSheetFragment";
     RecyclerView.LayoutManager recylerViewLayoutManager;
     AppCompatSpinner spinner_listofsheet;
 int selectedItemposition=0;
-
+TextView tvapprovalstatus;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_employeetimesheet, container, false);
@@ -77,7 +78,8 @@ int selectedItemposition=0;
         btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         recylerViewLayoutManager = new LinearLayoutManager(context);
-
+        tvapprovalstatus= (TextView) view.findViewById(R.id.tvapprovalstatus);
+        tvapprovalstatus.setVisibility(View.GONE);
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
      //   recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);

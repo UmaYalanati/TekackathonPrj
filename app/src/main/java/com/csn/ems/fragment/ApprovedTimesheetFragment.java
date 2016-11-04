@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +23,6 @@ import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
-import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
@@ -39,6 +39,9 @@ import retrofit2.Response;
  */
 
 public class ApprovedTimesheetFragment extends Fragment {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;

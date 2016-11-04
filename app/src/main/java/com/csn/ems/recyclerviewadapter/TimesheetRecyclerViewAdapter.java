@@ -100,15 +100,7 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
                 }
             }
         });
-        String intime = "";
 
-        String ottime = "";
-
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-        SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
-        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd hh:mm a");
-        Date dt = null;
-        Date dt_out = null;
 
         if (timesheetDetails.get(position).getCheckIn() != null) {
             holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
@@ -117,73 +109,13 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
             holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
         }
 
- /*       try {
-            if (timesheetDetails.get(position).getCheckIn() != null) {
-
-                if (timesheetDetails.get(position).getCheckIn().contains("AM")
-                        || timesheetDetails.get(position).getCheckIn().contains("PM")) {
-                    holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckIn());
-                }else {
-                    dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
-                    System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-                    intime = sdfs.format(dt);
-                    holder.tvcheckintime.setText(intime);
-                }
-            }
-            if (timesheetDetails.get(position).getCheckOut() != null) {
-                if (timesheetDetails.get(position).getCheckOut().contains("AM")
-                        || timesheetDetails.get(position).getCheckOut().contains("PM")) {
-                    holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
-                } else {
-                    dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
-                    ottime = sdfs.format(dt_out);
-                    holder.tvcheckouttime.setText(ottime);
-                }
 
 
-            }
-
-
-        } catch (ParseException e) {
-
-            e.printStackTrace();
-        }*/
-        try {
-            if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
-                //   long secs = (dt.getTime() - dt.getTime()) / 1000;
-                //   int hours = secs / 3600;
-             /*   dt = sdfs.parse(timesheetDetails.get(position).getCheckIn());
-                dt_out = sdfs.parse(timesheetDetails.get(position).getCheckOut());
-                final int MILLI_TO_HOUR = 1000 * 60 * 60;
-                int hours = (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
-                //
-                //  Period p = new Period(dt, dt_out);
-                long diff = dt.getTime() - dt_out.getTime();
-                long diffHours = diff / (60 * 60 * 1000) % 24;*/
-
-
-                String str_intime = timesheetDetails.get(position).getCheckIn();
-                String[] splited = str_intime.split("\\s+");
-
-                String str_ottime = timesheetDetails.get(position).getCheckOut();
-                String[] splited_out = str_intime.split("\\s+");
-                SimpleDateFormat formate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                str_intime = "01/15/2012 " + splited[0] + ":10";
-                str_ottime = "01/15/2012 " + splited_out[0] + ":10";
-                Date d1 = null;
-                Date d2 = null;
-                d1 = format.parse(str_intime);
-                d2 = format.parse(str_ottime);
-                long diff = d2.getTime() - d1.getTime();
-
-
-                long diffHours = diff / (60 * 60 * 1000) % 24;
-                holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
+            if (timesheetDetails.get(position).getCalculatedLength() != null ) {
+                holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
                 // int hours = p.getHours();
             }
-        } catch (ParseException e) {
 
-        }
 
     }
 

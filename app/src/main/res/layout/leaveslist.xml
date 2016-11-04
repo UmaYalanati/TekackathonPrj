@@ -12,15 +12,14 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-
         >
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_weight="1"
             android:gravity="left"
-            android:layout_gravity="left"
             android:orientation="vertical">
 
             <TextView
@@ -34,12 +33,12 @@
                 />
 
             <Button
-                android:paddingTop="10dp"
-                android:gravity="left"
                 android:id="@+id/btnstarttime"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/rectangularbox_warranty"
+                android:gravity="left"
+                android:paddingTop="10dp"
                 android:text="10-10-22"
                 android:textSize="16sp"
 
@@ -65,12 +64,12 @@
                 />
 
             <Button
-                android:paddingTop="10dp"
-android:gravity="left"
                 android:id="@+id/btnendtime"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/rectangularbox_warranty"
+                android:gravity="left"
+                android:paddingTop="10dp"
                 android:text="10-10-22"
                 android:textSize="16sp"
 
@@ -80,10 +79,10 @@ android:gravity="left"
 
 
     <RelativeLayout
-android:visibility="gone"
         android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/my_recycler_view"

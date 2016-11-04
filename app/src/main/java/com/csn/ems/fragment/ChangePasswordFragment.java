@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,6 @@ import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.ChangePassword;
-import com.csn.ems.model.Login;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 
@@ -35,7 +35,11 @@ import retrofit2.Response;
  */
 
 public class ChangePasswordFragment extends Fragment {
-TextInputEditText confirmpassword,password;
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
+    TextInputEditText confirmpassword,password;
     Button btnupdatepassword;
     String TAG="ChangePasswordFragment";
    // Login login=new Login();

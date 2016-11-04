@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 import com.csn.ems.R;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
-import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.model.LeaveDetails;
 import com.csn.ems.recyclerviewadapter.ListofLivesRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
@@ -37,6 +37,10 @@ import retrofit2.Response;
  */
 
 public class LeavesStatusFragment extends Fragment implements View.OnClickListener {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     String TAG = "LeavesStatusFragment";
     //  LeaveDetails leavedetails=new LeaveDetails();
     Context context;

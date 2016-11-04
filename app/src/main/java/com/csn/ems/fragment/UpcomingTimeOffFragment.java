@@ -41,45 +41,46 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 /**
  * Created by uyalanat on 23-10-2016.
  */
 
 public class UpcomingTimeOffFragment extends Fragment implements View.OnClickListener {
-  String  TAG="UpcomingTimeOffFragment";
+    String TAG = "UpcomingTimeOffFragment";
     ListView listView_upcomingholidayslist;
+
     public static UpcomingTimeOffFragment newInstance() {
         return new UpcomingTimeOffFragment();
     }
+
     String toDate;
-CreateLeaveRequest createLeaveRequest=new CreateLeaveRequest();
-    Button btnstarttime, btnendtime,btnsubmitrequest;
-EditText ed_comments;
+    CreateLeaveRequest createLeaveRequest = new CreateLeaveRequest();
+    Button btnstarttime, btnendtime, btnsubmitrequest;
+    EditText ed_comments;
     InTakeMasterDetails inTakeMasterDetails = new InTakeMasterDetails();
     Spinner spinner_leavetype;
     TextView tvtittle;
-    int leaveTypeId,leav_postion=0;
+    int leaveTypeId, leav_postion = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.upcomingtimeoff, container, false);
-        listView_upcomingholidayslist= (ListView) view.findViewById(R.id.listView_upcomingholidayslist);
+        listView_upcomingholidayslist = (ListView) view.findViewById(R.id.listView_upcomingholidayslist);
         btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         btnsubmitrequest = (Button) view.findViewById(R.id.btnsubmitrequest);
-        ed_comments= (EditText) view.findViewById(R.id.ed_comments);
-        tvtittle= (TextView) view.findViewById(R.id.tvtittle);
-        spinner_leavetype= (Spinner) view.findViewById(R.id.spinner_leavetype);
+        ed_comments = (EditText) view.findViewById(R.id.ed_comments);
+        tvtittle = (TextView) view.findViewById(R.id.tvtittle);
+        spinner_leavetype = (Spinner) view.findViewById(R.id.spinner_leavetype);
 
-        LeaveTypeAdapter adapter=new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveTypes());
+        LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveTypes());
         spinner_leavetype.setAdapter(adapter);
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-       // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-         toDate = newDateFormat.format(c.getTime());
+        toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
         calendar.add(Calendar.DAY_OF_MONTH, +1);
@@ -100,7 +101,7 @@ EditText ed_comments;
                                        int arg2, long arg3) {
 
                 int selectedPosition = arg2; //Here is your selected position
-leav_postion=arg2;
+                leav_postion = arg2;
             }
 
             @Override
@@ -117,13 +118,13 @@ leav_postion=arg2;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString(),true);
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime, btnstarttime.getText().toString(), true);
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                 break;
             case R.id.btnendtime:
 
-                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString().trim(),true);
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime, btnstarttime.getText().toString().trim(), true);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
 
@@ -134,11 +135,11 @@ leav_postion=arg2;
         }
     }
 
-    void setData(){
-        leaveTypeId= EMSApplication.inTakeMasterDetails.getLeaveTypes().get(leav_postion).getId();
-       createLeaveRequest.setLeaveTypeId(leaveTypeId);
-       // createLeaveRequest.setLeaveleaveTypeId);
-        createLeaveRequest.setEmployeeId( Integer.parseInt(SharedPreferenceUtils
+    void setData() {
+        leaveTypeId = EMSApplication.inTakeMasterDetails.getLeaveTypes().get(leav_postion).getId();
+        createLeaveRequest.setLeaveTypeId(leaveTypeId);
+        // createLeaveRequest.setLeaveleaveTypeId);
+        createLeaveRequest.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim()));
@@ -168,7 +169,8 @@ leav_postion=arg2;
         createLeaveRequest.setLeaveStatusId(4);
 
     }
-    void createLeave(){
+
+    void createLeave() {
         setData();
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading Data", "Please wait...", false, false);
 
@@ -189,10 +191,43 @@ leav_postion=arg2;
                     } catch (IOException e) {
                         Log.e(TAG, "onResponse: IOException while parsing response error", e);
                     }
+
+
+                    CreateLeaveRequest emp = response.body();
+                    Calendar c = Calendar.getInstance();
+                    System.out.println("Current time => " + c.getTime());
+
+                    // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    toDate = newDateFormat.format(c.getTime());
+
+                    Calendar calendar = Calendar.getInstance(); // this would default to now
+                    calendar.add(Calendar.DAY_OF_MONTH, +1);
+                    String fromDate = newDateFormat.format(calendar.getTime());
+                    upcomingDetails();
+                    btnendtime.setText(fromDate);
+                    btnstarttime.setText(toDate);
+                    ed_comments.setText("");
+                    spinner_leavetype.setSelection(0);
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
 
                     CreateLeaveRequest emp = response.body();
+                    Calendar c = Calendar.getInstance();
+                    System.out.println("Current time => " + c.getTime());
+
+                    // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    toDate = newDateFormat.format(c.getTime());
+
+                    Calendar calendar = Calendar.getInstance(); // this would default to now
+                    calendar.add(Calendar.DAY_OF_MONTH, +1);
+                    String fromDate = newDateFormat.format(calendar.getTime());
+                    upcomingDetails();
+                    btnendtime.setText(fromDate);
+                    btnstarttime.setText(toDate);
+                    ed_comments.setText("");
+                    spinner_leavetype.setSelection(0);
                     if (emp != null) {
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         new AlertDialog.Builder(getContext())
@@ -242,10 +277,10 @@ leav_postion=arg2;
         loading.show();
 
     }
-    
-    public void upcomingDetails(){
+
+    public void upcomingDetails() {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
-        int empid=Integer.parseInt(SharedPreferenceUtils
+        int empid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
@@ -253,7 +288,7 @@ leav_postion=arg2;
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.timesheetId).toString().trim());*/
-        int timesheetid=1;
+        int timesheetid = 1;
         Call<List<UpcomingEvents>> listCall = ServiceGenerator.createService().getUpcomingEvents(toDate);
 
         listCall.enqueue(new Callback<List<UpcomingEvents>>() {
@@ -296,11 +331,12 @@ leav_postion=arg2;
         loading.setIndeterminate(true);
         loading.show();
     }
-    public void setUpcomingEvents(List<UpcomingEvents> breakDetails){
-        if (breakDetails.size()>0){
+
+    public void setUpcomingEvents(List<UpcomingEvents> breakDetails) {
+        if (breakDetails.size() > 0) {
             tvtittle.setVisibility(View.VISIBLE);
         }
-        UpcomingEventsAdapter adapter=new UpcomingEventsAdapter(getActivity(),breakDetails);
+        UpcomingEventsAdapter adapter = new UpcomingEventsAdapter(getActivity(), breakDetails);
         listView_upcomingholidayslist.setAdapter(adapter);
 
     }

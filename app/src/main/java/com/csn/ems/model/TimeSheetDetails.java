@@ -50,12 +50,6 @@ public class TimeSheetDetails {
     @JsonProperty("Status")
     private String status;
 
-
-
-    public int getTimeSheetId() {
-        return timeSheetId;
-    }
-
     @Override
     public String toString() {
         return "TimeSheetDetails{" +
@@ -64,15 +58,31 @@ public class TimeSheetDetails {
                 ", workingDate='" + workingDate + '\'' +
                 ", checkIn='" + checkIn + '\'' +
                 ", checkOut='" + checkOut + '\'' +
-                ", checkInLattitude='" + checkInLattitude + '\'' +
-                ", checkOutLattitude='" + checkOutLattitude + '\'' +
-                ", checkOutLongitude='" + checkOutLongitude + '\'' +
-                ", checkInLongitude='" + checkInLongitude + '\'' +
+                ", checkInLattitude=" + checkInLattitude +
+                ", checkOutLattitude=" + checkOutLattitude +
+                ", checkOutLongitude=" + checkOutLongitude +
+                ", checkInLongitude=" + checkInLongitude +
                 ", assignedTo='" + assignedTo + '\'' +
                 ", approvalType='" + approvalType + '\'' +
                 ", note='" + note + '\'' +
                 ", status='" + status + '\'' +
+                ", calculatedLength='" + calculatedLength + '\'' +
                 '}';
+    }
+
+    @JsonProperty("CalculatedLength")
+    private String calculatedLength;
+
+    public String getCalculatedLength() {
+        return calculatedLength;
+    }
+
+    public void setCalculatedLength(String calculatedLength) {
+        this.calculatedLength = calculatedLength;
+    }
+
+    public int getTimeSheetId() {
+        return timeSheetId;
     }
 
     public void setTimeSheetId(int timeSheetId) {

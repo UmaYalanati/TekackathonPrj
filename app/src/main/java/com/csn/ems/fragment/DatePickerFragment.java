@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.widget.Button;
 import android.widget.DatePicker;
 
@@ -13,14 +14,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.R.attr.y;
-
 /**
  * Created by uyalanat on 23-10-2016.
  */
 @SuppressLint("ValidFragment")
 public class DatePickerFragment extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     String date;
     Button mTextView;
     DatePickerDialog mDatePickerDialog;

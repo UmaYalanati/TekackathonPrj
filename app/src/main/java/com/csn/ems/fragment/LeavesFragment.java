@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +19,10 @@ import com.csn.ems.callback.MenuItemSelectedCallback;
  */
 
 public class LeavesFragment extends Fragment {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     String TAG="LeavesFragment";
     Fragment newFragment = null;
     int selectedItem;

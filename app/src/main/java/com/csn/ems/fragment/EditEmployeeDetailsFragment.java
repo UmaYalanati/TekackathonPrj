@@ -4,14 +4,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,10 +40,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.functions.Action1;
 
-import static com.csn.ems.R.id.card_view_orgcalendar;
-import static com.csn.ems.R.id.card_view_timeclcok;
-import static com.csn.ems.R.id.imgprofilepic;
-
 
 /**
  * Created by uyalanat on 20-10-2016.
@@ -52,6 +47,9 @@ import static com.csn.ems.R.id.imgprofilepic;
 
 public class EditEmployeeDetailsFragment extends Fragment {
     private static final String TAG = "EditEmployeeDetailsFrag";
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     de.hdodenhof.circleimageview.CircleImageView circleImageView;
     EmployeeDetails employeeDetails = new EmployeeDetails();

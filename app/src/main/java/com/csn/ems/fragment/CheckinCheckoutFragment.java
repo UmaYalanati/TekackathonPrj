@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ import com.csn.ems.model.InsertClockIn;
 import com.csn.ems.recyclerviewadapter.BreaklistAdapter;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
+import com.csn.ems.utils.LocationUtility;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -64,9 +66,17 @@ import retrofit2.Response;
  * Created by uyalanat on 22-10-2016.
  */
 
-public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener, LocationListener {
+public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener ,LocationUtility.LocationResultCustom{
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
+
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
     static final int  MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION=2;
+    private LocationUtility locationUtility;
+    private Location loc;
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
     String TAG = "CheckoutFragment";
@@ -84,11 +94,12 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     ImageButton imgbtnbreak;
     EditText edcomments;
     LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak,ll_breaktime_second;
-    double lat, lng;
+    double lat=0.0, lng=0.0;
     InsertClockIn insertClockIn = new InsertClockIn();
     InsertBreakIn insertBreakIn = new InsertBreakIn();
     String formattedDate;
 
+    String shardedvalue="";
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
@@ -113,7 +124,20 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         btncheckout.setOnClickListener(this);
         imgbtnbreak.setOnClickListener(this);
         btncontinueshift.setOnClickListener(this);
+        locationUtility = new LocationUtility(getActivity());
+        LocationManager locManager = (LocationManager) getActivity()
+                .getSystemService(Activity.LOCATION_SERVICE);
 
+        if (locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            // Do what you need if enabled...
+            locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+        }
+        else if (locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            // Do what you need if enabled...
+            locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+        }
         try {
             String str_MyDate;
             Calendar c = Calendar.getInstance();
@@ -154,14 +178,33 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+
+
+            locationUtility = new LocationUtility(getActivity());
+            LocationManager locManager1 = (LocationManager) getActivity()
+                    .getSystemService(Activity.LOCATION_SERVICE);
+
+            if (locManager1.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                // Do what you need if enabled...
+                locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+            }
+            else if (locManager1.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                // Do what you need if enabled...
+                locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+            }
+
         }
         try {
             location = locationManager
                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } catch (SecurityException e) {
-            buildAlertMessageNoGps();
+           // buildAlertMessageNoGps();
             Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
         }
+
         boolean isGPSEnabled = false;
         boolean isNetworkEnabled = false;
         // getting GPS status
@@ -176,46 +219,8 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             // no network provider is enabled(
             buildAlertMessageNoGps();
         } else {
-            // this.canGetLocation = true;
-            if (isNetworkEnabled) {
-                try {
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    Log.d("Network", "Network Enabled");
-                    if (locationManager != null) {
-                        location = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-                            onLocationChanged(location);
 
-                        }
-                    }
-                } catch (SecurityException e) {
-                    Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
-                }
-            } else if (isGPSEnabled) {
-                // if GPS Enabled get lat/long using GPS Services
-                if (location == null) {
-                    try {
-                        locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d("GPS", "GPS Enabled");
-                        if (locationManager != null) {
-                            location = locationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-                                onLocationChanged(location);
-                            }
-                        }
-                    } catch (SecurityException e) {
-                        Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
-                    }
-                }
-            }
+
         }
 
         if (SharedPreferenceUtils
@@ -269,7 +274,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         return view;
     }
 
-    @Override
+  /*  @Override
     public void onLocationChanged(Location location) {
         lat = location.getLatitude();
         lng = location.getLongitude();
@@ -288,7 +293,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.d("Latitude", "status");
-    }
+    }*/
 
 
     public void updateCheckin() {
@@ -509,15 +514,22 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
     public void getbreaktimes() {
         {
+
             final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
             int empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim());
-            int timesheetid = Integer.parseInt(SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.timesheetId).toString().trim());
+            int timesheetid=1;
+            if (!EmsConstants.timesheetId.trim().isEmpty()){
+                 timesheetid = Integer.parseInt(SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.timesheetId).toString().trim());
+            }else{
+                 timesheetid =0;
+            }
+
             //  int timesheetid=1;
             Call<List<BreakDetails>> listCall = ServiceGenerator.createService().getBreakDetails(timesheetid, empid);
 
@@ -617,29 +629,62 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             case R.id.btncheckin:
 
 
-                SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .editSplash()
-                        .addSplashCacheItem(EmsConstants.checkinTime,
-                                tvcurrenttime.getText().toString().trim()).commitSplash();
-                tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
-                layout_checkin.setVisibility(View.GONE);
-                layout_checkout.setVisibility(View.VISIBLE);
+
                 if (String.valueOf(lat).equals("0.0")){
-                    Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                    locationUtility = new LocationUtility(getActivity());
+                    LocationManager locManager1 = (LocationManager) getActivity()
+                            .getSystemService(Activity.LOCATION_SERVICE);
+                    shardedvalue="checkintrue";
+                    if (locManager1.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        // Do what you need if enabled...
+                        locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+                    }
+                    else if (locManager1.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        // Do what you need if enabled...
+                        locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+                    }
+
+
                 }else {
+                    SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .editSplash()
+                            .addSplashCacheItem(EmsConstants.checkinTime,
+                                    tvcurrenttime.getText().toString().trim()).commitSplash();
+                    tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
+                    layout_checkin.setVisibility(View.GONE);
+                    layout_checkout.setVisibility(View.VISIBLE);
                     checkIn(true);
                 }
 
                 break;
             case R.id.btncheckout:
 
-                layout_checkin.setVisibility(View.VISIBLE);
-                layout_checkout.setVisibility(View.GONE);
+
                 if (String.valueOf(lat).equals("0.0")){
-Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+//Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                    locationUtility = new LocationUtility(getActivity());
+                    LocationManager locManager2 = (LocationManager) getActivity()
+                            .getSystemService(Activity.LOCATION_SERVICE);
+                    shardedvalue="checkouttrue";
+                    if (locManager2.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        // Do what you need if enabled...
+                        locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+                    }
+                    else if (locManager2.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        // Do what you need if enabled...
+                        locationUtility.getLocation(CheckinCheckoutFragment.this, null);
+
+                    }
                 }else {
+                    layout_checkin.setVisibility(View.VISIBLE);
+                    layout_checkout.setVisibility(View.GONE);
                     checkIn(false);
+
                 }
                 break;
             case R.id.btncontinueshift:
@@ -784,6 +829,47 @@ Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENG
                 }
             }
         });
+    }
+    @Override
+    public void gotLocation(final Location currLocation, View view) {
+
+        this.loc = currLocation;
+        if (loc != null) {
+            lat = loc.getLatitude();
+            lng = loc.getLongitude();
+if (shardedvalue.equals("checkintrue"))
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+//stuff that updates ui
+                    SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .editSplash()
+                            .addSplashCacheItem(EmsConstants.checkinTime,
+                                    tvcurrenttime.getText().toString().trim()).commitSplash();
+                    tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
+                    layout_checkin.setVisibility(View.GONE);
+                    layout_checkout.setVisibility(View.VISIBLE);
+                    checkIn(true);
+                }
+            });
+        }else if (shardedvalue.equals("checkouttrue")){
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+//stuff that updates ui
+                    layout_checkin.setVisibility(View.VISIBLE);
+                    layout_checkout.setVisibility(View.GONE);
+                    checkIn(false);
+                }
+            });
+
+        }
+
     }
 }
 

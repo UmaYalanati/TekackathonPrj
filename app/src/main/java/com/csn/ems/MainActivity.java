@@ -60,6 +60,10 @@ import static com.csn.ems.R.id.nav_dashboard;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MenuItemSelectedCallback, NavigationDrawerCallback {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
 
     private static final String TAG = "MainActivity";
     EmployeeDetails employeeDetails = new EmployeeDetails();

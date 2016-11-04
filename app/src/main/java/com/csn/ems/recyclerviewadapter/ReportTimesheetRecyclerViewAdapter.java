@@ -176,19 +176,12 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
             }
 
 
-       /*     if (timesheetDetails.get(position).getCheckIn() != null && timesheetDetails.get(position).getCheckOut() != null) {
-                //   long secs = (dt.getTime() - dt.getTime()) / 1000;
-                //   int hours = secs / 3600;
-                final int MILLI_TO_HOUR = 1000 * 60 * 60;
-                int hours = (int) (dt.getTime() - dt_out.getTime()) / MILLI_TO_HOUR;
-                //  Period p = new Period(dt, dt_out);
+            if (timesheetDetails.get(position).getCalculatedLength() != null ) {
 
-                long diff = dt.getTime() - dt_out.getTime();
-                long diffHours = diff / (60 * 60 * 1000) % 24;
-                holder.tvtotalhrs.setText(String.valueOf(diffHours) + "hrs");
+                holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
 
                 // int hours = p.getHours();
-            }*/
+            }
 
 
 
