@@ -6,13 +6,13 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/csn/ems/emsconstants/SharedPreferenceUtils.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/csn/ems/recyclerviewadapter/BreaklistAdapter.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/csn/ems/utils/LocationUtility.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/rectangularbox_gray.xml" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/rectangularbox_theme_color.xml" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/rectangularbox_warranty.xml" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/roundedge_green.xml" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/empdetails.png" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/leave.png" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/leaveinformation.png" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/rectangularbox_gray.xml" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/rectangularbox_theme_color.xml" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/rectangularbox_warranty.xml" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/roundedge_green.xml" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/timecardapproval.png" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/timeicon.png" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/timesheet.png" charset="ISO-8859-1" />
