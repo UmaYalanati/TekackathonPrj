@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    <android.support.v7.widget.CardView
 
-        app:cardBackgroundColor="@color/white"
-        android:layout_marginTop="10dp"
+    <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
+        android:layout_marginTop="10dp"
         android:background="@color/transparent"
         android:foreground="?attr/selectableItemBackground"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
 
@@ -40,7 +41,6 @@
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:src="@drawable/male_profilepic"
                     android:id="@+id/imgprofilepic"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -48,9 +48,11 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="7dp"
+                    android:src="@drawable/male_profilepic"
                     android:tint="@color/transparent"
 
                     />
+
                 <TextView
                     android:id="@+id/tvemployeename"
                     android:layout_width="wrap_content"
@@ -64,26 +66,25 @@
                     android:textColor="@android:color/black"
                     android:textSize="15sp" />
 
-
                 <ImageView
-android:id="@+id/btnHomeScreenBuyArrow"
+                    android:id="@+id/btnHomeScreenBuyArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/greyarrow"
+                    android:src="@drawable/greyarrow"
                     android:visibility="visible" />
 
                 <TextView
-                    android:textColor="@color/gray"
                     android:id="@+id/tvcompanyname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/tvemployeename"
                     android:layout_alignStart="@+id/tvemployeename"
                     android:layout_below="@+id/tvemployeename"
-                    android:text="with CSN Software Labs" />
+                    android:text="with CSN Software Labs"
+                    android:textColor="@color/gray" />
 
             </RelativeLayout>
 
@@ -91,16 +92,15 @@ android:id="@+id/btnHomeScreenBuyArrow"
 
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/gray" />
+                android:background="@color/gray"
+                android:visibility="gone" />
 
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        app:cardBackgroundColor="@color/white"
-android:id="@+id/card_view_timeclcok"
+        android:id="@+id/card_view_timeclcok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -108,7 +108,8 @@ android:id="@+id/card_view_timeclcok"
         android:layout_marginRight="6dp"
         android:background="@color/transparent"
         android:foreground="?attr/selectableItemBackground"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
 
@@ -134,8 +135,8 @@ android:id="@+id/card_view_timeclcok"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="7dp"
                     android:tint="@color/transparent"
-                    app:srcCompat="@drawable/ic_time_clock_body"
-                    />
+                    app:srcCompat="@drawable/ic_time_clock_body" />
+
                 <TextView
                     android:id="@+id/tvcheckintime"
                     android:layout_width="wrap_content"
@@ -157,18 +158,18 @@ android:id="@+id/card_view_timeclcok"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/greyarrow"
+                    android:src="@drawable/greyarrow"
                     android:visibility="visible" />
 
                 <TextView
-                    android:textColor="@color/gray"
                     android:id="@+id/tvschedule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/tvcheckintime"
                     android:layout_alignStart="@+id/tvcheckintime"
                     android:layout_below="@+id/tvcheckintime"
-                    android:text="You are not clocked in" />
+                    android:text="You are not clocked in"
+                    android:textColor="@color/gray" />
 
             </RelativeLayout>
 
@@ -176,15 +177,14 @@ android:id="@+id/card_view_timeclcok"
 
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/gray" />
+                android:background="@color/gray"
+                android:visibility="gone" />
 
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        app:cardBackgroundColor="@color/white"
         android:id="@+id/card_view_orgcalendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -193,7 +193,8 @@ android:id="@+id/card_view_timeclcok"
         android:layout_marginRight="6dp"
         android:background="@color/transparent"
         android:foreground="?attr/selectableItemBackground"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:id="@+id/ll_completelayout"
@@ -211,10 +212,7 @@ android:id="@+id/card_view_timeclcok"
                 android:orientation="vertical">
 
 
-
-
                 <LinearLayout
-                    android:background="@drawable/rectangularbox"
                     android:id="@+id/img"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
@@ -222,43 +220,47 @@ android:id="@+id/card_view_timeclcok"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="7dp"
+                    android:background="@drawable/rectangularbox"
 
                     android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:background="@color/red"
                         android:layout_width="60dp"
-                        android:layout_height="20dp">
+                        android:layout_height="20dp"
+                        android:background="@color/red"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvmonth"
-                            android:textSize="12sp"
-                            android:gravity="center"
-                            android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:text="Oct"
-                            android:textColor="@color/white"/>
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
 
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:background="#ececec"
                         android:layout_width="60dp"
-                        android:layout_height="40dp">
+                        android:layout_height="40dp"
+                        android:background="#ececec"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvday"
-                            android:gravity="center"
-                            android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:text="17"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black" />
                     </LinearLayout>
 
                 </LinearLayout>
-
 
 
                 <TextView
@@ -282,18 +284,18 @@ android:id="@+id/card_view_timeclcok"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/greyarrow"
+                    android:src="@drawable/greyarrow"
                     android:visibility="visible" />
 
                 <TextView
-                    android:textColor="@color/gray"
                     android:id="@+id/tvnorofdays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/tvHome"
                     android:layout_alignStart="@+id/tvHome"
                     android:layout_below="@+id/tvHome"
-                    android:text="You have 0(days) shift" />
+                    android:text="You have 0(days) shift"
+                    android:textColor="@color/gray" />
 
             </RelativeLayout>
 
@@ -301,8 +303,8 @@ android:id="@+id/card_view_timeclcok"
                 android:id="@+id/viewHome"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/gray" />
+                android:background="@color/gray"
+                android:visibility="gone" />
 
 
         </LinearLayout>
