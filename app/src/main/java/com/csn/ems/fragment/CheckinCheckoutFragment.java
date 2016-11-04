@@ -66,7 +66,7 @@ import retrofit2.Response;
  * Created by uyalanat on 22-10-2016.
  */
 
-public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener ,LocationUtility.LocationResultCustom{
+public class CheckinCheckoutFragment extends Fragment implements View.OnClickListener, LocationUtility.LocationResultCustom {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -74,7 +74,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
-    static final int  MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION=2;
+    static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2;
     private LocationUtility locationUtility;
     private Location loc;
     // The minimum time between updates in milliseconds
@@ -93,13 +93,15 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     Button btncheckin, btncheckout, btncontinueshift;
     ImageButton imgbtnbreak;
     EditText edcomments;
-    LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak,ll_breaktime_second;
-    double lat=0.0, lng=0.0;
+    LinearLayout layout_checkout, layout_checkin, ll_breaktime, ll_startbreak, ll_breaktime_second;
+    double lat = 0.0, lng = 0.0;
     InsertClockIn insertClockIn = new InsertClockIn();
     InsertBreakIn insertBreakIn = new InsertBreakIn();
+    InsertBreakIn insertBreakOut = new InsertBreakIn();
     String formattedDate;
 
-    String shardedvalue="";
+    String shardedvalue = "";
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
@@ -132,8 +134,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             // Do what you need if enabled...
             locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
-        }
-        else if (locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        } else if (locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             // Do what you need if enabled...
             locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
@@ -170,15 +171,14 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
         Location location = null;
 
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
           /*  ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
                     LocationService.MY_PERMISSION_ACCESS_COURSE_LOCATION );*/
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
 
 
             locationUtility = new LocationUtility(getActivity());
@@ -189,8 +189,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 // Do what you need if enabled...
                 locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
-            }
-            else if (locManager1.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            } else if (locManager1.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 // Do what you need if enabled...
                 locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
@@ -201,7 +200,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             location = locationManager
                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } catch (SecurityException e) {
-           // buildAlertMessageNoGps();
+            // buildAlertMessageNoGps();
             Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
         }
 
@@ -265,7 +264,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                             EmsConstants.breakinTime) != null && !SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.breakinTime).toString().trim().isEmpty()){
+                            EmsConstants.breakinTime).toString().trim().isEmpty()) {
                 ll_startbreak.setVisibility(View.GONE);
                 ll_breaktime.setVisibility(View.VISIBLE);
             }
@@ -310,7 +309,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     }
 
     public void updateCheckOut() {
-        int timesheetid=Integer.parseInt(SharedPreferenceUtils
+        int timesheetid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.timesheetId).toString().trim());
@@ -335,12 +334,12 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.breakinid).toString().trim());
-        insertBreakIn.setTimeSheetId(timesheetid);
-        insertBreakIn.setBreakId(breakinid);
-        insertBreakIn.setComments(edcomments.getText().toString());
-        insertBreakIn.setBreakOutOutLattitude(lat);
-        insertBreakIn.setBreakOutLongitude(lng);
-        insertBreakIn.setBreakOut(tvcurrenttime.getText().toString().trim());
+        insertBreakOut.setTimeSheetId(timesheetid);
+        insertBreakOut.setBreakId(breakinid);
+        insertBreakOut.setComments(edcomments.getText().toString());
+        insertBreakOut.setBreakOutOutLattitude(lat);
+        insertBreakOut.setBreakOutLongitude(lng);
+        insertBreakOut.setBreakOut(tvcurrenttime.getText().toString().trim());
     }
 
     public void updateBreakin() {
@@ -439,7 +438,74 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
         }
     }
+    public void breakOut() {
+        {
 
+            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
+
+            EMSService service = ServiceGenerator.createService();
+            Call<InsertBreakIn> insertClockInCall;
+
+                updatebreakout();
+                insertClockInCall = service.updateBreakOut(insertBreakOut);
+
+            insertClockInCall.enqueue(new Callback<InsertBreakIn>() {
+                @Override
+                public void onResponse(Call<InsertBreakIn> call, Response<InsertBreakIn> response) {
+                    if (loading.isShowing()) {
+                        loading.dismiss();
+                    }
+
+                    if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                        try {
+                            String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                            Log.e(TAG, "onResponse: " + errorMessage);
+                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                        }
+                    } else if (response != null && response.isSuccessful()) {
+//DO SUCCESS HANDLING HERE
+
+                        InsertBreakIn emp = response.body();
+                        if (emp != null) {
+                            Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
+                            SharedPreferenceUtils
+                                    .getInstance(getActivity())
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.breakinid,
+                                            String.valueOf(emp.getBreakId())).commitSplash();
+                            edcomments.setText("");
+                        } else {
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("InsertClockIn Creation Failed!")
+                                    .setMessage("We are unable to save your InsertClockInin our database this time.\n\n" +
+                                            "Please try validating your parameters once or Try again later.")
+                                    .setPositiveButton(R.string.ok, null)
+                                    .show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<InsertBreakIn> call, Throwable t) {
+                    if (loading.isShowing()) {
+                        loading.dismiss();
+                    }
+                    Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
+                            "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                    if (t != null) {
+                        Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+                    } else {
+                    }
+                }
+            });
+            loading.setCancelable(false);
+            loading.setIndeterminate(true);
+            loading.show();
+
+        }
+    }
     public void breakIn(boolean breakin) {
         {
 
@@ -520,14 +586,14 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim());
-            int timesheetid=1;
-            if (!EmsConstants.timesheetId.trim().isEmpty()){
-                 timesheetid = Integer.parseInt(SharedPreferenceUtils
+            int timesheetid = 1;
+            if (!EmsConstants.timesheetId.trim().isEmpty()) {
+                timesheetid = Integer.parseInt(SharedPreferenceUtils
                         .getInstance(getActivity())
                         .getSplashCacheItem(
                                 EmsConstants.timesheetId).toString().trim());
-            }else{
-                 timesheetid =0;
+            } else {
+                timesheetid = 0;
             }
 
             //  int timesheetid=1;
@@ -575,8 +641,8 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     }
 
     void setBreakDetails(List<BreakDetails> breakDetails) {
-        if (breakDetails!=null&&breakDetails.size()>0) {
-          //  ll_breaktime_second.setVisibility(View.GONE);
+        if (breakDetails != null && breakDetails.size() > 0) {
+            //  ll_breaktime_second.setVisibility(View.GONE);
             BreaklistAdapter adapter = new BreaklistAdapter(getActivity(), breakDetails);
             listView_breakDetails.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -606,10 +672,10 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                         am_pm = "PM";
 
 
-                    String curTime="";
-                    if (String.valueOf(minute).length()<2){
-                        curTime = String.valueOf(hour) + ":" + "0"+String.valueOf(minute) + " " + am_pm;
-                    }else{
+                    String curTime = "";
+                    if (String.valueOf(minute).length() < 2) {
+                        curTime = String.valueOf(hour) + ":" + "0" + String.valueOf(minute) + " " + am_pm;
+                    } else {
                         curTime = String.valueOf(hour) + ":" + String.valueOf(minute) + " " + am_pm;
                     }
 
@@ -629,26 +695,24 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             case R.id.btncheckin:
 
 
-
-                if (String.valueOf(lat).equals("0.0")){
-                   // Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
+                if (String.valueOf(lat).equals("0.0")) {
+                    // Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
                     locationUtility = new LocationUtility(getActivity());
                     LocationManager locManager1 = (LocationManager) getActivity()
                             .getSystemService(Activity.LOCATION_SERVICE);
-                    shardedvalue="checkintrue";
+                    shardedvalue = "checkintrue";
                     if (locManager1.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         // Do what you need if enabled...
                         locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
-                    }
-                    else if (locManager1.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    } else if (locManager1.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                         // Do what you need if enabled...
                         locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
                     }
 
 
-                }else {
+                } else {
                     SharedPreferenceUtils
                             .getInstance(getActivity())
                             .editSplash()
@@ -664,23 +728,22 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             case R.id.btncheckout:
 
 
-                if (String.valueOf(lat).equals("0.0")){
+                if (String.valueOf(lat).equals("0.0")) {
 //Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
                     locationUtility = new LocationUtility(getActivity());
                     LocationManager locManager2 = (LocationManager) getActivity()
                             .getSystemService(Activity.LOCATION_SERVICE);
-                    shardedvalue="checkouttrue";
+                    shardedvalue = "checkouttrue";
                     if (locManager2.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         // Do what you need if enabled...
                         locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
-                    }
-                    else if (locManager2.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    } else if (locManager2.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                         // Do what you need if enabled...
                         locationUtility.getLocation(CheckinCheckoutFragment.this, null);
 
                     }
-                }else {
+                } else {
                     layout_checkin.setVisibility(View.VISIBLE);
                     layout_checkout.setVisibility(View.GONE);
                     checkIn(false);
@@ -690,10 +753,11 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             case R.id.btncontinueshift:
                 ll_startbreak.setVisibility(View.VISIBLE);
                 ll_breaktime.setVisibility(View.GONE);
-                if (String.valueOf(lat).equals("0.0")){
-                    Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
-                }else {
-                    breakIn(false);
+                if (String.valueOf(lat).equals("0.0")) {
+                    Toast.makeText(getActivity(), "Please Enable GPS get Current Location", Toast.LENGTH_SHORT).show();
+                } else {
+                   // breakIn(false);
+                    breakOut();
                 }
                 SharedPreferenceUtils
                         .getInstance(getActivity())
@@ -715,9 +779,9 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
                 break;
             case R.id.imgbtnbreak:
-                if (String.valueOf(lat).equals("0.0")){
-                    Toast.makeText(getActivity(),"Please Enable GPS get Current Location",Toast.LENGTH_SHORT).show();
-                }else {
+                if (String.valueOf(lat).equals("0.0")) {
+                    Toast.makeText(getActivity(), "Please Enable GPS get Current Location", Toast.LENGTH_SHORT).show();
+                } else {
                     breakIn(true);
                 }
                 SharedPreferenceUtils
@@ -766,6 +830,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         final AlertDialog alert = builder.create();
         alert.show();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -775,7 +840,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission was granted, yay! Do the task you need to do.
-                 //   displayLocationSettingsRequest(getActivity(),requestCode);
+                    //   displayLocationSettingsRequest(getActivity(),requestCode);
                 } else {
 
                     // permission denied, boo! Disable the functionality that depends on this permission.
@@ -830,6 +895,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             }
         });
     }
+
     @Override
     public void gotLocation(final Location currLocation, View view) {
 
@@ -837,25 +903,25 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         if (loc != null) {
             lat = loc.getLatitude();
             lng = loc.getLongitude();
-if (shardedvalue.equals("checkintrue"))
+            if (shardedvalue.equals("checkintrue"))
 
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
 //stuff that updates ui
-                    SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .editSplash()
-                            .addSplashCacheItem(EmsConstants.checkinTime,
-                                    tvcurrenttime.getText().toString().trim()).commitSplash();
-                    tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
-                    layout_checkin.setVisibility(View.GONE);
-                    layout_checkout.setVisibility(View.VISIBLE);
-                    checkIn(true);
-                }
-            });
-        }else if (shardedvalue.equals("checkouttrue")){
+                        SharedPreferenceUtils
+                                .getInstance(getActivity())
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.checkinTime,
+                                        tvcurrenttime.getText().toString().trim()).commitSplash();
+                        tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
+                        layout_checkin.setVisibility(View.GONE);
+                        layout_checkout.setVisibility(View.VISIBLE);
+                        checkIn(true);
+                    }
+                });
+        } else if (shardedvalue.equals("checkouttrue")) {
 
             getActivity().runOnUiThread(new Runnable() {
                 @Override
