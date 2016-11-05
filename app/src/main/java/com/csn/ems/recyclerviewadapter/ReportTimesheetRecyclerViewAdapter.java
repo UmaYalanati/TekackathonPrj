@@ -1,6 +1,5 @@
 package com.csn.ems.recyclerviewadapter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,26 +21,10 @@ import com.csn.ems.activity.GoogleMaps;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.TimeSheetDetails;
-import com.csn.ems.services.EMSService;
-import com.csn.ems.services.ServiceGenerator;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.csn.ems.R.id.imageButton;
-import static com.csn.ems.R.id.imageButton2;
-import static com.csn.ems.emsconstants.EmsConstants.latitude;
-import static com.csn.ems.emsconstants.EmsConstants.longitude;
+import static com.csn.ems.R.id.tvapprovalstatus;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -56,7 +38,7 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
     View view1;
     ReportTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
     public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
-    ImageView tvapprovalstatus;
+ //   ImageView tvapprovalstatus;
     List<TimeSheetDetails> timesheetDetails;
 
     public ReportTimesheetRecyclerViewAdapter(Context context1, List<TimeSheetDetails> timesheetDetails) {
@@ -70,7 +52,8 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
 
         public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
         public ImageView tvapprovalstatus;
-     public   ImageView imageButton,imageButton2;
+        public ImageView imageButton, imageButton2;
+
         public ViewHolder(View v) {
 
             super(v);
@@ -80,8 +63,8 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
             tvcheckouttime = (TextView) v.findViewById(R.id.tvcheckouttime);
             tvtotalhrs = (TextView) v.findViewById(R.id.tvtotalhrs);
             //      tvapprovalstatus.setVisibility(View.GONE);
-            imageButton= (ImageView) v.findViewById(R.id.imageButton);
-            imageButton2= (ImageView) v.findViewById(R.id.imageButton2);
+            imageButton = (ImageView) v.findViewById(R.id.imageButton);
+            imageButton2 = (ImageView) v.findViewById(R.id.imageButton2);
 
             v.setOnClickListener(new View.OnClickListener() {
 
@@ -113,24 +96,18 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
     }
 
     @Override
-    public void onBindViewHolder(ReportTimesheetRecyclerViewAdapter.ViewHolder holder,final int position) {
+    public void onBindViewHolder(ReportTimesheetRecyclerViewAdapter.ViewHolder holder, final int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
-/*if (timesheetDetails.get(position).getStatus()!=null) {
-    if (timesheetDetails.get(position).getStatus().equals("Approved"))
-        tvapprovalstatus.setBackgroundResource(R.drawable.bluedot);
-    else {
-        tvapprovalstatus.setBackgroundResource(R.drawable.reddot);
-    }
-}*/
+
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")){
-                    Toast.makeText(context,"Location not Available",Toast.LENGTH_SHORT).show();
-                }else {
-                    EmsConstants.latitude=timesheetDetails.get(position).getCheckInLattitude();
-                    EmsConstants.longitude=  timesheetDetails.get(position).getCheckInLongitude();
+                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
+                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
+                } else {
+                    EmsConstants.latitude = timesheetDetails.get(position).getCheckInLattitude();
+                    EmsConstants.longitude = timesheetDetails.get(position).getCheckInLongitude();
                     Intent i = new Intent(context, GoogleMaps.class);
                     context.startActivity(i);
                 }
@@ -139,51 +116,46 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
         holder.imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")){
-                    Toast.makeText(context,"Location not Available",Toast.LENGTH_SHORT).show();
-                }else {
-                    EmsConstants.latitude=timesheetDetails.get(position).getCheckOutLattitude();
-                    EmsConstants.longitude=  timesheetDetails.get(position).getCheckOutLongitude();
+                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
+                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
+                } else {
+                    EmsConstants.latitude = timesheetDetails.get(position).getCheckOutLattitude();
+                    EmsConstants.longitude = timesheetDetails.get(position).getCheckOutLongitude();
                     Intent i = new Intent(context, GoogleMaps.class);
                     context.startActivity(i);
                 }
             }
         });
 
-        String intime = "";
-
-        String ottime = "";
-
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-        SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
-        Date dt = null;
-        Date dt_out = null;
-     //
-
-
-            if (timesheetDetails.get(position).getCheckIn() != null) {
-              //  dt = sdf.parse(timesheetDetails.get(position).getCheckIn());
-               // System.out.println("Time Display: " + sdfs.format(dt)); // <-- I got result here
-               // intime = sdfs.format(dt);
-                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
-
+       if (timesheetDetails.get(position).getStatus() != null) {
+            if (timesheetDetails.get(position).getStatus().equals("Approved")) {
+               // tvapprovalstatus.setBackgroundResource(R.drawable.approvedicon);
+                //setting image resource
+                holder.tvapprovalstatus.setImageResource(R.drawable.approvedicon);
+            } else if (timesheetDetails.get(position).getStatus().equals("Pending")) {
+              //  tvapprovalstatus.setBackgroundResource(R.drawable.bluedot);
+                holder.tvapprovalstatus.setImageResource(R.drawable.bluedot);
+            } else {
+               // tvapprovalstatus.setBackgroundResource(R.drawable.reddot);
+                holder.tvapprovalstatus.setImageResource(R.drawable.reddot);
             }
-            if (timesheetDetails.get(position).getCheckOut() != null) {
+        }
 
-             //   dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
-               // ottime = sdfs.format(dt_out);
-                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
-            }
+        if (timesheetDetails.get(position).getCheckIn() != null) {
+            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
 
+        }
+        if (timesheetDetails.get(position).getCheckOut() != null) {
 
-            if (timesheetDetails.get(position).getCalculatedLength() != null ) {
-
-                holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
-
-                // int hours = p.getHours();
-            }
+            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+        }
 
 
+        if (timesheetDetails.get(position).getCalculatedLength() != null) {
+
+            holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
+
+        }
 
 
     }
@@ -197,25 +169,24 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
     public void Alertview(final int timesheetid, final int EmployeeId, final String WorkingDate, final String CheckIn, final String CheckOut, final double CheckInLattitude, final double checkInLongitude, final double checkOutLattitude, final double checkOutLongitude, final String AssignedTo, final String ApprovalType, final String Note, final String status) {
         {
 
-            String approvalval="FullDay";
+            String approvalval = "FullDay";
             //  View dialogView = context.inflater.inflate(R.layout.custom_approveleave, null);
             SharedPreferenceUtils
                     .getInstance(context)
                     .editSplash()
                     .addSplashCacheItem(EmsConstants.approvalval,
                             approvalval).commitSplash();
-            final    View dialogView = LayoutInflater.from(context).inflate(
+            final View dialogView = LayoutInflater.from(context).inflate(
                     R.layout.custom_approveleave, null);
 
             final TextInputEditText allocationDateTextField = (TextInputEditText) dialogView.findViewById(R.id.ed_comments);
             //  final RadioGroup active_inactiveRadioButtonGroup = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
             final RadioGroup rg = (RadioGroup) dialogView.findViewById(R.id.radioGroup1);
-            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-            {
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    switch(checkedId){
+                    switch (checkedId) {
                         case R.id.radioButton1:
-                            String radiovalue = ((RadioButton)dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                            String radiovalue = ((RadioButton) dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                             // approvalval=radiovalue;
                             SharedPreferenceUtils
                                     .getInstance(context)
@@ -225,7 +196,7 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
                             break;
 
                         case R.id.radioButton2:
-                            String radiovalue1 = ((RadioButton)dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                            String radiovalue1 = ((RadioButton) dialogView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                             // approvalval=radiovalue;
                             SharedPreferenceUtils
                                     .getInstance(context)
@@ -233,7 +204,6 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
                                     .addSplashCacheItem(EmsConstants.approvalval,
                                             radiovalue1).commitSplash();
                             break;
-
 
 
                     }
@@ -314,7 +284,7 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
         timeSheetDetails.setApprovalType(ApprovalType);
         timeSheetDetails.setNote(Note);
         timeSheetDetails.setStatus(status);
-      //  uploadDetails();
+        //  uploadDetails();
 
     }
 

@@ -187,7 +187,12 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                     try {
                         String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
                         Log.e(TAG, "onResponse: " + errorMessage);
-                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        if (response.code()==400){
+                            Toast.makeText(getContext(), "You have already created Leave for this Day", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+
                     } catch (IOException e) {
                         Log.e(TAG, "onResponse: IOException while parsing response error", e);
                     }

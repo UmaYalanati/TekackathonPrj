@@ -273,26 +273,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         return view;
     }
 
-  /*  @Override
-    public void onLocationChanged(Location location) {
-        lat = location.getLatitude();
-        lng = location.getLongitude();
-    }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-        Log.d("Latitude", "disable");
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Log.d("Latitude", "enable");
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("Latitude", "status");
-    }*/
 
 
     public void updateCheckin() {
@@ -758,24 +739,27 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 } else {
                    // breakIn(false);
                     breakOut();
+
+                    if (SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.timesheetId) != null && !SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .getSplashCacheItem(
+                                    EmsConstants.timesheetId).toString().trim().isEmpty()) {
+                        getbreaktimes();
+                        ll_breaktime_second.setVisibility(View.VISIBLE);
+                        layout_checkin.setVisibility(View.GONE);
+                        layout_checkout.setVisibility(View.VISIBLE);
+                    }
+                    SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .editSplash()
+                            .addSplashCacheItem(EmsConstants.breakinTime,
+                                    "").commitSplash();
+
                 }
-                SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .editSplash()
-                        .addSplashCacheItem(EmsConstants.breakinTime,
-                                "").commitSplash();
-                if (SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .getSplashCacheItem(
-                                EmsConstants.timesheetId) != null && !SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .getSplashCacheItem(
-                                EmsConstants.timesheetId).toString().trim().isEmpty()) {
-                    getbreaktimes();
-                    ll_breaktime_second.setVisibility(View.VISIBLE);
-                    layout_checkin.setVisibility(View.GONE);
-                    layout_checkout.setVisibility(View.VISIBLE);
-                }
+
 
                 break;
             case R.id.imgbtnbreak:
@@ -902,7 +886,10 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
         this.loc = currLocation;
         if (loc != null) {
             lat = loc.getLatitude();
-            lng = loc.getLongitude();
+           lng = loc.getLongitude();
+
+           // lat=17.2509136;
+           // lng = 80.1401463;
             if (shardedvalue.equals("checkintrue"))
 
                 getActivity().runOnUiThread(new Runnable() {

@@ -27,9 +27,6 @@ import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,12 +45,12 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     View view1;
     String radiovalue;
     String approvalType = "";
-    String note = "";
+
     ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
     public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
     ImageView tvapprovalstatus;
     List<TimeSheetDetails> timesheetDetails;
-
+String note="";
     public ApprovedTimesheetRecyclerViewAdapter(Context context1, List<TimeSheetDetails> timesheetDetails) {
 
         this.timesheetDetails = timesheetDetails;
@@ -150,26 +147,25 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
         });
 
 
-            if (timesheetDetails.get(position).getCheckIn() != null) {
+        if (timesheetDetails.get(position).getCheckIn() != null) {
 
-                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
+            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
 
-            }
-            if (timesheetDetails.get(position).getCheckOut() != null) {
+        }
+        if (timesheetDetails.get(position).getCheckOut() != null) {
 
               /*  dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
                 ottime = sdfs.format(dt_out);*/
-                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
-            }
+            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+        }
 
 
-            if (timesheetDetails.get(position).getCalculatedLength() != null) {
+        if (timesheetDetails.get(position).getCalculatedLength() != null) {
 
-                holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
+            holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
 
-                // int hours = p.getHours();
-            }
-
+            // int hours = p.getHours();
+        }
 
 
     }
@@ -196,6 +192,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
             final TextInputEditText allocationDateTextField = (TextInputEditText) dialogView.findViewById(R.id.ed_comments);
             note = allocationDateTextField.getText().toString().trim();
             final RadioGroup rg = (RadioGroup) dialogView.findViewById(R.id.radioGroup1);
+            note=allocationDateTextField.getText().toString().trim();
             rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
@@ -241,11 +238,14 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                     .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, SharedPreferenceUtils
+                        /*    updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, SharedPreferenceUtils
                                     .getInstance(context)
                                     .getSplashCacheItem(
-                                            EmsConstants.approvalval).toString().trim(), Note, radiovalue);
+                                            EmsConstants.approvalval).toString().trim(), Note, radiovalue);*/
                             //Log.i(TAG, "onClick: Clearing " + operation + " Allocation Details");
+                   if (allocationDialog!=null){
+                       allocationDialog.dismiss();
+                   }
                         }
                     })
                     .setNegativeButton("Reject", null)
@@ -302,7 +302,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim()));
         timeSheetDetails1.setApprovalType(radiovalue);
-        timeSheetDetails1.setNote(Note);
+        timeSheetDetails1.setNote(note);
         timeSheetDetails1.setStatus(approvalType);
         uploadDetails();
 
@@ -331,12 +331,12 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                     }
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
-notifyDataSetChanged();
+                    notifyDataSetChanged();
                     TimeSheetDetailsApprove emp = response.body();
                     if (emp != null) {
                         // Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         new AlertDialog.Builder(context)
-                                .setTitle("Approved Successfully!")
+                                .setTitle("Successfully Done!")
                                 .setMessage("")
                                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override

@@ -29,7 +29,7 @@ public class InsertBreakIn {
     @JsonProperty("BreakInLongitude")
     private double breakInLongitude;
 
-    @JsonProperty("BreakOutOutLattitude")
+    @JsonProperty("BreakOutLattitude")
     private double breakOutOutLattitude;
 
     @JsonProperty("BreakOutLongitude")
