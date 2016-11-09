@@ -30,7 +30,7 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
     Context context;
     View view1;
     ViewHolder viewHolder1;
-    TextView textView, tvapprovalstatus;
+    TextView textView;
     List<TimeSheetDetails> timesheetDetails;
 
     public TimesheetRecyclerViewAdapter(Context context1, List<TimeSheetDetails> timesheetDetails) {
@@ -55,7 +55,7 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
             tvcheckouttime = (TextView) v.findViewById(R.id.tvcheckouttime);
             imageButton = (ImageView) v.findViewById(R.id.imageButton);
             imageButton2 = (ImageView) v.findViewById(R.id.imageButton2);
-            tvapprovalstatus.setVisibility(View.GONE);
+            //tvapprovalstatus.setVisibility(View.GONE);
         }
     }
 
@@ -73,7 +73,19 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
-
+        if (timesheetDetails.get(position).getStatus() != null) {
+            if (timesheetDetails.get(position).getStatus().equals("Approved")) {
+                // tvapprovalstatus.setBackgroundResource(R.drawable.approvedicon);
+                //setting image resource
+                holder.tvapprovalstatus.setImageResource(R.drawable.approvedicon);
+            } else if (timesheetDetails.get(position).getStatus().equals("Pending")) {
+                //  tvapprovalstatus.setBackgroundResource(R.drawable.bluedot);
+                holder.tvapprovalstatus.setImageResource(R.drawable.bluedot);
+            } else {
+                // tvapprovalstatus.setBackgroundResource(R.drawable.reddot);
+                holder.tvapprovalstatus.setImageResource(R.drawable.reddot);
+            }
+        }
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -46,7 +46,10 @@ public class LeaveTypeAdapter extends BaseAdapter {
     @Override
     public int getCount()
     {
+        if (leaveTypes.size()>0)
         return	leaveTypes.size();
+        else
+            return 0;
     }
 
     @Override

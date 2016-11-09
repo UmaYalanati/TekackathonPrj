@@ -79,7 +79,7 @@ TextView tvapprovalstatus;
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         recylerViewLayoutManager = new LinearLayoutManager(context);
         tvapprovalstatus= (TextView) view.findViewById(R.id.tvapprovalstatus);
-        tvapprovalstatus.setVisibility(View.GONE);
+       // tvapprovalstatus.setVisibility(View.GONE);
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
      //   recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
@@ -92,8 +92,10 @@ TextView tvapprovalstatus;
 
        // spinner_listofsheet.setAdapter(arrayAdapter);
        // LeaveStatus
-        LeaveTypeAdapter adapter=new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveStatus());
-        spinner_listofsheet.setAdapter(adapter);
+        if (EMSApplication.inTakeMasterDetails.getLeaveStatus()!=null&&EMSApplication.inTakeMasterDetails.getLeaveStatus().size()>0) {
+            LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveStatus());
+            spinner_listofsheet.setAdapter(adapter);
+        }
         /////Uma
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);

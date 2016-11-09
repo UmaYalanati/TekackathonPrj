@@ -33,6 +33,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.csn.ems.R.id.tvapprovalstatus;
+
 /**
  * Created by uyalanat on 24-10-2016.
  */
@@ -48,7 +50,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
 
     ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
     public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
-    ImageView tvapprovalstatus;
+
     List<TimeSheetDetails> timesheetDetails;
 String note="";
     public ApprovedTimesheetRecyclerViewAdapter(Context context1, List<TimeSheetDetails> timesheetDetails) {
@@ -61,9 +63,9 @@ String note="";
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
-        public ImageView tvapprovalstatus;
-        ImageView imageButton, imageButton2;
 
+        ImageView imageButton, imageButton2;
+        ImageView tvapprovalstatus;
         public ViewHolder(View v) {
 
             super(v);
@@ -112,13 +114,19 @@ String note="";
     public void onBindViewHolder(ApprovedTimesheetRecyclerViewAdapter.ViewHolder holder, final int position) {
 
         holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
-/*if (timesheetDetails.get(position).getStatus()!=null) {
-    if (timesheetDetails.get(position).getStatus().equals("Approved"))
-        tvapprovalstatus.setBackgroundResource(R.drawable.bluedot);
-    else {
-        tvapprovalstatus.setBackgroundResource(R.drawable.reddot);
-    }
-}*/
+        if (timesheetDetails.get(position).getStatus() != null) {
+            if (timesheetDetails.get(position).getStatus().equals("Approved")) {
+                // tvapprovalstatus.setBackgroundResource(R.drawable.approvedicon);
+                //setting image resource
+                holder.tvapprovalstatus.setImageResource(R.drawable.approvedicon);
+            } else if (timesheetDetails.get(position).getStatus().equals("Pending")) {
+                //  tvapprovalstatus.setBackgroundResource(R.drawable.bluedot);
+                holder.tvapprovalstatus.setImageResource(R.drawable.bluedot);
+            } else {
+                // tvapprovalstatus.setBackgroundResource(R.drawable.reddot);
+                holder.tvapprovalstatus.setImageResource(R.drawable.reddot);
+            }
+        }
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -301,7 +309,12 @@ String note="";
                 .getInstance(context)
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim()));
-        timeSheetDetails1.setApprovalType(radiovalue);
+        if (approvalType.equals("Rejected")){
+            timeSheetDetails1.setApprovalType("LOP");
+        }else {
+            timeSheetDetails1.setApprovalType(radiovalue);
+        }
+
         timeSheetDetails1.setNote(note);
         timeSheetDetails1.setStatus(approvalType);
         uploadDetails();

@@ -8,7 +8,6 @@
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
     app:cardBackgroundColor="@color/white"
-
     android:foreground="?attr/selectableItemBackground"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
