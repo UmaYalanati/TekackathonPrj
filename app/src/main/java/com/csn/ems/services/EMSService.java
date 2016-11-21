@@ -45,7 +45,7 @@ public interface EMSService {
     @GET("Login/GetLogin")
     Call<Login> getLogin(@Query("UserName") String userName,@Query("Password") String password);
 
-    @POST("Login/ChangePassword")
+    @PUT("Login/ChangePassword")
     Call<ChangePassword> changePassword(@Body ChangePassword changePassword);
 
     @GET("TimeSheet/GetTimeSheetDetails")

@@ -26,13 +26,16 @@ import android.widget.Toast;
 
 import com.csn.ems.EMSApplication;
 import com.csn.ems.R;
+import com.csn.ems.callback.OnCustomEventListener;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
-import com.csn.ems.model.LeaveStatus;
+import com.csn.ems.model.Login;
 import com.csn.ems.model.TimeSheetDetails;
+import com.csn.ems.recyclerviewadapter.ChildEmployeesAdapter;
 import com.csn.ems.recyclerviewadapter.LeaveTypeAdapter;
 import com.csn.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
 import com.csn.ems.services.ServiceGenerator;
+import com.csn.ems.sharedpreference.LoginComplexPreferences;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -45,17 +48,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.id.spinner_leavetype;
+import static com.csn.ems.EMSApplication.inTakeMasterDetails;
 
 
 /**
  * Created by uyalanat on 22-10-2016.
  */
 
-public class TimeSheetFragment extends Fragment implements View.OnClickListener {
+public class TimeSheetFragment extends Fragment implements View.OnClickListener,OnCustomEventListener {
     public static TimeSheetFragment newInstance() {
         return new TimeSheetFragment();
     }
+    //OnCustomEventListener onCustomEventListener;
+
 String TAG="TimeSheetFragment";
     Button btnstarttime, btnendtime;
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
@@ -64,8 +69,8 @@ String TAG="TimeSheetFragment";
     RelativeLayout relativeLayout;
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-    AppCompatSpinner spinner_listofsheet;
-int selectedItemposition=0;
+    AppCompatSpinner spinner_listofsheet,spinner_listofemployees;
+int selectedItemposition=0,selectedEmployeeposition=0;
 TextView tvapprovalstatus;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,16 +91,25 @@ TextView tvapprovalstatus;
 
         recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
+        spinner_listofemployees = (AppCompatSpinner) view.findViewById(R.id.spinner_listofemployees);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
 
        // spinner_listofsheet.setAdapter(arrayAdapter);
        // LeaveStatus
-        if (EMSApplication.inTakeMasterDetails.getLeaveStatus()!=null&&EMSApplication.inTakeMasterDetails.getLeaveStatus().size()>0) {
-            LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveStatus());
+        if (inTakeMasterDetails.getLeaveStatus()!=null&& inTakeMasterDetails.getLeaveStatus().size()>0) {
+            LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), inTakeMasterDetails.getLeaveStatus());
             spinner_listofsheet.setAdapter(adapter);
         }
+        LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
+       final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
+         ;
+        if (currentUser.getChildEmployees()!=null&& currentUser.getChildEmployees().size()>0) {
+            ChildEmployeesAdapter childEmployeesAdapter = new ChildEmployeesAdapter(getActivity(), currentUser.getChildEmployees());
+            spinner_listofemployees.setAdapter(childEmployeesAdapter);
+        }
+
         /////Uma
         btnstarttime.setOnClickListener(this);
         btnendtime.setOnClickListener(this);
@@ -114,7 +128,20 @@ TextView tvapprovalstatus;
         btnstarttime.setText(fromDate);
 
       //  spinner_listofsheet.setoni
+        spinner_listofemployees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                // String selectedItem = parent.getItemAtPosition(position).toString();
+                selectedEmployeeposition=position;
+                getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
 
+            } // to close the onItemSelected
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
         spinner_listofsheet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -124,7 +151,7 @@ TextView tvapprovalstatus;
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
                             .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(position).getName());
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
 
             } // to close the onItemSelected
             public void onNothingSelected(AdapterView<?> parent)
@@ -135,7 +162,7 @@ TextView tvapprovalstatus;
         getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
 
 
 
@@ -151,10 +178,10 @@ TextView tvapprovalstatus;
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
 
 
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                 /*   getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
                             .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());*/
 
 
                 break;
@@ -247,6 +274,17 @@ TextView tvapprovalstatus;
         //  }
 
     }
+
+    @Override
+    public void onEvent(String buttenview) {
+        if (buttenview!=null) {
+            getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+        }
+        }
+
     @SuppressLint("ValidFragment")
     public class DatePickerFragment2 extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
@@ -356,9 +394,15 @@ TextView tvapprovalstatus;
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                            EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
 
         }
     }
+  /*  onCustomEventListener.setCustomEventListener(new OnCustomEventListener(){
+        public void onEvent(){
+            //do whatever you want to do when the event is performed.
+
+        }
+    });*/
 
 }

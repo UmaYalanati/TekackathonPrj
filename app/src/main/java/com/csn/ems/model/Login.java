@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-import static com.csn.ems.emsconstants.EmsConstants.childEmployeeId;
-
 /**
  * Created by uyalanat on 26-10-2016.
  */
@@ -40,6 +38,17 @@ public class Login {
     @JsonProperty("ChildRoleName")
     private String childRoleName;
 
+    @JsonProperty("ChildEmployees")
+    private List<ChildEmployees> childEmployees;
+
+    public List<ChildEmployees> getChildEmployees() {
+        return childEmployees;
+    }
+
+    public void setChildEmployees(List<ChildEmployees> childEmployees) {
+        this.childEmployees = childEmployees;
+    }
+
     @Override
     public String toString() {
         return "Login{" +
@@ -52,6 +61,7 @@ public class Login {
                 ", childEmployeeId=" + childEmployeeId +
                 ", roleName='" + roleName + '\'' +
                 ", childRoleName='" + childRoleName + '\'' +
+                ", childEmployees=" + childEmployees +
                 ", userRolePermission=" + userRolePermission +
                 ", emailId='" + emailId + '\'' +
                 ", photoPath='" + photoPath + '\'' +

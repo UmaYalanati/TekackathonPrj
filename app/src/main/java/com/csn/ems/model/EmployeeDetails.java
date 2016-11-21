@@ -94,15 +94,6 @@ public class EmployeeDetails {
     @JsonProperty("Photo")
     private String photo;
 
-    @JsonProperty("EmployeeLocation")
-    private List<EmployeeLocation> employeeLocation;
-
-    @JsonProperty("CreatedDate")
-    private String createdDate;
-
-    @JsonProperty("CreatedBy")
-    private int createdBy;
-
     @Override
     public String toString() {
         return "EmployeeDetails{" +
@@ -112,7 +103,7 @@ public class EmployeeDetails {
                 ", employeeName='" + employeeName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +
-                ", Gender='" + gender + '\'' +
+                ", gender='" + gender + '\'' +
                 ", dOB='" + dOB + '\'' +
                 ", address1='" + address1 + '\'' +
                 ", address2='" + address2 + '\'' +
@@ -137,11 +128,40 @@ public class EmployeeDetails {
                 ", createdDate='" + createdDate + '\'' +
                 ", createdBy=" + createdBy +
                 ", modifiedDate='" + modifiedDate + '\'' +
-                ", MmdifiedBy=" + MmdifiedBy +
+                ", modifiedBy=" + modifiedBy +
+                ", locationIds='" + locationIds + '\'' +
                 ", photoPath='" + photoPath + '\'' +
                 ", byteArrayPhoto=" + Arrays.toString(byteArrayPhoto) +
                 '}';
     }
+
+    @JsonProperty("EmployeeLocation")
+    private List<EmployeeLocation> employeeLocation;
+
+    @JsonProperty("CreatedDate")
+    private String createdDate;
+
+    @JsonProperty("CreatedBy")
+    private int createdBy;
+
+    @JsonProperty("ModifiedDate")
+
+    private String modifiedDate;
+
+    public String getLocationIds() {
+        return locationIds;
+    }
+
+    public void setLocationIds(String locationIds) {
+        this.locationIds = locationIds;
+    }
+
+    @JsonProperty("ModifiedBy")
+
+    private int modifiedBy;
+
+@JsonProperty("LocationIds")
+    private String locationIds;
 
     public String getCreatedDate() {
         return createdDate;
@@ -167,20 +187,15 @@ public class EmployeeDetails {
         this.modifiedDate = modifiedDate;
     }
 
-    public int getMmdifiedBy() {
-        return MmdifiedBy;
+    public int getModifiedBy() {
+        return modifiedBy;
     }
 
-    public void setMmdifiedBy(int mmdifiedBy) {
-        MmdifiedBy = mmdifiedBy;
+    public void setModifiedBy(int modifiedBy) {
+        modifiedBy = modifiedBy;
     }
 
-    @JsonProperty("ModifiedDate")
 
-    private String modifiedDate;
-
-    @JsonProperty("ModifiedBy")
-    private int MmdifiedBy;
 
 
     public List<EmployeeLocation> getEmployeeLocation() {

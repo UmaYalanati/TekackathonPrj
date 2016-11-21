@@ -8,9 +8,9 @@
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
 
-    app:cardBackgroundColor="@color/white"
     android:foreground="?attr/selectableItemBackground"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,12 +21,12 @@
 
         <CheckBox
             android:id="@+id/checkbox"
-            android:button="@drawable/abc_btn_check_material"
-            android:buttonTint="@color/colorAccent"
-            android:layout_marginTop="4dp"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:button="@drawable/abc_btn_check_material"
+            android:buttonTint="@color/colorAccent" />
 
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:text="October"
+            android:text="November"
             android:textColor="@color/blakkish_textcolor" />
 
         <TextView
@@ -80,6 +80,7 @@
             android:textColor="@color/blakkish_textcolor"
 
             />
+
         <TextView
             android:id="@+id/tvtgs"
             android:layout_width="0dp"
@@ -90,6 +91,7 @@
             android:textColor="@color/blakkish_textcolor"
 
             />
+
         <TextView
             android:id="@+id/tvtds"
             android:layout_width="0dp"
@@ -100,6 +102,7 @@
             android:textColor="@color/blakkish_textcolor"
 
             />
+
         <TextView
             android:id="@+id/tvtna"
             android:layout_width="0dp"

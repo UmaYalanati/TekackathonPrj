@@ -209,6 +209,11 @@ public class EditEmployeeDetailsFragment extends Fragment {
 
     public void updateemployeedetails() {
         // ed_Name,ed_NickName,ed_email,ed_username,ed_mobilenor,ed_homenor,ed_address,ed_city,ed_state,ed_zipcode
+        int empid=Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+        employeeDetails.setModifiedBy(empid);
         employeeDetails.setEmployeeName(ed_Name.getText().toString().trim());
         employeeDetails.setEmailId(ed_email.getText().toString().trim());
         employeeDetails.setContactNumber(ed_mobilenor.getText().toString().trim());

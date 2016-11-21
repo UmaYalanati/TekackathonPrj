@@ -15,6 +15,7 @@ public class EmsConstants {
     public static String checkinTime="checkinTime";
     public static String breakinTime="breakinTime";
     public static int empId;
+    public static boolean isfromemployeedetails=false;
     public static String breakinid="breakinid";
    public static String employeename="employeename";
     public static String rolename="rolename";

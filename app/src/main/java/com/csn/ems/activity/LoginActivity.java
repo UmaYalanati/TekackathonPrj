@@ -20,6 +20,7 @@ import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.Login;
 import com.csn.ems.services.EMSService;
 import com.csn.ems.services.ServiceGenerator;
+import com.csn.ems.sharedpreference.LoginComplexPreferences;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputEditText userIdEditText;
     private TextInputEditText passwordEditText;
 
+    public static Login logindetails = new Login();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_clear:
+                userIdEditText.setText("");
+                passwordEditText.setText("");
+                break;
             case R.id.btn_submit:
                 if (userIdEditText.getText().toString().isEmpty()) {
                     userIdEditText.setError("Please enter UserName to Login!");
@@ -174,6 +180,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //DO SUCCESS HANDLING HERE
 //if (response.body().)
                     final Login emp = response.body();
+                    logindetails.setChildEmployees(emp.getChildEmployees());
+                    LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getBaseContext(), "object_prefs", 0);
+                    loginComplexPreferences.putObject("object_value", emp);
+                    loginComplexPreferences.commit();
                     if (emp != null) {
                         empId = emp.getEmployeeId();
                         SharedPreferenceUtils

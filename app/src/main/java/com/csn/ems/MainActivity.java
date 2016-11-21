@@ -323,6 +323,8 @@ public class MainActivity extends AppCompatActivity
                 MenuItem item = menu.findItem(R.id.action_editdetails);
                 item.setVisible(false);
             }
+            MenuItem item1 = menu.findItem(R.id.action_changepassword);
+            item1.setVisible(false);
         } else if (currentSelectedItem == R.id.nav_timeclock) {
             getMenuInflater().inflate(R.menu.timeclock, menu);
             if (SharedPreferenceUtils
@@ -353,7 +355,7 @@ public class MainActivity extends AppCompatActivity
             item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_settings) {
             getMenuInflater().inflate(R.menu.main, menu);
-            if (SharedPreferenceUtils
+          /*  if (SharedPreferenceUtils
                     .getInstance(MainActivity.this)
                     .getSplashCacheItem(
                             EmsConstants.rolename) != null && SharedPreferenceUtils
@@ -362,7 +364,7 @@ public class MainActivity extends AppCompatActivity
                             EmsConstants.rolename).equals("Manager")) {
                 MenuItem item = menu.findItem(R.id.action_editdetails);
                 item.setVisible(false);
-            }
+            }*/
         } else {
             getMenuInflater().inflate(R.menu.dashboardmenu, menu);
         }
@@ -487,6 +489,7 @@ public class MainActivity extends AppCompatActivity
             //  onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
             tag = "Dashboard";
         } else if (id == R.id.nav_employee) {
+            EmsConstants.isfromemployeedetails=true;
             fragmentClass = EmployeeDetailsFragment.class;
             tag = "Employee";
         } else if (id == R.id.nav_timeclock) {
@@ -500,8 +503,9 @@ public class MainActivity extends AppCompatActivity
             tag = "Leave";
         } else if (id == R.id.nav_reports) {
             fragmentClass = ReportsFragment.class;
-            tag = "Report";
+            tag = "Reports";
         } else if (id == R.id.nav_settings) {
+            EmsConstants.isfromemployeedetails=false;
             fragmentClass = EmployeeDetailsFragment.class;
             tag = "Settings";
         }

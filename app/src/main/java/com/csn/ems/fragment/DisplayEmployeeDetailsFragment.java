@@ -68,6 +68,9 @@ TextView tvhrsperday,tvdob;
         tvhrsperday = (TextView) view.findViewById(R.id.tvhrsperday);
                 tvdob = (TextView) view.findViewById(R.id.tvdob);
         btnlogout= (Button) view.findViewById(R.id.btnlogout);
+        if (EmsConstants.isfromemployeedetails){
+            btnlogout.setVisibility(View.INVISIBLE);
+        }
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
