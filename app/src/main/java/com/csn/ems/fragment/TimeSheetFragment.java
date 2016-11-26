@@ -96,7 +96,7 @@ TextView tvapprovalstatus;
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
 
-       // spinner_listofsheet.setAdapter(arrayAdapter);
+       // spinner_listofsheet.setddapter(arrayAdapter);
        // LeaveStatus
         if (inTakeMasterDetails.getLeaveStatus()!=null&& inTakeMasterDetails.getLeaveStatus().size()>0) {
             LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), inTakeMasterDetails.getLeaveStatus());

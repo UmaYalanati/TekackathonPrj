@@ -72,7 +72,7 @@ public CheckBox checkbox;
             holder.checkbox.setChecked(false);
         }
 
-        holder.textView.setText(timesheetDetails.get(position).getMonth());
+        holder.textView.setText(timesheetDetails.get(position).getMonth().substring(0,3));
         holder.tvawd.setText(String.valueOf(timesheetDetails.get(position).getaWD()));
         holder.tvpwd.setText(String.valueOf(timesheetDetails.get(position).getpWD()));
         holder.tvlop.setText(String.valueOf(timesheetDetails.get(position).getlOP()));
