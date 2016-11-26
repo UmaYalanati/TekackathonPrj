@@ -15,9 +15,6 @@ import com.csn.ems.activity.GoogleMaps;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.model.TimeSheetDetails;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -115,10 +112,22 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
 
 
         if (timesheetDetails.get(position).getCheckIn() != null) {
+
             holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
+            if (timesheetDetails.get(position).getCheckIn().trim().isEmpty()) {
+                holder.tvcheckintime.setText("00:00 am");
+            } else {
+                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
+            }
         }
         if (timesheetDetails.get(position).getCheckOut() != null) {
-            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+            if (timesheetDetails.get(position).getCheckOut().trim().isEmpty()) {
+                holder.tvcheckouttime.setText("00:00 am");
+            } else {
+                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+            }
+
+
         }
 
 

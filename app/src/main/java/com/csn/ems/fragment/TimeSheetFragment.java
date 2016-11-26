@@ -55,13 +55,13 @@ import static com.csn.ems.EMSApplication.inTakeMasterDetails;
  * Created by uyalanat on 22-10-2016.
  */
 
-public class TimeSheetFragment extends Fragment implements View.OnClickListener,OnCustomEventListener {
+public class TimeSheetFragment extends Fragment implements View.OnClickListener, OnCustomEventListener {
     public static TimeSheetFragment newInstance() {
         return new TimeSheetFragment();
     }
     //OnCustomEventListener onCustomEventListener;
 
-String TAG="TimeSheetFragment";
+    String TAG = "TimeSheetFragment";
     Button btnstarttime, btnendtime;
     String[] SPINNERLIST = {"Select", "Approved", "Unapproved"};
     Context context;
@@ -69,9 +69,10 @@ String TAG="TimeSheetFragment";
     RelativeLayout relativeLayout;
     RecyclerView.Adapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-    AppCompatSpinner spinner_listofsheet,spinner_listofemployees;
-int selectedItemposition=0,selectedEmployeeposition=0;
-TextView tvapprovalstatus;
+    AppCompatSpinner spinner_listofsheet, spinner_listofemployees;
+    int selectedItemposition = 0, selectedEmployeeposition = 0;
+    TextView tvapprovalstatus;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_employeetimesheet, container, false);
@@ -83,11 +84,11 @@ TextView tvapprovalstatus;
         btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         recylerViewLayoutManager = new LinearLayoutManager(context);
-        tvapprovalstatus= (TextView) view.findViewById(R.id.tvapprovalstatus);
-       // tvapprovalstatus.setVisibility(View.GONE);
+        tvapprovalstatus = (TextView) view.findViewById(R.id.tvapprovalstatus);
+        // tvapprovalstatus.setVisibility(View.GONE);
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-     //   recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
+        //   recyclerViewAdapter = new TimesheetRecyclerViewAdapter(context, subjects);
 
         recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
@@ -96,16 +97,17 @@ TextView tvapprovalstatus;
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
 
-       // spinner_listofsheet.setddapter(arrayAdapter);
-       // LeaveStatus
-        if (inTakeMasterDetails.getLeaveStatus()!=null&& inTakeMasterDetails.getLeaveStatus().size()>0) {
+        // spinner_listofsheet.setddapter(arrayAdapter);
+        // LeaveStatus
+        if (inTakeMasterDetails.getLeaveStatus() != null && inTakeMasterDetails.getLeaveStatus().size() > 0) {
             LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), inTakeMasterDetails.getLeaveStatus());
             spinner_listofsheet.setAdapter(adapter);
         }
         LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
-       final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
-         ;
-        if (currentUser.getChildEmployees()!=null&& currentUser.getChildEmployees().size()>0) {
+        final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
+        ;
+        if (currentUser.getChildEmployees() != null && currentUser.getChildEmployees().size() > 0) {
+            spinner_listofemployees.setVisibility(View.VISIBLE);
             ChildEmployeesAdapter childEmployeesAdapter = new ChildEmployeesAdapter(getActivity(), currentUser.getChildEmployees());
             spinner_listofemployees.setAdapter(childEmployeesAdapter);
         }
@@ -116,7 +118,7 @@ TextView tvapprovalstatus;
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-      //  SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //  SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String toDate = newDateFormat.format(c.getTime());
 
@@ -127,44 +129,76 @@ TextView tvapprovalstatus;
         btnendtime.setText(toDate);
         btnstarttime.setText(fromDate);
 
-      //  spinner_listofsheet.setoni
-        spinner_listofemployees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+        //  spinner_listofsheet.setoni
+        spinner_listofemployees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // String selectedItem = parent.getItemAtPosition(position).toString();
-                selectedEmployeeposition=position;
-                getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
+                selectedEmployeeposition = position;
+                getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
 
             } // to close the onItemSelected
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-        spinner_listofsheet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-               // String selectedItem = parent.getItemAtPosition(position).toString();
-                selectedItemposition=position;
+        spinner_listofsheet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // String selectedItem = parent.getItemAtPosition(position).toString();
+                selectedItemposition = position;
+/*                getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());*/
+
+                if (SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename) != null && SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename).equals("Manager")) {
+
+                    // getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+                    if (currentUser.getChildEmployees() != null) {
+
+
+                        getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                    }
+                } else {
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
                             .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
-
+                                    EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                }
             } // to close the onItemSelected
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-        getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+
+
+        if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+
+            // getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+            if (currentUser.getChildEmployees() != null) {
 
 
+                getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+            }
+        } else {
+            getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+        }
 
         return view;
     }
@@ -173,7 +207,7 @@ TextView tvapprovalstatus;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-                DatePickerFragment2 starttimeFragment = new DatePickerFragment2(btnstarttime,btnstarttime.getText().toString(),false);
+                DatePickerFragment2 starttimeFragment = new DatePickerFragment2(btnstarttime, btnstarttime.getText().toString(), false);
 
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
 
@@ -186,12 +220,11 @@ TextView tvapprovalstatus;
 
                 break;
             case R.id.btnendtime:
-                DatePickerFragment2 endtimeFragment = new DatePickerFragment2(btnendtime,btnstarttime.getText().toString(),false);
+                DatePickerFragment2 endtimeFragment = new DatePickerFragment2(btnendtime, btnstarttime.getText().toString(), false);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
-               // Date date2 = sdf.parse(getTodaysDate());
-               // Date date1 = sdf.parse(SharedPreferenceUtils.getInstance(context).getSettingsCacheItem(WatscoConstants.RATEUS_DATE).toString());
-
+                // Date date2 = sdf.parse(getTodaysDate());
+                // Date date1 = sdf.parse(SharedPreferenceUtils.getInstance(context).getSettingsCacheItem(WatscoConstants.RATEUS_DATE).toString());
 
 
                 break;
@@ -199,9 +232,9 @@ TextView tvapprovalstatus;
         }
     }
 
-    void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
+    void getlistofleaves(int employeeId, String startdate, String enddaate, String status) {
 
-        int empid=employeeId;
+        int empid = employeeId;
 
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
@@ -210,11 +243,11 @@ TextView tvapprovalstatus;
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.rolename).equals("Manager")) {
-            empid = Integer.parseInt(SharedPreferenceUtils
+         /*   empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.childEmployeeId).toString().trim());
-        }else {
+                            EmsConstants.childEmployeeId).toString().trim());*/
+        } else {
             empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
@@ -247,7 +280,7 @@ TextView tvapprovalstatus;
 //                    for (Client client : clients) {
 //                        Log.i(TAG, "onResponse: Client: "+client);
 //                    }
-                   updateRecyclerViewForClients(timesheetDetails);
+                    updateRecyclerViewForClients(timesheetDetails);
                 }
             }
 
@@ -277,13 +310,13 @@ TextView tvapprovalstatus;
 
     @Override
     public void onEvent(String buttenview) {
-        if (buttenview!=null) {
+        if (buttenview != null) {
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
         }
-        }
+    }
 
     @SuppressLint("ValidFragment")
     public class DatePickerFragment2 extends DialogFragment implements
@@ -292,13 +325,14 @@ TextView tvapprovalstatus;
         Button mTextView;
         DatePickerDialog mDatePickerDialog;
         boolean isdateset;
+
         public DatePickerFragment2() {
         }
 
-        public DatePickerFragment2(Button textview,String date,boolean isdateset) {
+        public DatePickerFragment2(Button textview, String date, boolean isdateset) {
             this.mTextView = textview;
-            this.date= date;
-            this.isdateset=isdateset;
+            this.date = date;
+            this.isdateset = isdateset;
         }
 
 
@@ -310,9 +344,9 @@ TextView tvapprovalstatus;
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog fff;
-            Date d=null;
-            int year1=year,month1=month,day1=day;
-            try{
+            Date d = null;
+            int year1 = year, month1 = month, day1 = day;
+            try {
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 d = sdf.parse(date);
                 Calendar cal = Calendar.getInstance();
@@ -322,12 +356,12 @@ TextView tvapprovalstatus;
                 day1 = cal.get(Calendar.DAY_OF_MONTH);
 
 
-            }catch (ParseException e){
+            } catch (ParseException e) {
 
             }
             fff = new DatePickerDialog(getActivity(), this, year, month,
                     day);
-            if (isdateset){
+            if (isdateset) {
                 fff.getDatePicker().setMinDate(d.getTime());
             }
 
@@ -341,11 +375,11 @@ TextView tvapprovalstatus;
 
             String str_year = String.valueOf(year);
             String date_str = "";
-            try{
+            try {
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date d = sdf.parse(date);
                 view.setMinDate(d.getTime());
-            }catch (ParseException e){
+            } catch (ParseException e) {
 
             }
 
@@ -365,13 +399,13 @@ TextView tvapprovalstatus;
                 }
             } else {
                 if (new StringBuilder().append(day).length() >= 2) {
-                    if (new StringBuilder().append(month + 1).length() >= 2){
+                    if (new StringBuilder().append(month + 1).length() >= 2) {
                         mTextView.setText(new StringBuilder()
                                 .append(month + 1).append("/")
                                 .append(day).append("/")
                                 .append(str_year)
                                 .toString());
-                    }else{
+                    } else {
                         mTextView.setText(new StringBuilder()
                                 .append(0).append(month + 1).append("/")
                                 .append(day).append("/")
@@ -394,7 +428,7 @@ TextView tvapprovalstatus;
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
 
         }
     }

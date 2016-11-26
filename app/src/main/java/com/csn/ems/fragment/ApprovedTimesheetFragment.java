@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,9 +22,12 @@ import android.widget.Toast;
 import com.csn.ems.R;
 import com.csn.ems.emsconstants.EmsConstants;
 import com.csn.ems.emsconstants.SharedPreferenceUtils;
+import com.csn.ems.model.Login;
 import com.csn.ems.model.TimeSheetDetails;
 import com.csn.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
+import com.csn.ems.recyclerviewadapter.ChildEmployeesAdapter;
 import com.csn.ems.services.ServiceGenerator;
+import com.csn.ems.sharedpreference.LoginComplexPreferences;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -49,7 +53,7 @@ public class ApprovedTimesheetFragment extends Fragment {
     RelativeLayout relativeLayout;
     ApprovedTimesheetRecyclerViewAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-    AppCompatSpinner spinner_listofsheet;
+    AppCompatSpinner spinner_listofsheet,spinner_listofemployees;
     TextView tvtittle;
 Button btnstarttime,btnendtime;
 String TAG="TimesheetFragment";
@@ -86,19 +90,50 @@ String TAG="TimesheetFragment";
 
         btnendtime.setText(toDate);
         btnstarttime.setText(fromDate);
+        LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
+        final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
 
-        getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+        if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
-
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            if (currentUser.getChildEmployees()!=null) {
+                getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), "Pending");
+            }
+        }else {
+            getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+        }
        // recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
-
+        spinner_listofemployees= (AppCompatSpinner) view.findViewById(R.id.spinner_listofemployees);
         spinner_listofsheet.setVisibility(View.GONE);
 
+        ;
+        if (currentUser.getChildEmployees()!=null&& currentUser.getChildEmployees().size()>0) {
+            spinner_listofemployees.setVisibility(View.VISIBLE);
+            ChildEmployeesAdapter childEmployeesAdapter = new ChildEmployeesAdapter(getActivity(), currentUser.getChildEmployees());
+            spinner_listofemployees.setAdapter(childEmployeesAdapter);
+        }
 
 
+        spinner_listofemployees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+
+                getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+            } // to close the onItemSelected
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
         return view;
     }
     void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
@@ -113,10 +148,10 @@ int empid=employeeId;
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.rolename).equals("Manager")) {
-            empid = Integer.parseInt(SharedPreferenceUtils
+          /*  empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.childEmployeeId).toString().trim());
+                            EmsConstants.childEmployeeId).toString().trim());*/
         }else {
             empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())

@@ -33,8 +33,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.csn.ems.R.id.tvapprovalstatus;
-
 /**
  * Created by uyalanat on 24-10-2016.
  */
@@ -45,14 +43,15 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     TimeSheetDetailsApprove timeSheetDetails1 = new TimeSheetDetailsApprove();
     Context context;
     View view1;
-    String radiovalue;
+    String radiovalue = "Half Day";
     String approvalType = "";
 
     ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
     public TextView textView, tvcheckintime, tvcheckouttime, tvtotalhrs;
 
     List<TimeSheetDetails> timesheetDetails;
-String note="";
+    String note = "";
+
     public ApprovedTimesheetRecyclerViewAdapter(Context context1, List<TimeSheetDetails> timesheetDetails) {
 
         this.timesheetDetails = timesheetDetails;
@@ -66,6 +65,7 @@ String note="";
 
         ImageView imageButton, imageButton2;
         ImageView tvapprovalstatus;
+
         public ViewHolder(View v) {
 
             super(v);
@@ -153,18 +153,25 @@ String note="";
                 }
             }
         });
-
+        holder.tvcheckintime.setText("00:00");
 
         if (timesheetDetails.get(position).getCheckIn() != null) {
 
             holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
-
+            if (timesheetDetails.get(position).getCheckIn().trim().isEmpty()) {
+                holder.tvcheckintime.setText("00:00 am");
+            } else {
+                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
+            }
         }
         if (timesheetDetails.get(position).getCheckOut() != null) {
+            if (timesheetDetails.get(position).getCheckOut().trim().isEmpty()) {
+                holder.tvcheckouttime.setText("00:00 am");
+            } else {
+                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+            }
 
-              /*  dt_out = sdf.parse(timesheetDetails.get(position).getCheckOut());
-                ottime = sdfs.format(dt_out);*/
-            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+
         }
 
 
@@ -200,7 +207,7 @@ String note="";
             final TextInputEditText allocationDateTextField = (TextInputEditText) dialogView.findViewById(R.id.ed_comments);
             note = allocationDateTextField.getText().toString().trim();
             final RadioGroup rg = (RadioGroup) dialogView.findViewById(R.id.radioGroup1);
-            note=allocationDateTextField.getText().toString().trim();
+            note = allocationDateTextField.getText().toString().trim();
             rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
@@ -251,9 +258,9 @@ String note="";
                                     .getSplashCacheItem(
                                             EmsConstants.approvalval).toString().trim(), Note, radiovalue);*/
                             //Log.i(TAG, "onClick: Clearing " + operation + " Allocation Details");
-                   if (allocationDialog!=null){
-                       allocationDialog.dismiss();
-                   }
+                            if (allocationDialog != null) {
+                                allocationDialog.dismiss();
+                            }
                         }
                     })
                     .setNegativeButton("Reject", null)
@@ -309,9 +316,9 @@ String note="";
                 .getInstance(context)
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim()));
-        if (approvalType.equals("Rejected")){
+        if (approvalType.equals("Rejected")) {
             timeSheetDetails1.setApprovalType("LOP");
-        }else {
+        } else {
             timeSheetDetails1.setApprovalType(radiovalue);
         }
 

@@ -14,12 +14,36 @@ public class ChildEmployees {
     @JsonProperty("EmployeeName")
     private String employeeName;
 
+    @JsonProperty("EmployeeCode")
+    private String employeeCode;
+
+    @JsonProperty("PhotoPath")
+    private String photoPath;
+
     @Override
     public String toString() {
         return "ChildEmployees{" +
                 "employeeId=" + employeeId +
                 ", employeeName='" + employeeName + '\'' +
+                ", employeeCode='" + employeeCode + '\'' +
+                ", photoPath='" + photoPath + '\'' +
                 '}';
+    }
+
+    public String getEmployeeCode() {
+        return employeeCode;
+    }
+
+    public void setEmployeeCode(String employeeCode) {
+        this.employeeCode = employeeCode;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public int getEmployeeId() {

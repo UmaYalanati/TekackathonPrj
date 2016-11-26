@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/tvtittle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="6dp"
             android:text="My Time Sheet"
@@ -20,10 +20,12 @@
             android:textStyle="bold" />
 
         <android.support.v7.widget.AppCompatSpinner
+            android:visibility="gone"
             android:id="@+id/spinner_listofemployees"
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
             android:textSize="13sp" />
