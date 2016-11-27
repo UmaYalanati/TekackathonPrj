@@ -19,7 +19,7 @@ public class EmsConstants {
     public static String breakinid="breakinid";
    public static String employeename="employeename";
     public static String rolename="rolename";
-
+    public static int child_Employeeid=0;
     public static String checkintime="checkintime";
     public static String emaailid="emaailid";
     public static String photoPath="photoPath";

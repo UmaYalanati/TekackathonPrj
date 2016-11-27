@@ -190,8 +190,12 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
             // getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
             if (currentUser.getChildEmployees() != null) {
 
+try{
+    getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+}catch (NullPointerException e){
 
-                getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+}
+
             }
         } else {
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils

@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.csn.ems.R;
 import com.csn.ems.callback.MenuItemSelectedCallback;
+import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 
 import java.lang.reflect.Field;
 
@@ -49,12 +51,21 @@ public class EmployeeDetailsFragment extends Fragment {
         if (savedInstanceState == null) {
             try {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                if (SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename) != null && SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename).equals("Manager")) {
+                    transaction.replace(R.id.fragment_container, new ChildEmployeeList());
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack if needed
-                transaction.replace(R.id.fragment_container, new DisplayEmployeeDetailsFragment());
+                }else {
+                    transaction.replace(R.id.fragment_container, new DisplayEmployeeDetailsFragment());
 
-// Commit the transaction
+                }
+
+
                 transaction.commit();
                 selectedItem = R.id.action_employeedetails;
 
@@ -92,8 +103,21 @@ public class EmployeeDetailsFragment extends Fragment {
             //    action_editdetails
             case R.id.action_employeedetails:
 
-                newFragment = new DisplayEmployeeDetailsFragment();
+              //  newFragment = new DisplayEmployeeDetailsFragment();
+                if (SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename) != null && SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.rolename).equals("Manager")) {
+                    //newFragment.replace(R.id.fragment_container, new ChildEmployeeList());
+                    newFragment = new ChildEmployeeList();
 
+                }else {
+                    newFragment = new DisplayEmployeeDetailsFragment();
+
+                }
                 break;
             case R.id.action_editdetails:
 

@@ -68,8 +68,9 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-
-        holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
+        if (timesheetDetails.get(position).getWorkingDate() != null) {
+            holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
+        }
         if (timesheetDetails.get(position).getStatus() != null) {
             if (timesheetDetails.get(position).getStatus().equals("Approved")) {
                 // tvapprovalstatus.setBackgroundResource(R.drawable.approvedicon);
@@ -115,14 +116,14 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
 
             holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
             if (timesheetDetails.get(position).getCheckIn().trim().isEmpty()) {
-                holder.tvcheckintime.setText("00:00 am");
+                holder.tvcheckintime.setText("0:00 am");
             } else {
                 holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
             }
         }
         if (timesheetDetails.get(position).getCheckOut() != null) {
             if (timesheetDetails.get(position).getCheckOut().trim().isEmpty()) {
-                holder.tvcheckouttime.setText("00:00 am");
+                holder.tvcheckouttime.setText("0:00 am");
             } else {
                 holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
             }
@@ -131,11 +132,10 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
         }
 
 
-
-            if (timesheetDetails.get(position).getCalculatedLength() != null ) {
-                holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
-                // int hours = p.getHours();
-            }
+        if (timesheetDetails.get(position).getCalculatedLength() != null) {
+            holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
+            // int hours = p.getHours();
+        }
 
 
     }

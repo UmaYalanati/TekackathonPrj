@@ -47,6 +47,7 @@ import rx.functions.Action1;
 
 public class EditEmployeeDetailsFragment extends Fragment {
     private static final String TAG = "EditEmployeeDetailsFrag";
+
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -132,7 +133,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.childEmployeeId).toString().trim());
-        }else {
+        } else {
             empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
@@ -195,11 +196,11 @@ public class EditEmployeeDetailsFragment extends Fragment {
         ed_businessAreaName.setText(employeeDetails.getBusinessAreaName());
         ed_subBusinessAreaName.setText(employeeDetails.getSubBusinessAreaName());
         ed_hoursPerDay.setText(employeeDetails.getHoursPerDay());
-        if (employeeDetails.getPhotoPath()!=null&&employeeDetails.getPhotoPath().contains("www")){
-        Picasso.with(getActivity())
-                .load("http://" +employeeDetails.getPhotoPath()).into(circleImageView);
-        //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
-    }/* else {
+        if (employeeDetails.getPhotoPath() != null && employeeDetails.getPhotoPath().contains("www")) {
+            Picasso.with(getActivity())
+                    .load("http://" + employeeDetails.getPhotoPath()).into(circleImageView);
+            //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
+        }/* else {
       circleImageView.setBackgroundResource(R.drawable.male_profilepic);
           *//*  Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
             circleImageView.setImageDrawable(drawable);*//*
@@ -209,7 +210,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
 
     public void updateemployeedetails() {
         // ed_Name,ed_NickName,ed_email,ed_username,ed_mobilenor,ed_homenor,ed_address,ed_city,ed_state,ed_zipcode
-        int empid=Integer.parseInt(SharedPreferenceUtils
+        int empid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());

@@ -11,8 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.csn.ems.R;
-import com.csn.ems.model.BreakDetails;
-import com.csn.ems.model.LeaveCategorylist;
 import com.csn.ems.model.LeaveDetails;
 
 import java.text.ParseException;
@@ -20,9 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static com.csn.ems.R.id.tvleavedate;
-import static com.csn.ems.R.id.tvnumofleaves;
 
 /**
  * Created by uyalanat on 01-11-2016.
@@ -37,7 +32,7 @@ public class Leaves_ListAdapter extends BaseAdapter {
     private Typeface regular;
     private List<LeaveDetails> leaveDetails;
 
-    public Leaves_ListAdapter(Context context, List<LeaveDetails>  leaveDetails) {
+    public Leaves_ListAdapter(Context context, List<LeaveDetails> leaveDetails) {
         this.context = context;
         this.leaveDetails = leaveDetails;
 
@@ -62,12 +57,11 @@ public class Leaves_ListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(context).inflate(R.layout.child_leaves, null);
-      TextView  tvleavedate = (TextView) convertView.findViewById(R.id.tvleavedate);
-        TextView   tvnumofleaves = (TextView) convertView.findViewById(R.id.tvnumofleaves);
-        TextView   textView_leavestatus = (TextView) convertView.findViewById(R.id.tvleavestatus);
-if (leaveDetails.get(position).getLeaveType()!=null)
-        textView_leavestatus.setText(leaveDetails.get(position).getLeaveType());
-
+        TextView tvleavedate = (TextView) convertView.findViewById(R.id.tvleavedate);
+        TextView tvnumofleaves = (TextView) convertView.findViewById(R.id.tvnumofleaves);
+        TextView textView_leavestatus = (TextView) convertView.findViewById(R.id.tvleavestatus);
+        if (leaveDetails.get(position).getLeaveType() != null)
+            textView_leavestatus.setText(leaveDetails.get(position).getLeaveType());
 
 
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");

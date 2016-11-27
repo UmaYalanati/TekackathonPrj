@@ -159,14 +159,14 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
 
             holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
             if (timesheetDetails.get(position).getCheckIn().trim().isEmpty()) {
-                holder.tvcheckintime.setText("00:00 am");
+                holder.tvcheckintime.setText("0:00 am");
             } else {
                 holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
             }
         }
         if (timesheetDetails.get(position).getCheckOut() != null) {
             if (timesheetDetails.get(position).getCheckOut().trim().isEmpty()) {
-                holder.tvcheckouttime.setText("00:00 am");
+                holder.tvcheckouttime.setText("0:00 am");
             } else {
                 holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
             }

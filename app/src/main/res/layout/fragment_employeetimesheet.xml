@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,15 +20,15 @@
             android:textStyle="bold" />
 
         <android.support.v7.widget.AppCompatSpinner
-            android:visibility="gone"
             android:id="@+id/spinner_listofemployees"
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
-            android:textSize="13sp" />
+            android:layout_marginRight="10dp"
+            android:textSize="13sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -77,103 +77,190 @@
         android:layout_marginTop="5dp"
         android:background="@color/black" />
 
-    <RelativeLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/txtdate"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="18dp"
-            android:text="Date"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
 
-        <TextView
-            android:id="@+id/txtcheckintime"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txtdate"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/txtdate"
-            android:layout_toRightOf="@+id/txtdate"
-            android:gravity="center"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:text="Clock In"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtcheckouttime"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txtcheckintime"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/txtlocation"
-            android:layout_toRightOf="@+id/txtlocation"
-            android:gravity="center"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:text="Clock Out"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/txtdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:padding="3dp"
+                android:text="Date                  "
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/txttotalhrs"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txtcheckouttime"
-            android:layout_toEndOf="@+id/txtlocation2"
-            android:layout_toRightOf="@+id/txtlocation2"
-            android:gravity="center"
-            android:text="Length"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/txtcheckintime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="Clock In          "
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/txtlocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/txtcheckintime"
-            android:layout_marginLeft="6dp"
-            android:layout_toEndOf="@+id/txtcheckintime"
-            android:layout_toRightOf="@+id/txtcheckintime"
-            android:text="Location"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/txtlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Location"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/txtlocation2"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txtlocation"
-            android:layout_marginLeft="6dp"
-            android:layout_toEndOf="@+id/txtcheckouttime"
-            android:layout_toRightOf="@+id/txtcheckouttime"
-            android:text="Location"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/txtcheckouttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txtcheckintime"
 
-        <TextView
-            android:id="@+id/tvapprovalstatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txtlocation2"
-            android:layout_marginLeft="5dp"
-            android:layout_toEndOf="@+id/txttotalhrs"
-            android:layout_toRightOf="@+id/txttotalhrs"
-            android:gravity="center"
-            android:text="Status"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
-    </RelativeLayout>
+                android:gravity="center"
+
+                android:text="Clock Out"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/txtlocation2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txttotalhrs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="Length"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <!--
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtdate"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="18dp"
+                android:text="Date"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtcheckintime"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txtdate"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/txtdate"
+                android:layout_toRightOf="@+id/txtdate"
+                android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:text="Clock In"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtcheckouttime"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txtcheckintime"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/txtlocation"
+                android:layout_toRightOf="@+id/txtlocation"
+                android:gravity="center"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:text="Clock Out"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txttotalhrs"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txtcheckouttime"
+                android:layout_toEndOf="@+id/txtlocation2"
+                android:layout_toRightOf="@+id/txtlocation2"
+                android:gravity="center"
+                android:text="Length"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txtcheckintime"
+                android:layout_marginLeft="6dp"
+                android:layout_toEndOf="@+id/txtcheckintime"
+                android:layout_toRightOf="@+id/txtcheckintime"
+                android:text="Location"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtlocation2"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txtlocation"
+                android:layout_marginLeft="6dp"
+                android:layout_toEndOf="@+id/txtcheckouttime"
+                android:layout_toRightOf="@+id/txtcheckouttime"
+                android:text="Location"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvapprovalstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/txtlocation2"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/txttotalhrs"
+                android:layout_toRightOf="@+id/txttotalhrs"
+                android:gravity="center"
+                android:text="Status"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    -->
 
     <RelativeLayout
         android:id="@+id/relativelayout1"
