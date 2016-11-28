@@ -484,14 +484,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         currentSelectedItem = id;
+        boolean overWriteNewInstance = false;
         if (id == nav_dashboard) {
             fragmentClass = DashBoardFragment.class;
             //  onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_employee));
             tag = "Dashboard";
         } else if (id == R.id.nav_employee) {
             EmsConstants.isfromemployeedetails=true;
-            fragmentClass = EmployeeDetailsFragment.class;
             tag = "Employee";
+            fragment = EmployeeDetailsFragment.newInstance(tag);
+            overWriteNewInstance = true;
+
         } else if (id == R.id.nav_timeclock) {
             fragmentClass = TimeClockFragment.class;
             tag = "Time Lock";
@@ -505,16 +508,20 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = ReportsFragment.class;
             tag = "Reports";
         } else if (id == R.id.nav_settings) {
+            tag = "Settings";
             EmsConstants.isfromemployeedetails=false;
             fragmentClass = EmployeeDetailsFragment.class;
-            tag = "Settings";
+            fragment = EmployeeDetailsFragment.newInstance(tag);
+            overWriteNewInstance = true;
+
         }
         //
         //   onNavigationItemSelected(navigationView.getMenu().getItem(R.id.nav_employee));
         if (fragmentClass != null) {
             try {
-                fragment = (Fragment) fragmentClass.newInstance();
-
+                if(!overWriteNewInstance) {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                }
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment, fragment, tag)

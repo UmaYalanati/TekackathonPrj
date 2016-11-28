@@ -43,7 +43,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     TimeSheetDetailsApprove timeSheetDetails1 = new TimeSheetDetailsApprove();
     Context context;
     View view1;
-    String radiovalue = "Half Day";
+    String radiovalue = "";
     String approvalType = "";
 
     ApprovedTimesheetRecyclerViewAdapter.ViewHolder viewHolder1;
@@ -244,10 +244,14 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                     .setPositiveButton("Approve", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, SharedPreferenceUtils
-                                    .getInstance(context)
-                                    .getSplashCacheItem(
-                                            EmsConstants.approvalval).toString().trim(), Note, radiovalue);
+                            if (!radiovalue.isEmpty()) {
+                                updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, SharedPreferenceUtils
+                                        .getInstance(context)
+                                        .getSplashCacheItem(
+                                                EmsConstants.approvalval).toString().trim(), Note, radiovalue);
+                            } else {
+                                Toast.makeText(context, "Please Select the day", Toast.LENGTH_LONG).show();
+                            }
                         }
                     })
                     .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -281,7 +285,11 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                             /// updateemployeedetails();
                             allocationDialog.dismiss();
                             approvalType = "Approved";
-                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
+                            if (!radiovalue.isEmpty()) {
+                                updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
+                            } else {
+                                Toast.makeText(context, "Please Select the day", Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
 
@@ -290,7 +298,11 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                         public void onClick(View v) {
 
                             approvalType = "Rejected";
-                            updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
+                            if (!radiovalue.isEmpty()) {
+                                updateemployeedetails(timesheetid, EmployeeId, WorkingDate, CheckIn, CheckOut, CheckInLattitude, checkInLongitude, checkOutLattitude, checkOutLongitude, AssignedTo, ApprovalType, Note, radiovalue);
+                            } else {
+                                Toast.makeText(context, "Please Select the day", Toast.LENGTH_LONG).show();
+                            }
                             allocationDialog.dismiss();
                         }
                     });
@@ -352,6 +364,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
                     notifyDataSetChanged();
+
                     TimeSheetDetailsApprove emp = response.body();
                     if (emp != null) {
                         // Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
@@ -402,4 +415,5 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
         loading.show();
 
     }
+
 }

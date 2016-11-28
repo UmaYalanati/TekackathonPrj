@@ -12,15 +12,12 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 
-import com.csn.ems.callback.NavigationDrawerCallback;
 import com.csn.ems.callback.OnCustomEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import static android.R.attr.bitmap;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -150,7 +147,9 @@ boolean isdateset;
 
 
         }
-        onCustomEventListener.onEvent(get_date);
+        if (onCustomEventListener!=null) {
+            onCustomEventListener.onEvent(get_date);
+        }
     }
 
 

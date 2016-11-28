@@ -1,18 +1,23 @@
-package com.csn.ems;
+package com.csn.ems.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.csn.ems.R;
+import com.csn.ems.activity.LoginActivity;
 import com.csn.ems.emsconstants.EmsConstants;
+import com.csn.ems.emsconstants.SharedPreferenceUtils;
 import com.csn.ems.model.EmployeeDetails;
 import com.csn.ems.services.ServiceGenerator;
 
@@ -23,10 +28,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by uyalanat on 27-11-2016.
+ * Created by uyalanat on 29-11-2016.
  */
 
-public class ChildEmployeeDetailsActivity extends AppCompatActivity {
+public class ManagerDetails extends Fragment {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -37,39 +42,66 @@ public class ChildEmployeeDetailsActivity extends AppCompatActivity {
     TextView tvemployeefullname, tvid, tvusername, tvmobile, tvaddress, tvemail, tvposition;
     TextView tvgender, tvcity, tvstate, tvpincode, tvbusinessarea, tvsubbusiness, tvlocation, tvjoiningdate;
     TextView tvhrsperday,tvdob;
+    public static ManagerDetails newInstance() {
+        return new ManagerDetails();
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_employeedetails);
-        tvemployeefullname = (TextView) findViewById(R.id.tvemployeefullname);
-        tvid = (TextView) findViewById(R.id.tvid);
-        tvusername = (TextView) findViewById(R.id.tvusername);
-        tvmobile = (TextView) findViewById(R.id.tvmobile);
-        tvaddress = (TextView) findViewById(R.id.tvaddress);
-        tvemail = (TextView) findViewById(R.id.tvemail);
-        tvposition = (TextView) findViewById(R.id.tvposition);
-        tvgender = (TextView) findViewById(R.id.tvgender);
-        tvcity = (TextView) findViewById(R.id.tvcity);
-        tvstate = (TextView) findViewById(R.id.tvstate);
-        tvpincode = (TextView) findViewById(R.id.tvpincode);
-        tvbusinessarea = (TextView) findViewById(R.id.tvbusinessarea);
-        tvsubbusiness = (TextView) findViewById(R.id.tvsubbusiness);
-        tvlocation = (TextView) findViewById(R.id.tvlocation);
-        tvjoiningdate = (TextView) findViewById(R.id.tvjoiningdate);
-        tvhrsperday = (TextView) findViewById(R.id.tvhrsperday);
-        tvdob = (TextView) findViewById(R.id.tvdob);
-        btnlogout = (Button) findViewById(R.id.btnlogout);
-        btnlogout.setVisibility(View.GONE);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_employeedetails, container, false);
+
+        tvemployeefullname = (TextView) view.findViewById(R.id.tvemployeefullname);
+        tvid = (TextView) view.findViewById(R.id.tvid);
+        tvusername = (TextView) view.findViewById(R.id.tvusername);
+        tvmobile = (TextView) view.findViewById(R.id.tvmobile);
+        tvaddress = (TextView) view.findViewById(R.id.tvaddress);
+        tvemail = (TextView) view.findViewById(R.id.tvemail);
+        tvposition = (TextView) view.findViewById(R.id.tvposition);
+        tvgender = (TextView) view.findViewById(R.id.tvgender);
+        tvcity = (TextView) view.findViewById(R.id.tvcity);
+        tvstate = (TextView) view.findViewById(R.id.tvstate);
+        tvpincode = (TextView) view.findViewById(R.id.tvpincode);
+        tvbusinessarea = (TextView) view.findViewById(R.id.tvbusinessarea);
+        tvsubbusiness = (TextView) view.findViewById(R.id.tvsubbusiness);
+        tvlocation = (TextView) view.findViewById(R.id.tvlocation);
+        tvjoiningdate = (TextView) view.findViewById(R.id.tvjoiningdate);
+        tvhrsperday = (TextView) view.findViewById(R.id.tvhrsperday);
+        tvdob = (TextView) view.findViewById(R.id.tvdob);
+        btnlogout = (Button) view.findViewById(R.id.btnlogout);
+        if (EmsConstants.isfromemployeedetails){
+            btnlogout.setVisibility(View.INVISIBLE);
+        }
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .editSplash()
+                        .addSplashCacheItem(EmsConstants.employeeId,
+                                "").commitSplash();
+
+                Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent_homescreen);
+                getActivity().finish();
+            }
+        });
         displaydetails();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-        //getSupportActionBar().setIcon(R.drawable.left_arrow);
+
+        return view;
     }
     void displaydetails(){
-        final ProgressDialog loading = ProgressDialog.show(ChildEmployeeDetailsActivity.this, "Fetching Data", "Please wait...", false, false);
-        int empid=EmsConstants.child_Employeeid;
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+        int empid=Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
 
+
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
+        
         Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {
@@ -83,7 +115,7 @@ public class ChildEmployeeDetailsActivity extends AppCompatActivity {
                     try {
                         String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
                         Log.e(TAG, "onResponse: " + errorMessage);
-                        Toast.makeText(ChildEmployeeDetailsActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Log.e(TAG, "onResponse: IOException while parsing response error", e);
                     }
@@ -100,7 +132,7 @@ public class ChildEmployeeDetailsActivity extends AppCompatActivity {
                 if (loading.isShowing()) {
                     loading.dismiss();
                 }
-                Toast.makeText(getApplicationContext(), "Error connecting with Web Services...\n" +
+                Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
                         "Please try again after some time.", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
             }
@@ -116,7 +148,6 @@ public class ChildEmployeeDetailsActivity extends AppCompatActivity {
         tvemail.setText(employeeDetails.getEmailId());
         tvmobile.setText(employeeDetails.getContactNumber());
         tvaddress.setText(employeeDetails.getAddress1()+employeeDetails.getAddress2());
-
         tvcity.setText(employeeDetails.getCity());
         tvstate.setText(employeeDetails.getStateName());
         tvpincode.setText(String.valueOf(employeeDetails.getPostalCode()));
@@ -129,13 +160,5 @@ public class ChildEmployeeDetailsActivity extends AppCompatActivity {
         tvhrsperday.setText(employeeDetails.getHoursPerDay());
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
+
