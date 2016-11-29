@@ -153,13 +153,22 @@ void displaydetails(){
     loading.show();
 }
     void setEmployeeDetails(){
-        // ed_Name,ed_NickName,ed_email,ed_username,ed_mobilenor,ed_homenor,ed_address,ed_city,ed_state,ed_zipcode
+
         tvemployeefullname.setText(employeeDetails.getEmployeeName());
         tvusername.setText(employeeDetails.getEmployeeCode());
         tvemail.setText(employeeDetails.getEmailId());
         tvmobile.setText(employeeDetails.getContactNumber());
         tvaddress.setText(employeeDetails.getAddress1()+employeeDetails.getAddress2());
+        StringBuilder employeelocation=new StringBuilder();
+        for (int i=0;i<employeeDetails.getEmployeeLocation().size();i++){
+            if (i==0){
+            employeelocation.append(employeeDetails.getEmployeeLocation().get(i).getLocationName());
+            }else{
+                employeelocation.append(", "+employeeDetails.getEmployeeLocation().get(i).getLocationName());
+            }
 
+        }
+        tvlocation.setText(employeelocation.toString());
         tvcity.setText(employeeDetails.getCity());
         tvstate.setText(employeeDetails.getStateName());
         tvpincode.setText(String.valueOf(employeeDetails.getPostalCode()));

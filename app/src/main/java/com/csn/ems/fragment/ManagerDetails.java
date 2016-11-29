@@ -91,13 +91,10 @@ public class ManagerDetails extends Fragment {
     }
     void displaydetails(){
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
-        int empid=Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim());
 
 
-            empid = Integer.parseInt(SharedPreferenceUtils
+
+       int     empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim());

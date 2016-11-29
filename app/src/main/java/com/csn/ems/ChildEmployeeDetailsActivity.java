@@ -116,7 +116,15 @@ public class ChildEmployeeDetailsActivity extends AppCompatActivity {
         tvemail.setText(employeeDetails.getEmailId());
         tvmobile.setText(employeeDetails.getContactNumber());
         tvaddress.setText(employeeDetails.getAddress1()+employeeDetails.getAddress2());
+        StringBuilder employeelocation=new StringBuilder();
+        for (int i=0;i<employeeDetails.getEmployeeLocation().size();i++){
+            if (i==0){
+                employeelocation.append(employeeDetails.getEmployeeLocation().get(i).getLocationName());
+            }else{
+                employeelocation.append(", "+employeeDetails.getEmployeeLocation().get(i).getLocationName());
+            }
 
+        }
         tvcity.setText(employeeDetails.getCity());
         tvstate.setText(employeeDetails.getStateName());
         tvpincode.setText(String.valueOf(employeeDetails.getPostalCode()));
