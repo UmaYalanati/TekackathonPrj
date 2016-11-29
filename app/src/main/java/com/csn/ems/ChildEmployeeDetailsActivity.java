@@ -125,6 +125,7 @@ public class ChildEmployeeDetailsActivity extends AppCompatActivity {
             }
 
         }
+        tvlocation.setText(employeelocation.toString());
         tvcity.setText(employeeDetails.getCity());
         tvstate.setText(employeeDetails.getStateName());
         tvpincode.setText(String.valueOf(employeeDetails.getPostalCode()));
