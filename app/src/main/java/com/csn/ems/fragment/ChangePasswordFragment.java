@@ -39,30 +39,34 @@ public class ChangePasswordFragment extends Fragment {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    TextInputEditText confirmpassword,password;
+    TextInputEditText confirmpassword, password;
     Button btnupdatepassword;
-    String TAG="ChangePasswordFragment";
-   // Login login=new Login();
+    String TAG = "ChangePasswordFragment";
+
+    // Login login=new Login();
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.password_change, container, false);
-        confirmpassword=(TextInputEditText)view.findViewById(R.id.confirmpassword) ;
-                password=(TextInputEditText)view.findViewById(R.id.password) ;
-        btnupdatepassword=(Button) view.findViewById(R.id.btnupdatepassword) ;
+        confirmpassword = (TextInputEditText) view.findViewById(R.id.confirmpassword);
+        password = (TextInputEditText) view.findViewById(R.id.password);
+        btnupdatepassword = (Button) view.findViewById(R.id.btnupdatepassword);
         btnupdatepassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!password.getText().toString().trim().equals(confirmpassword.getText().toString().trim())){
-                    Toast.makeText(getActivity(),"Password and Confirm passwords are not matching",Toast.LENGTH_SHORT).show();
-                }else{
-                    uploadDetails(LoginActivity.userName,password.getText().toString().trim());
+                if (password.getText().toString().trim().isEmpty() && confirmpassword.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "Please enter mandatory fields", Toast.LENGTH_SHORT).show();
+                } else if (!password.getText().toString().trim().equals(confirmpassword.getText().toString().trim())) {
+                    Toast.makeText(getActivity(), "Password and Confirm passwords are not matching", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadDetails(LoginActivity.userName, password.getText().toString().trim());
                 }
             }
         });
         return view;
     }
-    void uploadDetails(String username,String password){
-        ChangePassword changePassword=new ChangePassword();
+
+    void uploadDetails(String username, String password) {
+        ChangePassword changePassword = new ChangePassword();
         changePassword.setUserName(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -114,7 +118,7 @@ public class ChangePasswordFragment extends Fragment {
                                 }
                             })
                             .show();
-                   // Login emp = response.body();
+                    // Login emp = response.body();
            /*         if (emp != null) {
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         new AlertDialog.Builder(getActivity())

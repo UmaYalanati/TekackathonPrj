@@ -50,7 +50,7 @@ public class EmployeeDetailsFragment extends Fragment {
         Bundle arguments = getArguments();
 
         String loginType = arguments.getString(LOGIN_TYPE);
-        Log.d(TAG, "onCreateView: loginType: "+loginType);
+        Log.d(TAG, "onCreateView: loginType: " + loginType);
 
         if (getContext() instanceof MenuItemSelectedCallback) {
             Log.d(TAG, "onCreateView: Instance matched");
@@ -69,9 +69,9 @@ public class EmployeeDetailsFragment extends Fragment {
                         .getInstance(getActivity())
                         .getSplashCacheItem(
                                 EmsConstants.rolename).equals("Manager")) {
-                    if (loginType.equals("Settings")){
+                    if (loginType.equals("Settings")) {
                         transaction.replace(R.id.fragment_container, new ManagerDetails());
-                    }else {
+                    } else {
                         transaction.replace(R.id.fragment_container, new ChildEmployeeList());
                     }
 
