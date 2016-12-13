@@ -15,8 +15,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class ServiceGenerator {
 
-//    public static final String WEB_SERVICE_BASE_URL = "http://csn.pdc.com.iis3002.databasemart.net/api/";
-    public static final String WEB_SERVICE_BASE_URL = "http://www.csn.ems.com.iis3002.databasemart.net/api/";
+public static final String WEB_SERVICE_BASE_URL = "http://103.245.20.163:8081/api/";
+   // public static final String WEB_SERVICE_BASE_URL = "http://www.csn.ems.com.iis3002.databasemart.net/api/";
+
     private static final String TAG = "ServiceGenerator";
 
     private static HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
