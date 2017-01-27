@@ -23,7 +23,7 @@
     android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <com.csn.ems.emsconstants.NestedListView
+    <com.tek.ems.emsconstants.NestedListView
         android:id="@+id/listView_upcomingholidayslist"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:background="@android:color/transparent"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:scrollbars="@null"></com.csn.ems.emsconstants.NestedListView>
+        android:scrollbars="@null"></com.tek.ems.emsconstants.NestedListView>
 
 
     <TextView
