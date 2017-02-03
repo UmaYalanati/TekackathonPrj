@@ -613,14 +613,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setEmployeeDetails(EmployeeDetails employeeDetails) {
-        if (employeeDetails.getPhotoPath() != null) {
+      /*  if (employeeDetails.getPhotoPath() != null) {
             //  Bitmap bmp=null;
             //  image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
             ///   image_employee.setImageBitmap(getBitmapFromURL(employeeDetails.getPhotoPath()));
             //  Picasso.with(MainActivity.this)
             //        .load("http://"+employeeDetails.getPhotoPath()).into((ImageView) navigationView.findViewById(R.id.imageView_employee));
             //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
-        }
+        }*/
       /*  if (employeeDetails.getEmployeeName()!=null)
             tvemployeename.setText(employeeDetails.getEmployeeName());
 

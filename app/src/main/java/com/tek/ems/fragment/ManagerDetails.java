@@ -140,7 +140,7 @@ public class ManagerDetails extends Fragment {
     }
     void setEmployeeDetails(){
         // ed_Name,ed_NickName,ed_email,ed_username,ed_mobilenor,ed_homenor,ed_address,ed_city,ed_state,ed_zipcode
-        tvemployeefullname.setText(employeeDetails.getEmployeeName());
+      /*  tvemployeefullname.setText(employeeDetails.getEmployeeName());
         tvusername.setText(employeeDetails.getEmployeeCode());
         tvemail.setText(employeeDetails.getEmailId());
         tvmobile.setText(employeeDetails.getContactNumber());
@@ -154,7 +154,7 @@ public class ManagerDetails extends Fragment {
         tvposition.setText(employeeDetails.getPositionName());
         tvbusinessarea.setText(employeeDetails.getBusinessAreaName());
         tvsubbusiness.setText(employeeDetails.getSubBusinessAreaName());
-        tvhrsperday.setText(employeeDetails.getHoursPerDay());
+        tvhrsperday.setText(employeeDetails.getHoursPerDay());*/
 
     }
 }

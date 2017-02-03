@@ -27,14 +27,8 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginTop="6dp"
-                android:background="@color/gray_dark" />
-
-
             <de.hdodenhof.circleimageview.CircleImageView
+                android:visibility="gone"
                 android:id="@+id/circleImageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -127,6 +121,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp">
@@ -142,6 +137,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp">
@@ -153,7 +149,7 @@
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:hint="Gender"
+                    android:hint="Reporting Manager"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -173,20 +169,7 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/ed_address2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Address2:"
-
-                    android:inputType="text" />
-
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -268,6 +251,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp">
@@ -287,6 +271,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp">
@@ -319,14 +304,6 @@
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
-
-
-            <!-- <android.support.v7.widget.AppCompatSpinner
-                 android:id="@+id/spinner_language"
-                 style="@style/Widget.AppCompat.Spinner.Underlined"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:textSize="13sp" />-->
 
 
             <Button

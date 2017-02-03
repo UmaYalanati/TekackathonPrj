@@ -25,7 +25,6 @@ import com.tek.ems.emsconstants.SharedPreferenceUtils;
 import com.tek.ems.model.Login;
 import com.tek.ems.model.TimeSheetDetails;
 import com.tek.ems.recyclerviewadapter.ApprovedTimesheetRecyclerViewAdapter;
-import com.tek.ems.recyclerviewadapter.ChildEmployeesAdapter;
 import com.tek.ems.services.ServiceGenerator;
 import com.tek.ems.sharedpreference.LoginComplexPreferences;
 
@@ -100,9 +99,9 @@ String TAG="TimesheetFragment";
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.rolename).equals("Manager")) {
-            if (currentUser.getChildEmployees()!=null) {
+            /*if (currentUser.getChildEmployees()!=null) {
                 getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), "Pending");
-            }
+            }*/
         }else {
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
@@ -115,11 +114,11 @@ String TAG="TimesheetFragment";
         spinner_listofsheet.setVisibility(View.GONE);
 
         ;
-        if (currentUser.getChildEmployees()!=null&& currentUser.getChildEmployees().size()>0) {
+       /* if (currentUser.getChildEmployees()!=null&& currentUser.getChildEmployees().size()>0) {
             spinner_listofemployees.setVisibility(View.VISIBLE);
             ChildEmployeesAdapter childEmployeesAdapter = new ChildEmployeesAdapter(getActivity(), currentUser.getChildEmployees());
             spinner_listofemployees.setAdapter(childEmployeesAdapter);
-        }
+        }*/
 
 
         spinner_listofemployees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -127,7 +126,7 @@ String TAG="TimesheetFragment";
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
 
-                getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+              //  getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
             } // to close the onItemSelected
             public void onNothingSelected(AdapterView<?> parent)
             {

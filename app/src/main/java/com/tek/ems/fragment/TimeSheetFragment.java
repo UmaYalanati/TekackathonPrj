@@ -31,7 +31,6 @@ import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
 import com.tek.ems.model.Login;
 import com.tek.ems.model.TimeSheetDetails;
-import com.tek.ems.recyclerviewadapter.ChildEmployeesAdapter;
 import com.tek.ems.recyclerviewadapter.LeaveTypeAdapter;
 import com.tek.ems.recyclerviewadapter.TimesheetRecyclerViewAdapter;
 import com.tek.ems.services.ServiceGenerator;
@@ -106,11 +105,11 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
         LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
         final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
         ;
-        if (currentUser.getChildEmployees() != null && currentUser.getChildEmployees().size() > 0) {
+       /* if (currentUser.getChildEmployees() != null && currentUser.getChildEmployees().size() > 0) {
             spinner_listofemployees.setVisibility(View.VISIBLE);
             ChildEmployeesAdapter childEmployeesAdapter = new ChildEmployeesAdapter(getActivity(), currentUser.getChildEmployees());
             spinner_listofemployees.setAdapter(childEmployeesAdapter);
-        }
+        }*/
 
         /////Uma
         btnstarttime.setOnClickListener(this);
@@ -134,7 +133,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // String selectedItem = parent.getItemAtPosition(position).toString();
                 selectedEmployeeposition = position;
-                getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
+               // getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
 
             } // to close the onItemSelected
 
@@ -160,11 +159,11 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
                                 EmsConstants.rolename).equals("Manager")) {
 
                     // getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
-                    if (currentUser.getChildEmployees() != null) {
+                   /* if (currentUser.getChildEmployees() != null) {
 
 
                         getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
-                    }
+                    }*/
                 } else {
                     getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                             .getInstance(getActivity())
@@ -188,20 +187,20 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
                         EmsConstants.rolename).equals("Manager")) {
 
             // getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
-            if (currentUser.getChildEmployees() != null) {
+            if (currentUser.getFirstName() != null) {
 
 try{
-    getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+  //  getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
 }catch (NullPointerException e){
 
 }
 
             }
         } else {
-            getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+        /*    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());*/
         }
 
         return view;

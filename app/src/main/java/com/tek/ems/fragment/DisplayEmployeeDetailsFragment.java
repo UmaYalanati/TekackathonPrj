@@ -36,12 +36,13 @@ public class DisplayEmployeeDetailsFragment extends Fragment {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-   String TAG="EmployeeDetailsFragment";
+    String TAG = "EmployeeDetailsFragment";
     EmployeeDetails employeeDetails = new EmployeeDetails();
     Button btnlogout;
     TextView tvemployeefullname, tvid, tvusername, tvmobile, tvaddress, tvemail, tvposition;
     TextView tvgender, tvcity, tvstate, tvpincode, tvbusinessarea, tvsubbusiness, tvlocation, tvjoiningdate;
-TextView tvhrsperday,tvdob;
+    TextView tvhrsperday, tvdob;
+
     public static DisplayEmployeeDetailsFragment newInstance() {
         return new DisplayEmployeeDetailsFragment();
     }
@@ -68,7 +69,7 @@ TextView tvhrsperday,tvdob;
         tvhrsperday = (TextView) view.findViewById(R.id.tvhrsperday);
         tvdob = (TextView) view.findViewById(R.id.tvdob);
         btnlogout = (Button) view.findViewById(R.id.btnlogout);
-        if (EmsConstants.isfromemployeedetails){
+        if (EmsConstants.isfromemployeedetails) {
             btnlogout.setVisibility(View.INVISIBLE);
         }
         btnlogout.setOnClickListener(new View.OnClickListener() {
@@ -89,96 +90,102 @@ TextView tvhrsperday,tvdob;
 
         return view;
     }
-void displaydetails(){
-    final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
-    int empid=Integer.parseInt(SharedPreferenceUtils
-            .getInstance(getActivity())
-            .getSplashCacheItem(
-                    EmsConstants.employeeId).toString().trim());
 
-    if (SharedPreferenceUtils
-            .getInstance(getActivity())
-            .getSplashCacheItem(
-                    EmsConstants.rolename) != null && SharedPreferenceUtils
-            .getInstance(getActivity())
-            .getSplashCacheItem(
-                    EmsConstants.rolename).equals("Manager")) {
-        empid = Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.childEmployeeId).toString().trim());
-    }else {
-        empid = Integer.parseInt(SharedPreferenceUtils
+    void displaydetails() {
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+        int empid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
-    }
-    Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
-    listCall.enqueue(new Callback<EmployeeDetails>() {
-        @Override
-        public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
-            if (loading.isShowing()) {
-                loading.dismiss();
-            }
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.childEmployeeId).toString().trim());
+        } else {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
+        }
+        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
-            if (response != null && !response.isSuccessful() && response.errorBody() != null) {
-                try {
-                    String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
-                    Log.e(TAG, "onResponse: " + errorMessage);
-                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    Log.e(TAG, "onResponse: IOException while parsing response error", e);
+        listCall.enqueue(new Callback<EmployeeDetails>() {
+            @Override
+            public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
                 }
-            } else if (response != null && response.isSuccessful()) {
-                //DO SUCCESS HANDLING HERE
-                employeeDetails = response.body();
-                Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
-                setEmployeeDetails();
-            }
-        }
 
-        @Override
-        public void onFailure(Call<EmployeeDetails> call, Throwable t) {
-            if (loading.isShowing()) {
-                loading.dismiss();
-            }
-            Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
-                    "Please try again after some time.", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
-        }
-    });
-    loading.setCancelable(false);
-    loading.setIndeterminate(true);
-    loading.show();
-}
-    void setEmployeeDetails(){
-
-        tvemployeefullname.setText(employeeDetails.getEmployeeName());
-        tvusername.setText(employeeDetails.getEmployeeCode());
-        tvemail.setText(employeeDetails.getEmailId());
-        tvmobile.setText(employeeDetails.getContactNumber());
-        tvaddress.setText(employeeDetails.getAddress1()+employeeDetails.getAddress2());
-        StringBuilder employeelocation=new StringBuilder();
-        for (int i=0;i<employeeDetails.getEmployeeLocation().size();i++){
-            if (i==0){
-            employeelocation.append(employeeDetails.getEmployeeLocation().get(i).getLocationName());
-            }else{
-                employeelocation.append(", "+employeeDetails.getEmployeeLocation().get(i).getLocationName());
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                        Log.e(TAG, "onResponse: " + errorMessage);
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                    }
+                } else if (response != null && response.isSuccessful()) {
+                    //DO SUCCESS HANDLING HERE
+                    employeeDetails = response.body();
+                    Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
+                    setEmployeeDetails();
+                }
             }
 
+            @Override
+            public void onFailure(Call<EmployeeDetails> call, Throwable t) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+                Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
+                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+            }
+        });
+        loading.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.show();
+    }
+
+    void setEmployeeDetails() {
+
+        tvid.setText(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+        tvemployeefullname.setText(employeeDetails.getFirstName()+" "+employeeDetails.getLastName());
+        tvusername.setText(employeeDetails.getUserName());
+        tvemail.setText(employeeDetails.getEmailid());
+        tvmobile.setText(employeeDetails.getContactNo());
+        tvaddress.setText(employeeDetails.getStreet()+"," + employeeDetails.getCity()+","+employeeDetails.getCountry());
+       /* StringBuilder employeelocation = new StringBuilder();
+        for (int i = 0; i < employeeDetails.getEmployeeLocation().size(); i++) {
+            if (i == 0) {
+                employeelocation.append(employeeDetails.getEmployeeLocation().get(i).getLocationName());
+            } else {
+                employeelocation.append(", " + employeeDetails.getEmployeeLocation().get(i).getLocationName());
+            }
+
         }
-        tvlocation.setText(employeelocation.toString());
+        tvlocation.setText(employeelocation.toString());*/
         tvcity.setText(employeeDetails.getCity());
-        tvstate.setText(employeeDetails.getStateName());
-        tvpincode.setText(String.valueOf(employeeDetails.getPostalCode()));
-        tvdob.setText(employeeDetails.getdOB());
-        tvgender.setText(employeeDetails.getGender());
-        tvjoiningdate.setText(employeeDetails.getJoiningDate());
-        tvposition.setText(employeeDetails.getPositionName());
-        tvbusinessarea.setText(employeeDetails.getBusinessAreaName());
-        tvsubbusiness.setText(employeeDetails.getSubBusinessAreaName());
-        tvhrsperday.setText(employeeDetails.getHoursPerDay());
+        tvstate.setText(employeeDetails.getState());
+        tvpincode.setText(String.valueOf(employeeDetails.getPincode()));
+        tvdob.setText(employeeDetails.getDateOfBirth());
+        tvgender.setText(employeeDetails.getReportingManagerName());
+        tvjoiningdate.setText(employeeDetails.getDateOfJoining());
+        tvposition.setText(employeeDetails.getDesignation());
+       // tvbusinessarea.setText(employeeDetails.getReportingManagerId());
+      /*  tvsubbusiness.setText(employeeDetails.getSubBusinessAreaName());
+        tvhrsperday.setText(employeeDetails.getHoursPerDay());*/
 
     }
 }

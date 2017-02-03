@@ -27,20 +27,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tek.ems.R;
-import com.tek.ems.emsconstants.EmsConstants;
-import com.tek.ems.emsconstants.SharedPreferenceUtils;
-import com.tek.ems.model.BreakDetails;
-import com.tek.ems.model.InsertBreakIn;
-import com.tek.ems.model.InsertClockIn;
-import com.tek.ems.recyclerviewadapter.BreaklistAdapter;
-import com.tek.ems.services.EMSService;
-import com.tek.ems.services.ServiceGenerator;
-import com.tek.ems.utils.LocationUtility;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -50,13 +39,21 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.tek.ems.R;
+import com.tek.ems.emsconstants.EmsConstants;
+import com.tek.ems.emsconstants.SharedPreferenceUtils;
+import com.tek.ems.model.BreakDetails;
+import com.tek.ems.model.InsertBreakIn;
+import com.tek.ems.model.InsertClockIn;
+import com.tek.ems.services.EMSService;
+import com.tek.ems.services.ServiceGenerator;
+import com.tek.ems.utils.LocationUtility;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,7 +81,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     protected LocationManager locationManager;
     protected LocationListener locationListener;
 
-    ListView listView_breakDetails;
+    //ListView listView_breakDetails;
     String provider;
     protected String latitude, longitude;
     protected boolean gps_enabled, network_enabled;
@@ -99,14 +96,14 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     InsertBreakIn insertBreakIn = new InsertBreakIn();
     InsertBreakIn insertBreakOut = new InsertBreakIn();
     String formattedDate;
-
+    int flag=1;
     String shardedvalue = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.checkinfragment, container, false);
         edcomments = (EditText) view.findViewById(R.id.edcomments);
-        listView_breakDetails = (ListView) view.findViewById(R.id.listView_breakDetails);
+      //  listView_breakDetails = (ListView) view.findViewById(listView_breakDetails);
         tvcheckintime = (TextView) view.findViewById(R.id.tvcheckintime);
         tvcurrentdate = (TextView) view.findViewById(R.id.tvcurrentdate);
         tvcheckoutcurrentdate = (TextView) view.findViewById(R.id.tvcheckoutcurrentdate);
@@ -254,7 +251,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.checkinTime).toString().trim().isEmpty()) {
-            getbreaktimes();
+
             layout_checkin.setVisibility(View.GONE);
             layout_checkout.setVisibility(View.VISIBLE);
             ll_breaktime_second.setVisibility(View.GONE);
@@ -274,82 +271,41 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
     }
 
 
-
-
-    public void updateCheckin() {
-
-        insertClockIn.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()));
-        insertClockIn.setWorkingDate(formattedDate);
-        insertClockIn.setCheckInLattitude(lat);
-        insertClockIn.setCheckInLongitude(lng);
-        insertClockIn.setCheckIn(tvcurrenttime.getText().toString().trim());
-
-    }
-
-    public void updateCheckOut() {
+   /* public void updateCheckOut() {
         int timesheetid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.timesheetId).toString().trim());
         insertClockIn.setTimeSheetId(timesheetid);
-        insertClockIn.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
+        insertClockIn.setTimeSheetId(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()));
-        insertClockIn.setWorkingDate(formattedDate);
-        insertClockIn.setCheckOutLattitude(lat);
-        insertClockIn.setCheckOutLongitude(lng);
-        insertClockIn.setCheckOut(tvtotalahrs.getText().toString().trim());
+                        EmsConstants.timesheetId).toString().trim()));
+    }*/
 
-    }
 
-    public void updatebreakout() {
-        int timesheetid = Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.timesheetId).toString().trim());
-        int breakinid = Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.breakinid).toString().trim());
-        insertBreakOut.setTimeSheetId(timesheetid);
-        insertBreakOut.setBreakId(breakinid);
-        insertBreakOut.setComments(edcomments.getText().toString());
-        insertBreakOut.setBreakOutOutLattitude(lat);
-        insertBreakOut.setBreakOutLongitude(lng);
-        insertBreakOut.setBreakOut(tvcurrenttime.getText().toString().trim());
-    }
-
-    public void updateBreakin() {
-        int timesheetid = Integer.parseInt(SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.timesheetId).toString().trim());
-        insertBreakIn.setTimeSheetId(timesheetid);
-
-        insertBreakIn.setComments(edcomments.getText().toString());
-        insertBreakIn.setBreakInLattitude(lat);
-        insertBreakIn.setBreakInLongitude(lng);
-        insertBreakIn.setBreakIn(tvbreaktime.getText().toString().trim());
-    }
 
     public void checkIn(boolean checkin) {
         {
 
+            int empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
             final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
 
             EMSService service = ServiceGenerator.createService();
             Call<InsertClockIn> insertClockInCall;
             if (checkin) {
-                updateCheckin();
-                insertClockInCall = service.insertClockIn(insertClockIn);
+                flag=1;
+                insertClockInCall= service.insertClockIn(empid,lat,lng,edcomments.getText().toString().trim(),"mobile",flag);
             } else {
-                updateCheckOut();
-                insertClockInCall = service.updateClockOut(insertClockIn);
-
+                int timesheetid = Integer.parseInt(SharedPreferenceUtils
+                        .getInstance(getActivity())
+                        .getSplashCacheItem(
+                                EmsConstants.timesheetId).toString().trim());
+                flag=2;
+                insertClockInCall= service.insertClockIn(timesheetid,lat,lng,edcomments.getText().toString().trim(),"mobile",flag);
                 SharedPreferenceUtils
                         .getInstance(getActivity())
                         .editSplash()
@@ -389,6 +345,19 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                                     .editSplash()
                                     .addSplashCacheItem(EmsConstants.timesheetId,
                                             String.valueOf(emp.getTimeSheetId())).commitSplash();
+                            if (flag==1){
+                            SharedPreferenceUtils
+                                    .getInstance(getActivity())
+                                    .editSplash()
+                                    .addSplashCacheItem(EmsConstants.checkinTime,
+                                            emp.getCheckinTime()).commitSplash();}else {
+                                SharedPreferenceUtils
+                                        .getInstance(getActivity())
+                                        .editSplash()
+                                        .addSplashCacheItem(EmsConstants.checkinTime,
+                                                "").commitSplash();
+                            }
+
                         } else {
                             new AlertDialog.Builder(getContext())
                                     .setTitle("InsertClockIn Creation Failed!")
@@ -419,217 +388,17 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
         }
     }
-    public void breakOut() {
-        {
 
-            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
 
-            EMSService service = ServiceGenerator.createService();
-            Call<InsertBreakIn> insertClockInCall;
-
-                updatebreakout();
-                insertClockInCall = service.updateBreakOut(insertBreakOut);
-
-            insertClockInCall.enqueue(new Callback<InsertBreakIn>() {
-                @Override
-                public void onResponse(Call<InsertBreakIn> call, Response<InsertBreakIn> response) {
-                    if (loading.isShowing()) {
-                        loading.dismiss();
-                    }
-
-                    if (response != null && !response.isSuccessful() && response.errorBody() != null) {
-                        try {
-                            String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
-                            Log.e(TAG, "onResponse: " + errorMessage);
-                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            Log.e(TAG, "onResponse: IOException while parsing response error", e);
-                        }
-                    } else if (response != null && response.isSuccessful()) {
-//DO SUCCESS HANDLING HERE
-
-                        InsertBreakIn emp = response.body();
-                        if (emp != null) {
-                            Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                            SharedPreferenceUtils
-                                    .getInstance(getActivity())
-                                    .editSplash()
-                                    .addSplashCacheItem(EmsConstants.breakinid,
-                                            String.valueOf(emp.getBreakId())).commitSplash();
-                            edcomments.setText("");
-                        } else {
-                            new AlertDialog.Builder(getContext())
-                                    .setTitle("InsertClockIn Creation Failed!")
-                                    .setMessage("We are unable to save your InsertClockInin our database this time.\n\n" +
-                                            "Please try validating your parameters once or Try again later.")
-                                    .setPositiveButton(R.string.ok, null)
-                                    .show();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<InsertBreakIn> call, Throwable t) {
-                    if (loading.isShowing()) {
-                        loading.dismiss();
-                    }
-                    Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
-                            "Please try again after some time.", Toast.LENGTH_SHORT).show();
-                    if (t != null) {
-                        Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
-                    } else {
-                    }
-                }
-            });
-            loading.setCancelable(false);
-            loading.setIndeterminate(true);
-            loading.show();
-
-        }
-    }
-    public void breakIn(boolean breakin) {
-        {
-
-            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Please wait...", false, false);
-
-            EMSService service = ServiceGenerator.createService();
-            Call<InsertBreakIn> insertClockInCall;
-            if (breakin) {
-                updateBreakin();
-                insertClockInCall = service.InsertBreakIn(insertBreakIn);
-            } else {
-                updatebreakout();
-                insertClockInCall = service.updateBreakOut(insertBreakIn);
-            }
-            insertClockInCall.enqueue(new Callback<InsertBreakIn>() {
-                @Override
-                public void onResponse(Call<InsertBreakIn> call, Response<InsertBreakIn> response) {
-                    if (loading.isShowing()) {
-                        loading.dismiss();
-                    }
-
-                    if (response != null && !response.isSuccessful() && response.errorBody() != null) {
-                        try {
-                            String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
-                            Log.e(TAG, "onResponse: " + errorMessage);
-                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            Log.e(TAG, "onResponse: IOException while parsing response error", e);
-                        }
-                    } else if (response != null && response.isSuccessful()) {
-//DO SUCCESS HANDLING HERE
-
-                        InsertBreakIn emp = response.body();
-                        if (emp != null) {
-                            Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                            SharedPreferenceUtils
-                                    .getInstance(getActivity())
-                                    .editSplash()
-                                    .addSplashCacheItem(EmsConstants.breakinid,
-                                            String.valueOf(emp.getBreakId())).commitSplash();
-                            edcomments.setText("");
-                        } else {
-                            new AlertDialog.Builder(getContext())
-                                    .setTitle("InsertClockIn Creation Failed!")
-                                    .setMessage("We are unable to save your InsertClockInin our database this time.\n\n" +
-                                            "Please try validating your parameters once or Try again later.")
-                                    .setPositiveButton(R.string.ok, null)
-                                    .show();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<InsertBreakIn> call, Throwable t) {
-                    if (loading.isShowing()) {
-                        loading.dismiss();
-                    }
-                    Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
-                            "Please try again after some time.", Toast.LENGTH_SHORT).show();
-                    if (t != null) {
-                        Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
-                    } else {
-                    }
-                }
-            });
-            loading.setCancelable(false);
-            loading.setIndeterminate(true);
-            loading.show();
-
-        }
-    }
-
-    public void getbreaktimes() {
-        {
-
-            final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
-            int empid = Integer.parseInt(SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim());
-            int timesheetid = 1;
-            if (!EmsConstants.timesheetId.trim().isEmpty()) {
-                timesheetid = Integer.parseInt(SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .getSplashCacheItem(
-                                EmsConstants.timesheetId).toString().trim());
-            } else {
-                timesheetid = 0;
-            }
-
-            //  int timesheetid=1;
-            Call<List<BreakDetails>> listCall = ServiceGenerator.createService().getBreakDetails(timesheetid, empid);
-
-            listCall.enqueue(new Callback<List<BreakDetails>>() {
-                @Override
-                public void onResponse(Call<List<BreakDetails>> call, Response<List<BreakDetails>> response) {
-                    if (loading.isShowing()) {
-                        loading.dismiss();
-                    }
-
-                    if (response != null && !response.isSuccessful() && response.errorBody() != null) {
-                        try {
-                            String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
-                            Log.e(TAG, "onResponse: " + errorMessage);
-                            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            Log.e(TAG, "onResponse: IOException while parsing response error", e);
-                        }
-                    } else if (response != null && response.isSuccessful()) {
-                        //DO SUCCESS HANDLING HERE
-                        //  breakDetails = response.body();
-
-                        List<BreakDetails> breakDetails = response.body();
-                        Log.i(TAG, "onResponse: Fetched " + breakDetails + " PropertyTypes.");
-                        setBreakDetails(breakDetails);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<BreakDetails>> call, Throwable t) {
-                    if (loading.isShowing()) {
-                        loading.dismiss();
-                    }
-                    Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
-                            "Please try again after some time.", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
-                }
-            });
-            loading.setCancelable(false);
-            loading.setIndeterminate(true);
-            loading.show();
-        }
-    }
-
-    void setBreakDetails(List<BreakDetails> breakDetails) {
+  /*  void setBreakDetails(List<BreakDetails> breakDetails) {
         if (breakDetails != null && breakDetails.size() > 0) {
             //  ll_breaktime_second.setVisibility(View.GONE);
             BreaklistAdapter adapter = new BreaklistAdapter(getActivity(), breakDetails);
-            listView_breakDetails.setAdapter(adapter);
+          //  listView_breakDetails.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
         }
-    }
+    }*/
 
     public void doWork() {
         getActivity().runOnUiThread(new Runnable() {
@@ -694,11 +463,11 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
 
 
                 } else {
-                    SharedPreferenceUtils
+                    /*SharedPreferenceUtils
                             .getInstance(getActivity())
                             .editSplash()
                             .addSplashCacheItem(EmsConstants.checkinTime,
-                                    tvcurrenttime.getText().toString().trim()).commitSplash();
+                                    tvcurrenttime.getText().toString().trim()).commitSplash();*/
                     tvcheckintime.setText(tvcurrenttime.getText().toString().trim());
                     layout_checkin.setVisibility(View.GONE);
                     layout_checkout.setVisibility(View.VISIBLE);
@@ -738,7 +507,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                     Toast.makeText(getActivity(), "Please Enable GPS get Current Location", Toast.LENGTH_SHORT).show();
                 } else {
                    // breakIn(false);
-                    breakOut();
+                    //breakOut();
 
                     if (SharedPreferenceUtils
                             .getInstance(getActivity())
@@ -747,7 +516,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                             .getInstance(getActivity())
                             .getSplashCacheItem(
                                     EmsConstants.timesheetId).toString().trim().isEmpty()) {
-                        getbreaktimes();
+
                         ll_breaktime_second.setVisibility(View.VISIBLE);
                         layout_checkin.setVisibility(View.GONE);
                         layout_checkout.setVisibility(View.VISIBLE);
@@ -766,7 +535,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 if (String.valueOf(lat).equals("0.0")) {
                     Toast.makeText(getActivity(), "Please Enable GPS get Current Location", Toast.LENGTH_SHORT).show();
                 } else {
-                    breakIn(true);
+                    //breakIn(true);
                 }
                 SharedPreferenceUtils
                         .getInstance(getActivity())
@@ -776,7 +545,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
                 ll_startbreak.setVisibility(View.GONE);
                 ll_breaktime.setVisibility(View.VISIBLE);
 
-                getbreaktimes();
+
                 ll_breaktime_second.setVisibility(View.GONE);
                 break;
         }

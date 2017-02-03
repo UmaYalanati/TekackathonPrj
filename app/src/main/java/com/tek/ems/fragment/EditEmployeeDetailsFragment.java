@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.mlsdev.rximagepicker.RxImagePicker;
+import com.mlsdev.rximagepicker.Sources;
 import com.tek.ems.R;
 import com.tek.ems.callback.NavigationDrawerCallback;
 import com.tek.ems.emsconstants.EmsConstants;
@@ -26,9 +28,6 @@ import com.tek.ems.emsconstants.SharedPreferenceUtils;
 import com.tek.ems.model.EmployeeDetails;
 import com.tek.ems.services.EMSService;
 import com.tek.ems.services.ServiceGenerator;
-import com.mlsdev.rximagepicker.RxImagePicker;
-import com.mlsdev.rximagepicker.Sources;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -55,8 +54,8 @@ public class EditEmployeeDetailsFragment extends Fragment {
     de.hdodenhof.circleimageview.CircleImageView circleImageView;
     EmployeeDetails employeeDetails = new EmployeeDetails();
     Button btnupdateemployee;
-    TextInputEditText ed_gender;
-    TextInputEditText ed_Name, ed_NickName, ed_email, ed_dob, ed_mobilenor, ed_homenor, ed_address, ed_address2, ed_city, ed_state, ed_zipcode;
+
+    TextInputEditText ed_gender,ed_Name, ed_NickName, ed_email, ed_dob, ed_mobilenor, ed_homenor, ed_address, ed_city, ed_state, ed_zipcode;
 
     TextInputEditText ed_joiningDate, ed_positionName, ed_businessAreaName, ed_subBusinessAreaName, ed_hoursPerDay;
 
@@ -74,11 +73,10 @@ public class EditEmployeeDetailsFragment extends Fragment {
         }
 
         circleImageView = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.circleImageView);
-        ed_gender = (TextInputEditText) view.findViewById(R.id.ed_gender);
         btnupdateemployee = (Button) view.findViewById(R.id.btnupdateemployee);
         ed_Name = (TextInputEditText) view.findViewById(R.id.ed_Name);
+        ed_gender = (TextInputEditText) view.findViewById(R.id.ed_gender);
         ed_NickName = (TextInputEditText) view.findViewById(R.id.ed_NickName);
-        ed_address2 = (TextInputEditText) view.findViewById(R.id.ed_address2);
         ed_email = (TextInputEditText) view.findViewById(R.id.ed_email);
         ed_dob = (TextInputEditText) view.findViewById(R.id.ed_dob);
         ed_mobilenor = (TextInputEditText) view.findViewById(R.id.ed_mobilenor);
@@ -181,29 +179,25 @@ public class EditEmployeeDetailsFragment extends Fragment {
 
     public void setEmployeeDetails() {
         // ed_Name,ed_NickName,ed_email,ed_username,ed_mobilenor,ed_homenor,ed_address,ed_city,ed_state,ed_zipcode
-        ed_Name.setText(employeeDetails.getEmployeeName());
-        ed_email.setText(employeeDetails.getEmailId());
-        ed_mobilenor.setText(employeeDetails.getContactNumber());
-        ed_address.setText(employeeDetails.getAddress1());
-        ed_address2.setText(employeeDetails.getAddress2());
+        ed_Name.setText(employeeDetails.getFirstName());
+        ed_email.setText(employeeDetails.getEmailid());
+        ed_mobilenor.setText(employeeDetails.getContactNo());
         ed_city.setText(employeeDetails.getCity());
-        ed_state.setText(employeeDetails.getStateName());
-        ed_zipcode.setText(String.valueOf(employeeDetails.getPostalCode()));
-        ed_dob.setText(employeeDetails.getdOB());
-        ed_gender.setText(employeeDetails.getGender());
-        ed_joiningDate.setText(employeeDetails.getJoiningDate());
-        ed_positionName.setText(employeeDetails.getPositionName());
-        ed_businessAreaName.setText(employeeDetails.getBusinessAreaName());
-        ed_subBusinessAreaName.setText(employeeDetails.getSubBusinessAreaName());
-        ed_hoursPerDay.setText(employeeDetails.getHoursPerDay());
-        if (employeeDetails.getPhotoPath() != null && employeeDetails.getPhotoPath().contains("www")) {
+        ed_state.setText(employeeDetails.getState());
+        ed_zipcode.setText(String.valueOf(employeeDetails.getPincode()));
+        ed_dob.setText(employeeDetails.getDateOfBirth());
+        ed_joiningDate.setText(employeeDetails.getDateOfJoining());
+        ed_positionName.setText(employeeDetails.getDesignation());
+        ed_hoursPerDay.setText("8h");
+        ed_gender.setText(employeeDetails.getReportingManagerName());
+      /*  if (employeeDetails.getPhotoPath() != null && employeeDetails.getPhotoPath().contains("www")) {
             Picasso.with(getActivity())
                     .load("http://" + employeeDetails.getPhotoPath()).into(circleImageView);
             //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
-        }/* else {
+        } else {
       circleImageView.setBackgroundResource(R.drawable.male_profilepic);
-          *//*  Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
-            circleImageView.setImageDrawable(drawable);*//*
+            Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.ic_dashboard_profile_pic, getContext().getTheme());
+            circleImageView.setImageDrawable(drawable);
     }*/
 
     }
@@ -214,25 +208,24 @@ public class EditEmployeeDetailsFragment extends Fragment {
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
-        employeeDetails.setModifiedBy(empid);
-        employeeDetails.setEmployeeName(ed_Name.getText().toString().trim());
-        employeeDetails.setEmailId(ed_email.getText().toString().trim());
-        employeeDetails.setContactNumber(ed_mobilenor.getText().toString().trim());
-        employeeDetails.setAddress1(ed_address.getText().toString().trim());
-        employeeDetails.setAddress2(ed_address2.getText().toString().trim());
-        employeeDetails.setdOB(ed_dob.getText().toString().trim());
+        employeeDetails.setEmployeeId(empid);
+        employeeDetails.setFirstName(ed_Name.getText().toString().trim());
+        employeeDetails.setEmailid(ed_email.getText().toString().trim());
+        employeeDetails.setContactNo(ed_mobilenor.getText().toString().trim());
+      /*  employeeDetails.setAddress1(ed_address.getText().toString().trim());
+        employeeDetails.setAddress2(ed_address2.getText().toString().trim());*/
+        employeeDetails.setDateOfBirth(ed_dob.getText().toString().trim());
         employeeDetails.setCity(ed_city.getText().toString().trim());
-        employeeDetails.setStateName(ed_state.getText().toString().trim());
-        employeeDetails.setGender(ed_gender.getText().toString().trim());
+        employeeDetails.setState(ed_state.getText().toString().trim());
+        employeeDetails.setReportingManagerName(ed_gender.getText().toString().trim());
         if (!ed_zipcode.getText().toString().trim().isEmpty())
-            employeeDetails.setPostalCode(Integer.parseInt(ed_zipcode.getText().toString().trim()));
+            employeeDetails.setPincode(ed_zipcode.getText().toString().trim());
 
 
-        employeeDetails.setJoiningDate(ed_joiningDate.getText().toString().trim());
-        employeeDetails.setPositionName(ed_positionName.getText().toString().trim());
-        employeeDetails.setBusinessAreaName(ed_businessAreaName.getText().toString().trim());
-        employeeDetails.setSubBusinessAreaName(ed_subBusinessAreaName.getText().toString().trim());
-        employeeDetails.setHoursPerDay(ed_hoursPerDay.getText().toString().trim());
+        employeeDetails.setDateOfJoining(ed_joiningDate.getText().toString().trim());
+        employeeDetails.setDateOfJoining(ed_positionName.getText().toString().trim());
+
+       // employeeDetails.setHoursPerDay(ed_hoursPerDay.getText().toString().trim());
 
 
     }
@@ -242,7 +235,11 @@ public class EditEmployeeDetailsFragment extends Fragment {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading Data", "Please wait...", false, false);
 
         EMSService service = ServiceGenerator.createService();
-        Call<EmployeeDetails> employeeDetailsCall = service.updateEmployee(employeeDetails);
+        int empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+        Call<EmployeeDetails> employeeDetailsCall = service.updateEmployee(empid,employeeDetails);
         employeeDetailsCall.enqueue(new Callback<EmployeeDetails>() {
             @Override
             public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
@@ -268,25 +265,25 @@ public class EditEmployeeDetailsFragment extends Fragment {
                             .getInstance(getActivity())
                             .editSplash()
                             .addSplashCacheItem(EmsConstants.employeename,
-                                    String.valueOf(emp.getEmployeeName())).commitSplash();
+                                    String.valueOf(emp.getFirstName())).commitSplash();
 
                     SharedPreferenceUtils
                             .getInstance(getActivity())
                             .editSplash()
                             .addSplashCacheItem(EmsConstants.emaailid,
-                                    String.valueOf(emp.getEmailId())).commitSplash();
+                                    String.valueOf(emp.getEmailid())).commitSplash();
 
-                    SharedPreferenceUtils
+                  /*  SharedPreferenceUtils
                             .getInstance(getActivity())
                             .editSplash()
                             .addSplashCacheItem(EmsConstants.photoPath,
-                                    String.valueOf(emp.getPhotoPath())).commitSplash();
+                                    String.valueOf(emp.getPhotoPath())).commitSplash();*/
 
 
                     if (emp != null) {
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         new AlertDialog.Builder(getContext())
-                                .setTitle("EmployeeDetails Uploaded Successfully!")
+                                .setTitle("EmployeeDetails Updated Successfully!")
                                 .setMessage("")
                                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
@@ -365,7 +362,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                                 InputStream iStream = getActivity().getContentResolver().openInputStream(uri);
 //                                byte[] bytes = ImageCompressor.compressImage(getBytes(iStream));
                                 byte[] bytes = getBytes(iStream);
-                                employeeDetails.setByteArrayPhoto(bytes);
+                            //    employeeDetails.setByteArrayPhoto(bytes);
                                 updateNavigationDrawer(bytes);
                                 //  getHoarding().setHoardingImage(bytes);
                             } catch (IOException e) {
@@ -389,7 +386,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                                 iStream = getActivity().getContentResolver().openInputStream(uri);
 //                                byte[] bytes = ImageCompressor.compressImage(getBytes(iStream));
                                 byte[] bytes = getBytes(iStream);
-                                employeeDetails.setByteArrayPhoto(bytes);
+                             //   employeeDetails.setByteArrayPhoto(bytes);
                                 updateNavigationDrawer(bytes);
                                 //  getHoarding().setHoardingImage(bytes);
                             } catch (FileNotFoundException e) {

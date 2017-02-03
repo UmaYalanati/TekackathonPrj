@@ -1,227 +1,134 @@
 package com.tek.ems.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by uyalanat on 24-10-2016.
  */
-//@JsonInclude(JsonInclude.Include.NON_EMPTY)
+
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployeeDetails {
-
-    @JsonProperty("EmployeeId")
+    @JsonProperty("employeeId")
     private int employeeId;
 
-    @JsonProperty("PropertyOwnerName")
-    private String propertyOwnerName;
+    @JsonProperty("firstName")
+    private String firstName;
 
-    @JsonProperty("EmployeeCode")
-    private String employeeCode;
+    @JsonProperty("lastName")
+    private String lastName;
 
-    @JsonProperty("EmployeeName")
-    private String employeeName;
+    @JsonProperty("userName")
+    private String userName;
 
-    @JsonProperty("EmailId")
-    private String emailId;
+    @JsonProperty("password")
+    private String password;
 
-    @JsonProperty("ContactNumber")
-    private String contactNumber;
+    @JsonProperty("street")
+    private String street;
 
-    @JsonProperty("Gender")
-    private String gender;
-
-    @JsonProperty("DOB")
-    private String dOB;
-
-    @JsonProperty("Address1")
-    private String address1;
-
-    @JsonProperty("Address2")
-    private String address2;
-
-    @JsonProperty("City")
+    @JsonProperty("city")
     private String city;
 
-    @JsonProperty("StateId")
-    private int stateId;
+    @JsonProperty("state")
+    private String state;
 
-    @JsonProperty("PostalCode")
-    private int postalCode;
+    @JsonProperty("pincode")
+    private String pincode;
 
-    @JsonProperty("PositionId")
-    private int positionId;
+    @JsonProperty("country")
+    private String country;
 
-    @JsonProperty("BusinessAreaId")
-    private int businessAreaId;
+    @JsonProperty("emailid")
+    private String emailid;
 
-    @JsonProperty("SubBusinessAreaId")
-    private int subBusinessAreaId;
+    @JsonProperty("contactNo")
+    private String contactNo;
 
-    @JsonProperty("ScheduleId")
-    private int scheduleId;
+    @JsonProperty("dateOfBirth")
+    private String dateOfBirth;
 
-    @JsonProperty("Wage")
-    private int wage;
+    @JsonProperty("designation")
+    private String designation;
 
-    @JsonProperty("HoursPerDay")
-    private String hoursPerDay;
+    @JsonProperty("dateOfJoining")
+    private String dateOfJoining;
 
-    @JsonProperty("JoiningDate")
-    private String joiningDate;
+    @JsonProperty("yearsOfExperience")
+    private String yearsOfExperience;
 
-    @JsonProperty("Status")
-    private Boolean status;
+    @JsonProperty("reportingManagerId")
+    private int reportingManagerId;
 
-    @JsonProperty("StateName")
-    private String stateName;
+    @JsonProperty("casualLeaves")
+    private int casualLeaves;
 
-    @JsonProperty("PositionName")
-    private String positionName;
+    @JsonProperty("earnedLeaves")
+    private int earnedLeaves;
 
-    @JsonProperty("BusinessAreaName")
-    private String businessAreaName;
+    @JsonProperty("sickLeaves")
+    private int sickLeaves;
 
-    @JsonProperty("SubBusinessAreaName")
-    private String SubBusinessAreaName;
+    @JsonProperty("compOffs")
+    private int compOffs;
 
-    @JsonProperty("ScheduleName")
-    private String scheduleName;
+    @JsonProperty("sharedLeaves")
+    private int sharedLeaves;
 
-    @JsonProperty("Photo")
-    private String photo;
+    @JsonProperty("createdDate")
+    private String createdDate;
+
+    @JsonProperty("companyName")
+    private String companyName;
+
+    @JsonProperty("deviceId")
+    private String deviceId;
+
+    @JsonProperty("reportingManagerName")
+    private String reportingManagerName;
 
     @Override
     public String toString() {
         return "EmployeeDetails{" +
                 "employeeId=" + employeeId +
-                ", propertyOwnerName='" + propertyOwnerName + '\'' +
-                ", employeeCode='" + employeeCode + '\'' +
-                ", employeeName='" + employeeName + '\'' +
-                ", emailId='" + emailId + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                ", gender='" + gender + '\'' +
-                ", dOB='" + dOB + '\'' +
-                ", address1='" + address1 + '\'' +
-                ", address2='" + address2 + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
-                ", stateId=" + stateId +
-                ", postalCode=" + postalCode +
-                ", positionId=" + positionId +
-                ", businessAreaId=" + businessAreaId +
-                ", subBusinessAreaId=" + subBusinessAreaId +
-                ", scheduleId=" + scheduleId +
-                ", wage=" + wage +
-                ", hoursPerDay='" + hoursPerDay + '\'' +
-                ", joiningDate='" + joiningDate + '\'' +
-                ", status=" + status +
-                ", stateName='" + stateName + '\'' +
-                ", positionName='" + positionName + '\'' +
-                ", businessAreaName='" + businessAreaName + '\'' +
-                ", SubBusinessAreaName='" + SubBusinessAreaName + '\'' +
-                ", scheduleName='" + scheduleName + '\'' +
-                ", photo='" + photo + '\'' +
-                ", employeeLocation=" + employeeLocation +
+                ", state='" + state + '\'' +
+                ", pincode='" + pincode + '\'' +
+                ", country='" + country + '\'' +
+                ", emailid='" + emailid + '\'' +
+                ", contactNo='" + contactNo + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", designation='" + designation + '\'' +
+                ", dateOfJoining='" + dateOfJoining + '\'' +
+                ", yearsOfExperience='" + yearsOfExperience + '\'' +
+                ", reportingManagerId=" + reportingManagerId +
+                ", casualLeaves=" + casualLeaves +
+                ", earnedLeaves=" + earnedLeaves +
+                ", sickLeaves=" + sickLeaves +
+                ", compOffs=" + compOffs +
+                ", sharedLeaves=" + sharedLeaves +
                 ", createdDate='" + createdDate + '\'' +
-                ", createdBy=" + createdBy +
-                ", modifiedDate='" + modifiedDate + '\'' +
-                ", modifiedBy=" + modifiedBy +
-                ", locationIds='" + locationIds + '\'' +
-                ", photoPath='" + photoPath + '\'' +
-                ", byteArrayPhoto=" + Arrays.toString(byteArrayPhoto) +
+                ", companyName='" + companyName + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                ", reportingManagerName='" + reportingManagerName + '\'' +
                 '}';
     }
 
-    @JsonProperty("EmployeeLocation")
-    private List<EmployeeLocation> employeeLocation;
-
-    @JsonProperty("CreatedDate")
-    private String createdDate;
-
-    @JsonProperty("CreatedBy")
-    private int createdBy;
-
-    @JsonProperty("ModifiedDate")
-
-    private String modifiedDate;
-
-    public String getLocationIds() {
-        return locationIds;
+    public String getReportingManagerName() {
+        return reportingManagerName;
     }
 
-    public void setLocationIds(String locationIds) {
-        this.locationIds = locationIds;
+    public void setReportingManagerName(String reportingManagerName) {
+        this.reportingManagerName = reportingManagerName;
     }
-
-    @JsonProperty("ModifiedBy")
-
-    private int modifiedBy;
-
-@JsonProperty("LocationIds")
-    private String locationIds;
-
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public int getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public int getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(int modifiedBy) {
-        modifiedBy = modifiedBy;
-    }
-
-
-
-
-    public List<EmployeeLocation> getEmployeeLocation() {
-        return employeeLocation;
-    }
-
-    public void setEmployeeLocation(List<EmployeeLocation> employeeLocation) {
-        this.employeeLocation = employeeLocation;
-    }
-
-    public String getPhotoPath() {
-        return photoPath;
-    }
-
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
-    }
-
-    @JsonProperty("PhotoPath")
-    private String photoPath;
-
-    @JsonProperty("ByteArrayPhoto")
-    private byte[] byteArrayPhoto;
-
-   /* @JsonProperty("EmployeeLocation")
-    private JSONArray employeeLocation;*/
 
     public int getEmployeeId() {
         return employeeId;
@@ -231,76 +138,44 @@ public class EmployeeDetails {
         this.employeeId = employeeId;
     }
 
-    public String getPropertyOwnerName() {
-        return propertyOwnerName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setPropertyOwnerName(String propertyOwnerName) {
-        this.propertyOwnerName = propertyOwnerName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getEmployeeCode() {
-        return employeeCode;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getEmailId() {
-        return emailId;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+    public String getStreet() {
+        return street;
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getdOB() {
-        return dOB;
-    }
-
-    public void setdOB(String dOB) {
-        this.dOB = dOB;
-    }
-
-    public String getAddress1() {
-        return address1;
-    }
-
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getCity() {
@@ -311,148 +186,152 @@ public class EmployeeDetails {
         this.city = city;
     }
 
-    public int getStateId() {
-        return stateId;
+    public String getState() {
+        return state;
     }
 
-    public void setStateId(int stateId) {
-        this.stateId = stateId;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public int getPostalCode() {
-        return postalCode;
+    public String getPincode() {
+        return pincode;
     }
 
-    public void setPostalCode(int postalCode) {
-        this.postalCode = postalCode;
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
     }
 
-    public int getPositionId() {
-        return positionId;
+    public String getCountry() {
+        return country;
     }
 
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public int getBusinessAreaId() {
-        return businessAreaId;
+    public String getEmailid() {
+        return emailid;
     }
 
-    public void setBusinessAreaId(int businessAreaId) {
-        this.businessAreaId = businessAreaId;
+    public void setEmailid(String emailid) {
+        this.emailid = emailid;
     }
 
-    public int getSubBusinessAreaId() {
-        return subBusinessAreaId;
+    public String getContactNo() {
+        return contactNo;
     }
 
-    public void setSubBusinessAreaId(int subBusinessAreaId) {
-        this.subBusinessAreaId = subBusinessAreaId;
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
     }
 
-    public int getScheduleId() {
-        return scheduleId;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setScheduleId(int scheduleId) {
-        this.scheduleId = scheduleId;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public int getWage() {
-        return wage;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setWage(int wage) {
-        this.wage = wage;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
-    public String getHoursPerDay() {
-        return hoursPerDay;
+    public String getDateOfJoining() {
+        return dateOfJoining;
     }
 
-    public void setHoursPerDay(String hoursPerDay) {
-        this.hoursPerDay = hoursPerDay;
+    public void setDateOfJoining(String dateOfJoining) {
+        this.dateOfJoining = dateOfJoining;
     }
 
-    public String getJoiningDate() {
-        return joiningDate;
+    public String getYearsOfExperience() {
+        return yearsOfExperience;
     }
 
-    public void setJoiningDate(String joiningDate) {
-        this.joiningDate = joiningDate;
+    public void setYearsOfExperience(String yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public int getReportingManagerId() {
+        return reportingManagerId;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setReportingManagerId(int reportingManagerId) {
+        this.reportingManagerId = reportingManagerId;
     }
 
-    public String getStateName() {
-        return stateName;
+    public int getCasualLeaves() {
+        return casualLeaves;
     }
 
-    public void setStateName(String stateName) {
-        this.stateName = stateName;
+    public void setCasualLeaves(int casualLeaves) {
+        this.casualLeaves = casualLeaves;
     }
 
-    public String getPositionName() {
-        return positionName;
+    public int getEarnedLeaves() {
+        return earnedLeaves;
     }
 
-    public void setPositionName(String positionName) {
-        this.positionName = positionName;
+    public void setEarnedLeaves(int earnedLeaves) {
+        this.earnedLeaves = earnedLeaves;
     }
 
-    public String getBusinessAreaName() {
-        return businessAreaName;
+    public int getSickLeaves() {
+        return sickLeaves;
     }
 
-    public void setBusinessAreaName(String businessAreaName) {
-        this.businessAreaName = businessAreaName;
+    public void setSickLeaves(int sickLeaves) {
+        this.sickLeaves = sickLeaves;
     }
 
-    public String getSubBusinessAreaName() {
-        return SubBusinessAreaName;
+    public int getCompOffs() {
+        return compOffs;
     }
 
-    public void setSubBusinessAreaName(String subBusinessAreaName) {
-        SubBusinessAreaName = subBusinessAreaName;
+    public void setCompOffs(int compOffs) {
+        this.compOffs = compOffs;
     }
 
-    public String getScheduleName() {
-        return scheduleName;
+    public int getSharedLeaves() {
+        return sharedLeaves;
     }
 
-    public void setScheduleName(String scheduleName) {
-        this.scheduleName = scheduleName;
+    public void setSharedLeaves(int sharedLeaves) {
+        this.sharedLeaves = sharedLeaves;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public byte[] getByteArrayPhoto() {
-        return byteArrayPhoto;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setByteArrayPhoto(byte[] byteArrayPhoto) {
-        this.byteArrayPhoto = byteArrayPhoto;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
- /*   public JSONArray getEmployeeLocation() {
-        return employeeLocation;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setEmployeeLocation(JSONArray employeeLocation) {
-        this.employeeLocation = employeeLocation;
-    }*/
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+/*  @JsonProperty("ChildRoleName")
+    private String childRoleName;
 
+    @JsonProperty("ChildEmployees")
+    private List<ChildEmployees> childEmployees;*/
 }

@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.tek.ems.emsconstants.EmsConstants.empId;
+
+/*import android.util.Base64;*/
 
 
 /**
@@ -112,12 +115,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } catch (UnsupportedEncodingException e) {
 
                     }
+                   /* byte[] encodedBytes = Base64.getEncoder().encode("Test".getBytes());
+                    System.out.println("encodedBytes " + new String(encodedBytes));*/
+                    byte[] data = new byte[0];
+                    String base64 = null;
+                    try {
+                        data = passwordEditText.getText().toString().trim().getBytes("UTF-8");
+                         base64 = Base64.encodeToString(data, Base64.DEFAULT);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    String source = encodeString(passwordEditText.getText().toString().trim());
 
-                    uploadDetails(userIdEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
-                  /*  Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent_homescreen);*/
+                  /*  try {
+                        String query = URLEncoder.encode(source, "utf-8");
+                        uploadDetails(userIdEditText.getText().toString().trim(),query );
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }*/
+
+                    uploadDetails(userIdEditText.getText().toString().trim(),source.replace("%3D%0A","=") );
+
                 }
-
+                //mlalwani@teksystems.com
+                /*SendMail sm = new SendMail(getApplicationContext(), "ujain@teksystems.com", "Time and Expense", "Please Approve the Time and expense",true);
+                //Executing sendmail to send email
+                sm.execute();*/
 
                 break;
 
@@ -180,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //DO SUCCESS HANDLING HERE
 //if (response.body().)
                     final Login emp = response.body();
-                    logindetails.setChildEmployees(emp.getChildEmployees());
+                 //   logindetails.setChildEmployees(emp.getChildEmployees());
                     LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getBaseContext(), "object_prefs", 0);
                     loginComplexPreferences.putObject("object_value", emp);
                     loginComplexPreferences.commit();
@@ -202,38 +225,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.employeename,
-                                        String.valueOf(emp.getEmployeeName())).commitSplash();
+                                        String.valueOf(emp.getFirstName())).commitSplash();
 
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.emaailid,
-                                        String.valueOf(emp.getEmailId())).commitSplash();
-                        if (emp.getRoleName()!=null) {
+                                        String.valueOf(emp.getEmailid())).commitSplash();
+                   /*     if (emp.getRoleName()!=null) {
                             SharedPreferenceUtils
                                     .getInstance(LoginActivity.this)
                                     .editSplash()
                                     .addSplashCacheItem(EmsConstants.rolename,
                                             emp.getRoleName()
                                     ).commitSplash();
-                        }
-                        if (emp.getChildEmployeeId()!=0) {
+                        }*/
+                     /*   if (emp.getChildEmployeeId()!=0) {
                             SharedPreferenceUtils
                                     .getInstance(LoginActivity.this)
                                     .editSplash()
                                     .addSplashCacheItem(EmsConstants.childEmployeeId,
                                             String.valueOf(emp.getChildEmployeeId())).commitSplash();
-                        }
-                        SharedPreferenceUtils
+                        }*/
+                      /*  SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.photoPath,
-                                        String.valueOf(emp.getPhotoPath())).commitSplash();
+                                        String.valueOf(emp.getPhotoPath())).commitSplash();*/
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.organizationame,
-                                        String.valueOf(emp.getOrganizationName())).commitSplash();
+                                        String.valueOf(emp.getCompanyName())).commitSplash();
 
 
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
@@ -271,6 +294,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loading.show();
 
     }
+    private String encodeString(String s) {
+        byte[] data = new byte[0];
 
+        try {
+            data = s.getBytes("UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } finally {
+            String base64Encoded = Base64.encodeToString(data, Base64.DEFAULT);
+
+            return base64Encoded;
+
+        }
+    }
 }
 

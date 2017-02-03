@@ -64,16 +64,6 @@ android:id="@+id/tvcheckintime"
 
     </LinearLayout>
 
-    <com.tek.ems.emsconstants.NestedListView
-        android:id="@+id/listView_breakDetails"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@android:color/transparent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:scrollbars="@null"></com.tek.ems.emsconstants.NestedListView>
-
     <LinearLayout
         android:id="@+id/ll_breaktime"
         android:layout_width="match_parent"

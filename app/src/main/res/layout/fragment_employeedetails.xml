@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,9 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="6dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-
         >
 
         <LinearLayout
@@ -33,9 +32,9 @@
                 android:id="@+id/tvemployeefullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Uma yalanati"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Uma yalanati" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,9 +55,9 @@
                 android:id="@+id/tvid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="2143"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="2143" />
         </LinearLayout>
     </LinearLayout>
 
@@ -92,9 +91,9 @@
                 android:id="@+id/tvusername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="uma.yaan"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="uma.yaan" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,9 +114,9 @@
                 android:id="@+id/tvmobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="898439482934"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="898439482934" />
         </LinearLayout>
     </LinearLayout>
 
@@ -127,9 +126,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="6dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-
-        >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -139,19 +136,18 @@
             android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gender"
+                android:text="Reporting Manager"
                 android:textColor="@color/blakkish_textcolor" />
 
             <TextView
                 android:id="@+id/tvgender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xxxxx"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xxxxx" />
         </LinearLayout>
 
         <LinearLayout
@@ -162,7 +158,6 @@
             android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
@@ -172,11 +167,12 @@
                 android:id="@+id/tvemail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xyz@gmail.com"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xyz@gmail.com" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -205,9 +201,9 @@
                 android:id="@+id/tvdob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xxxxx"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xxxxx" />
         </LinearLayout>
 
         <LinearLayout
@@ -218,7 +214,6 @@
             android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Min Working Hours per day"
@@ -228,11 +223,12 @@
                 android:id="@+id/tvhrsperday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xyz@gmail.com"
+                android:text="8h"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -261,9 +257,9 @@
                 android:id="@+id/tvaddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xxxxx"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xxxxx" />
         </LinearLayout>
 
         <LinearLayout
@@ -284,11 +280,12 @@
                 android:id="@+id/tvcity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xyz@gmail.com"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xyz@gmail.com" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -317,9 +314,9 @@
                 android:id="@+id/tvstate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xxxxx"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xxxxx" />
         </LinearLayout>
 
         <LinearLayout
@@ -340,11 +337,12 @@
                 android:id="@+id/tvpincode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xyz@gmail.com"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xyz@gmail.com" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -352,8 +350,7 @@
         android:layout_marginRight="6dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-
-        >
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -373,9 +370,9 @@
                 android:id="@+id/tvbusinessarea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xxxxx"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xxxxx" />
         </LinearLayout>
 
         <LinearLayout
@@ -396,11 +393,12 @@
                 android:id="@+id/tvsubbusiness"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xyz@gmail.com"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xyz@gmail.com" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -416,7 +414,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
 
@@ -429,9 +428,9 @@
                 android:id="@+id/tvlocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xxxxx"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xxxxx" />
         </LinearLayout>
 
         <LinearLayout
@@ -452,9 +451,9 @@
                 android:id="@+id/tvjoiningdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="xyz@gmail.com"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="xyz@gmail.com" />
         </LinearLayout>
     </LinearLayout>
 
@@ -487,9 +486,9 @@
                 android:id="@+id/tvposition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Software Engineer"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Software Engineer" />
         </LinearLayout>
 
     </LinearLayout>

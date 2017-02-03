@@ -34,6 +34,10 @@ public class SplashActivity extends AppCompatActivity {
                         sleep(100);
                         if (_active) {
                             waited += 100;
+                           /* SendMail sm = new SendMail(getApplicationContext(), "uma08426@gmail.com", "Time and Expense", "Please Approve the Time and expense",true);
+
+                            //Executing sendmail to send email
+                            sm.execute();*/
                         }
                     }
                 } catch (Exception e) {

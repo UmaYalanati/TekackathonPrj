@@ -22,8 +22,6 @@ import com.tek.ems.sharedpreference.LoginComplexPreferences;
 
 import java.util.List;
 
-import static com.tek.ems.emsconstants.EmsConstants.child_Employeeid;
-
 /**
  * Created by uyalanat on 27-11-2016.
  */
@@ -60,7 +58,7 @@ public class ChildEmployeeList extends Fragment implements ItemClickListener {
         child_employee_recycler_view.setLayoutManager(recylerViewLayoutManager);
         LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
         final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
-        updateRecyclerViewForClients(currentUser.getChildEmployees());
+       // updateRecyclerViewForClients(currentUser.getChildEmployees());
         //child_employee_recycler_view.setO
         return view;
     }
@@ -69,7 +67,7 @@ public class ChildEmployeeList extends Fragment implements ItemClickListener {
     public void onClick(View view, int position) {
         LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
         final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
-        child_Employeeid=currentUser.getChildEmployees().get(position).getEmployeeId();
+        //child_Employeeid=currentUser.getChildEmployees().get(position).getEmployeeId();
         Intent i=new Intent(getActivity(), ChildEmployeeDetailsActivity.class);
         startActivity(i);
     }

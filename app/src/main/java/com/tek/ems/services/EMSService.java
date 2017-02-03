@@ -23,6 +23,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -30,11 +31,11 @@ import retrofit2.http.Query;
  */
 public interface EMSService {
 
-    @PUT("Employee/UpdateEmployee")
-    Call<EmployeeDetails> updateEmployee(@Body EmployeeDetails employeeDetails);
+    @POST("employees/update/{employeeId}")
+    Call<EmployeeDetails> updateEmployee(@Path("employeeId") int employeeId,@Body EmployeeDetails employeeDetails);
 
-    @GET("Employee/GetEmployeeById")
-    Call<EmployeeDetails> getEmployeeById(@Query("employeeId") int employeeId);
+    @GET("employees/{employeeId}")
+    Call<EmployeeDetails> getEmployeeById(@Path("employeeId") int employeeId);
 
     @GET("Leave/GetLeaveDetails")
     Call<List<LeaveDetails>> getLeaveDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom, @Query("dateTo") String dateTo, @Query("LeaveStatusId") int leaveStatusId);
@@ -42,8 +43,8 @@ public interface EMSService {
     @POST("Leave/CreateLeaveRequest")
     Call<CreateLeaveRequest> createLeaveRequest(@Body CreateLeaveRequest createLeaveRequest);
 
-    @GET("Login/GetLogin")
-    Call<Login> getLogin(@Query("UserName") String userName,@Query("Password") String password);
+    @GET("teksystems/login")
+    Call<Login> getLogin(@Query("userName") String userName,@Query(value = "password", encoded = true) String password);
 
     @PUT("Login/ChangePassword")
     Call<ChangePassword> changePassword(@Body ChangePassword changePassword);
@@ -57,8 +58,8 @@ public interface EMSService {
     @GET("InTakeMaster/GetInTakeMasterDetails")
     Call<InTakeMasterDetails> getInTakeMasterDetails();
 
-    @POST("TimeSheet/InsertClockIn")
-    Call<InsertClockIn> insertClockIn(@Body InsertClockIn insertClockIn);
+    @GET("timeandexpense/checkIn-OutTimeSheet")
+    Call<InsertClockIn> insertClockIn(@Query("id") int id,@Query("latitude") double latitude,@Query("longitude") double longitude,@Query("comments") String comments,@Query("attendanceMode") String attendanceMode,@Query("flag") int flag);
 
     @PUT("TimeSheet/UpdateClockOut")
     Call<InsertClockIn> updateClockOut(@Body InsertClockIn insertClockIn);
