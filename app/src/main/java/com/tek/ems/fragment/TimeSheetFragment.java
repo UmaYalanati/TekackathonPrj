@@ -39,6 +39,7 @@ import com.tek.ems.sharedpreference.LoginComplexPreferences;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -98,10 +99,15 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
 
         // spinner_listofsheet.setddapter(arrayAdapter);
         // LeaveStatus
-        if (inTakeMasterDetails.getLeaveStatus() != null && inTakeMasterDetails.getLeaveStatus().size() > 0) {
-            LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), inTakeMasterDetails.getLeaveStatus());
+        //if (inTakeMasterDetails.getLeaveStatus() != null && inTakeMasterDetails.getLeaveStatus().size() > 0) {
+            List<String> list = new ArrayList<String>();
+        list.add("NORMAL");
+        list.add("SICK");
+        list.add("COMPOFF");
+        list.add("OPTIONAL");
+        LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), list);
             spinner_listofsheet.setAdapter(adapter);
-        }
+       // }
         LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
         final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
         ;
@@ -165,10 +171,10 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
                         getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
                     }*/
                 } else {
-                    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                //    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                    //           .getInstance(getActivity())
+                    //          .getSplashCacheItem(
+                    //                EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
                 }
             } // to close the onItemSelected
 

@@ -13,28 +13,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tek.ems.EMSApplication;
 import com.tek.ems.R;
 import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
 import com.tek.ems.model.CreateLeaveRequest;
-import com.tek.ems.model.InTakeMasterDetails;
-import com.tek.ems.model.UpcomingEvents;
+import com.tek.ems.model.EmployeeDetails;
 import com.tek.ems.recyclerviewadapter.LeaveTypeAdapter;
-import com.tek.ems.recyclerviewadapter.UpcomingEventsAdapter;
 import com.tek.ems.services.EMSService;
 import com.tek.ems.services.ServiceGenerator;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -47,7 +42,7 @@ import retrofit2.Response;
 
 public class UpcomingTimeOffFragment extends Fragment implements View.OnClickListener {
     String TAG = "UpcomingTimeOffFragment";
-    ListView listView_upcomingholidayslist;
+
 
     public static UpcomingTimeOffFragment newInstance() {
         return new UpcomingTimeOffFragment();
@@ -57,29 +52,38 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
     CreateLeaveRequest createLeaveRequest = new CreateLeaveRequest();
     Button btnstarttime, btnendtime, btnsubmitrequest;
     EditText ed_comments;
-    InTakeMasterDetails inTakeMasterDetails = new InTakeMasterDetails();
     Spinner spinner_leavetype;
     TextView tvtittle;
-    int leaveTypeId, leav_postion = 0;
+    EmployeeDetails employeeDetails = new EmployeeDetails();
+    String leaveType = "NORMAL";
+    TextView tvCasualLeaves, tveEarnedLeaves, tvSickLeaves, tveCompOffs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.upcomingtimeoff, container, false);
-        listView_upcomingholidayslist = (ListView) view.findViewById(R.id.listView_upcomingholidayslist);
+
         btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
         btnendtime = (Button) view.findViewById(R.id.btnendtime);
         btnsubmitrequest = (Button) view.findViewById(R.id.btnsubmitrequest);
         ed_comments = (EditText) view.findViewById(R.id.ed_comments);
         tvtittle = (TextView) view.findViewById(R.id.tvtittle);
         spinner_leavetype = (Spinner) view.findViewById(R.id.spinner_leavetype);
-
-        LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), EMSApplication.inTakeMasterDetails.getLeaveTypes());
+        tvCasualLeaves = (TextView) view.findViewById(R.id.tvCasualLeaves);
+        tveEarnedLeaves = (TextView) view.findViewById(R.id.tveEarnedLeaves);
+        tvSickLeaves = (TextView) view.findViewById(R.id.tvSickLeaves);
+        tveCompOffs = (TextView) view.findViewById(R.id.tveCompOffs);
+        final List<String> list = new ArrayList<String>();
+        list.add("NORMAL");
+        list.add("SICK");
+        list.add("COMPOFF");
+        list.add("OPTIONAL");
+        LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), list);
         spinner_leavetype.setAdapter(adapter);
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
         // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
@@ -101,7 +105,8 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                                        int arg2, long arg3) {
 
                 int selectedPosition = arg2; //Here is your selected position
-                leav_postion = arg2;
+                //leav_postion = arg2;
+                leaveType = list.get(arg2);
             }
 
             @Override
@@ -135,47 +140,14 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    void setData() {
-        leaveTypeId = EMSApplication.inTakeMasterDetails.getLeaveTypes().get(leav_postion).getId();
-        createLeaveRequest.setLeaveTypeId(leaveTypeId);
-        // createLeaveRequest.setLeaveleaveTypeId);
-        createLeaveRequest.setEmployeeId(Integer.parseInt(SharedPreferenceUtils
+    void createLeave() {
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading Data", "Please wait...", false, false);
+        int empid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()));
-        try {
-            String str_MyDate;
-            Calendar c = Calendar.getInstance();
-            System.out.println("Current time => " + c.getTime());
-
-            //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            String formattedDate = newDateFormat.format(c.getTime());
-
-
-            Date MyDate = newDateFormat.parse(formattedDate);
-            //newDateFormat.applyPattern("yyyy-MM-dd");
-            str_MyDate = newDateFormat.format(MyDate);
-            createLeaveRequest.setAppliedDate(str_MyDate);
-        } catch (ParseException e) {
-
-        }
-        createLeaveRequest.setDateFrom(btnstarttime.getText().toString().trim());
-        createLeaveRequest.setDateTo(btnendtime.getText().toString().trim());
-        createLeaveRequest.setLeaveId(0);
-        createLeaveRequest.setComments(ed_comments.getText().toString().trim());
-        createLeaveRequest.setAssignedTo(null);
-        createLeaveRequest.setActionDate(null);
-        createLeaveRequest.setLeaveStatusId(4);
-
-    }
-
-    void createLeave() {
-        setData();
-        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading Data", "Please wait...", false, false);
-
+                        EmsConstants.employeeId).toString().trim());
         EMSService service = ServiceGenerator.createService();
-        Call<CreateLeaveRequest> createLeaveRequestcall = service.createLeaveRequest(createLeaveRequest);
+        Call<CreateLeaveRequest> createLeaveRequestcall = service.createLeaveRequest(empid, "Mobile", "NORMAL", ed_comments.getText().toString().trim(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
         createLeaveRequestcall.enqueue(new Callback<CreateLeaveRequest>() {
             @Override
             public void onResponse(Call<CreateLeaveRequest> call, Response<CreateLeaveRequest> response) {
@@ -187,9 +159,9 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                     try {
                         String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
                         Log.e(TAG, "onResponse: " + errorMessage);
-                        if (response.code()==400){
+                        if (response.code() == 400) {
                             Toast.makeText(getContext(), "You have already created Leave for this Day", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
                         }
 
@@ -289,16 +261,29 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
-           /* int timesheetid=Integer.parseInt(SharedPreferenceUtils
+
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.timesheetId).toString().trim());*/
-        int timesheetid = 1;
-        Call<List<UpcomingEvents>> listCall = ServiceGenerator.createService().getUpcomingEvents(toDate);
+                            EmsConstants.childEmployeeId).toString().trim());
+        } else {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim());
+        }
+        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
-        listCall.enqueue(new Callback<List<UpcomingEvents>>() {
+        listCall.enqueue(new Callback<EmployeeDetails>() {
             @Override
-            public void onResponse(Call<List<UpcomingEvents>> call, Response<List<UpcomingEvents>> response) {
+            public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
                 if (loading.isShowing()) {
                     loading.dismiss();
                 }
@@ -313,17 +298,18 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                     }
                 } else if (response != null && response.isSuccessful()) {
                     //DO SUCCESS HANDLING HERE
-                    //  breakDetails = response.body();
+                    employeeDetails = response.body();
+                    tvCasualLeaves.setText("CasualLeaves" + " : " + String.valueOf(employeeDetails.getCasualLeaves()));
+                    tveEarnedLeaves.setText("EarnedLeaves" + " : " + String.valueOf(employeeDetails.getEarnedLeaves()));
+                    tvSickLeaves.setText("SickLeaves" + " : " + String.valueOf(employeeDetails.getSickLeaves()));
+                    tveCompOffs.setText("CompOffs" + " : " + String.valueOf(employeeDetails.getCompOffs()));
+                    Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
 
-                    List<UpcomingEvents> breakDetails = response.body();
-                    Log.i(TAG, "onResponse: Fetched " + breakDetails + " PropertyTypes.");
-
-                    setUpcomingEvents(breakDetails);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<UpcomingEvents>> call, Throwable t) {
+            public void onFailure(Call<EmployeeDetails> call, Throwable t) {
                 if (loading.isShowing()) {
                     loading.dismiss();
                 }
@@ -337,12 +323,5 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
         loading.show();
     }
 
-    public void setUpcomingEvents(List<UpcomingEvents> breakDetails) {
-        if (breakDetails.size() > 0) {
-            tvtittle.setVisibility(View.VISIBLE);
-        }
-        UpcomingEventsAdapter adapter = new UpcomingEventsAdapter(getActivity(), breakDetails);
-        listView_upcomingholidayslist.setAdapter(adapter);
 
-    }
 }

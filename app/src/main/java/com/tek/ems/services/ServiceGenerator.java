@@ -17,7 +17,7 @@ public class ServiceGenerator {
 
    // public static final String WEB_SERVICE_BASE_URL = "http://192.168.0.124:8084/EaSI/rest/";
 
-    public static final String WEB_SERVICE_BASE_URL = "http://45ba4158.ngrok.io/EaSI/rest/";
+    public static final String WEB_SERVICE_BASE_URL = "http://f03fd0dd.ngrok.io/EaSI/rest/";
 /*public static final String WEB_SERVICE_BASE_URL = "http://103.245.20.163:8081/api/";*/
 
    // public static final String WEB_SERVICE_BASE_URL = "http://103.245.20.163:8081/api/";

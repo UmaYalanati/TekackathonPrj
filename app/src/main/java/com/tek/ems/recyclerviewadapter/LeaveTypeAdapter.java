@@ -11,8 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tek.ems.R;
-import com.tek.ems.model.LeaveStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,9 +28,9 @@ public class LeaveTypeAdapter extends BaseAdapter {
     private Typeface regular;
 
    // EMSApplication.InTakeMasterDetails
-   List<LeaveStatus> leaveTypes;
-
-    public LeaveTypeAdapter(Context context, List<LeaveStatus> leaveTypes)
+   //List<LeaveStatus> leaveTypes;
+    List<String> leaveTypes = new ArrayList<String>();
+    public LeaveTypeAdapter(Context context, List<String> leaveTypes)
     {
         this.context				 = context;
         this.leaveTypes				 = leaveTypes;
@@ -64,7 +64,7 @@ public class LeaveTypeAdapter extends BaseAdapter {
     {
         convertView = LayoutInflater.from(context).inflate(R.layout.child_leavetype, null);
         TextView tvleavetype=(TextView)convertView.findViewById(R.id.tvleavetype);
-        tvleavetype.setText(leaveTypes.get(position).getName());
+        tvleavetype.setText(leaveTypes.get(position));
 
         return convertView;
     }

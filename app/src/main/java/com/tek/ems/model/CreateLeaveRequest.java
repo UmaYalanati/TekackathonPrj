@@ -1,37 +1,63 @@
 package com.tek.ems.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by uyalanat on 25-10-2016.
  */
-//@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateLeaveRequest {
 
-    @JsonProperty("LeaveId")
+    @JsonProperty("leaveId")
     private int leaveId;
 
-    @JsonProperty("EmployeeId")
+    @JsonProperty("employeeId")
     private int employeeId;
 
-    @JsonProperty("AppliedDate")
-    private String appliedDate;
+    @JsonProperty("absenceCategory")
+    private String absenceCategory;
+
+    @JsonProperty("attendanceMode")
+    private String attendanceMode;
+
+    @JsonProperty("leaveReason")
+    private String leaveReason;
+
+    @JsonProperty("startDate")
+    private String startDate;
+
+    @JsonProperty("endDate")
+    private String endDate;
+
+    @JsonProperty("status")
+    private String status;
+
+    @JsonProperty("noOfDays")
+    private int noOfDays;
+
+    @JsonProperty("leaveComments")
+    private String leaveComments;
+
+    @JsonProperty("reportingManagerId")
+    private String reportingManagerId;
 
     @Override
     public String toString() {
         return "CreateLeaveRequest{" +
                 "leaveId=" + leaveId +
                 ", employeeId=" + employeeId +
-                ", appliedDate='" + appliedDate + '\'' +
-                ", dateFrom='" + dateFrom + '\'' +
-                ", dateTo='" + dateTo + '\'' +
-                ", leaveTypeId=" + leaveTypeId +
-                ", comments='" + comments + '\'' +
-                ", assignedTo='" + assignedTo + '\'' +
-                ", actionDate='" + actionDate + '\'' +
-                ", leaveStatusId=" + leaveStatusId +
+                ", absenceCategory='" + absenceCategory + '\'' +
+                ", attendanceMode='" + attendanceMode + '\'' +
+                ", leaveReason='" + leaveReason + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", status='" + status + '\'' +
+                ", noOfDays=" + noOfDays +
+                ", leaveComments='" + leaveComments + '\'' +
+                ", reportingManagerId='" + reportingManagerId + '\'' +
                 '}';
     }
 
@@ -51,88 +77,75 @@ public class CreateLeaveRequest {
         this.employeeId = employeeId;
     }
 
-    public String getAppliedDate() {
-        return appliedDate;
+    public String getAbsenceCategory() {
+        return absenceCategory;
     }
 
-    public void setAppliedDate(String appliedDate) {
-        this.appliedDate = appliedDate;
+    public void setAbsenceCategory(String absenceCategory) {
+        this.absenceCategory = absenceCategory;
     }
 
-    public String getDateFrom() {
-        return dateFrom;
+    public String getAttendanceMode() {
+        return attendanceMode;
     }
 
-    public void setDateFrom(String dateFrom) {
-        this.dateFrom = dateFrom;
+    public void setAttendanceMode(String attendanceMode) {
+        this.attendanceMode = attendanceMode;
     }
 
-    public String getDateTo() {
-        return dateTo;
+    public String getLeaveReason() {
+        return leaveReason;
     }
 
-    public void setDateTo(String dateTo) {
-        this.dateTo = dateTo;
+    public void setLeaveReason(String leaveReason) {
+        this.leaveReason = leaveReason;
     }
 
-    public int getLeaveTypeId() {
-        return leaveTypeId;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setLeaveTypeId(int leaveTypeId) {
-        this.leaveTypeId = leaveTypeId;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public String getComments() {
-        return comments;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
-    public String getAssignedTo() {
-        return assignedTo;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAssignedTo(String assignedTo) {
-        this.assignedTo = assignedTo;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getActionDate() {
-        return actionDate;
+    public int getNoOfDays() {
+        return noOfDays;
     }
 
-    public void setActionDate(String actionDate) {
-        this.actionDate = actionDate;
+    public void setNoOfDays(int noOfDays) {
+        this.noOfDays = noOfDays;
     }
 
-    public int getLeaveStatusId() {
-        return leaveStatusId;
+    public String getLeaveComments() {
+        return leaveComments;
     }
 
-    public void setLeaveStatusId(int leaveStatusId) {
-        this.leaveStatusId = leaveStatusId;
+    public void setLeaveComments(String leaveComments) {
+        this.leaveComments = leaveComments;
     }
 
-    @JsonProperty("DateFrom")
-    private String dateFrom;
+    public String getReportingManagerId() {
+        return reportingManagerId;
+    }
 
-    @JsonProperty("DateTo")
-    private String dateTo;
-
-    @JsonProperty("LeaveTypeId")
-    private int leaveTypeId;
-
-    @JsonProperty("Comments")
-    private String comments;
-
-    @JsonProperty("AssignedTo")
-    private String assignedTo;
-
-    @JsonProperty("ActionDate")
-    private String actionDate;
-
-    @JsonProperty("LeaveStatusId")
-    private int leaveStatusId;
+    public void setReportingManagerId(String reportingManagerId) {
+        this.reportingManagerId = reportingManagerId;
+    }
 }

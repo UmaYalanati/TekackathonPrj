@@ -105,14 +105,13 @@ boolean isdateset;
 //mm dd yy
             if (new StringBuilder().append(day).length() >= 2) {
                 mTextView.setText(new StringBuilder()
-                        .append(month + 1).append("/").append(day).append("/").append(str_year).toString());
+                        .append(str_year).append("-").append(month + 1).append("-").append(day).toString());
                 get_date=mTextView.getText().toString().trim();
 
             } else {
 
                 mTextView.setText(new StringBuilder()
-
-                        .append(month + 1).append("/").append(0).append(day).append("/").append(str_year)
+                        .append(str_year).append("-").append(month + 1).append("-").append(0).append(day)
                         .toString());
                 get_date=mTextView.getText().toString().trim();
             }
@@ -120,16 +119,16 @@ boolean isdateset;
             if (new StringBuilder().append(day).length() >= 2) {
                 if (new StringBuilder().append(month + 1).length() >= 2){
                     mTextView.setText(new StringBuilder()
-                            .append(month + 1).append("/")
-                            .append(day).append("/")
-                            .append(str_year)
+                            .append(str_year).append("-")
+                            .append(month + 1).append("-")
+                            .append(day)
                             .toString());
                     get_date=mTextView.getText().toString().trim();
                 }else{
                     mTextView.setText(new StringBuilder()
-                            .append(0).append(month + 1).append("/")
-                            .append(day).append("/")
-                            .append(str_year)
+                            .append(str_year).append("-")
+                            .append(0).append(month + 1).append("-")
+                            .append(day)
                             .toString());
                     get_date=mTextView.getText().toString().trim();
                 }
@@ -138,10 +137,10 @@ boolean isdateset;
             } else {
 
 
-                mTextView.setText(new StringBuilder()
-                        .append(0).append(month + 1).append("/")
-                        .append(0).append(day).append("/")
-                        .append(str_year).toString());
+                mTextView.setText(new StringBuilder().append(str_year).append("-")
+                        .append(0).append(month + 1).append("-")
+                        .append(0).append(day)
+                        .toString());
                 get_date=mTextView.getText().toString().trim();
             }
 

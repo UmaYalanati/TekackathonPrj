@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tvtittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,179 +13,199 @@
         android:text="Upcoming Time off"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <com.tek.ems.emsconstants.NestedListView
-        android:id="@+id/listView_upcomingholidayslist"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@android:color/transparent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:scrollbars="@null"></com.tek.ems.emsconstants.NestedListView>
-
-
-    <TextView
-        android:id="@+id/tvemployee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Employee"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:visibility="gone"
-        />
-
-    <EditText
-        android:visibility="gone"
-        android:id="@+id/ed_employee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/rectangularbox_warranty"
-        android:focusableInTouchMode="false"
-        android:padding="8dp"
-        android:text=""
-
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-
-        >
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
+
             <TextView
-                android:id="@+id/tvCodeNameDetail12"
+                android:id="@+id/tvCasualLeaves"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="From"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="CasualLeaves"
                 android:textColor="@color/black"
                 android:textSize="16sp"
 
                 />
 
-            <Button
-                android:id="@+id/btnstarttime"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/rectangularbox_warranty"
-                android:text="10-10-22"
+            <TextView
+                android:id="@+id/tveEarnedLeaves"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="EarnedLeaves"
+                android:textColor="@color/black"
                 android:textSize="16sp"
 
                 />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:orientation="vertical">
-
             <TextView
-                android:id="@+id/tvid"
+                android:id="@+id/tvSickLeaves"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="To"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="SickLeaves"
                 android:textColor="@color/black"
                 android:textSize="16sp"
 
                 />
 
-            <Button
-
-                android:id="@+id/btnendtime"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/rectangularbox_warranty"
-                android:text="10-10-22"
+            <TextView
+                android:id="@+id/tveCompOffs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="CompOffs"
+                android:textColor="@color/black"
                 android:textSize="16sp"
 
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCodeNameDetail12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="From"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+
+                        />
+
+                    <Button
+                        android:id="@+id/btnstarttime"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rectangularbox_warranty"
+                        android:text="10-10-22"
+                        android:textSize="16sp"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="To"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+
+                        />
+
+                    <Button
+
+                        android:id="@+id/btnendtime"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/rectangularbox_warranty"
+                        android:text="10-10-22"
+                        android:textSize="16sp"
+
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Leave Type"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_leavetype"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Comments"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+
+                />
+
+            <EditText
+                android:id="@+id/ed_comments"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rectangularbox_warranty"
+                android:padding="8dp" />
+
+            <Button
+                android:id="@+id/btnsubmitrequest"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/green"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Submit Request"
+                android:textColor="@color/white" />
         </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Leave Type"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-
-        />
-
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinner_leavetype"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="13sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Comments"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-
-        />
-
-    <EditText
-        android:id="@+id/ed_comments"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/rectangularbox_warranty"
-        android:padding="8dp" />
-
-    <Button
-        android:id="@+id/btnsubmitrequest"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/green"
-        android:gravity="center"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="Submit Request"
-        android:textColor="@color/white" />
-    </LinearLayout>
     </ScrollView>
 </LinearLayout>

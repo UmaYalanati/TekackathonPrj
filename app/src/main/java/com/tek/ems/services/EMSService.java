@@ -40,8 +40,8 @@ public interface EMSService {
     @GET("Leave/GetLeaveDetails")
     Call<List<LeaveDetails>> getLeaveDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom, @Query("dateTo") String dateTo, @Query("LeaveStatusId") int leaveStatusId);
 
-    @POST("Leave/CreateLeaveRequest")
-    Call<CreateLeaveRequest> createLeaveRequest(@Body CreateLeaveRequest createLeaveRequest);
+    @GET("employees/applyLeaves")
+    Call<CreateLeaveRequest> createLeaveRequest(@Query("employeeId") int employeeId,@Query("attendanceMode") String attendanceMode,@Query("absenceCategory") String absenceCategory,@Query("leaveReason") String leaveReason,@Query("startDate") String startDate,@Query("endDate") String endDate);
 
     @GET("teksystems/login")
     Call<Login> getLogin(@Query("userName") String userName,@Query(value = "password", encoded = true) String password);
@@ -61,14 +61,9 @@ public interface EMSService {
     @GET("timeandexpense/checkIn-OutTimeSheet")
     Call<InsertClockIn> insertClockIn(@Query("id") int id,@Query("latitude") double latitude,@Query("longitude") double longitude,@Query("comments") String comments,@Query("attendanceMode") String attendanceMode,@Query("flag") int flag);
 
-    @PUT("TimeSheet/UpdateClockOut")
-    Call<InsertClockIn> updateClockOut(@Body InsertClockIn insertClockIn);
-
     @POST("TimeSheet/InsertBreakIn")
     Call<InsertBreakIn> InsertBreakIn(@Body InsertBreakIn insertBreakIn);
 
-    @PUT("TimeSheet/UpdateBreakOut")
-    Call<InsertBreakIn> updateBreakOut(@Body InsertBreakIn insertBreakIn);
 
     @GET("TimeSheet/GetBreakDetails")
     Call<List<BreakDetails>> getBreakDetails(@Query("timeSheetId") int timeSheetId,@Query("employeeId") int employeeId);
