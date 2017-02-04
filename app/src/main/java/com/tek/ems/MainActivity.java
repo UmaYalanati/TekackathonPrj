@@ -35,6 +35,7 @@ import com.tek.ems.callback.MenuItemSelectedCallback;
 import com.tek.ems.callback.NavigationDrawerCallback;
 import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
+import com.tek.ems.fragment.ComplaintsFragment;
 import com.tek.ems.fragment.DashBoardFragment;
 import com.tek.ems.fragment.EmployeeDetailsFragment;
 import com.tek.ems.fragment.LeavesFragment;
@@ -362,8 +363,10 @@ public class MainActivity extends AppCompatActivity
             item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_reports) {
             getMenuInflater().inflate(R.menu.report, menu);
-            /*MenuItem item = menu.findItem(R.id.action_some);
-            item.setVisible(false);*/
+            MenuItem item = menu.findItem(R.id.action_reportsheeet);
+            item.setVisible(false);
+            MenuItem item1 = menu.findItem(R.id.action_reportsheeetsecond);
+            item1.setVisible(false);
         } else if (currentSelectedItem == R.id.nav_settings) {
             getMenuInflater().inflate(R.menu.main, menu);
           /*  if (SharedPreferenceUtils
@@ -516,7 +519,7 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = LeavesFragment.class;
             tag = "Leave";
         } else if (id == R.id.nav_reports) {
-            //fragmentClass = ReportsFragment.class;
+            fragmentClass = ComplaintsFragment.class;
             tag = "Complaints";
         } else if (id == R.id.nav_settings) {
             tag = "Settings";
