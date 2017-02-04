@@ -39,7 +39,6 @@ import com.tek.ems.fragment.DashBoardFragment;
 import com.tek.ems.fragment.EmployeeDetailsFragment;
 import com.tek.ems.fragment.LeavesFragment;
 import com.tek.ems.fragment.OrgCalendarFragment;
-import com.tek.ems.fragment.ReportsFragment;
 import com.tek.ems.fragment.TimeClockFragment;
 import com.tek.ems.model.EmployeeDetails;
 import com.tek.ems.services.ServiceGenerator;
@@ -49,6 +48,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity
 
 
     private static final String TAG = "MainActivity";
-    EmployeeDetails employeeDetails = new EmployeeDetails();
+    List<EmployeeDetails> employeeDetails ;
+
     Fragment fragment;
     Class fragmentClass = null;
     String tag = null;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         tvemployeename = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvemployeename);
         tvemployeeemail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvemployeeemail);
 
-        if (SharedPreferenceUtils
+   /*     if (SharedPreferenceUtils
                 .getInstance(MainActivity.this)
                 .getSplashCacheItem(
                         EmsConstants.rolename) != null && SharedPreferenceUtils
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity
             nav_Menu.findItem(R.id.nav_leave).setVisible(false);
             nav_Menu.findItem(R.id.nav_reports).setVisible(false);
             nav_Menu.findItem(R.id.nav_settings).setVisible(true);
-        }
+        }*/
 
 
 
@@ -312,7 +313,7 @@ public class MainActivity extends AppCompatActivity
         } else if (currentSelectedItem == R.id.nav_employee) {
             getMenuInflater().inflate(R.menu.main, menu);
 
-            if (SharedPreferenceUtils
+         /*   if (SharedPreferenceUtils
                     .getInstance(MainActivity.this)
                     .getSplashCacheItem(
                             EmsConstants.rolename) != null && SharedPreferenceUtils
@@ -321,7 +322,7 @@ public class MainActivity extends AppCompatActivity
                             EmsConstants.rolename).equals("Manager")) {
                 MenuItem item = menu.findItem(R.id.action_editdetails);
                 item.setVisible(false);
-            }
+            }*/
             MenuItem item1 = menu.findItem(R.id.action_changepassword);
             item1.setVisible(false);
         } else if (currentSelectedItem == R.id.nav_timeclock) {
@@ -335,10 +336,10 @@ public class MainActivity extends AppCompatActivity
                             EmsConstants.rolename).equals("Manager")) {
                 MenuItem item = menu.findItem(R.id.action_approvedtimesheet);
                 item.setVisible(false);
-            }else {
+            }/*else {
                 MenuItem item = menu.findItem(R.id.action_checkin);
                 item.setVisible(false);
-            }
+            }*/
 
         }else if (currentSelectedItem == R.id.nav_orgcalendar) {
             getMenuInflater().inflate(R.menu.orgcal, menu);
@@ -346,6 +347,17 @@ public class MainActivity extends AppCompatActivity
             item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_leave) {
             getMenuInflater().inflate(R.menu.leaves, menu);
+
+            if (SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename) != null && !SharedPreferenceUtils
+                    .getInstance(MainActivity.this)
+                    .getSplashCacheItem(
+                            EmsConstants.rolename).equals("Manager")) {
+                MenuItem item = menu.findItem(R.id.action_reportsheeetsecond);
+                item.setVisible(false);
+            }
             /*MenuItem item = menu.findItem(R.id.action_some);
             item.setVisible(false);*/
         } else if (currentSelectedItem == R.id.nav_reports) {
@@ -408,7 +420,7 @@ public class MainActivity extends AppCompatActivity
                 SharedPreferenceUtils
                         .getInstance(MainActivity.this)
                         .editSplash()
-                        .addSplashCacheItem(EmsConstants.breakinTime,
+                        .addSplashCacheItem(EmsConstants.rolename,
                                 "").commitSplash();
 
                 Intent intent_homescreen = new Intent(MainActivity.this, LoginActivity.class);
@@ -504,8 +516,8 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = LeavesFragment.class;
             tag = "Leave";
         } else if (id == R.id.nav_reports) {
-            fragmentClass = ReportsFragment.class;
-            tag = "Reports";
+            //fragmentClass = ReportsFragment.class;
+            tag = "Complaints";
         } else if (id == R.id.nav_settings) {
             tag = "Settings";
             EmsConstants.isfromemployeedetails=false;
@@ -571,14 +583,11 @@ public class MainActivity extends AppCompatActivity
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
-        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getreportes(empid);
+        Call<List<EmployeeDetails>> listCall = ServiceGenerator.createService().getreportes(empid);
 
-        listCall.enqueue(new Callback<EmployeeDetails>() {
+        listCall.enqueue(new Callback<List<EmployeeDetails>>() {
             @Override
-            public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
-            /*    if (loading.isShowing()) {
-                    loading.dismiss();
-                }*/
+            public void onResponse(Call<List<EmployeeDetails>> call, Response<List<EmployeeDetails>> response) {
 
                 if (response != null && !response.isSuccessful() && response.errorBody() != null) {
                     try {
@@ -592,12 +601,18 @@ public class MainActivity extends AppCompatActivity
                     //DO SUCCESS HANDLING HERE
                     employeeDetails = response.body();
                     Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
-                    setEmployeeDetails(employeeDetails);
+                   if (employeeDetails.size()>0){
+                       SharedPreferenceUtils
+                               .getInstance(MainActivity.this)
+                               .editSplash()
+                               .addSplashCacheItem(EmsConstants.rolename,
+                                       "Manager").commitSplash();
+                   }
                 }
             }
 
             @Override
-            public void onFailure(Call<EmployeeDetails> call, Throwable t) {
+            public void onFailure(Call<List<EmployeeDetails>> call, Throwable t) {
                 /*if (loading.isShowing()) {
                     loading.dismiss();
                 }*/
@@ -611,21 +626,7 @@ public class MainActivity extends AppCompatActivity
         loading.show();*/
     }
 
-    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
-      /*  if (employeeDetails.getPhotoPath() != null) {
-            //  Bitmap bmp=null;
-            //  image_employee = (ImageView)navigationView. findViewById(R.id.imageView_employee);
-            ///   image_employee.setImageBitmap(getBitmapFromURL(employeeDetails.getPhotoPath()));
-            //  Picasso.with(MainActivity.this)
-            //        .load("http://"+employeeDetails.getPhotoPath()).into((ImageView) navigationView.findViewById(R.id.imageView_employee));
-            //   (ImageView) navigationView.findViewById(R.id.imageView_employee).s(getBitmapFromURL("http://"+employeeDetails.getPhotoPath()));
-        }*/
-      /*  if (employeeDetails.getEmployeeName()!=null)
-            tvemployeename.setText(employeeDetails.getEmployeeName());
 
-        if (employeeDetails.getEmailId()!=null)
-            tvemployeeemail.setText(employeeDetails.getEmailId());*/
-    }
 
     @Override
     public boolean navigateUpTo(Intent upIntent) {

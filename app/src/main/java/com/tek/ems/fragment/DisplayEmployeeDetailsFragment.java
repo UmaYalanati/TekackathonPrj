@@ -98,7 +98,7 @@ public class DisplayEmployeeDetailsFragment extends Fragment {
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
 
-        if (SharedPreferenceUtils
+      /*  if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.rolename) != null && SharedPreferenceUtils
@@ -114,7 +114,11 @@ public class DisplayEmployeeDetailsFragment extends Fragment {
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim());
-        }
+        }*/
+        empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
         Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {

@@ -69,12 +69,12 @@ public class EmployeeDetailsFragment extends Fragment {
                         .getInstance(getActivity())
                         .getSplashCacheItem(
                                 EmsConstants.rolename).equals("Manager")) {
-                    if (loginType.equals("Settings")) {
+                   /* if (loginType.equals("Settings")) {
                         transaction.replace(R.id.fragment_container, new ManagerDetails());
                     } else {
                         transaction.replace(R.id.fragment_container, new ChildEmployeeList());
-                    }
-
+                    }*/
+                    transaction.replace(R.id.fragment_container, new DisplayEmployeeDetailsFragment());
 
                 } else {
                     transaction.replace(R.id.fragment_container, new DisplayEmployeeDetailsFragment());

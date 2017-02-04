@@ -45,7 +45,8 @@ public class ReportsTimesheetSecond extends Fragment {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-    String TAG="ReportsTimesheetSecond";
+
+    String TAG = "ReportsTimesheetSecond";
 
     public static ReportsTimesheetSecond newInstance() {
         return new ReportsTimesheetSecond();
@@ -54,7 +55,7 @@ public class ReportsTimesheetSecond extends Fragment {
     public static final int JANUARY = 1;
 
     public static final int DECEMBER = 12;
-CheckBox checkbox_select;
+    CheckBox checkbox_select;
     public static final int FIRST_OF_THE_MONTH = 1;
     static int month;
     String[] str = {"January",
@@ -86,14 +87,12 @@ CheckBox checkbox_select;
         tvmonthname = (TextView) view.findViewById(R.id.tvmonthname);
         ll_next = (LinearLayout) view.findViewById(R.id.ll_next);
         ll_back = (LinearLayout) view.findViewById(R.id.ll_back);
-        checkbox_select= (CheckBox) view.findViewById(R.id.checkbox_select);
+        checkbox_select = (CheckBox) view.findViewById(R.id.checkbox_select);
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         recylerViewLayoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
-
-
 
 
         Date date = new Date();
@@ -113,10 +112,10 @@ CheckBox checkbox_select;
 
                 if (month < 11) {
                     // month++;
-                    month=month+1;
+                    month = month + 1;
                     String monthString;
 
-                    monthString = str[month+1 - 1];
+                    monthString = str[month + 1 - 1];
                     tvmonthname.setText(monthString);
 
                 } else {
@@ -124,12 +123,12 @@ CheckBox checkbox_select;
                     month = 1;
                     String monthString;
 
-                    monthString = str[month+1 - 1];
+                    monthString = str[month + 1 - 1];
                     tvmonthname.setText(monthString);
                 }
 
 
-                getLastDayOfMonth(month+1,year);
+                getLastDayOfMonth(month + 1, year);
             }
 
         });
@@ -138,14 +137,14 @@ CheckBox checkbox_select;
             @Override
             public void onClick(View v) {
                 if (month >= 0) {
-                  //  month--;
-                    month=month-1;
+                    //  month--;
+                    month = month - 1;
                 }
                 getLastDayOfMonth(month + 1, year);
 
                 String monthString;
-                if (month+1 < str.length) {
-                    monthString = str[month+1 - 1];
+                if (month + 1 < str.length) {
+                    monthString = str[month + 1 - 1];
                     tvmonthname.setText(monthString);
                 } else {
                     monthString = "Invalid month";
@@ -159,11 +158,11 @@ CheckBox checkbox_select;
         checkbox_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (buttonView.isPressed()){
-                    if (isChecked){
-                        updateRecyclerViewForClients(timesheetDetails,true);
-                    }else{
-                        updateRecyclerViewForClients(timesheetDetails,false);
+                if (buttonView.isPressed()) {
+                    if (isChecked) {
+                        updateRecyclerViewForClients(timesheetDetails, true);
+                    } else {
+                        updateRecyclerViewForClients(timesheetDetails, false);
                     }
                 }
             }
@@ -200,7 +199,7 @@ CheckBox checkbox_select;
 //                    for (Client client : clients) {
 //                        Log.i(TAG, "onResponse: Client: "+client);
 //                    }
-                    updateRecyclerViewForClients(timesheetDetails,false);
+                    updateRecyclerViewForClients(timesheetDetails, false);
                 }
             }
 
@@ -219,9 +218,9 @@ CheckBox checkbox_select;
         loading.show();
     }
 
-    private void updateRecyclerViewForClients(List<TimeSheetReport> timesheetDetails,boolean check) {
+    private void updateRecyclerViewForClients(List<TimeSheetReport> timesheetDetails, boolean check) {
 
-        recyclerViewAdapter = new ReportTimesheetSecondRecyclerViewAdapter(getActivity(), timesheetDetails,check);
+        recyclerViewAdapter = new ReportTimesheetSecondRecyclerViewAdapter(getActivity(), timesheetDetails, check);
 
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
@@ -239,23 +238,23 @@ CheckBox checkbox_select;
             lastDay = aDate.dayOfMonth().getMaximumValue();
             firstDay = aDate.dayOfMonth().getMinimumValue();
         }
-if (SharedPreferenceUtils
-        .getInstance(getActivity())
-        .getSplashCacheItem(
-                EmsConstants.childEmployeeId)!=null&&!SharedPreferenceUtils
-        .getInstance(getActivity())
-        .getSplashCacheItem(
-                EmsConstants.childEmployeeId).toString().trim().isEmpty()){
-    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-            .getInstance(getActivity())
-            .getSplashCacheItem(
-                    EmsConstants.childEmployeeId).toString().trim()), String.valueOf(month)+"/"+String.valueOf(firstDay)+"/"+String.valueOf(year));
-                }else{
-    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-            .getInstance(getActivity())
-            .getSplashCacheItem(
-                    EmsConstants.employeeId).toString().trim()), String.valueOf(month)+"/"+String.valueOf(firstDay)+"/"+String.valueOf(year));
-                }
+        if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.childEmployeeId) != null && !SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.childEmployeeId).toString().trim().isEmpty()) {
+            getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.childEmployeeId).toString().trim()), String.valueOf(month) + "/" + String.valueOf(firstDay) + "/" + String.valueOf(year));
+        } else {
+            getlistofleaves(Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.employeeId).toString().trim()), String.valueOf(month) + "/" + String.valueOf(firstDay) + "/" + String.valueOf(year));
+        }
 
     }
 }

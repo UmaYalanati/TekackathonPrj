@@ -81,7 +81,7 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
         card_view_timeclcok.setOnClickListener(this);
         card_view_orgcalendar.setOnClickListener(this);
 
-        if (SharedPreferenceUtils
+       /* if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.rolename) != null && SharedPreferenceUtils
@@ -90,7 +90,7 @@ public class DashBoardFragment extends Fragment implements View.OnClickListener 
                         EmsConstants.rolename).equals("Manager")) {
             card_view_timeclcok.setVisibility(View.GONE);
             card_view_orgcalendar.setVisibility(View.GONE);
-        }
+        }*/
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(

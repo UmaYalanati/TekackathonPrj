@@ -24,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tek.ems.EMSApplication;
 import com.tek.ems.R;
 import com.tek.ems.callback.OnCustomEventListener;
 import com.tek.ems.emsconstants.EmsConstants;
@@ -47,8 +46,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.tek.ems.EMSApplication.inTakeMasterDetails;
 
 
 /**
@@ -100,14 +97,14 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
         // spinner_listofsheet.setddapter(arrayAdapter);
         // LeaveStatus
         //if (inTakeMasterDetails.getLeaveStatus() != null && inTakeMasterDetails.getLeaveStatus().size() > 0) {
-            List<String> list = new ArrayList<String>();
-        list.add("NORMAL");
-        list.add("SICK");
-        list.add("COMPOFF");
-        list.add("OPTIONAL");
+        List<String> list = new ArrayList<String>();
+        list.add("Select");
+        list.add("Approved");
+        list.add("Unapproved");
+        //   list.add("OPTIONAL");
         LeaveTypeAdapter adapter = new LeaveTypeAdapter(getActivity(), list);
-            spinner_listofsheet.setAdapter(adapter);
-       // }
+        spinner_listofsheet.setAdapter(adapter);
+        // }
         LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getActivity(), "object_prefs", 0);
         final Login currentUser = loginComplexPreferences.getObject("object_value", Login.class);
         ;
@@ -123,8 +120,8 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        //  SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        //  SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyyy-MM-dd");
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
@@ -139,7 +136,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // String selectedItem = parent.getItemAtPosition(position).toString();
                 selectedEmployeeposition = position;
-               // getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());
+                getlistofleaves(1, btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
 
             } // to close the onItemSelected
 
@@ -151,31 +148,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // String selectedItem = parent.getItemAtPosition(position).toString();
                 selectedItemposition = position;
-/*                getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .getSplashCacheItem(
-                                EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(position).getName());*/
-
-                if (SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .getSplashCacheItem(
-                                EmsConstants.rolename) != null && SharedPreferenceUtils
-                        .getInstance(getActivity())
-                        .getSplashCacheItem(
-                                EmsConstants.rolename).equals("Manager")) {
-
-                    // getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
-                   /* if (currentUser.getChildEmployees() != null) {
-
-
-                        getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
-                    }*/
-                } else {
-                //    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                    //           .getInstance(getActivity())
-                    //          .getSplashCacheItem(
-                    //                EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
-                }
+                getlistofleaves(1, btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
             } // to close the onItemSelected
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -183,31 +156,7 @@ public class TimeSheetFragment extends Fragment implements View.OnClickListener,
             }
         });
 
-
-        if (SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.rolename) != null && SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.rolename).equals("Manager")) {
-
-            // getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
-            if (currentUser.getFirstName() != null) {
-
-try{
-  //  getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
-}catch (NullPointerException e){
-
-}
-
-            }
-        } else {
-        /*    getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());*/
-        }
+        getlistofleaves(1, btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
 
         return view;
     }
@@ -221,11 +170,7 @@ try{
                 starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
 
 
-                 /*   getlistofleaves(Integer.parseInt(SharedPreferenceUtils
-                            .getInstance(getActivity())
-                            .getSplashCacheItem(
-                                    EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());*/
-
+                //  getlistofleaves(1, btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
 
                 break;
             case R.id.btnendtime:
@@ -235,36 +180,23 @@ try{
                 // Date date2 = sdf.parse(getTodaysDate());
                 // Date date1 = sdf.parse(SharedPreferenceUtils.getInstance(context).getSettingsCacheItem(WatscoConstants.RATEUS_DATE).toString());
 
-
+                //  getlistofleaves(1, btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
                 break;
 
         }
     }
 
-    void getlistofleaves(int employeeId, String startdate, String enddaate, String status) {
+    void getlistofleaves(int employeeId, String startdate, String enddaate) {
 
         int empid = employeeId;
+        empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
 
-        if (SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.rolename) != null && SharedPreferenceUtils
-                .getInstance(getActivity())
-                .getSplashCacheItem(
-                        EmsConstants.rolename).equals("Manager")) {
-         /*   empid = Integer.parseInt(SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.childEmployeeId).toString().trim());*/
-        } else {
-            empid = Integer.parseInt(SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim());
-        }
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(empid, startdate, enddaate, status);
+        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(empid, startdate, enddaate);
 
 
         listCall.enqueue(new Callback<List<TimeSheetDetails>>() {
@@ -311,7 +243,6 @@ try{
     private void updateRecyclerViewForClients(List<TimeSheetDetails> timesheetDetails) {
 
         TimesheetRecyclerViewAdapter adapter = new TimesheetRecyclerViewAdapter(context, timesheetDetails);
-
         recyclerView.setAdapter(adapter);
         //  }
 
@@ -323,7 +254,7 @@ try{
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), EMSApplication.inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
         }
     }
 
@@ -356,7 +287,7 @@ try{
             Date d = null;
             int year1 = year, month1 = month, day1 = day;
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 d = sdf.parse(date);
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(d);
@@ -385,7 +316,7 @@ try{
             String str_year = String.valueOf(year);
             String date_str = "";
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date d = sdf.parse(date);
                 view.setMinDate(d.getTime());
             } catch (ParseException e) {
@@ -437,7 +368,7 @@ try{
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), inTakeMasterDetails.getLeaveStatus().get(selectedItemposition).getName());
+                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
 
         }
     }

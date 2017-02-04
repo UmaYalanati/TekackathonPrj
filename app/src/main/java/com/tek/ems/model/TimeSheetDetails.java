@@ -9,75 +9,89 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 //@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TimeSheetDetails {
-
-    @JsonProperty("TimeSheetId")
+    @JsonProperty("timesheetId")
     private int timeSheetId;
 
-    @JsonProperty("EmployeeId")
-    private int employeeId;
+   /* @JsonProperty("EmployeeId")
+    private int employeeId;*/
 
-    @JsonProperty("WorkingDate")
-    private String workingDate;
+    @JsonProperty("insertDate")
+    private String insertDate;
 
-    @JsonProperty("CheckIn")
-    private String checkIn;
+    @JsonProperty("endDate")
+    private String endDate;
 
-    @JsonProperty("CheckOut")
-    private String checkOut;
+    @JsonProperty("checkinTime")
+    private String checkinTime;
 
-    @JsonProperty("CheckInLattitude")
-    private double  checkInLattitude;
+    @JsonProperty("checkoutTime")
+    private String checkoutTime;
 
-    @JsonProperty("CheckOutLattitude")
-    private double  checkOutLattitude;
+    @JsonProperty("checkinLatitude")
+    private double checkinLatitude;
 
-    @JsonProperty("CheckOutLongitude")
-    private double  checkOutLongitude;
+    @JsonProperty("checkinLongitude")
+    private double checkinLongitude;
 
-    @JsonProperty("CheckInLongitude")
-    private double  checkInLongitude;
+    @JsonProperty("checkoutLatitude")
+    private double checkoutLatitude;
 
-    @JsonProperty("AssignedTo")
+    @JsonProperty("checkoutLongitude")
+    private double checkoutLongitude;
+
+    @JsonProperty("assignedTo")
     private String assignedTo;
 
-    @JsonProperty("ApprovalType")
-    private String approvalType;
+    @JsonProperty("comments")
+    private String comments;
 
-    @JsonProperty("Note")
-    private String note;
+    @JsonProperty("approvaltype")
+    private String approvaltype;
 
-    @JsonProperty("Status")
+    @JsonProperty("attendanceMode")
+    private String attendanceMode;
+
+    @JsonProperty("status")
     private String status;
+
+    @JsonProperty("workingHours")
+    private String workingHours;
+
+    @JsonProperty("noOfDays")
+    private String noOfDays;
+
+    @JsonProperty("absenceCategory")
+    private String absenceCategory;
+
+    @JsonProperty("leaveReason")
+    private String leaveReason;
+
+    @JsonProperty("leaveComments")
+    private String leaveComments;
 
     @Override
     public String toString() {
-        return "TimeSheetDetails{" +
+        return "InsertClockIn{" +
                 "timeSheetId=" + timeSheetId +
-                ", employeeId=" + employeeId +
-                ", workingDate='" + workingDate + '\'' +
-                ", checkIn='" + checkIn + '\'' +
-                ", checkOut='" + checkOut + '\'' +
-                ", checkInLattitude=" + checkInLattitude +
-                ", checkOutLattitude=" + checkOutLattitude +
-                ", checkOutLongitude=" + checkOutLongitude +
-                ", checkInLongitude=" + checkInLongitude +
+                ", insertDate='" + insertDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", checkinTime='" + checkinTime + '\'' +
+                ", checkoutTime='" + checkoutTime + '\'' +
+                ", checkinLatitude=" + checkinLatitude +
+                ", checkinLongitude=" + checkinLongitude +
+                ", checkoutLatitude=" + checkoutLatitude +
+                ", checkoutLongitude=" + checkoutLongitude +
                 ", assignedTo='" + assignedTo + '\'' +
-                ", approvalType='" + approvalType + '\'' +
-                ", note='" + note + '\'' +
+                ", comments='" + comments + '\'' +
+                ", approvaltype='" + approvaltype + '\'' +
+                ", attendanceMode='" + attendanceMode + '\'' +
                 ", status='" + status + '\'' +
-                ", calculatedLength='" + calculatedLength + '\'' +
+                ", workingHours='" + workingHours + '\'' +
+                ", noOfDays='" + noOfDays + '\'' +
+                ", absenceCategory='" + absenceCategory + '\'' +
+                ", leaveReason='" + leaveReason + '\'' +
+                ", leaveComments='" + leaveComments + '\'' +
                 '}';
-    }
-
-    @JsonProperty("CalculatedLength")
-    private String calculatedLength;
-
-    public String getCalculatedLength() {
-        return calculatedLength;
-    }
-
-    public void setCalculatedLength(String calculatedLength) {
-        this.calculatedLength = calculatedLength;
     }
 
     public int getTimeSheetId() {
@@ -88,68 +102,68 @@ public class TimeSheetDetails {
         this.timeSheetId = timeSheetId;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public String getInsertDate() {
+        return insertDate;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setInsertDate(String insertDate) {
+        this.insertDate = insertDate;
     }
 
-    public String getWorkingDate() {
-        return workingDate;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setWorkingDate(String workingDate) {
-        this.workingDate = workingDate;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
-    public String getCheckIn() {
-        return checkIn;
+    public String getCheckinTime() {
+        return checkinTime;
     }
 
-    public void setCheckIn(String checkIn) {
-        this.checkIn = checkIn;
+    public void setCheckinTime(String checkinTime) {
+        this.checkinTime = checkinTime;
     }
 
-    public String getCheckOut() {
-        return checkOut;
+    public String getCheckoutTime() {
+        return checkoutTime;
     }
 
-    public void setCheckOut(String checkOut) {
-        this.checkOut = checkOut;
+    public void setCheckoutTime(String checkoutTime) {
+        this.checkoutTime = checkoutTime;
     }
 
-    public double  getCheckInLattitude() {
-        return checkInLattitude;
+    public double getCheckinLatitude() {
+        return checkinLatitude;
     }
 
-    public void setCheckInLattitude(double  checkInLattitude) {
-        this.checkInLattitude = checkInLattitude;
+    public void setCheckinLatitude(double checkinLatitude) {
+        this.checkinLatitude = checkinLatitude;
     }
 
-    public double  getCheckOutLattitude() {
-        return checkOutLattitude;
+    public double getCheckinLongitude() {
+        return checkinLongitude;
     }
 
-    public void setCheckOutLattitude(double  checkOutLattitude) {
-        this.checkOutLattitude = checkOutLattitude;
+    public void setCheckinLongitude(double checkinLongitude) {
+        this.checkinLongitude = checkinLongitude;
     }
 
-    public double  getCheckOutLongitude() {
-        return checkOutLongitude;
+    public double getCheckoutLatitude() {
+        return checkoutLatitude;
     }
 
-    public void setCheckOutLongitude(double  checkOutLongitude) {
-        this.checkOutLongitude = checkOutLongitude;
+    public void setCheckoutLatitude(double checkoutLatitude) {
+        this.checkoutLatitude = checkoutLatitude;
     }
 
-    public double  getCheckInLongitude() {
-        return checkInLongitude;
+    public double getCheckoutLongitude() {
+        return checkoutLongitude;
     }
 
-    public void setCheckInLongitude(double  checkInLongitude) {
-        this.checkInLongitude = checkInLongitude;
+    public void setCheckoutLongitude(double checkoutLongitude) {
+        this.checkoutLongitude = checkoutLongitude;
     }
 
     public String getAssignedTo() {
@@ -160,20 +174,28 @@ public class TimeSheetDetails {
         this.assignedTo = assignedTo;
     }
 
-    public String getApprovalType() {
-        return approvalType;
+    public String getComments() {
+        return comments;
     }
 
-    public void setApprovalType(String approvalType) {
-        this.approvalType = approvalType;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
-    public String getNote() {
-        return note;
+    public String getApprovaltype() {
+        return approvaltype;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setApprovaltype(String approvaltype) {
+        this.approvaltype = approvaltype;
+    }
+
+    public String getAttendanceMode() {
+        return attendanceMode;
+    }
+
+    public void setAttendanceMode(String attendanceMode) {
+        this.attendanceMode = attendanceMode;
     }
 
     public String getStatus() {
@@ -184,6 +206,45 @@ public class TimeSheetDetails {
         this.status = status;
     }
 
+    public String getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(String workingHours) {
+        this.workingHours = workingHours;
+    }
+
+    public String getNoOfDays() {
+        return noOfDays;
+    }
+
+    public void setNoOfDays(String noOfDays) {
+        this.noOfDays = noOfDays;
+    }
+
+    public String getAbsenceCategory() {
+        return absenceCategory;
+    }
+
+    public void setAbsenceCategory(String absenceCategory) {
+        this.absenceCategory = absenceCategory;
+    }
+
+    public String getLeaveReason() {
+        return leaveReason;
+    }
+
+    public void setLeaveReason(String leaveReason) {
+        this.leaveReason = leaveReason;
+    }
+
+    public String getLeaveComments() {
+        return leaveComments;
+    }
+
+    public void setLeaveComments(String leaveComments) {
+        this.leaveComments = leaveComments;
+    }
 
 
 }

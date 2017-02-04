@@ -23,11 +23,12 @@ public class LeavesFragment extends Fragment {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    String TAG="LeavesFragment";
+    String TAG = "LeavesFragment";
     Fragment newFragment = null;
     int selectedItem;
 
     private MenuItemSelectedCallback menuItemSelectedCallback;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.completeemployeedetails, container, false);
@@ -98,6 +99,11 @@ public class LeavesFragment extends Fragment {
 
                 newFragment = UpcomingTimeOffFragment.newInstance();
 
+
+                break;
+            case R.id.action_reportsheeetsecond:
+
+                newFragment = ReportsTimesheetFragment.newInstance();
 
                 break;
 

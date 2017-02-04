@@ -2,7 +2,6 @@ package com.tek.ems.recyclerviewadapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +13,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tek.ems.R;
-import com.tek.ems.activity.GoogleMaps;
 import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
 import com.tek.ems.model.TimeSheetDetails;
@@ -96,34 +93,9 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
     @Override
     public void onBindViewHolder(ReportTimesheetRecyclerViewAdapter.ViewHolder holder, final int position) {
 
-        holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
+        holder.textView.setText(timesheetDetails.get(position).getInsertDate());
 
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
-                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
-                } else {
-                    EmsConstants.latitude = timesheetDetails.get(position).getCheckInLattitude();
-                    EmsConstants.longitude = timesheetDetails.get(position).getCheckInLongitude();
-                    Intent i = new Intent(context, GoogleMaps.class);
-                    context.startActivity(i);
-                }
-            }
-        });
-        holder.imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
-                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
-                } else {
-                    EmsConstants.latitude = timesheetDetails.get(position).getCheckOutLattitude();
-                    EmsConstants.longitude = timesheetDetails.get(position).getCheckOutLongitude();
-                    Intent i = new Intent(context, GoogleMaps.class);
-                    context.startActivity(i);
-                }
-            }
-        });
+
 
        if (timesheetDetails.get(position).getStatus() != null) {
             if (timesheetDetails.get(position).getStatus().equals("Approved")) {
@@ -139,19 +111,19 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
             }
         }
 
-        if (timesheetDetails.get(position).getCheckIn() != null) {
-            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
+        if (timesheetDetails.get(position).getCheckinTime() != null) {
+            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckinTime());
 
         }
-        if (timesheetDetails.get(position).getCheckOut() != null) {
+        if (timesheetDetails.get(position).getCheckoutTime() != null) {
 
-            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckoutTime());
         }
 
 
-        if (timesheetDetails.get(position).getCalculatedLength() != null) {
+        if (timesheetDetails.get(position).getWorkingHours() != null) {
 
-            holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
+            holder.tvtotalhrs.setText(timesheetDetails.get(position).getWorkingHours() + "hrs");
 
         }
 
@@ -269,7 +241,7 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
     }
 
     public void updateemployeedetails(int timesheetid, int EmployeeId, String WorkingDate, String CheckIn, String CheckOut, double CheckInLattitude, double checkInLongitude, double checkOutLattitude, double checkOutLongitude, String AssignedTo, String ApprovalType, String Note, String status) {
-        timeSheetDetails.setTimeSheetId(timesheetid);
+      /*  timeSheetDetails.setTimeSheetId(timesheetid);
         timeSheetDetails.setEmployeeId(EmployeeId);
         timeSheetDetails.setWorkingDate(WorkingDate);
         timeSheetDetails.setCheckIn(CheckIn);
@@ -281,7 +253,7 @@ public class ReportTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Rep
         timeSheetDetails.setAssignedTo(AssignedTo);
         timeSheetDetails.setApprovalType(ApprovalType);
         timeSheetDetails.setNote(Note);
-        timeSheetDetails.setStatus(status);
+        timeSheetDetails.setStatus(status);*/
         //  uploadDetails();
 
     }

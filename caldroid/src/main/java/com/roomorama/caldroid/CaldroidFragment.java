@@ -519,11 +519,11 @@ public class CaldroidFragment extends DialogFragment {
         }
 
         if (minDateTime != null) {
-            bundle.putString(MIN_DATE, minDateTime.format("YYYY-MM-DD"));
+            bundle.putString(MIN_DATE, minDateTime.format("yyyy-MM-dd"));
         }
 
         if (maxDateTime != null) {
-            bundle.putString(MAX_DATE, maxDateTime.format("YYYY-MM-DD"));
+            bundle.putString(MAX_DATE, maxDateTime.format("yyyy-MM-dd"));
         }
 
         bundle.putBoolean(SHOW_NAVIGATION_ARROWS, showNavigationArrows);
@@ -712,7 +712,7 @@ public class CaldroidFragment extends DialogFragment {
 
     /**
      * Set disableDates from ArrayList of String. By default, the date formatter
-     * is yyyy-MM-dd. For e.g 2013-12-24
+     * is yyyyy-MM-dd. For e.g 2013-12-24
      *
      * @param disableDateStrings
      */
@@ -898,7 +898,7 @@ public class CaldroidFragment extends DialogFragment {
 
     /**
      * Convenient method to set min date from String. If dateFormat is null,
-     * default format is yyyy-MM-dd
+     * default format is yyyyy-MM-dd
      *
      * @param minDateString
      * @param dateFormat
@@ -927,7 +927,7 @@ public class CaldroidFragment extends DialogFragment {
 
     /**
      * Convenient method to set max date from String. If dateFormat is null,
-     * default format is yyyy-MM-dd
+     * default format is yyyyy-MM-dd
      *
      * @param maxDateString
      * @param dateFormat

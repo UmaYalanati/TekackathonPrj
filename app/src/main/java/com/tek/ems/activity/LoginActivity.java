@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mFirebaseAuth.addAuthStateListener(mAuthListener);
         // ...
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -152,22 +153,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String base64 = null;
                     try {
                         data = passwordEditText.getText().toString().trim().getBytes("UTF-8");
-                         base64 = Base64.encodeToString(data, Base64.DEFAULT);
+                        base64 = Base64.encodeToString(data, Base64.DEFAULT);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    String source = encodeString(passwordEditText.getText().toString().trim());
-
-                    uploadDetails(userIdEditText.getText().toString().trim(),source.replace("%3D%0A","=") );
+                    //    String source = encodeString(passwordEditText.getText().toString().trim());
+                    String source = md5(passwordEditText.getText().toString().trim());
+                    uploadDetails(userIdEditText.getText().toString().trim(), source);
 
                 }
                 //mlalwani@teksystems.com
                 /*SendMail sm = new SendMail(getApplicationContext(), "ujain@teksystems.com", "Time and Expense", "Please Approve the Time and expense",true);
                 //Executing sendmail to send email
                 sm.execute();*/
-
-
-
 
 
                 break;
@@ -267,10 +265,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 .addSplashCacheItem(EmsConstants.organizationame,
                                         String.valueOf(emp.getCompanyName())).commitSplash();
 
+                        SharedPreferenceUtils
+                                .getInstance(LoginActivity.this)
+                                .editSplash()
+                                .addSplashCacheItem(EmsConstants.reportingManagerId,
+                                        String.valueOf(emp.getReportingManagerId())).commitSplash();
+
 
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         userName = username_n;
-                        mFirebaseAuth.createUserWithEmailAndPassword(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345")
+                        mFirebaseAuth.createUserWithEmailAndPassword(passwordEditText.getText().toString().trim() + "@teksystems.com", userIdEditText.getText().toString().trim() + "12345")
                                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
 
                                     @Override
@@ -280,7 +284,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         } else {
                                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                             String uid = user.getUid();
-                                            firebaseAuthWithCustomLogin(userIdEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
+                                            firebaseAuthWithCustomLogin(userIdEditText.getText().toString().trim() + "@teksystems.com", userIdEditText.getText().toString().trim() + "12345");
                                             Log.d(TAG, "onComplete: uid: " + uid);
 
                                         }
@@ -290,7 +294,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             public void onFailure(@NonNull Exception e) {
                                 Log.d("Exception..", "" + e);
                                 if (e.getMessage().equals("The email address is already in use by another account.")) {
-                                    firebaseAuthWithCustomLogin(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
+                                    firebaseAuthWithCustomLogin(passwordEditText.getText().toString().trim() + "@teksystems.com", userIdEditText.getText().toString().trim() + "12345");
                                 } else {
                                     Toast.makeText(getApplicationContext(), e.getMessage(),
                                             Toast.LENGTH_SHORT).show();
@@ -347,6 +351,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
     }
+
     private void firebaseAuthWithCustomLogin(String username, String password) {
         //  loginWithPassword();
         // Log.d(TAG, "firebaseAuthWithCustomLogin() called with: mCustomToken = [" + mCustomToken + "]");
@@ -366,7 +371,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                            /* android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                                     Settings.Secure.ANDROID_ID);*/
 
-                           // getLogin(edittext_username.getText().toString().trim(), edittext_password.getText().toString().trim(), token, android_id);
+                            // getLogin(edittext_username.getText().toString().trim(), edittext_password.getText().toString().trim(), token, android_id);
                         }
 
                         // ...
@@ -380,6 +385,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+    }
+
+    public String md5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
 

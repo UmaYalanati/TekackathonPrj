@@ -72,7 +72,7 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyyy-MM-dd");
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String toDate = newDateFormat.format(c.getTime());
 
@@ -156,15 +156,15 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnstarttime:
-              /*  DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString(),false);
+                DatePickerFragment starttimeFragment = new DatePickerFragment(btnstarttime,btnstarttime.getText().toString(),false);
 
-                starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");*/
+                starttimeFragment.show(getActivity().getFragmentManager(), "datePicker");
                 break;
             case R.id.btnendtime:
-            /*    DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString(),false);
+                DatePickerFragment endtimeFragment = new DatePickerFragment(btnendtime,btnstarttime.getText().toString(),false);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
-                getlistofleaves(btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());*/
+                getlistofleaves(btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
                 break;
 
         }

@@ -134,7 +134,7 @@ public class CalendarHelper {
     }
 
     /**
-     * Get the Date from String with custom format. Default format is yyyy-MM-dd
+     * Get the Date from String with custom format. Default format is yyyyy-MM-dd
      *
      * @param dateString
      * @param dateFormat
@@ -159,7 +159,7 @@ public class CalendarHelper {
 
     /**
      * Get the DateTime from String with custom format. Default format is
-     * yyyy-MM-dd
+     * yyyyy-MM-dd
      *
      * @param dateString
      * @param dateFormat
@@ -182,7 +182,7 @@ public class CalendarHelper {
             ArrayList<DateTime> dateTimes) {
         ArrayList<String> list = new ArrayList<String>();
         for (DateTime dateTime : dateTimes) {
-            list.add(dateTime.format("YYYY-MM-DD"));
+            list.add(dateTime.format("yyyy-MM-dd"));
         }
         return list;
     }

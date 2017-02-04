@@ -80,7 +80,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyyy-MM-dd");
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String toDate = newDateFormat.format(c.getTime());
 
@@ -227,7 +227,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
             Date d = null;
             int year1 = year, month1 = month, day1 = day;
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 d = sdf.parse(date);
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(d);
@@ -256,7 +256,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
             String str_year = String.valueOf(year);
             String date_str = "";
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date d = sdf.parse(date);
                 view.setMinDate(d.getTime());
             } catch (ParseException e) {
@@ -268,39 +268,43 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
 //mm dd yy
                 if (new StringBuilder().append(day).length() >= 2) {
                     mTextView.setText(new StringBuilder()
-                            .append(month + 1).append("/").append(day).append("/").append(str_year).toString());
+                            .append(str_year).append("-").append(month + 1).append("-").append(day).toString());
+                //    get_date=mTextView.getText().toString().trim();
 
                 } else {
 
                     mTextView.setText(new StringBuilder()
-
-                            .append(month + 1).append("/").append(0).append(day).append("/").append(str_year)
+                            .append(str_year).append("-").append(month + 1).append("-").append(0).append(day)
                             .toString());
+                //    get_date=mTextView.getText().toString().trim();
                 }
             } else {
                 if (new StringBuilder().append(day).length() >= 2) {
-                    if (new StringBuilder().append(month + 1).length() >= 2) {
+                    if (new StringBuilder().append(month + 1).length() >= 2){
                         mTextView.setText(new StringBuilder()
-                                .append(month + 1).append("/")
-                                .append(day).append("/")
-                                .append(str_year)
+                                .append(str_year).append("-")
+                                .append(month + 1).append("-")
+                                .append(day)
                                 .toString());
-                    } else {
+                        //get_date=mTextView.getText().toString().trim();
+                    }else{
                         mTextView.setText(new StringBuilder()
-                                .append(0).append(month + 1).append("/")
-                                .append(day).append("/")
-                                .append(str_year)
+                                .append(str_year).append("-")
+                                .append(0).append(month + 1).append("-")
+                                .append(day)
                                 .toString());
+                       // get_date=mTextView.getText().toString().trim();
                     }
 
 
                 } else {
 
 
-                    mTextView.setText(new StringBuilder()
-                            .append(0).append(month + 1).append("/")
-                            .append(0).append(day).append("/")
-                            .append(str_year).toString());
+                    mTextView.setText(new StringBuilder().append(str_year).append("-")
+                            .append(0).append(month + 1).append("-")
+                            .append(0).append(day)
+                            .toString());
+                   // get_date=mTextView.getText().toString().trim();
                 }
 
 

@@ -44,6 +44,7 @@ public class ReportsTimesheetFragment extends Fragment {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
     public static final int JANUARY = 1;
 
     public static final int DECEMBER = 12;
@@ -111,24 +112,24 @@ public class ReportsTimesheetFragment extends Fragment {
             public void onClick(View v) {
 
                 if (month < 11) {
-                   // month++;
-                    month=month+1;
+                    // month++;
+                    month = month + 1;
                     String monthString;
 
-                        monthString = str[month+1 - 1];
-                        tvmonthname.setText(monthString);
+                    monthString = str[month + 1 - 1];
+                    tvmonthname.setText(monthString);
 
                 } else {
 
                     month = 1;
                     String monthString;
 
-                    monthString = str[month+1 - 1];
+                    monthString = str[month + 1 - 1];
                     tvmonthname.setText(monthString);
                 }
 
 
-                getLastDayOfMonth(month+1,year);
+                getLastDayOfMonth(month + 1, year);
             }
 
         });
@@ -137,19 +138,19 @@ public class ReportsTimesheetFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (month >= 0) {
-                  //  month--;
-                    month=month-1;
+                    //  month--;
+                    month = month - 1;
                 }
                 getLastDayOfMonth(month + 1, year);
 
                 String monthString;
-                if (month+1 < str.length) {
-                    monthString = str[month+1 - 1];
+                if (month + 1 < str.length) {
+                    monthString = str[month + 1 - 1];
                     tvmonthname.setText(monthString);
                 } else {
                     monthString = "Invalid month";
                 }
-               // getLastDayOfMonth(month+1,year);
+                // getLastDayOfMonth(month+1,year);
             }
 
         });
@@ -161,7 +162,7 @@ public class ReportsTimesheetFragment extends Fragment {
     void getlistofleaves(int employeeId, String startdate, String enddaate, String status) {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(employeeId, startdate, enddaate, status);
+        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(employeeId, startdate, enddaate);
 
 
         listCall.enqueue(new Callback<List<TimeSheetDetails>>() {
@@ -228,7 +229,7 @@ public class ReportsTimesheetFragment extends Fragment {
         getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()), String.valueOf(month)+"/"+String.valueOf(firstDay)+"/"+String.valueOf(year), String.valueOf(month)+"/"+String.valueOf(lastDay)+"/"+String.valueOf(year), "ALL");
+                        EmsConstants.employeeId).toString().trim()), String.valueOf(month) + "/" + String.valueOf(firstDay) + "/" + String.valueOf(year), String.valueOf(month) + "/" + String.valueOf(lastDay) + "/" + String.valueOf(year), "ALL");
     }
 }
 

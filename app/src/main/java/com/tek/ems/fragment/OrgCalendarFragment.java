@@ -115,10 +115,10 @@ public class OrgCalendarFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-     final   SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+     final   SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         toDate = newDateFormat.format(c.getTime());
         tvdatee.setText(toDate);
-        displayDatedetails();
+       // displayDatedetails();
         // Setup listener
         listener = new CaldroidListener() {
 

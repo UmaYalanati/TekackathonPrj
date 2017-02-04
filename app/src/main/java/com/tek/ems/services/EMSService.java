@@ -37,23 +37,23 @@ public interface EMSService {
     @GET("employees/{employeeId}")
     Call<EmployeeDetails> getEmployeeById(@Path("employeeId") int employeeId);
 
-    @GET("employees/reportes{employeeId}")
-    Call<EmployeeDetails> getreportes(@Path("employeeId") int employeeId);
+    @GET("employees/reportes/{employeeId}")
+    Call<List<EmployeeDetails>> getreportes(@Path("employeeId") int employeeId);
 
     @GET("employees/leaveDetailsReport")
     Call<List<LeaveDetails>> getLeaveDetails(@Query("employeeId") int employeeId, @Query("startDate") String startDate, @Query("endDate") String endDate);
 
     @GET("employees/applyLeaves")
-    Call<CreateLeaveRequest> createLeaveRequest(@Query("employeeId") int employeeId,@Query("attendanceMode") String attendanceMode,@Query("absenceCategory") String absenceCategory,@Query("leaveReason") String leaveReason,@Query("startDate") String startDate,@Query("endDate") String endDate);
+    Call<CreateLeaveRequest> createLeaveRequest(@Query("employeeId") int employeeId,@Query("attendanceMode") String attendanceMode,@Query("absenceCategory") String absenceCategory,@Query("leaveReason") String leaveReason,@Query("startDate") String startDate,@Query("endDate") String endDate,@Query("reportingManagerId") int reportingManagerId);
 
     @GET("teksystems/login")
-    Call<Login> getLogin(@Query("userName") String userName,@Query(value = "password", encoded = true) String password);
+    Call<Login> getLogin(@Query("userName") String userName,@Query("password") String password);
 
     @PUT("Login/ChangePassword")
     Call<ChangePassword> changePassword(@Body ChangePassword changePassword);
 
-    @GET("TimeSheet/GetTimeSheetDetails")
-    Call<List<TimeSheetDetails>> getTimeSheetDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo,@Query("status") String status);
+    @GET("timeandexpense/timesheetById")
+    Call<List<TimeSheetDetails>> getTimeSheetDetails(@Query("employeeId") int employeeId, @Query("fromDate") String fromDate,@Query("toDate") String toDate);
 
     @PUT("TimeSheet/UpdateTimeCardApproval")
     Call<TimeSheetDetailsApprove> updateTimeCardApproval(@Body TimeSheetDetailsApprove timeSheetDetails);

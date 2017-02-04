@@ -82,7 +82,7 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-        // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyyy-MM-dd");
         SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         toDate = newDateFormat.format(c.getTime());
 
@@ -146,8 +146,12 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
+        int reportingManagerId = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.reportingManagerId).toString().trim());
         EMSService service = ServiceGenerator.createService();
-        Call<CreateLeaveRequest> createLeaveRequestcall = service.createLeaveRequest(empid, "Mobile", "NORMAL", ed_comments.getText().toString().trim(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
+        Call<CreateLeaveRequest> createLeaveRequestcall = service.createLeaveRequest(empid, "Mobile", "NORMAL", ed_comments.getText().toString().trim(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(),reportingManagerId);
         createLeaveRequestcall.enqueue(new Callback<CreateLeaveRequest>() {
             @Override
             public void onResponse(Call<CreateLeaveRequest> call, Response<CreateLeaveRequest> response) {
@@ -174,8 +178,8 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                     Calendar c = Calendar.getInstance();
                     System.out.println("Current time => " + c.getTime());
 
-                    // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyyy-MM-dd");
+                    SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     toDate = newDateFormat.format(c.getTime());
 
                     Calendar calendar = Calendar.getInstance(); // this would default to now
@@ -193,8 +197,8 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                     Calendar c = Calendar.getInstance();
                     System.out.println("Current time => " + c.getTime());
 
-                    // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    // SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyyy-MM-dd");
+                    SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     toDate = newDateFormat.format(c.getTime());
 
                     Calendar calendar = Calendar.getInstance(); // this would default to now
@@ -262,7 +266,7 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
 
-        if (SharedPreferenceUtils
+      /*  if (SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.rolename) != null && SharedPreferenceUtils
@@ -278,7 +282,12 @@ public class UpcomingTimeOffFragment extends Fragment implements View.OnClickLis
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.employeeId).toString().trim());
-        }
+        }*/
+
+        empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
         Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {

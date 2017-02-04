@@ -23,7 +23,8 @@ public class ReportsFragment extends Fragment {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-    String TAG="ReportsFragment";
+
+    String TAG = "ReportsFragment";
     Fragment newFragment = null;
     int selectedItem;
 
@@ -78,20 +79,12 @@ public class ReportsFragment extends Fragment {
             //    action_editdetails
             case R.id.action_reportsheeet:
 
-
-
                 newFragment = ReportsTimesheetFragment.newInstance();
-
-
 
                 break;
             case R.id.action_reportsheeetsecond:
 
-
                 newFragment = ReportsTimesheetSecond.newInstance();
-
-
-
 
                 break;
 
@@ -126,7 +119,6 @@ public class ReportsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
 
 
 }

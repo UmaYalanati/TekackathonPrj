@@ -141,7 +141,7 @@ public class CheckinCheckoutFragment extends Fragment implements View.OnClickLis
             Calendar c = Calendar.getInstance();
             System.out.println("Current time => " + c.getTime());
 
-            SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             formattedDate = newDateFormat.format(c.getTime());
 
 

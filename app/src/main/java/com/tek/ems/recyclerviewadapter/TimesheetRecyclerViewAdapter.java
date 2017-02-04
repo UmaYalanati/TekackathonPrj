@@ -1,18 +1,14 @@
 package com.tek.ems.recyclerviewadapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tek.ems.R;
-import com.tek.ems.activity.GoogleMaps;
-import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.model.TimeSheetDetails;
 
 import java.util.List;
@@ -68,8 +64,8 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        if (timesheetDetails.get(position).getWorkingDate() != null) {
-            holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
+        if (timesheetDetails.get(position).getInsertDate() != null) {
+            holder.textView.setText(timesheetDetails.get(position).getInsertDate());
         }
         if (timesheetDetails.get(position).getStatus() != null) {
             if (timesheetDetails.get(position).getStatus().equals("Approved")) {
@@ -84,57 +80,20 @@ public class TimesheetRecyclerViewAdapter extends RecyclerView.Adapter<Timesheet
                 holder.tvapprovalstatus.setImageResource(R.drawable.reddot);
             }
         }
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
-                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
-                } else {
-                    EmsConstants.latitude = timesheetDetails.get(position).getCheckInLattitude();
-                    EmsConstants.longitude = timesheetDetails.get(position).getCheckInLongitude();
-                    Intent i = new Intent(context, GoogleMaps.class);
-                    context.startActivity(i);
-                }
-            }
-        });
-        holder.imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
-                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
-                } else {
-                    EmsConstants.latitude = timesheetDetails.get(position).getCheckOutLattitude();
-                    EmsConstants.longitude = timesheetDetails.get(position).getCheckOutLongitude();
-                    Intent i = new Intent(context, GoogleMaps.class);
-                    context.startActivity(i);
-                }
-            }
-        });
 
 
-        if (timesheetDetails.get(position).getCheckIn() != null) {
+        if (timesheetDetails.get(position).getCheckinTime() != null) {
 
-            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
-            if (timesheetDetails.get(position).getCheckIn().trim().isEmpty()) {
-                holder.tvcheckintime.setText("0:00 am");
-            } else {
-                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
-            }
+            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckinTime());
+
         }
-        if (timesheetDetails.get(position).getCheckOut() != null) {
-            if (timesheetDetails.get(position).getCheckOut().trim().isEmpty()) {
-                holder.tvcheckouttime.setText("0:00 am");
-            } else {
-                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
-            }
-
-
+        if (timesheetDetails.get(position).getCheckoutTime() != null) {
+            holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckoutTime());
         }
 
 
-        if (timesheetDetails.get(position).getCalculatedLength() != null) {
-            holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
-            // int hours = p.getHours();
+        if (timesheetDetails.get(position).getWorkingHours() != null) {
+            holder.tvtotalhrs.setText(timesheetDetails.get(position).getWorkingHours() + "hrs");
         }
 
 

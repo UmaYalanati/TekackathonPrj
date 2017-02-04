@@ -19,5 +19,11 @@
         android:title="action_search"
         app:showAsAction="ifRoom" />
 
-
+    <item
+        android:id="@+id/action_reportsheeetsecond"
+        android:icon="@drawable/ic_pay_sheet"
+        android:menuCategory="secondary"
+        android:orderInCategory="1"
+        android:title="action_search"
+        app:showAsAction="ifRoom" />
 </menu>

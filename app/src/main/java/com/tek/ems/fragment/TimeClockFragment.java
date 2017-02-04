@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 
 import com.tek.ems.R;
 import com.tek.ems.callback.MenuItemSelectedCallback;
-import com.tek.ems.emsconstants.EmsConstants;
-import com.tek.ems.emsconstants.SharedPreferenceUtils;
 
 /**
  * Created by uyalanat on 20-10-2016.
@@ -24,9 +22,10 @@ public class TimeClockFragment extends Fragment {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
     Fragment newFragment = null;
     int selectedItem;
-String TAG="TimeClockFragment";
+    String TAG = "TimeClockFragment";
     private MenuItemSelectedCallback menuItemSelectedCallback;
 
     @Override
@@ -44,7 +43,7 @@ String TAG="TimeClockFragment";
                 // FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                if (SharedPreferenceUtils
+               /* if (SharedPreferenceUtils
                         .getInstance(getActivity())
                         .getSplashCacheItem(
                                 EmsConstants.rolename) != null && !SharedPreferenceUtils
@@ -53,16 +52,17 @@ String TAG="TimeClockFragment";
                                 EmsConstants.rolename).equals("Manager")) {
                     transaction.replace(R.id.fragment_container, new CheckinCheckoutFragment());
                     selectedItem = R.id.action_checkin;
-                }else {
+                } else {
                     transaction.replace(R.id.fragment_container, new TimeSheetFragment());
                     selectedItem = R.id.action_timesheet;
-                }
+                }*/
+                transaction.replace(R.id.fragment_container, new CheckinCheckoutFragment());
+                selectedItem = R.id.action_checkin;
 
 //                transaction.addToBackStack(null);
 
 // Commit the transaction
                 transaction.commit();
-
 
 
                 if (menuItemSelectedCallback != null) {
@@ -88,8 +88,6 @@ String TAG="TimeClockFragment";
                 // item.getTitle().equals()
 
                 newFragment = new CheckinCheckoutFragment();
-
-
 
 
                 break;

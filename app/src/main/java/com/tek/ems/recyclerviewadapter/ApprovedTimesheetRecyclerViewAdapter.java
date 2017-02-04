@@ -3,7 +3,6 @@ package com.tek.ems.recyclerviewadapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tek.ems.R;
-import com.tek.ems.activity.GoogleMaps;
 import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
 import com.tek.ems.model.TimeSheetDetails;
@@ -90,10 +88,10 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                             .getInstance(context)
                             .getSplashCacheItem(
                                     EmsConstants.rolename).equals("Manager")) {
-                        Alertview(timesheetDetails.get(pos).getTimeSheetId(), Integer.parseInt(SharedPreferenceUtils
-                                .getInstance(context)
-                                .getSplashCacheItem(
-                                        EmsConstants.childEmployeeId).toString()), timesheetDetails.get(pos).getWorkingDate(), timesheetDetails.get(pos).getCheckIn(), timesheetDetails.get(pos).getCheckOut(), timesheetDetails.get(pos).getCheckInLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getCheckOutLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getAssignedTo(), timesheetDetails.get(pos).getApprovalType(), timesheetDetails.get(pos).getNote(), timesheetDetails.get(pos).getStatus());
+                  //      Alertview(timesheetDetails.get(pos).getTimeSheetId(), Integer.parseInt(SharedPreferenceUtils
+                   //             .getInstance(context)
+                    //            .getSplashCacheItem(
+                    //                    EmsConstants.childEmployeeId).toString()), timesheetDetails.get(pos).getInsertDate(), timesheetDetails.get(pos).getCheckinTime(), timesheetDetails.get(pos).getCheckoutTime(), timesheetDetails.get(pos).getCheckInLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getCheckOutLattitude(), timesheetDetails.get(pos).getCheckOutLongitude(), timesheetDetails.get(pos).getAssignedTo(), timesheetDetails.get(pos).getApprovalType(), timesheetDetails.get(pos).getNote(), timesheetDetails.get(pos).getStatus());
                     }
                 }
             });
@@ -113,7 +111,7 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
     @Override
     public void onBindViewHolder(ApprovedTimesheetRecyclerViewAdapter.ViewHolder holder, final int position) {
 
-        holder.textView.setText(timesheetDetails.get(position).getWorkingDate());
+        holder.textView.setText(timesheetDetails.get(position).getInsertDate());
         if (timesheetDetails.get(position).getStatus() != null) {
             if (timesheetDetails.get(position).getStatus().equals("Approved")) {
                 // tvapprovalstatus.setBackgroundResource(R.drawable.approvedicon);
@@ -127,57 +125,32 @@ public class ApprovedTimesheetRecyclerViewAdapter extends RecyclerView.Adapter<A
                 holder.tvapprovalstatus.setImageResource(R.drawable.reddot);
             }
         }
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
-                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
-                } else {
-                    EmsConstants.latitude = timesheetDetails.get(position).getCheckInLattitude();
-                    EmsConstants.longitude = timesheetDetails.get(position).getCheckInLongitude();
-                    Intent i = new Intent(context, GoogleMaps.class);
-                    context.startActivity(i);
-                }
-            }
-        });
-        holder.imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (String.valueOf(timesheetDetails.get(position).getCheckInLattitude()).equals("0.0")) {
-                    Toast.makeText(context, "Location not Available", Toast.LENGTH_SHORT).show();
-                } else {
-                    EmsConstants.latitude = timesheetDetails.get(position).getCheckOutLattitude();
-                    EmsConstants.longitude = timesheetDetails.get(position).getCheckOutLongitude();
-                    Intent i = new Intent(context, GoogleMaps.class);
-                    context.startActivity(i);
-                }
-            }
-        });
-        holder.tvcheckintime.setText("00:00");
 
-        if (timesheetDetails.get(position).getCheckIn() != null) {
 
-            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
-            if (timesheetDetails.get(position).getCheckIn().trim().isEmpty()) {
+
+        if (timesheetDetails.get(position).getCheckinTime() != null) {
+
+            holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckinTime());
+            if (timesheetDetails.get(position).getCheckinTime().trim().isEmpty()) {
                 holder.tvcheckintime.setText("0:00 am");
             } else {
-                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckIn());
+                holder.tvcheckintime.setText(timesheetDetails.get(position).getCheckinTime());
             }
         }
-        if (timesheetDetails.get(position).getCheckOut() != null) {
-            if (timesheetDetails.get(position).getCheckOut().trim().isEmpty()) {
+        if (timesheetDetails.get(position).getCheckoutTime()!= null) {
+            if (timesheetDetails.get(position).getCheckoutTime().trim().isEmpty()) {
                 holder.tvcheckouttime.setText("0:00 am");
             } else {
-                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckOut());
+                holder.tvcheckouttime.setText(timesheetDetails.get(position).getCheckoutTime());
             }
 
 
         }
 
 
-        if (timesheetDetails.get(position).getCalculatedLength() != null) {
+        if (timesheetDetails.get(position).getWorkingHours() != null) {
 
-            holder.tvtotalhrs.setText(timesheetDetails.get(position).getCalculatedLength() + "hrs");
+            holder.tvtotalhrs.setText(timesheetDetails.get(position).getCheckoutTime() + "hrs");
 
             // int hours = p.getHours();
         }

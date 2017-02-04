@@ -64,7 +64,7 @@ boolean isdateset;
         Date d=null;
         int year1=year,month1=month,day1=day;
         try{
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
              d = sdf.parse(date);
             Calendar cal = Calendar.getInstance();
             cal.setTime(d);
@@ -96,7 +96,7 @@ boolean isdateset;
         String str_year = String.valueOf(year);
         String date_str = "";
         try{
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date d = sdf.parse(date);
             view.setMinDate(d.getTime());
         }catch (ParseException e){

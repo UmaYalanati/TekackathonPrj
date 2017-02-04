@@ -52,10 +52,11 @@ public class ApprovedTimesheetFragment extends Fragment {
     RelativeLayout relativeLayout;
     ApprovedTimesheetRecyclerViewAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager recylerViewLayoutManager;
-    AppCompatSpinner spinner_listofsheet,spinner_listofemployees;
+    AppCompatSpinner spinner_listofsheet, spinner_listofemployees;
     TextView tvtittle;
-Button btnstarttime,btnendtime;
-String TAG="TimesheetFragment";
+    Button btnstarttime, btnendtime;
+    String TAG = "TimesheetFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_employeetimesheet, container, false);
@@ -66,21 +67,21 @@ String TAG="TimesheetFragment";
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
 
         tvtittle = (TextView) view.findViewById(R.id.tvtittle);
-        btnstarttime= (Button) view.findViewById(R.id.btnstarttime);
-                btnendtime= (Button) view.findViewById(R.id.btnendtime);
+        btnstarttime = (Button) view.findViewById(R.id.btnstarttime);
+        btnendtime = (Button) view.findViewById(R.id.btnendtime);
         tvtittle.setText("Time Card Approval");
         recylerViewLayoutManager = new LinearLayoutManager(context);
 
         recyclerView.setLayoutManager(recylerViewLayoutManager);
 
-      //  recyclerViewAdapter = new ApprovedTimesheetRecyclerViewAdapter(context, subjects);
+        //  recyclerViewAdapter = new ApprovedTimesheetRecyclerViewAdapter(context, subjects);
 
 
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
-     //   SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        //   SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyyy-MM-dd");
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
@@ -102,15 +103,15 @@ String TAG="TimesheetFragment";
             /*if (currentUser.getChildEmployees()!=null) {
                 getlistofleaves(currentUser.getChildEmployees().get(0).getEmployeeId(), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), "Pending");
             }*/
-        }else {
+        } else {
             getlistofleaves(Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim()),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+                            EmsConstants.employeeId).toString().trim()), btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim(), "Pending");
         }
-       // recyclerView.setAdapter(recyclerViewAdapter);
+        // recyclerView.setAdapter(recyclerViewAdapter);
         spinner_listofsheet = (AppCompatSpinner) view.findViewById(R.id.spinner_listofsheet);
-        spinner_listofemployees= (AppCompatSpinner) view.findViewById(R.id.spinner_listofemployees);
+        spinner_listofemployees = (AppCompatSpinner) view.findViewById(R.id.spinner_listofemployees);
         spinner_listofsheet.setVisibility(View.GONE);
 
         ;
@@ -121,24 +122,23 @@ String TAG="TimesheetFragment";
         }*/
 
 
-        spinner_listofemployees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+        spinner_listofemployees.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-              //  getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
+                //  getlistofleaves(currentUser.getChildEmployees().get(position).getEmployeeId(),btnstarttime.getText().toString().trim(),btnendtime.getText().toString().trim(),"Pending");
             } // to close the onItemSelected
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
         return view;
     }
-    void getlistofleaves(int employeeId,String startdate,String enddaate,String status) {
+
+    void getlistofleaves(int employeeId, String startdate, String enddaate, String status) {
 
 
-int empid=employeeId;
+        int empid = employeeId;
 
         if (SharedPreferenceUtils
                 .getInstance(getActivity())
@@ -151,7 +151,7 @@ int empid=employeeId;
                     .getInstance(getActivity())
                     .getSplashCacheItem(
                             EmsConstants.childEmployeeId).toString().trim());*/
-        }else {
+        } else {
             empid = Integer.parseInt(SharedPreferenceUtils
                     .getInstance(getActivity())
                     .getSplashCacheItem(
@@ -160,7 +160,7 @@ int empid=employeeId;
 
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(empid, startdate, enddaate, status);
+        Call<List<TimeSheetDetails>> listCall = ServiceGenerator.createService().getTimeSheetDetails(empid, startdate, enddaate);
 
 
         listCall.enqueue(new Callback<List<TimeSheetDetails>>() {
