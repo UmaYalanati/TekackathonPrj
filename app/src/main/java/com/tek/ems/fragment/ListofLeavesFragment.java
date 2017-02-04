@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.tek.ems.R;
 import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
-import com.tek.ems.model.LeaveCategorylist;
+import com.tek.ems.model.LeaveDetails;
 import com.tek.ems.recyclerviewadapter.Leaves_ListAdapter;
 import com.tek.ems.services.ServiceGenerator;
 
@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +46,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-
+    List<LeaveDetails> leaveDetails;
 
     String TAG = "LeavesStatusFragment";
     //  LeaveCategorylist leavedetails=new LeaveCategorylist();
@@ -103,15 +104,15 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
     void getlistofleaves(String startdate, String enddaate) {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
 
-        Call<LeaveCategorylist> listCall = ServiceGenerator.createService().getLeaveCategorylist(Integer.parseInt(SharedPreferenceUtils
+        Call<List<LeaveDetails>> listCall = ServiceGenerator.createService().getLeaveCategorylist(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()), startdate, enddaate);
+                        EmsConstants.employeeId).toString().trim()), "2017-01-31", "2017-02-01");
 
 
-        listCall.enqueue(new Callback<LeaveCategorylist>() {
+        listCall.enqueue(new Callback<List<LeaveDetails>>() {
             @Override
-            public void onResponse(Call<LeaveCategorylist> call, Response<LeaveCategorylist> response) {
+            public void onResponse(Call<List<LeaveDetails>> call, Response<List<LeaveDetails>> response) {
                 if (loading.isShowing()) {
                     loading.dismiss();
                 }
@@ -126,7 +127,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
                     }
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
-                    LeaveCategorylist leaveDetails = response.body();
+                     leaveDetails = response.body();
                     Log.i(TAG, "onResponse: Fetched " + leaveDetails + " clients.");
 //                    for (Client client : clients) {
 //                        Log.i(TAG, "onResponse: Client: "+client);
@@ -136,7 +137,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
             }
 
             @Override
-            public void onFailure(Call<LeaveCategorylist> call, Throwable t) {
+            public void onFailure(Call<List<LeaveDetails>> call, Throwable t) {
                 if (loading.isShowing()) {
                     loading.dismiss();
                 }
@@ -150,17 +151,17 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
         loading.show();
     }
 
-    private void updateRecyclerViewForClients(LeaveCategorylist leaveDetails) {
+    private void updateRecyclerViewForClients( List<LeaveDetails> leaveDetails) {
         //   Log.d(TAG, "updateRecyclerViewForClients() called for " + leaveDetails.size() + " Clients.");
 
         // ,,
-        if (leaveDetails.getPending() != null && leaveDetails.getPending().size() > 0) {
-            Leaves_ListAdapter adapter = new Leaves_ListAdapter(context, leaveDetails.getPending());
+       // if (leaveDetails.getPending() != null && leaveDetails.getPending().size() > 0) {
+            Leaves_ListAdapter adapter = new Leaves_ListAdapter(context, leaveDetails);
 
             listView_pending.setAdapter(adapter);
-            tvPending.setVisibility(View.VISIBLE);
-        }
-        if (leaveDetails.getApproved() != null && leaveDetails.getApproved().size() > 0) {
+            tvPending.setVisibility(View.GONE);
+      //  }
+       /* if (leaveDetails.getApproved() != null && leaveDetails.getApproved().size() > 0) {
             Leaves_ListAdapter adapter1 = new Leaves_ListAdapter(context, leaveDetails.getApproved());
 
             listView_approved.setAdapter(adapter1);
@@ -173,7 +174,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
             listView_rejected.setAdapter(adapter3);
             tvRejected.setVisibility(View.VISIBLE);
         }
-
+*/
 
     }
 

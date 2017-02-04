@@ -63,7 +63,7 @@ public class Leaves_ListAdapter extends BaseAdapter {
 
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
         if (leaveDetails.get(position).getStartDate() != null) {
-            tvleavedate.setText(leaveDetails.get(position).getStartDate()+"to"+leaveDetails.get(position).getEndDate());
+            tvleavedate.setText(leaveDetails.get(position).getStartDate()+" to "+leaveDetails.get(position).getEndDate());
         }
         if (leaveDetails.get(position).getStartDate() != null && leaveDetails.get(position).getEndDate() != null) {
 

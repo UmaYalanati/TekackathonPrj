@@ -7,7 +7,6 @@ import com.tek.ems.model.EmployeeDetails;
 import com.tek.ems.model.InTakeMasterDetails;
 import com.tek.ems.model.InsertBreakIn;
 import com.tek.ems.model.InsertClockIn;
-import com.tek.ems.model.LeaveCategorylist;
 import com.tek.ems.model.LeaveDetails;
 import com.tek.ems.model.Login;
 import com.tek.ems.model.ScheduleTime;
@@ -83,6 +82,6 @@ public interface EMSService {
     //
 
     @GET("employees/leaveDetailsReport")
-    Call<LeaveCategorylist> getLeaveCategorylist(@Query("employeeId") int employeeId, @Query("startDate") String startDate,@Query("endDate") String endDate);
+    Call<List<LeaveDetails>> getLeaveCategorylist(@Query("employeeId") int employeeId, @Query("startDate") String startDate,@Query("endDate") String endDate);
 
 }

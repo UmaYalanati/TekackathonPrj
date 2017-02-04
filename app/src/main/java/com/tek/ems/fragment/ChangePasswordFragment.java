@@ -25,6 +25,8 @@ import com.tek.ems.services.ServiceGenerator;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,7 +75,7 @@ public class ChangePasswordFragment extends Fragment {
                         EmsConstants.employeeId).toString().trim());
         employeeDetails.setEmployeeId(empid);
 
-        String source = encodeString(password.getText().toString().trim());
+        String source = md5(password.getText().toString().trim());
         employeeDetails.setPassword(source);
 
     }
@@ -253,5 +255,24 @@ public class ChangePasswordFragment extends Fragment {
             return base64Encoded;
 
         }
+    }
+
+    public String md5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
