@@ -13,11 +13,8 @@ import android.widget.TextView;
 import com.tek.ems.R;
 import com.tek.ems.model.LeaveDetails;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by uyalanat on 01-11-2016.
@@ -60,24 +57,22 @@ public class Leaves_ListAdapter extends BaseAdapter {
         TextView tvleavedate = (TextView) convertView.findViewById(R.id.tvleavedate);
         TextView tvnumofleaves = (TextView) convertView.findViewById(R.id.tvnumofleaves);
         TextView textView_leavestatus = (TextView) convertView.findViewById(R.id.tvleavestatus);
-        if (leaveDetails.get(position).getLeaveType() != null)
-            textView_leavestatus.setText(leaveDetails.get(position).getLeaveType());
+        if (leaveDetails.get(position).getStatus() != null)
+            textView_leavestatus.setText(leaveDetails.get(position).getStatus());
 
 
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if (leaveDetails.get(position).getLeaveDate() != null) {
-            tvleavedate.setText(leaveDetails.get(position).getLeaveDate());
+        if (leaveDetails.get(position).getStartDate() != null) {
+            tvleavedate.setText(leaveDetails.get(position).getStartDate()+"to"+leaveDetails.get(position).getEndDate());
         }
-        if (leaveDetails.get(position).getDateFrom() != null && leaveDetails.get(position).getDateTo() != null) {
-            try {
-                Date date1 = myFormat.parse(leaveDetails.get(position).getDateFrom());
+        if (leaveDetails.get(position).getStartDate() != null && leaveDetails.get(position).getEndDate() != null) {
+
+             /*   Date date1 = myFormat.parse(leaveDetails.get(position).getDateFrom());
                 Date date2 = myFormat.parse(leaveDetails.get(position).getDateTo());
                 long diff = date2.getTime() - date1.getTime();
 
-                tvnumofleaves.setText(String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + "Day(s)"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+                tvnumofleaves.setText(String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + "Day(s)"));*/
+            tvnumofleaves.setText(leaveDetails.get(position).getNoOfDays() + "Day(s)");
         }
         return convertView;
     }

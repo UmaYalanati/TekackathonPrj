@@ -13,58 +13,54 @@ import java.io.Serializable;
 public class LeaveDetails implements Serializable {
 
 
-    @JsonProperty("LeaveId")
+    @JsonProperty("leaveId")
     private int leaveId;
 
-    @JsonProperty("EmployeeId")
+    @JsonProperty("employeeId")
     private int employeeId;
 
-    @JsonProperty("AppliedDate")
-    private String appliedDate;
+    @JsonProperty("absenceCategory")
+    private String absenceCategory;
 
-    @JsonProperty("DateFrom")
-    private String dateFrom;
+    @JsonProperty("attendanceMode")
+    private String attendanceMode;
 
-    @JsonProperty("DateTo")
-    private String dateTo;
+    @JsonProperty("leaveReason")
+    private String leaveReason;
 
-    @JsonProperty("LeaveDate")
-    private String leaveDate;
+    @JsonProperty("startDate")
+    private String startDate;
 
-    @JsonProperty("LeaveTypeId")
-    private int leaveTypeId;
+    @JsonProperty("endDate")
+    private String endDate;
 
-    @JsonProperty("Comments")
-    private String comments;
+    @JsonProperty("status")
+    private String status;
 
-    @JsonProperty("AssignedTo")
-    private int assignedTo;
+    @JsonProperty("noOfDays")
+    private int noOfDays;
+
+    @JsonProperty("leaveComments")
+    private String leaveComments;
+
+    @JsonProperty("reportingManagerId")
+    private String reportingManagerId;
 
     @Override
     public String toString() {
         return "LeaveDetails{" +
                 "leaveId=" + leaveId +
                 ", employeeId=" + employeeId +
-                ", appliedDate='" + appliedDate + '\'' +
-                ", dateFrom='" + dateFrom + '\'' +
-                ", dateTo='" + dateTo + '\'' +
-                ", leaveDate='" + leaveDate + '\'' +
-                ", leaveTypeId=" + leaveTypeId +
-                ", comments='" + comments + '\'' +
-                ", assignedTo=" + assignedTo +
-                ", actionDate='" + actionDate + '\'' +
-                ", leaveStatusId=" + leaveStatusId +
-                ", leaveStatus='" + leaveStatus + '\'' +
-                ", leaveType='" + leaveType + '\'' +
+                ", absenceCategory='" + absenceCategory + '\'' +
+                ", attendanceMode='" + attendanceMode + '\'' +
+                ", leaveReason='" + leaveReason + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate=" + endDate +
+                ", status='" + status + '\'' +
+                ", noOfDays=" + noOfDays +
+                ", leaveComments='" + leaveComments + '\'' +
+                ", reportingManagerId='" + reportingManagerId + '\'' +
                 '}';
-    }
-
-    public String getLeaveDate() {
-        return leaveDate;
-    }
-
-    public void setLeaveDate(String leaveDate) {
-        this.leaveDate = leaveDate;
     }
 
     public int getLeaveId() {
@@ -83,96 +79,75 @@ public class LeaveDetails implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public String getAppliedDate() {
-        return appliedDate;
+    public String getAbsenceCategory() {
+        return absenceCategory;
     }
 
-    public void setAppliedDate(String appliedDate) {
-        this.appliedDate = appliedDate;
+    public void setAbsenceCategory(String absenceCategory) {
+        this.absenceCategory = absenceCategory;
     }
 
-    public String getDateFrom() {
-        return dateFrom;
+    public String getAttendanceMode() {
+        return attendanceMode;
     }
 
-    public void setDateFrom(String dateFrom) {
-        this.dateFrom = dateFrom;
+    public void setAttendanceMode(String attendanceMode) {
+        this.attendanceMode = attendanceMode;
     }
 
-    public String getDateTo() {
-        return dateTo;
+    public String getLeaveReason() {
+        return leaveReason;
     }
 
-    public void setDateTo(String dateTo) {
-        this.dateTo = dateTo;
+    public void setLeaveReason(String leaveReason) {
+        this.leaveReason = leaveReason;
     }
 
-    public int getLeaveTypeId() {
-        return leaveTypeId;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setLeaveTypeId(int leaveTypeId) {
-        this.leaveTypeId = leaveTypeId;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public String getComments() {
-        return comments;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
-    public int getAssignedTo() {
-        return assignedTo;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAssignedTo(int assignedTo) {
-        this.assignedTo = assignedTo;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getActionDate() {
-        return actionDate;
+    public int getNoOfDays() {
+        return noOfDays;
     }
 
-    public void setActionDate(String actionDate) {
-        this.actionDate = actionDate;
+    public void setNoOfDays(int noOfDays) {
+        this.noOfDays = noOfDays;
     }
 
-    public int getLeaveStatusId() {
-        return leaveStatusId;
+    public String getLeaveComments() {
+        return leaveComments;
     }
 
-    public void setLeaveStatusId(int leaveStatusId) {
-        this.leaveStatusId = leaveStatusId;
+    public void setLeaveComments(String leaveComments) {
+        this.leaveComments = leaveComments;
     }
 
-    public String getLeaveStatus() {
-        return leaveStatus;
+    public String getReportingManagerId() {
+        return reportingManagerId;
     }
 
-    public void setLeaveStatus(String leaveStatus) {
-        this.leaveStatus = leaveStatus;
+    public void setReportingManagerId(String reportingManagerId) {
+        this.reportingManagerId = reportingManagerId;
     }
-
-    public String getLeaveType() {
-        return leaveType;
-    }
-
-    public void setLeaveType(String leaveType) {
-        this.leaveType = leaveType;
-    }
-
-    @JsonProperty("ActionDate")
-
-    private String actionDate;
-
-    @JsonProperty("LeaveStatusId")
-    private int leaveStatusId;
-
-    @JsonProperty("LeaveStatus")
-    private String leaveStatus;
-
-    @JsonProperty("LeaveType")
-    private String leaveType;
 }

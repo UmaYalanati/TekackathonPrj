@@ -10,11 +10,8 @@ import android.widget.TextView;
 import com.tek.ems.R;
 import com.tek.ems.model.LeaveDetails;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by uyalanat on 23-10-2016.
@@ -61,23 +58,24 @@ public class ListofLivesRecyclerViewAdapter extends RecyclerView.Adapter<ListofL
     @Override
     public void onBindViewHolder(ListofLivesRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        holder.textView_leavestatus.setText(leaveDetails.get(position).getLeaveStatus());
+        holder.textView_leavestatus.setText(leaveDetails.get(position).getStatus());
 
 
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if (leaveDetails.get(position).getLeaveDate() != null) {
-            holder.tvleavedate.setText(leaveDetails.get(position).getLeaveDate());
-        }
-        if (leaveDetails.get(position).getDateFrom() != null && leaveDetails.get(position).getDateTo() != null) {
-            try {
-                Date date1 = myFormat.parse(leaveDetails.get(position).getDateFrom());
-                Date date2 = myFormat.parse(leaveDetails.get(position).getDateTo());
-                long diff = date2.getTime() - date1.getTime();
 
-                holder.tvnumofleaves.setText(String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + "Day(s)"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        if (leaveDetails.get(position).getStartDate() != null) {
+            holder.tvleavedate.setText(leaveDetails.get(position).getStartDate()+"to"+leaveDetails.get(position).getEndDate());
+        }
+        if (leaveDetails.get(position).getStartDate() != null && leaveDetails.get(position).getEndDate() != null) {
+            /*try {
+                Date date1 = myFormat.parse(leaveDetails.get(position).getStartDate());
+                Date date2 = myFormat.parse(leaveDetails.get(position).getEndDate());
+                long diff = date2.getTime() - date1.getTime();*/
+
+                holder.tvnumofleaves.setText(leaveDetails.get(position).getNoOfDays() + "Day(s)");
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
         }
 
     }

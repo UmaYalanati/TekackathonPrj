@@ -40,8 +40,8 @@ public interface EMSService {
     @GET("employees/reportes{employeeId}")
     Call<EmployeeDetails> getreportes(@Path("employeeId") int employeeId);
 
-    @GET("Leave/GetLeaveDetails")
-    Call<List<LeaveDetails>> getLeaveDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom, @Query("dateTo") String dateTo, @Query("LeaveStatusId") int leaveStatusId);
+    @GET("employees/leaveDetailsReport")
+    Call<List<LeaveDetails>> getLeaveDetails(@Query("employeeId") int employeeId, @Query("startDate") String startDate, @Query("endDate") String endDate);
 
     @GET("employees/applyLeaves")
     Call<CreateLeaveRequest> createLeaveRequest(@Query("employeeId") int employeeId,@Query("attendanceMode") String attendanceMode,@Query("absenceCategory") String absenceCategory,@Query("leaveReason") String leaveReason,@Query("startDate") String startDate,@Query("endDate") String endDate);
@@ -82,7 +82,7 @@ public interface EMSService {
     Call<List<TimeSheetReport>> getTimeSheetReport(@Query("employeeId") int employeeId, @Query("selectedDate") String selectedDate);
     //
 
-    @GET("leave/GetLeaveCategorylist")
-    Call<LeaveCategorylist> getLeaveCategorylist(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom,@Query("dateTo") String dateTo);
+    @GET("employees/leaveDetailsReport")
+    Call<LeaveCategorylist> getLeaveCategorylist(@Query("employeeId") int employeeId, @Query("startDate") String startDate,@Query("endDate") String endDate);
 
 }

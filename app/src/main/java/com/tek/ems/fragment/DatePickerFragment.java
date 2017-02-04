@@ -79,7 +79,10 @@ boolean isdateset;
         fff = new DatePickerDialog(getActivity(), this, year, month,
                 day);
         if (isdateset){
-            fff.getDatePicker().setMinDate(d.getTime());
+            if (d!=null){
+                fff.getDatePicker().setMinDate(d.getTime());
+            }
+
         }
 
         // Create a new instance of DatePickerDialog and return it

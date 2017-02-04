@@ -73,7 +73,7 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
         System.out.println("Current time => " + c.getTime());
 
         //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
@@ -98,7 +98,7 @@ public class LeavesStatusFragment extends Fragment implements View.OnClickListen
         Call<List<LeaveDetails>> listCall = ServiceGenerator.createService().getLeaveDetails(Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.employeeId).toString().trim()), startdate, enddaate, 0);
+                        EmsConstants.employeeId).toString().trim()), startdate, enddaate);
 
 
         listCall.enqueue(new Callback<List<LeaveDetails>>() {

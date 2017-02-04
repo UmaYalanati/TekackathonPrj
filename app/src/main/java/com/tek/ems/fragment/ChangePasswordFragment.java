@@ -2,13 +2,13 @@ package com.tek.ems.fragment;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +17,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.tek.ems.R;
-import com.tek.ems.activity.LoginActivity;
 import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
-import com.tek.ems.model.ChangePassword;
+import com.tek.ems.model.EmployeeDetails;
 import com.tek.ems.services.EMSService;
 import com.tek.ems.services.ServiceGenerator;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +42,7 @@ public class ChangePasswordFragment extends Fragment {
     TextInputEditText confirmpassword, password;
     Button btnupdatepassword;
     String TAG = "ChangePasswordFragment";
-
+    EmployeeDetails employeeDetails = new EmployeeDetails();
     // Login login=new Login();
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class ChangePasswordFragment extends Fragment {
         confirmpassword = (TextInputEditText) view.findViewById(R.id.confirmpassword);
         password = (TextInputEditText) view.findViewById(R.id.password);
         btnupdatepassword = (Button) view.findViewById(R.id.btnupdatepassword);
+        loadConsolidatedData();
         btnupdatepassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,28 +59,37 @@ public class ChangePasswordFragment extends Fragment {
                 } else if (!password.getText().toString().trim().equals(confirmpassword.getText().toString().trim())) {
                     Toast.makeText(getActivity(), "Password and Confirm passwords are not matching", Toast.LENGTH_SHORT).show();
                 } else {
-                    uploadDetails(LoginActivity.userName, password.getText().toString().trim());
+                    uploadDetails();
+                  //  uploadDetails(LoginActivity.userName, password.getText().toString().trim());
                 }
             }
         });
         return view;
     }
-
-    void uploadDetails(String username, String password) {
-        ChangePassword changePassword = new ChangePassword();
-        changePassword.setUserName(SharedPreferenceUtils
+    public void updateemployeedetails() {
+        int empid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
-                        EmsConstants.username).toString());
-        changePassword.setPassword(password);
-        final ProgressDialog loading = ProgressDialog.show(getActivity()
-                , "Uploading Data", "Please wait...", false, false);
+                        EmsConstants.employeeId).toString().trim());
+        employeeDetails.setEmployeeId(empid);
+
+        String source = encodeString(password.getText().toString().trim());
+        employeeDetails.setPassword(source);
+
+    }
+    void uploadDetails() {
+        updateemployeedetails();
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Uploading Data", "Please wait...", false, false);
 
         EMSService service = ServiceGenerator.createService();
-        Call<ChangePassword> employeeDetailsCall = service.changePassword(changePassword);
-        employeeDetailsCall.enqueue(new Callback<ChangePassword>() {
+        int empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+        Call<EmployeeDetails> employeeDetailsCall = service.updateEmployee(empid, employeeDetails);
+        employeeDetailsCall.enqueue(new Callback<EmployeeDetails>() {
             @Override
-            public void onResponse(Call<ChangePassword> call, Response<ChangePassword> response) {
+            public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
                 if (loading.isShowing()) {
                     loading.dismiss();
                 }
@@ -88,41 +98,39 @@ public class ChangePasswordFragment extends Fragment {
                     try {
                         String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
                         Log.e(TAG, "onResponse: " + errorMessage);
-                        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         Log.e(TAG, "onResponse: IOException while parsing response error", e);
                     }
                 } else if (response != null && response.isSuccessful()) {
 //DO SUCCESS HANDLING HERE
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle("Password Changed Successfully!")
-                            .setMessage("")
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
 
-                                    SharedPreferenceUtils
-                                            .getInstance(getActivity())
-                                            .editSplash()
-                                            .addSplashCacheItem(EmsConstants.employeeId,
-                                                    "").commitSplash();
-                                    Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
-                                    startActivity(intent_homescreen);
-                                }
-                            })
-                            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                @Override
-                                public void onCancel(DialogInterface dialog) {
-                                    //  clear_Fields();
-                                    // loadPage(1);
-                                }
-                            })
-                            .show();
-                    // Login emp = response.body();
-           /*         if (emp != null) {
+                    EmployeeDetails emp = response.body();
+
+
+                    SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .editSplash()
+                            .addSplashCacheItem(EmsConstants.employeename,
+                                    String.valueOf(emp.getFirstName())).commitSplash();
+
+                    SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .editSplash()
+                            .addSplashCacheItem(EmsConstants.emaailid,
+                                    String.valueOf(emp.getEmailid())).commitSplash();
+
+                  /*  SharedPreferenceUtils
+                            .getInstance(getActivity())
+                            .editSplash()
+                            .addSplashCacheItem(EmsConstants.photoPath,
+                                    String.valueOf(emp.getPhotoPath())).commitSplash();*/
+
+
+                    if (emp != null) {
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
-                        new AlertDialog.Builder(getActivity())
-                                .setTitle("Password Changed Successfully!")
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("EmployeeDetails Updated Successfully!")
                                 .setMessage("")
                                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     @Override
@@ -140,51 +148,27 @@ public class ChangePasswordFragment extends Fragment {
                                 })
                                 .show();
                     } else {
-                        new AlertDialog.Builder(getActivity())
-                                .setTitle("Login  Failed!")
-                                .setMessage("We are unable to save your Loginin our database this time.\n\n" +
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("EmployeeDetails Creation Failed!")
+                                .setMessage("We are unable to save your EmployeeDetailsin our database this time.\n\n" +
                                         "Please try validating your parameters once or Try again later.")
                                 .setPositiveButton(R.string.ok, null)
                                 .show();
-                    }*/
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<ChangePassword> call, Throwable t) {
+            public void onFailure(Call<EmployeeDetails> call, Throwable t) {
                 if (loading.isShowing()) {
                     loading.dismiss();
                 }
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Password Changed Successfully!")
-                        .setMessage("")
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                SharedPreferenceUtils
-                                        .getInstance(getActivity())
-                                        .editSplash()
-                                        .addSplashCacheItem(EmsConstants.employeeId,
-                                                "").commitSplash();
-                                Intent intent_homescreen = new Intent(getActivity(), LoginActivity.class);
-                                startActivity(intent_homescreen);
-                            }
-                        })
-                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                //  clear_Fields();
-                                // loadPage(1);
-                            }
-                        })
-                        .show();
-               /* Toast.makeText(getActivity(), "Error connecting with Web Services...\n" +
+                Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
                         "Please try again after some time.", Toast.LENGTH_SHORT).show();
                 if (t != null) {
                     Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
                 } else {
-                }*/
+                }
             }
         });
         loading.setCancelable(false);
@@ -192,5 +176,82 @@ public class ChangePasswordFragment extends Fragment {
         loading.show();
 
     }
+    public void loadConsolidatedData() {
+        final ProgressDialog loading = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+        int empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
 
+   /*     if (SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename) != null && SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.rolename).equals("Manager")) {
+            empid = Integer.parseInt(SharedPreferenceUtils
+                    .getInstance(getActivity())
+                    .getSplashCacheItem(
+                            EmsConstants.childEmployeeId).toString().trim());
+        } else {*/
+        empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+        //    }
+        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
+
+        listCall.enqueue(new Callback<EmployeeDetails>() {
+            @Override
+            public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        String errorMessage = "ERROR - " + response.code() + " - " + response.errorBody().string();
+                        Log.e(TAG, "onResponse: " + errorMessage);
+                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: IOException while parsing response error", e);
+                    }
+                } else if (response != null && response.isSuccessful()) {
+                    //DO SUCCESS HANDLING HERE
+                    employeeDetails = response.body();
+                    Log.i(TAG, "onResponse: Fetched " + employeeDetails + " PropertyTypes.");
+                  //  setEmployeeDetails();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeDetails> call, Throwable t) {
+                if (loading.isShowing()) {
+                    loading.dismiss();
+                }
+                Toast.makeText(getContext(), "Error connecting with Web Services...\n" +
+                        "Please try again after some time.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
+            }
+        });
+        loading.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.show();
+    }
+    private String encodeString(String s) {
+        byte[] data = new byte[0];
+
+        try {
+            data = s.getBytes("UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } finally {
+            String base64Encoded = Base64.encodeToString(data, Base64.DEFAULT);
+
+            return base64Encoded;
+
+        }
+    }
 }

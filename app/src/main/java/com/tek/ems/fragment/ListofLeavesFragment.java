@@ -81,7 +81,7 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
         System.out.println("Current time => " + c.getTime());
 
         //SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String toDate = newDateFormat.format(c.getTime());
 
         Calendar calendar = Calendar.getInstance(); // this would default to now
