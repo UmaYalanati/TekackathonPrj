@@ -37,6 +37,9 @@ public interface EMSService {
     @GET("employees/{employeeId}")
     Call<EmployeeDetails> getEmployeeById(@Path("employeeId") int employeeId);
 
+    @GET("employees/reportes{employeeId}")
+    Call<EmployeeDetails> getreportes(@Path("employeeId") int employeeId);
+
     @GET("Leave/GetLeaveDetails")
     Call<List<LeaveDetails>> getLeaveDetails(@Query("employeeId") int employeeId, @Query("dateFrom") String dateFrom, @Query("dateTo") String dateTo, @Query("LeaveStatusId") int leaveStatusId);
 

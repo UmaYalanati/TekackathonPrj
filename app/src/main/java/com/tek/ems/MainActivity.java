@@ -1,6 +1,5 @@
 package com.tek.ems;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +25,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.squareup.picasso.Picasso;
 import com.tek.ems.activity.LoginActivity;
 import com.tek.ems.callback.MenuItemSelectedCallback;
 import com.tek.ems.callback.NavigationDrawerCallback;
@@ -39,11 +43,6 @@ import com.tek.ems.fragment.ReportsFragment;
 import com.tek.ems.fragment.TimeClockFragment;
 import com.tek.ems.model.EmployeeDetails;
 import com.tek.ems.services.ServiceGenerator;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        displaydetails();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -188,7 +187,7 @@ public class MainActivity extends AppCompatActivity
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
+            getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#007698>" + tag + "</font>"));
         }
 
         postInit();
@@ -431,7 +430,7 @@ public class MainActivity extends AppCompatActivity
                         if (backStackEntryCount > 0) {
                             final String pageName = getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount - 1).getName();
                             if (pageName != null) {
-                                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + pageName + "</font>"));
+                                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#007698>" + pageName + "</font>"));
                                 if (pageName.equals("Dashboard")) {
                                     navigationView.setCheckedItem(R.id.nav_dashboard);
                                     currentSelectedItem = R.id.nav_dashboard;
@@ -458,7 +457,7 @@ public class MainActivity extends AppCompatActivity
                                 Log.d(TAG, "onBackStackChanged: Null page name");
                             }
                         } else {
-                            getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4> Dashboard </font>"));
+                            getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#007698> Dashboard </font>"));
                             navigationView.setCheckedItem(R.id.nav_dashboard);
                             currentSelectedItem = R.id.nav_dashboard;
                         }
@@ -532,7 +531,7 @@ public class MainActivity extends AppCompatActivity
                 item.setChecked(true);
 
 
-                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#00BCD4>" + tag + "</font>"));
+                getSupportActionBar()/* or getSupportActionBar() */.setTitle(Html.fromHtml("<font color=#007698>" + tag + "</font>"));
                 // invalidateOptionsMenu();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -567,19 +566,19 @@ public class MainActivity extends AppCompatActivity
         invalidateOptionsMenu();
     }*/
     void displaydetails() {
-        final ProgressDialog loading = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please wait...", false, false);
+       // final ProgressDialog loading = ProgressDialog.show(MainActivity.this, "Fetching Data", "Please wait...", false, false);
         int empid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getApplicationContext())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
-        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
+        Call<EmployeeDetails> listCall = ServiceGenerator.createService().getreportes(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {
             @Override
             public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
-                if (loading.isShowing()) {
+            /*    if (loading.isShowing()) {
                     loading.dismiss();
-                }
+                }*/
 
                 if (response != null && !response.isSuccessful() && response.errorBody() != null) {
                     try {
@@ -599,17 +598,17 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<EmployeeDetails> call, Throwable t) {
-                if (loading.isShowing()) {
+                /*if (loading.isShowing()) {
                     loading.dismiss();
-                }
+                }*/
                 Toast.makeText(MainActivity.this, "Error connecting with Web Services...\n" +
                         "Please try again after some time.", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "onFailure: Error parsing WS: " + t.getMessage(), t);
             }
         });
-        loading.setCancelable(false);
+     /*   loading.setCancelable(false);
         loading.setIndeterminate(true);
-        loading.show();
+        loading.show();*/
     }
 
     public void setEmployeeDetails(EmployeeDetails employeeDetails) {

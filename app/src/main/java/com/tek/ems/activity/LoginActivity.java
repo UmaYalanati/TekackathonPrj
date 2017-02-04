@@ -34,6 +34,8 @@ import com.tek.ems.sharedpreference.LoginComplexPreferences;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 passwordEditText.setText("");
                 break;
             case R.id.btn_submit:
-          /*      if (userIdEditText.getText().toString().isEmpty()) {
+                if (userIdEditText.getText().toString().isEmpty()) {
                     userIdEditText.setError("Please enter UserName to Login!");
                     userIdEditText.requestFocus();
                 } else if (passwordEditText.getText().toString().isEmpty()) {
@@ -144,8 +146,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } catch (UnsupportedEncodingException e) {
 
                     }
-                   *//* byte[] encodedBytes = Base64.getEncoder().encode("Test".getBytes());
-                    System.out.println("encodedBytes " + new String(encodedBytes));*//*
+                  /*  byte[] encodedBytes = Base64.getEncoder().encode("Test".getBytes());
+                    System.out.println("encodedBytes " + new String(encodedBytes));*/
                     byte[] data = new byte[0];
                     String base64 = null;
                     try {
@@ -158,7 +160,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     uploadDetails(userIdEditText.getText().toString().trim(),source.replace("%3D%0A","=") );
 
-                }*/
+                }
                 //mlalwani@teksystems.com
                 /*SendMail sm = new SendMail(getApplicationContext(), "ujain@teksystems.com", "Time and Expense", "Please Approve the Time and expense",true);
                 //Executing sendmail to send email
@@ -166,35 +168,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-                mFirebaseAuth.createUserWithEmailAndPassword(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345")
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
 
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    Log.e("Signup Error", "onCancelled", task.getException());
-                                } else {
-                                    FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                                    String uid = user.getUid();
-                                    firebaseAuthWithCustomLogin(userIdEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
-                                    Log.d(TAG, "onComplete: uid: " + uid);
-
-                                }
-                            }
-                        }).addOnFailureListener(LoginActivity.this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Exception..", "" + e);
-                        if (e.getMessage().equals("The email address is already in use by another account.")) {
-                            firebaseAuthWithCustomLogin(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
-                        } else {
-                            Toast.makeText(getApplicationContext(), e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    }
-                });
 
                 break;
 
@@ -285,7 +259,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.emaailid,
-                                        String.valueOf(emp.getEmailid())).commitSplash();
+                                        emp.getEmailid()).commitSplash();
 
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
@@ -296,9 +270,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         Log.i(TAG, "onResponse: Property Data Saved Successfully!, Response: " + emp);
                         userName = username_n;
+                        mFirebaseAuth.createUserWithEmailAndPassword(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345")
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
 
-                        Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent_homescreen);
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            Log.e("Signup Error", "onCancelled", task.getException());
+                                        } else {
+                                            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                                            String uid = user.getUid();
+                                            firebaseAuthWithCustomLogin(userIdEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
+                                            Log.d(TAG, "onComplete: uid: " + uid);
+
+                                        }
+                                    }
+                                }).addOnFailureListener(LoginActivity.this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("Exception..", "" + e);
+                                if (e.getMessage().equals("The email address is already in use by another account.")) {
+                                    firebaseAuthWithCustomLogin(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
+                                } else {
+                                    Toast.makeText(getApplicationContext(), e.getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+                        });
+                     /*   Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent_homescreen);*/
 
                     } else {
                         new AlertDialog.Builder(LoginActivity.this)

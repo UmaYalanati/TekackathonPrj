@@ -39,7 +39,7 @@ public class Login {
     @JsonProperty("country")
     private String country;
 
-    @JsonProperty("emailid")
+    @JsonProperty("emailId")
     private String emailid;
 
     @JsonProperty("contactNo")
