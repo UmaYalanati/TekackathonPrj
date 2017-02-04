@@ -165,7 +165,7 @@ public class DisplayEmployeeDetailsFragment extends Fragment {
         tvusername.setText(employeeDetails.getUserName());
         tvemail.setText(employeeDetails.getEmailid());
         tvmobile.setText(employeeDetails.getContactNo());
-        tvaddress.setText(employeeDetails.getStreet()+"," + employeeDetails.getCity()+","+employeeDetails.getCountry());
+        tvaddress.setText(employeeDetails.getStreet());
        /* StringBuilder employeelocation = new StringBuilder();
         for (int i = 0; i < employeeDetails.getEmployeeLocation().size(); i++) {
             if (i == 0) {

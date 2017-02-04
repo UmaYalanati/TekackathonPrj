@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tek.ems.MainActivity;
 import com.tek.ems.R;
 import com.tek.ems.emsconstants.EmsConstants;
 import com.tek.ems.emsconstants.SharedPreferenceUtils;
+import com.tek.ems.model.CustomLoginDetails;
 import com.tek.ems.model.Login;
 import com.tek.ems.services.EMSService;
 import com.tek.ems.services.ServiceGenerator;
@@ -25,8 +34,6 @@ import com.tek.ems.sharedpreference.LoginComplexPreferences;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,11 +59,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextInputEditText passwordEditText;
 
     public static Login logindetails = new Login();
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    CustomLoginDetails customLoginDetails = new CustomLoginDetails();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //  getSupportActionBar().hide();
-        //  getActionBar().hide();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         if (SharedPreferenceUtils
                 .getInstance(LoginActivity.this)
                 .getSplashCacheItem(
@@ -83,10 +94,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             bt_clear.setOnClickListener(this);
         }
 
-
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        mFirebaseAuth.addAuthStateListener(mAuthListener);
+        // ...
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -95,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 passwordEditText.setText("");
                 break;
             case R.id.btn_submit:
-                if (userIdEditText.getText().toString().isEmpty()) {
+          /*      if (userIdEditText.getText().toString().isEmpty()) {
                     userIdEditText.setError("Please enter UserName to Login!");
                     userIdEditText.requestFocus();
                 } else if (passwordEditText.getText().toString().isEmpty()) {
@@ -115,8 +144,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } catch (UnsupportedEncodingException e) {
 
                     }
-                   /* byte[] encodedBytes = Base64.getEncoder().encode("Test".getBytes());
-                    System.out.println("encodedBytes " + new String(encodedBytes));*/
+                   *//* byte[] encodedBytes = Base64.getEncoder().encode("Test".getBytes());
+                    System.out.println("encodedBytes " + new String(encodedBytes));*//*
                     byte[] data = new byte[0];
                     String base64 = null;
                     try {
@@ -127,20 +156,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                     String source = encodeString(passwordEditText.getText().toString().trim());
 
-                  /*  try {
-                        String query = URLEncoder.encode(source, "utf-8");
-                        uploadDetails(userIdEditText.getText().toString().trim(),query );
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }*/
-
                     uploadDetails(userIdEditText.getText().toString().trim(),source.replace("%3D%0A","=") );
 
-                }
+                }*/
                 //mlalwani@teksystems.com
                 /*SendMail sm = new SendMail(getApplicationContext(), "ujain@teksystems.com", "Time and Expense", "Please Approve the Time and expense",true);
                 //Executing sendmail to send email
                 sm.execute();*/
+
+
+
+                mFirebaseAuth.createUserWithEmailAndPassword(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345")
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e("Signup Error", "onCancelled", task.getException());
+                                } else {
+                                    FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                                    String uid = user.getUid();
+                                    firebaseAuthWithCustomLogin(userIdEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
+                                    Log.d(TAG, "onComplete: uid: " + uid);
+
+                                }
+                            }
+                        }).addOnFailureListener(LoginActivity.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Exception..", "" + e);
+                        if (e.getMessage().equals("The email address is already in use by another account.")) {
+                            firebaseAuthWithCustomLogin(passwordEditText.getText().toString().trim()+"@teksystems.com", userIdEditText.getText().toString().trim()+"12345");
+                        } else {
+                            Toast.makeText(getApplicationContext(), e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
 
                 break;
 
@@ -203,7 +257,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //DO SUCCESS HANDLING HERE
 //if (response.body().)
                     final Login emp = response.body();
-                 //   logindetails.setChildEmployees(emp.getChildEmployees());
+                    //   logindetails.setChildEmployees(emp.getChildEmployees());
                     LoginComplexPreferences loginComplexPreferences = LoginComplexPreferences.getComplexPreferences(getBaseContext(), "object_prefs", 0);
                     loginComplexPreferences.putObject("object_value", emp);
                     loginComplexPreferences.commit();
@@ -232,26 +286,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 .editSplash()
                                 .addSplashCacheItem(EmsConstants.emaailid,
                                         String.valueOf(emp.getEmailid())).commitSplash();
-                   /*     if (emp.getRoleName()!=null) {
-                            SharedPreferenceUtils
-                                    .getInstance(LoginActivity.this)
-                                    .editSplash()
-                                    .addSplashCacheItem(EmsConstants.rolename,
-                                            emp.getRoleName()
-                                    ).commitSplash();
-                        }*/
-                     /*   if (emp.getChildEmployeeId()!=0) {
-                            SharedPreferenceUtils
-                                    .getInstance(LoginActivity.this)
-                                    .editSplash()
-                                    .addSplashCacheItem(EmsConstants.childEmployeeId,
-                                            String.valueOf(emp.getChildEmployeeId())).commitSplash();
-                        }*/
-                      /*  SharedPreferenceUtils
-                                .getInstance(LoginActivity.this)
-                                .editSplash()
-                                .addSplashCacheItem(EmsConstants.photoPath,
-                                        String.valueOf(emp.getPhotoPath())).commitSplash();*/
+
                         SharedPreferenceUtils
                                 .getInstance(LoginActivity.this)
                                 .editSplash()
@@ -294,6 +329,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loading.show();
 
     }
+
     private String encodeString(String s) {
         byte[] data = new byte[0];
 
@@ -308,6 +344,40 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return base64Encoded;
 
         }
+    }
+    private void firebaseAuthWithCustomLogin(String username, String password) {
+        //  loginWithPassword();
+        // Log.d(TAG, "firebaseAuthWithCustomLogin() called with: mCustomToken = [" + mCustomToken + "]");
+        mFirebaseAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+
+                        } else {
+                            String token = FirebaseInstanceId.getInstance().getToken();
+
+                            Intent intent_homescreen = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent_homescreen);
+                           /* android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                                    Settings.Secure.ANDROID_ID);*/
+
+                           // getLogin(edittext_username.getText().toString().trim(), edittext_password.getText().toString().trim(), token, android_id);
+                        }
+
+                        // ...
+                    }
+                }).addOnFailureListener(LoginActivity.this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("onFailure Message", "" + e.getMessage());
+                Toast.makeText(getApplicationContext(), e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
 

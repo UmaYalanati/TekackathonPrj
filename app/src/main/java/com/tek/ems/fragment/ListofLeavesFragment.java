@@ -50,14 +50,14 @@ public class ListofLeavesFragment extends Fragment implements View.OnClickListen
     String TAG = "LeavesStatusFragment";
     //  LeaveCategorylist leavedetails=new LeaveCategorylist();
     Context context;
-   // RecyclerView recyclerView;
+    // RecyclerView recyclerView;
     //RelativeLayout relativeLayout;
-  //  RecyclerView.Adapter recyclerViewAdapter;
-   // RecyclerView.LayoutManager recylerViewLayoutManager;
+    //  RecyclerView.Adapter recyclerViewAdapter;
+    // RecyclerView.LayoutManager recylerViewLayoutManager;
     Button btnstarttime, btnendtime;
 
     ListView listView_pending, listView_approved, listView_rejected;
-TextView tvRejected,tvapproved,tvPending;
+    TextView tvRejected, tvapproved, tvPending;
 
     public static ListofLeavesFragment newInstance() {
         return new ListofLeavesFragment();
@@ -74,9 +74,9 @@ TextView tvRejected,tvapproved,tvPending;
         listView_pending = (ListView) view.findViewById(R.id.listView_pending);
         listView_approved = (ListView) view.findViewById(R.id.listView_approved);
         listView_rejected = (ListView) view.findViewById(R.id.listView_rejected);
-        tvRejected= (TextView) view.findViewById(R.id.tvRejected);
-                tvapproved= (TextView) view.findViewById(R.id.tvapproved);
-                tvPending= (TextView) view.findViewById(R.id.tvPending);
+        tvRejected = (TextView) view.findViewById(R.id.tvRejected);
+        tvapproved = (TextView) view.findViewById(R.id.tvapproved);
+        tvPending = (TextView) view.findViewById(R.id.tvPending);
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
@@ -153,21 +153,21 @@ TextView tvRejected,tvapproved,tvPending;
     private void updateRecyclerViewForClients(LeaveCategorylist leaveDetails) {
         //   Log.d(TAG, "updateRecyclerViewForClients() called for " + leaveDetails.size() + " Clients.");
 
-       // ,,
-       if (leaveDetails.getPending()!=null&&leaveDetails.getPending().size()>0) {
-           Leaves_ListAdapter adapter = new Leaves_ListAdapter(context, leaveDetails.getPending());
+        // ,,
+        if (leaveDetails.getPending() != null && leaveDetails.getPending().size() > 0) {
+            Leaves_ListAdapter adapter = new Leaves_ListAdapter(context, leaveDetails.getPending());
 
-           listView_pending.setAdapter(adapter);
-           tvPending.setVisibility(View.VISIBLE);
-       }
-        if (leaveDetails.getApproved()!=null&&leaveDetails.getApproved().size()>0) {
+            listView_pending.setAdapter(adapter);
+            tvPending.setVisibility(View.VISIBLE);
+        }
+        if (leaveDetails.getApproved() != null && leaveDetails.getApproved().size() > 0) {
             Leaves_ListAdapter adapter1 = new Leaves_ListAdapter(context, leaveDetails.getApproved());
 
             listView_approved.setAdapter(adapter1);
             tvapproved.setVisibility(View.VISIBLE);
         }
 
-        if (leaveDetails.getRejected()!=null&&leaveDetails.getRejected().size()>0) {
+        if (leaveDetails.getRejected() != null && leaveDetails.getRejected().size() > 0) {
             Leaves_ListAdapter adapter3 = new Leaves_ListAdapter(context, leaveDetails.getRejected());
 
             listView_rejected.setAdapter(adapter3);
@@ -192,11 +192,12 @@ TextView tvRejected,tvapproved,tvPending;
                 DatePickerFragment1 endtimeFragment = new DatePickerFragment1(btnendtime, btnstarttime.getText().toString(), false);
 
                 endtimeFragment.show(getActivity().getFragmentManager(), "datePicker");
-              //  getlistofleaves(btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
+                //  getlistofleaves(btnstarttime.getText().toString().trim(), btnendtime.getText().toString().trim());
                 break;
 
         }
     }
+
     @SuppressLint("ValidFragment")
     public class DatePickerFragment1 extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
@@ -204,13 +205,14 @@ TextView tvRejected,tvapproved,tvPending;
         Button mTextView;
         DatePickerDialog mDatePickerDialog;
         boolean isdateset;
+
         public DatePickerFragment1() {
         }
 
-        public DatePickerFragment1(Button textview,String date,boolean isdateset) {
+        public DatePickerFragment1(Button textview, String date, boolean isdateset) {
             this.mTextView = textview;
-            this.date= date;
-            this.isdateset=isdateset;
+            this.date = date;
+            this.isdateset = isdateset;
         }
 
 
@@ -222,9 +224,9 @@ TextView tvRejected,tvapproved,tvPending;
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog fff;
-            Date d=null;
-            int year1=year,month1=month,day1=day;
-            try{
+            Date d = null;
+            int year1 = year, month1 = month, day1 = day;
+            try {
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 d = sdf.parse(date);
                 Calendar cal = Calendar.getInstance();
@@ -234,12 +236,12 @@ TextView tvRejected,tvapproved,tvPending;
                 day1 = cal.get(Calendar.DAY_OF_MONTH);
 
 
-            }catch (ParseException e){
+            } catch (ParseException e) {
 
             }
             fff = new DatePickerDialog(getActivity(), this, year, month,
                     day);
-            if (isdateset){
+            if (isdateset) {
                 fff.getDatePicker().setMinDate(d.getTime());
             }
 
@@ -253,11 +255,11 @@ TextView tvRejected,tvapproved,tvPending;
 
             String str_year = String.valueOf(year);
             String date_str = "";
-            try{
+            try {
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date d = sdf.parse(date);
                 view.setMinDate(d.getTime());
-            }catch (ParseException e){
+            } catch (ParseException e) {
 
             }
 
@@ -277,13 +279,13 @@ TextView tvRejected,tvapproved,tvPending;
                 }
             } else {
                 if (new StringBuilder().append(day).length() >= 2) {
-                    if (new StringBuilder().append(month + 1).length() >= 2){
+                    if (new StringBuilder().append(month + 1).length() >= 2) {
                         mTextView.setText(new StringBuilder()
                                 .append(month + 1).append("/")
                                 .append(day).append("/")
                                 .append(str_year)
                                 .toString());
-                    }else{
+                    } else {
                         mTextView.setText(new StringBuilder()
                                 .append(0).append(month + 1).append("/")
                                 .append(day).append("/")

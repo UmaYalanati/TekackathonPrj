@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:padding="3dp"
-                android:text="Date                  "
+                android:text="Date           "
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -110,15 +110,6 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/txtlocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Location"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txtcheckouttime"
@@ -134,20 +125,11 @@
 
 
             <TextView
-                android:id="@+id/txtlocation2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-            <TextView
                 android:id="@+id/txttotalhrs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:gravity="center"
-                android:text="Length"
+                android:text="Total"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 

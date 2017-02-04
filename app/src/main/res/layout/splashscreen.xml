@@ -41,7 +41,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:src="@drawable/csnlogo"/>
+                android:src="@drawable/logo"/>
 
             <TextView
                 android:textSize="18sp"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="CSN-EMS" />
+                android:text="Tek Systems-EASI" />
 
 
 

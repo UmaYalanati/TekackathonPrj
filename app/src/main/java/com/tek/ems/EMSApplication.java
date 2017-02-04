@@ -5,9 +5,11 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.tek.ems.model.InTakeMasterDetails;
 import com.tek.ems.services.ServiceGenerator;
 
+import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by uyalanat on 28-10-2016.
@@ -28,9 +31,16 @@ String TAG="EMSApplication";
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Helvetica_Neue_Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
         EMSApplication.context = getApplicationContext();
         JodaTimeAndroid.init(this);
-        displaydetails();
+        //displaydetails();
     }
 
     void displaydetails() {

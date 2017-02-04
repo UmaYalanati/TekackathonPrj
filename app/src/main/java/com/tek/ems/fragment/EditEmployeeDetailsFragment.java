@@ -55,7 +55,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
     EmployeeDetails employeeDetails = new EmployeeDetails();
     Button btnupdateemployee;
 
-    TextInputEditText ed_gender,ed_Name, ed_NickName, ed_email, ed_dob, ed_mobilenor, ed_homenor, ed_address, ed_city, ed_state, ed_zipcode;
+    TextInputEditText ed_gender, ed_Name, ed_NickName, ed_email, ed_dob, ed_mobilenor, ed_homenor, ed_address, ed_city, ed_state, ed_zipcode;
 
     TextInputEditText ed_joiningDate, ed_positionName, ed_businessAreaName, ed_subBusinessAreaName, ed_hoursPerDay;
 
@@ -132,11 +132,11 @@ public class EditEmployeeDetailsFragment extends Fragment {
                     .getSplashCacheItem(
                             EmsConstants.childEmployeeId).toString().trim());
         } else {*/
-            empid = Integer.parseInt(SharedPreferenceUtils
-                    .getInstance(getActivity())
-                    .getSplashCacheItem(
-                            EmsConstants.employeeId).toString().trim());
-    //    }
+        empid = Integer.parseInt(SharedPreferenceUtils
+                .getInstance(getActivity())
+                .getSplashCacheItem(
+                        EmsConstants.employeeId).toString().trim());
+        //    }
         Call<EmployeeDetails> listCall = ServiceGenerator.createService().getEmployeeById(empid);
 
         listCall.enqueue(new Callback<EmployeeDetails>() {
@@ -182,6 +182,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
         ed_Name.setText(employeeDetails.getFirstName());
         ed_email.setText(employeeDetails.getEmailid());
         ed_mobilenor.setText(employeeDetails.getContactNo());
+        ed_address.setText(employeeDetails.getStreet());
         ed_city.setText(employeeDetails.getCity());
         ed_state.setText(employeeDetails.getState());
         ed_zipcode.setText(String.valueOf(employeeDetails.getPincode()));
@@ -203,7 +204,6 @@ public class EditEmployeeDetailsFragment extends Fragment {
     }
 
     public void updateemployeedetails() {
-        // ed_Name,ed_NickName,ed_email,ed_username,ed_mobilenor,ed_homenor,ed_address,ed_city,ed_state,ed_zipcode
         int empid = Integer.parseInt(SharedPreferenceUtils
                 .getInstance(getActivity())
                 .getSplashCacheItem(
@@ -212,8 +212,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
         employeeDetails.setFirstName(ed_Name.getText().toString().trim());
         employeeDetails.setEmailid(ed_email.getText().toString().trim());
         employeeDetails.setContactNo(ed_mobilenor.getText().toString().trim());
-      /*  employeeDetails.setAddress1(ed_address.getText().toString().trim());
-        employeeDetails.setAddress2(ed_address2.getText().toString().trim());*/
+        employeeDetails.setStreet(ed_address.getText().toString());
         employeeDetails.setDateOfBirth(ed_dob.getText().toString().trim());
         employeeDetails.setCity(ed_city.getText().toString().trim());
         employeeDetails.setState(ed_state.getText().toString().trim());
@@ -225,7 +224,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
         employeeDetails.setDateOfJoining(ed_joiningDate.getText().toString().trim());
         employeeDetails.setDateOfJoining(ed_positionName.getText().toString().trim());
 
-       // employeeDetails.setHoursPerDay(ed_hoursPerDay.getText().toString().trim());
+        // employeeDetails.setHoursPerDay(ed_hoursPerDay.getText().toString().trim());
 
 
     }
@@ -239,7 +238,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                 .getInstance(getActivity())
                 .getSplashCacheItem(
                         EmsConstants.employeeId).toString().trim());
-        Call<EmployeeDetails> employeeDetailsCall = service.updateEmployee(empid,employeeDetails);
+        Call<EmployeeDetails> employeeDetailsCall = service.updateEmployee(empid, employeeDetails);
         employeeDetailsCall.enqueue(new Callback<EmployeeDetails>() {
             @Override
             public void onResponse(Call<EmployeeDetails> call, Response<EmployeeDetails> response) {
@@ -362,7 +361,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                                 InputStream iStream = getActivity().getContentResolver().openInputStream(uri);
 //                                byte[] bytes = ImageCompressor.compressImage(getBytes(iStream));
                                 byte[] bytes = getBytes(iStream);
-                            //    employeeDetails.setByteArrayPhoto(bytes);
+                                //    employeeDetails.setByteArrayPhoto(bytes);
                                 updateNavigationDrawer(bytes);
                                 //  getHoarding().setHoardingImage(bytes);
                             } catch (IOException e) {
@@ -386,7 +385,7 @@ public class EditEmployeeDetailsFragment extends Fragment {
                                 iStream = getActivity().getContentResolver().openInputStream(uri);
 //                                byte[] bytes = ImageCompressor.compressImage(getBytes(iStream));
                                 byte[] bytes = getBytes(iStream);
-                             //   employeeDetails.setByteArrayPhoto(bytes);
+                                //   employeeDetails.setByteArrayPhoto(bytes);
                                 updateNavigationDrawer(bytes);
                                 //  getHoarding().setHoardingImage(bytes);
                             } catch (FileNotFoundException e) {

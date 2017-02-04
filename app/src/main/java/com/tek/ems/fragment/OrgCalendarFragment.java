@@ -127,7 +127,7 @@ public class OrgCalendarFragment extends Fragment {
               /*  Toast.makeText(getActivity(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();*/
                 toDate=newDateFormat.format(date);
-                displayDatedetails();
+               // displayDatedetails();
                 if (caldroidFragment!=null) {
                     caldroidFragment.refreshView();
                 }
